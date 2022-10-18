@@ -22,7 +22,7 @@ createTheme(
         button: {
             hover: '#059669',
             focus: '#059669',
-            disabled: '#d1d5db',
+            disabled: '#2C8C99',
         },
         sortFocus: {
             default: '#000000',
