@@ -20,7 +20,7 @@ export default function Login (){
                         <p className="text-red text-xs italic">Please choose a password.</p>
                     </div>
                     <div className="flex items-center justify-between">
-                        <button className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" type="button">
+                        <button className="bg-blue hover:bg-blue-dark text-black font-bold py-2 px-4 rounded" type="button">
                             Sign In
                         </button>
                         <button className="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#" >
