@@ -13,7 +13,7 @@ function App() {
 					<Navbar />
 				</header>
 				<body className="w-screen 
-					h-5/6 align-middle justify-center">
+					h-[92vh] align-middle justify-center">
 					{/* <Dashboard /> */}
 
 					<Routes>
