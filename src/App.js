@@ -2,20 +2,22 @@ import Navbar from "./components/Navbar.jsx";
 import Login from "./screen/Login";
 import Dashboard from "./screen/Dashboard.jsx";
 import Propiedades from "./screen/Propiedades.jsx";
+import Propiedad from "./screen/Propiedad.jsx"
+import AgregarPropiedad from "./screen/AgregarPropiedad.jsx";
 import { Routes, Route } from 'react-router-dom'
 
 
 function App() {
 	return (
-		<div className="bg-white h-screen overflow-x-hidden">
-			<div className="h-screen">
-				<header class="w-screen">
+		<div className="bg-white overflow-y-hidden">
+			<div className="">
+				<header className="w-screen">
 					<Navbar />
 				</header>
 
 
 				<div className="flex w-screen
-					h-[91.5vh] justify-center items-center">
+				 justify-center items-center">
 
 
 
@@ -23,6 +25,9 @@ function App() {
 						<Route path="/login" element={<Login />} />
 						<Route path="/dashboard" element={<Dashboard />} />
 						<Route path="/propiedades" element={<Propiedades />} />
+						<Route path="/propiedades/propiedad" element={<Propiedad />} />
+						<Route path="/propiedades/agregarPropiedad" element={<AgregarPropiedad />} />
+
 					</Routes>
 				</div>
 			</div>

@@ -170,6 +170,10 @@ export default function TablePropiedades() {
         <DataTable
             columns={columnas}
             data={tablaData}
+            onRowClicked={(e) => {
+                console.log(e)
+            }}
+
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
