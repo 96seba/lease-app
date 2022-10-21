@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar.jsx";
 import Login from "./screen/Login";
 import Dashboard from "./screen/Dashboard.jsx";
 import Register from "./screen/Register.jsx";
+import Boletas from "./screen/Boletas.jsx";
 import { Routes, Route } from 'react-router-dom'
 
 
@@ -20,6 +21,8 @@ function App() {
 						<Route path="/login" element={<Login />} />
 						<Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/usuarios" element={<Register />} />
+						<Route path="/boletas" element={<Boletas />} />
+
 					</Routes>
 				</body>
 			</div>

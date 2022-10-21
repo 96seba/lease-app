@@ -34,7 +34,7 @@ createTheme(
 
 const tablaData = [
     { propiedad: 29, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
-    { propiedad: 19, descripcion: "El dia que murio la razon", fecha: "18/10/2019", urgencia: "Nivel 2" },
+    { propiedad: 19, descripcion: "Pryx", fecha: "18/10/2019", urgencia: "Nivel 2" },
     { propiedad: 27, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
     { propiedad: 74, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
     { propiedad: 94, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
@@ -74,7 +74,7 @@ const paginationComponentOptions = {
 export default function TableUsers() {
 
     return (
-        <div>
+        <div className='shadow-lg'>
             <DataTable
                 columns={columnas}
                 data={tablaData}
