@@ -78,6 +78,7 @@ export default function TableUsers() {
             <DataTable
                 columns={columnas}
                 data={tablaData}
+                highlightOnHover
                 fixedHeader
                 fixedHeaderScrollHeight='700px'
                 pagination

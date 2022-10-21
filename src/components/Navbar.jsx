@@ -6,7 +6,7 @@ import { Route, Routes, Link } from 'react-router-dom'
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: true },
     { name: 'Propiedades', href: '/propiedades', current: false },
-    { name: 'Boletas', href: '#', current: false },
+    { name: 'Boletas', href: '/boletas', current: false },
     { name: 'Usuarios', href: '/usuarios', current: false },
 ]
 
@@ -36,12 +36,12 @@ function Navbar() {
                                 <div className="flex flex-shrink-0 items-center">
                                     <img
                                         className="block h-8 w-auto lg:hidden"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                                        src={require("../assets/mariologo.png")}
                                         alt="Your Company"
                                     />
                                     <img
                                         className="hidden h-8 w-auto lg:block"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                                        src={require("../assets/mariologo.png")}
                                         alt="Your Company"
                                     />
                                 </div>
@@ -68,8 +68,8 @@ function Navbar() {
                                     type="button"
                                     className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                 >
-                                    <span className="sr-only">View notifications</span>
-                                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                                    {/* <span className="sr-only">View notifications</span>
+                                    <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
                                 </button>
                                 {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">

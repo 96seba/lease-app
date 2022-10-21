@@ -5,7 +5,7 @@ import TableUsers from "../components/TableUsers"
 export default function Register() {
     return (
         <div className="">
-            <section className=  "bg-slate-100 flex" >
+            <section className=  "flex" >
                 <div className="flex items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                     <div className="flex flex-col flex-wrap p-8">
                         {/* <button href="#" className="flex place-self-center mb-6 text-2xl font-semibold text-white dark:text-white">
@@ -46,7 +46,7 @@ export default function Register() {
                                             <label for="terms" className="font-light text-gray-500 dark:text-gray-300">Acepto los <button className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Términos y Condiciones </button></label>
                                         </div>
                                     </div>
-                                    <button type="submit" className="w-full text-white bg-blue-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Crear cuenta</button>
+                                    <button type="submit" className="w-full text-white bg-[#374151] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Crear cuenta</button>
                                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                         ¿Ya tienes una cuenta? <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Ingresa aquí</a>
                                     </p>
