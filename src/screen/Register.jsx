@@ -1,8 +1,32 @@
-import React from "react"
+import React, {useState} from "react"
 import TableUsers from "../components/TableUsers"
 
 
 export default function Register() {
+
+    const [tableData, setTableData] = useState(
+        [
+            { id: 1, correo: "bjara@pryx.cl", nombre: "Ricky", apellido: "Martin" },
+            { id: 2, correo: "bjara@pryx.cl", nombre: "Peter", apellido: "Parker" },
+            { id: 3, correo: "bjara@pryx.cl", nombre: "Carles", apellido: "Puyol" },
+            { id: 4, correo: "bjara@pryx.cl", nombre: "Gonzalo", apellido: "Cáceres" },
+            { id: 5, correo: "bjara@pryx.cl", nombre: "Tito", apellido: "El Bambino" },
+        ]
+
+    )
+
+    const [correo, setCorreo] = useState("")
+
+    const [nombre, setNombre] = useState("")
+
+    const [apellido, setApellido] = useState("")
+
+    const valores=()=>{
+        // setTableData(current=>[{id:6, correo: correo, nombre:nombre, apellido:apellido},...current])
+        console.log(correo,nombre,apellido)
+    }
+
+
     return (
         <div className="">
             <section className=  "flex" >
@@ -20,15 +44,15 @@ export default function Register() {
                                 <form className="space-y-4 md:space-y-6" action="#">
                                     <div className="">
                                         <label for="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
-                                        <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
+                                        <input value={correo} onChange={event=>setCorreo(event.target.value)} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
                                     </div>
                                     <div>
                                         <label for="nombre" className="block mb-2 text-sm font-medium text-black dark:text-white">Nombre</label>
-                                        <input type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" required="" />
+                                        <input value={nombre} onChange={event=>setNombre(event.target.value)} type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" required="" />
                                     </div>
                                     <div>
                                         <label for="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
-                                        <input type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Apellido" required="" />
+                                        <input value={apellido} onChange={event=>setApellido(event.target.value)} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Apellido" required="" />
                                     </div>
                                     <div>
                                         <label for="password" className="block mb-2 text-sm font-medium text-black dark:text-white">Contraseña</label>
@@ -46,7 +70,7 @@ export default function Register() {
                                             <label for="terms" className="font-light text-gray-500 dark:text-gray-300">Acepto los <button className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Términos y Condiciones </button></label>
                                         </div>
                                     </div>
-                                    <button type="submit" className="w-full text-white bg-[#374151] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Crear cuenta</button>
+                                    <button onClick={()=>{valores()}} className="w-full text-white bg-[#374151] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Crear cuenta</button>
                                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                         ¿Ya tienes una cuenta? <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Ingresa aquí</a>
                                     </p>
@@ -56,7 +80,7 @@ export default function Register() {
                     </div>
                     <div className="flex flex-col items-center p-8 ">
                         <h4 className=' text-gray-800 pb-3'> Editar Usuarios </h4>
-                        <TableUsers />
+                        <TableUsers tableData={tableData} />
                     </div>
                 </div>
             </section>

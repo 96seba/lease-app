@@ -32,34 +32,27 @@ createTheme(
     'dark',
 );
 
-const tablaData = [
-    { propiedad: 29, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
-    { propiedad: 19, descripcion: "Pryx", fecha: "18/10/2019", urgencia: "Nivel 2" },
-    { propiedad: 27, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
-    { propiedad: 74, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
-    { propiedad: 94, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
-]
 
 
 const columnas = [
     {
-        name: 'Propiedad',
-        selector: 'propiedad',
+        name: 'Id',
+        selector: 'id',
         sortable: true
     },
     {
-        name: 'Descripcion',
-        selector: 'descripcion',
+        name: 'Correo',
+        selector: 'correo',
         sortable: true
     },
     {
-        name: 'Fecha',
-        selector: 'fecha',
+        name: 'Nombre',
+        selector: 'nombre',
         sortable: true
     },
     {
-        name: 'Urgencia',
-        selector: 'urgencia',
+        name: 'Apellido',
+        selector: 'apellido',
         sortable: true
     },
 ]
@@ -71,13 +64,13 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TableUsers() {
+export default function TableUsers({tableData}) {
 
     return (
         <div className='shadow-lg'>
             <DataTable
                 columns={columnas}
-                data={tablaData}
+                data={tableData}
                 highlightOnHover
                 fixedHeader
                 fixedHeaderScrollHeight='700px'
