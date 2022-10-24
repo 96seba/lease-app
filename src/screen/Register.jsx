@@ -22,8 +22,7 @@ export default function Register() {
     const [apellido, setApellido] = useState("")
 
     const valores=()=>{
-        // setTableData(current=>[{id:6, correo: correo, nombre:nombre, apellido:apellido},...current])
-        console.log(correo,nombre,apellido)
+        setTableData(current=>[...current,{id:6, correo: correo, nombre:nombre, apellido:apellido}])
     }
 
 
@@ -41,7 +40,7 @@ export default function Register() {
                                 <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl dark:text-white  text-center">
                                     Crea una cuenta
                                 </h1>
-                                <form className="space-y-4 md:space-y-6" action="#">
+                                <div className="space-y-4 md:space-y-6" action="#">
                                     <div className="">
                                         <label for="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
                                         <input value={correo} onChange={event=>setCorreo(event.target.value)} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
@@ -74,7 +73,7 @@ export default function Register() {
                                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                         ¿Ya tienes una cuenta? <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Ingresa aquí</a>
                                     </p>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
