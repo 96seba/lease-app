@@ -31,72 +31,92 @@ createTheme(
     'dark',
 );
 
+const customStyles = {
+    rows: {
+        style: {
+            minHeight: '60px', // override the row height
+        },
+    },
+    headCells: {
+        style: {
+            paddingLeft: '8px', // override the cell padding for head cells
+            paddingRight: '8px',
+        },
+    },
+    cells: {
+        style: {
+            paddingLeft: '8px', // override the cell padding for data cells
+            paddingRight: '8px',
+        },
+    },
+};
+
 const tablaData = [
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 1
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 200000",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 2
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 10000", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 3
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 4
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 5
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 6
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 7
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 8
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 9
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 10
     },
     {
         tipo: "Depto", direccion: "Cochrane 284", arrendador: "Julian Casablancas",
         arrendatario: "George Michael", monto: "$ 0", ggcc: "$ 0",
         luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
+        gas: "$ 0", estado: "Deuda", id: 11
     },
 
 ]
@@ -105,17 +125,19 @@ const tablaData = [
 const columnas = [
     {
         name: 'Tipo',
-        selector: 'tipo',
+        selector: (row) => <p className='my-3'>{row.tipo}</p>,
+        // selector: 'tipo',
         sortable: true
     },
     {
         name: 'Direccion',
-        selector: 'direccion',
-        sortable: true
+        selector: row => row.direccion,
+        sortable: true,
+        grow: 1
     },
     {
         name: 'Arrendador',
-        selector: 'arrendador',
+        selector: row => row.arrendador,
         sortable: true
     },
     {
@@ -166,21 +188,26 @@ export default function TablePropiedades() {
 
     return (
 
+        <div className='w-full  shadow-md rounded '>
 
-        <DataTable
-            columns={columnas}
-            data={tablaData}
-            onRowClicked={(e) => {
-                console.log(e)
-            }}
+            <DataTable
+                columns={columnas}
+                data={tablaData}
+                onRowClicked={(e) => {
+                    console.log(e.id)
+                }}
+                highlightOnHover
+                fixedHeader
+                fixedHeaderScrollHeight='700px'
+                pagination
+                theme='solarized'
+                customStyles={customStyles}
+                onRowDoubleClicked={(e) => {
+                }}
+                paginationComponentOptions={paginationComponentOptions}
+            />
 
-            fixedHeader
-            fixedHeaderScrollHeight='700px'
-            pagination
-            theme='solarized'
-            paginationComponentOptions={paginationComponentOptions}
-        />
-
+        </div>
 
     )
 } 
