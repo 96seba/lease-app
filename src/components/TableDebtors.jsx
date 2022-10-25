@@ -124,18 +124,14 @@ const paginationComponentOptions = {
 export default function TableDebtors() {
 
     return (
-
-
-        <DataTable
-            columns={columnas}
-            data={tablaData}
-            fixedHeader
-            fixedHeaderScrollHeight='700px'
-            pagination
-            theme='solarized'
-            paginationComponentOptions={paginationComponentOptions}
-        />
-
-
+            <DataTable
+                columns={columnas}
+                data={tablaData}
+                fixedHeader
+                fixedHeaderScrollHeight='700px'
+                pagination
+                theme='solarized'
+                paginationComponentOptions={paginationComponentOptions}
+            />
     )
 } 

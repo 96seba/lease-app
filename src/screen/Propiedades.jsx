@@ -1,16 +1,12 @@
 import TablePropiedades from "../components/TablePropiedades"
 import { useNavigate } from "react-router-dom"
 
-
-
-
 export default function Propiedades() {
-
 
     let navigate = useNavigate()
 
     return (
-        <div className="bg-slate-50">
+        <div className="bg-white">
             <button onClick={() => {
                 navigate("/propiedades/agregarPropiedad")
             }} className="flex items-center my-2 justify-start px-8 w-3/4 h-[6vh]">
@@ -19,7 +15,7 @@ export default function Propiedades() {
                     <span className="sr-only">Icon description</span>
                 </button>
 
-                <h2 className="text-2xl ">
+                <h2 className="text-2xl">
                     Agregar propiedad
                 </h2>
             </button>

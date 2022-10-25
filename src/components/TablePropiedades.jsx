@@ -4,57 +4,57 @@ import DataTable, { createTheme } from 'react-data-table-component';
 import { useNavigate } from "react-router-dom"
 
 createTheme(
-    	'solarized',
-    	{
-    		text: {
-    			primary: '#268bd2',
-    			secondary: '#2aa198',
-    		},
-    		background: {
-    			default: '#002b36',
-    		},
-    		context: {
-    			background: '#cb4b16',
-    			text: '#FFFFFF',
-    		},
-		divider: {
-   			default: '#073642',
-		},
-    		button: {
-    			default: '#2aa198',
-    			hover: 'rgba(0,0,0,.08)',
-    			focus: 'rgba(255,255,255,.12)',
-    			disabled: 'rgba(255, 255, 255, .34)',
-		},
-    		sortFocus: {
-    			default: '#2aa198',
-    		},
-    	},
-    	'dark',
-    );
+    'solarized',
+    {
+        text: {
+            primary: '#268bd2',
+            secondary: '#2aa198',
+        },
+        background: {
+            default: '#002b36',
+        },
+        context: {
+            background: '#cb4b16',
+            text: '#FFFFFF',
+        },
+        divider: {
+            default: '#073642',
+        },
+        button: {
+            default: '#2aa198',
+            hover: 'rgba(0,0,0,.08)',
+            focus: 'rgba(255,255,255,.12)',
+            disabled: 'rgba(255, 255, 255, .34)',
+        },
+        sortFocus: {
+            default: '#2aa198',
+        },
+    },
+    'dark',
+);
 
 const customStyles = {
     // headRow: {
-	// 	style: {
-	// 		backgroundColor: '',
-	// 		minHeight: '52px',
-	// 		borderBottomWidth: '1px',
-	// 		borderBottomColor: theme.divider.default,
-	// 		borderBottomStyle: 'solid',
-	// 	},
-	// 	denseStyle: {
-	// 		minHeight: '32px',
-	// 	},
-	// },
+    // 	style: {
+    // 		backgroundColor: '',
+    // 		minHeight: '52px',
+    // 		borderBottomWidth: '1px',
+    // 		borderBottomColor: theme.divider.default,
+    // 		borderBottomStyle: 'solid',
+    // 	},
+    // 	denseStyle: {
+    // 		minHeight: '32px',
+    // 	},
+    // },
     // head: {
-	// 	style: {
-	// 		fontSize: '17px',
-	// 		backgroundColor: '#000000',
-	// 		minHeight: '50px',
-	// 		paddingLeft: '16px',
-	// 		paddingRight: '8px',
-	// 	},
-	// },
+    // 	style: {
+    // 		fontSize: '17px',
+    // 		backgroundColor: '#000000',
+    // 		minHeight: '50px',
+    // 		paddingLeft: '16px',
+    // 		paddingRight: '8px',
+    // 	},
+    // },
     rows: {
         style: {
             minHeight: '60px', // override the row height
@@ -211,9 +211,7 @@ export default function TablePropiedades() {
     let navigate = useNavigate()
 
     return (
-
-        <div className='w-full  shadow-md rounded '>
-
+        <div className='w-full shadow-sm rounded'>
             <DataTable
                 columns={columnas}
                 data={tablaData}

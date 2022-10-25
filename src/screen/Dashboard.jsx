@@ -23,7 +23,7 @@ export default function Dashboard() {
     ])
 
     return (
-        <div className="flex  h-[91.5vh] w-screen items-center justify-center">
+        <div className="flex  h-[91.5vh] bg-gray-50 w-screen items-center justify-center">
 
             <div className='flex w-3/4  h-[91.5vh] items-center justify-center flex-col'>
                 <div className='flex h-[46vh] w-full  items-end justify-center flex-column p-4
@@ -32,7 +32,7 @@ export default function Dashboard() {
                     <TableDebtors />
 
                 </div>
-                <div className='flex h-[46vh] w-full items-center justify-center'>
+                <div className='flex flex-row h-[46vh] w-full items-center justify-center'>
                     <div className='flex w-1/2 h-full items-end justify-center
                     flex-column p-4'>
                         <TableToResolveNVisits />

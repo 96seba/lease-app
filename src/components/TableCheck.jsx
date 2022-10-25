@@ -86,18 +86,14 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
     ]
 
     return (
-
-
         <DataTable
             columns={columnas}
             data={dataCheck}
-            fixedHeaderå
+            fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
             theme='solarized'
             paginationComponentOptions={paginationComponentOptions}
         />
-
-
     )
 } 

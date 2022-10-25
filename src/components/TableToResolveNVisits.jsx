@@ -73,8 +73,6 @@ const paginationComponentOptions = {
 export default function TableToResolveNVisits() {
 
     return (
-
-
         <DataTable
             columns={columnas}
             data={tablaData}
@@ -84,7 +82,5 @@ export default function TableToResolveNVisits() {
             theme='solarized'
             paginationComponentOptions={paginationComponentOptions}
         />
-
-
     )
 } 
