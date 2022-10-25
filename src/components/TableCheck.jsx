@@ -31,38 +31,10 @@ createTheme(
     'dark',
 );
 
-const tablaData = [
-    { id: 26, descripcion: "Revisar la luz", estado: "No revisado" },
-    { id: 16, descripcion: "Revisar el agua", estado: "Revisado" },
-    { id: 63, descripcion: "LLevar ampolletas", estado: "Revisado" },
-    { id: 37, descripcion: "Echarlos de la casa", estado: "Revisado" },
-    { id: 59, descripcion: "Revisar la luz", estado: "No revisado" },
-    { id: 85, descripcion: "Revisar la ducha", estado: "No revisado" },
-    { id: 75, descripcion: "Revisar la luz", estado: "No revisado" },
-    { id: 72, descripcion: "Revisar la ducha", estado: "No revisado" },
-    { id: 71, descripcion: "Revisar la luz", estado: "No revisado" },
-    { id: 41, descripcion: "Revisar la ducha", estado: "No revisado" },
-    { id: 81, descripcion: "Revisar la luz", estado: "No revisado" },
-]
 
 
-const columnas = [
-    {
-        name: 'Id',
-        selector: 'id',
-        sortable: true
-    },
-    {
-        name: 'Descripcion',
-        selector: 'descripcion',
-        sortable: true
-    },
-    {
-        name: 'Estado',
-        selector: 'estado',
-        sortable: true
-    },
-]
+
+
 
 const paginationComponentOptions = {
     rangeSeparatorText: 'de',
@@ -71,19 +43,55 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TableCheck() {
+export default function TableCheck({ dataCheck, setDataCheck }) {
 
-
-
-
+    const columnas = [
+        {
+            name: 'Id',
+            selector: row => row.id,
+            sortable: true
+        },
+        {
+            name: 'Descripcion',
+            selector: row => row.descripcion,
+            sortable: true
+        },
+        {
+            name: 'Estado',
+            selector: row => row.estado === "Revisado" ?
+                <button onClick={() => {
+                    let newDataCheck = []
+                    dataCheck.forEach((element, index) => {
+                        if (element.id === row.id) {
+                            newDataCheck[index] = { id: element.id, descripcion: element.descripcion, estado: "No revisado" }
+                        } else {
+                            newDataCheck[index] = element
+                        }
+                    });
+                    setDataCheck(newDataCheck)
+                }} className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button> :
+                <button onClick={() => {
+                    let newDataCheck = []
+                    dataCheck.forEach((element, index) => {
+                        if (element.id === row.id) {
+                            newDataCheck[index] = { id: element.id, descripcion: element.descripcion, estado: "Revisado" }
+                        } else {
+                            newDataCheck[index] = element
+                        }
+                    });
+                    setDataCheck(newDataCheck)
+                }} className='bg-red-400 w-20 h-7 rounded active:bg-violet-600 text-white'>No revisado</button>,
+            sortable: true
+        },
+    ]
 
     return (
 
 
         <DataTable
             columns={columnas}
-            data={tablaData}
-            fixedHeader
+            data={dataCheck}
+            fixedHeaderå
             fixedHeaderScrollHeight='700px'
             pagination
             theme='solarized'

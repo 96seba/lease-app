@@ -6,19 +6,20 @@ import Propiedad from "./screen/Propiedad.jsx"
 import AgregarPropiedad from "./screen/AgregarPropiedad.jsx";
 import Register from "./screen/Register.jsx";
 import Boletas from "./screen/Boletas.jsx";
+import EditarPropiedad from "./screen/EditarPropiedad.jsx";
 import { Routes, Route } from 'react-router-dom'
 
 
 function App() {
 	return (
-		<div className="bg-white overflow-y-hidden">
+		<div className="bg-white overflow-x-hidden">
 			<div className="">
 				<header className="w-screen">
 					<Navbar />
 				</header>
 
 
-				<div className="flex w-screen
+				<div className="flex w-screen overflow-y-hidden
 				 justify-center items-center">
 
 
@@ -28,6 +29,7 @@ function App() {
 						<Route path="/propiedades" element={<Propiedades />} />
 						<Route path="/propiedades/propiedad" element={<Propiedad />} />
 						<Route path="/propiedades/agregarPropiedad" element={<AgregarPropiedad />} />
+						<Route path="/propiedades/propiedad/editarPropiedad" element={<EditarPropiedad />} />
                         <Route path="/usuarios" element={<Register />} />
 						<Route path="/boletas" element={<Boletas />} />
 

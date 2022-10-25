@@ -74,42 +74,42 @@ const tablaData = [
 const columnas = [
     {
         name: 'Propiedad',
-        selector: 'propiedad',
+        selector: row => row.propiedad,
         sortable: true
     },
     {
         name: 'Fecha',
-        selector: 'fecha',
+        selector: row => row.fecha,
         sortable: true
     },
     {
         name: 'Monto',
-        selector: 'monto',
+        selector: row => row.monto,
         sortable: true
     },
     {
         name: 'GG.CC',
-        selector: 'ggcc',
+        selector: row => row.ggcc,
         sortable: true
     },
     {
         name: 'Luz',
-        selector: 'luz',
+        selector: row => row.luz,
         sortable: true
     },
     {
         name: 'Agua',
-        selector: 'agua',
+        selector: row => row.agua,
         sortable: true
     },
     {
         name: 'Gas',
-        selector: 'gas',
+        selector: row => row.gas,
         sortable: true
     },
     {
         name: 'Estado',
-        selector: 'estado',
+        selector: row => row.estado,
         sortable: true
     },
 ]

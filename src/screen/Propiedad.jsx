@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import TableBill from '../components/TableBill'
 import TableVisits from '../components/TableVisits'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function Propiedad() {
+
+    let navigate = useNavigate()
 
     const [logs, setLogs] = useState([
         { fecha: '23/04/2022  20:02', mensaje: "Se cayo gente" },
@@ -34,8 +37,8 @@ export default function Propiedad() {
 
     return (
         <div>
-            <div className="flex w-screen bg-slate-100  flex-column justify-start items-center p-6">
-                <div className="flex my-6 justify-center rounded items-center w-[90vw] h-[40vh] bg-white shadow-md">
+            <div className="flex w-[80vw] bg-slate-100   flex-column justify-start items-center p-6">
+                <div className="flex my-10 justify-center rounded items-center w-[75vw] h-[40vh] bg-white shadow-md">
                     <div className="flex justify-center rounded-l items-center w-[35vw] h-[40vh] bg-white ">
                         <img alt="propiedad"
                             className='w-[35vw] h-[40vh] rounded-l' src={require('../assets/lamoneda.jpeg')} />
@@ -50,7 +53,10 @@ export default function Propiedad() {
                                 <p>Nro Piso: 25</p>
                             </div>
                             <div className='w-full '>
-                                <button className='bg-slate-200 active:bg-slate-100  w-full justify-center items-center flex rounded'>
+                                <button onClick={() => {
+                                    let nav = `/propiedades/propiedad/editarPropiedad`
+                                    navigate(nav)
+                                }} className='bg-slate-200 active:bg-slate-100  w-full justify-center items-center flex rounded'>
                                     Editar propiedad
                                 </button>
                             </div>
@@ -68,8 +74,8 @@ export default function Propiedad() {
                         </div>
                     </div>
                 </div>
-                <div className="flex  mb-6  rounded justify-between items-center w-[90vw] h-[36vh] ">
-                    <div className="flex flex-col justify-start items-start p-6 w-[27vw] h-[36vh] bg-white rounded shadow-md">
+                <div className="flex  mb-10  rounded justify-between items-center w-[75vw] h-[36vh] ">
+                    <div className="flex flex-col justify-start items-start p-6 w-[22vw] h-[36vh] bg-white rounded shadow-md">
 
                         <p className='text-lg'>Ultimo pago</p>
                         <p className='text-sm'>Fecha de pago: (FECHA)</p>
@@ -78,7 +84,7 @@ export default function Propiedad() {
                         <p className='text-sm'>Agua: (MONTO)</p>
                         <p className='text-sm'>Gas: (MONTO)</p>
                     </div>
-                    <div className="flex flex-col justify-start items-start p-6 w-[27vw] h-[36vh] bg-white rounded shadow-md">
+                    <div className="flex flex-col justify-start items-start p-6 w-[22vw] h-[36vh] bg-white rounded shadow-md">
 
                         <p>Contrato</p>
                         <div className='flex w-full h-full'>
@@ -102,7 +108,7 @@ export default function Propiedad() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center  items-start p-6 w-[27vw] h-[36vh] bg-white rounded shadow-md">
+                    <div className="flex justify-center  items-start p-6 w-[22vw] h-[36vh] bg-white rounded shadow-md">
 
                         <div className='flex w-[100%] h-[100%] rounded flex-col bg-white p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
@@ -125,14 +131,14 @@ export default function Propiedad() {
                     </div>
 
                 </div>
-                <div className='flex p-6 mb-6 flex-col justify-start items-end w-[90vw] h-[45vh] bg-white shadow-md'>
+                <div className='flex p-6 mb-10 flex-col justify-start items-end w-[75vw] h-[45vh] bg-white shadow-md'>
                     <div className='fles w-full'>
                         <p>Historial de pagos</p>
                     </div>
                     <TableBill />
 
                 </div>
-                <div className='flex p-6 flex-col justify-start items-end w-[90vw] h-[45vh] bg-white shadow-md'>
+                <div className='flex p-6 flex-col justify-start items-end w-[75vw] h-[45vh] bg-white shadow-md'>
                     <div className='fles w-full'>
                         <p>Visitas</p>
                     </div>

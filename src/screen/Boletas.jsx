@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import TableUsers from '../components/TableUsers'
 
 

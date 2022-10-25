@@ -43,37 +43,37 @@ const tablaData = [
 const columnas = [
     {
         name: 'Mes',
-        selector: 'mes',
+        selector: row => row.mes,
         sortable: true
     },
     {
         name: 'Arrendatario',
-        selector: 'arrendatario',
+        selector: row => row.arrendatario,
         sortable: true
     },
     {
         name: 'Monto',
-        selector: 'monto',
+        selector: row => row.monto,
         sortable: true
     },
     {
         name: 'GG.CC',
-        selector: 'ggcc',
+        selector: row => row.ggcc,
         sortable: true
     },
     {
         name: 'Agua',
-        selector: 'agua',
+        selector: row => row.agua,
         sortable: true
     },
     {
         name: 'Luz',
-        selector: 'luz',
+        selector: row => row.luz,
         sortable: true
     },
     {
         name: 'Gas',
-        selector: 'gas',
+        selector: row => row.gas,
         sortable: true
     },
 ]

@@ -1,12 +1,12 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Route, Routes, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: true },
     { name: 'Propiedades', href: '/propiedades', current: false },
-    { name: 'Boletas', href: '#', current: false },
+    { name: 'Boletas', href: '/boletas', current: false },
     { name: 'Usuarios', href: '/usuarios', current: false },
 ]
 

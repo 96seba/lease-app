@@ -55,27 +55,27 @@ const tablaData = [
 const columnas = [
     {
         name: 'Descripcion',
-        selector: 'descripcion',
+        selector: row => row.descripcion,
         sortable: true
     },
     {
         name: 'Fecha Programada',
-        selector: 'fechap',
+        selector: row => row.fechap,
         sortable: true
     },
     {
         name: 'Fecha efectuada',
-        selector: 'fechae',
+        selector: row => row.fechae,
         sortable: true
     },
     {
         name: 'Estado Visita',
-        selector: 'estado',
+        selector:  row => row.estado,
         sortable: true
     },
     {
         name: 'Anotaciones',
-        selector: 'anotaciones',
+        selector:  row => row.anotaciones,
         sortable: true
     },
 ]

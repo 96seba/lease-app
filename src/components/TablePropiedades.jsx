@@ -1,37 +1,60 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable, { createTheme } from 'react-data-table-component';
+import { useNavigate } from "react-router-dom"
 
 createTheme(
-    'solarized',
-    {
-        text: {
-            primary: '#000000',
-            secondary: '#000000',
-        },
-        background: {
-            default: '#f0f9ff',
-        },
-        context: {
-            background: '#cb4b16',
-            text: '#FFFFFF',
-        },
-        divider: {
-            default: '#FFFFFF',
-        },
-        button: {
-            hover: '#059669',
-            focus: '#059669',
-            disabled: '#2C8C99',
-        },
-        sortFocus: {
-            default: '#000000',
-        },
-    },
-    'dark',
-);
+    	'solarized',
+    	{
+    		text: {
+    			primary: '#268bd2',
+    			secondary: '#2aa198',
+    		},
+    		background: {
+    			default: '#002b36',
+    		},
+    		context: {
+    			background: '#cb4b16',
+    			text: '#FFFFFF',
+    		},
+		divider: {
+   			default: '#073642',
+		},
+    		button: {
+    			default: '#2aa198',
+    			hover: 'rgba(0,0,0,.08)',
+    			focus: 'rgba(255,255,255,.12)',
+    			disabled: 'rgba(255, 255, 255, .34)',
+		},
+    		sortFocus: {
+    			default: '#2aa198',
+    		},
+    	},
+    	'dark',
+    );
 
 const customStyles = {
+    // headRow: {
+	// 	style: {
+	// 		backgroundColor: '',
+	// 		minHeight: '52px',
+	// 		borderBottomWidth: '1px',
+	// 		borderBottomColor: theme.divider.default,
+	// 		borderBottomStyle: 'solid',
+	// 	},
+	// 	denseStyle: {
+	// 		minHeight: '32px',
+	// 	},
+	// },
+    // head: {
+	// 	style: {
+	// 		fontSize: '17px',
+	// 		backgroundColor: '#000000',
+	// 		minHeight: '50px',
+	// 		paddingLeft: '16px',
+	// 		paddingRight: '8px',
+	// 	},
+	// },
     rows: {
         style: {
             minHeight: '60px', // override the row height
@@ -142,37 +165,37 @@ const columnas = [
     },
     {
         name: 'Arrendatario',
-        selector: 'arrendatario',
+        selector: row => row.arrendatario,
         sortable: true,
     },
     {
         name: 'Monto',
-        selector: 'monto',
+        selector: row => row.monto,
         sortable: true
     },
     {
         name: 'GG.CC',
-        selector: 'ggcc',
+        selector: row => row.ggcc,
         sortable: true
     },
     {
         name: 'Luz',
-        selector: 'luz',
+        selector: row => row.luz,
         sortable: true
     },
     {
         name: 'Agua',
-        selector: 'agua',
+        selector: row => row.agua,
         sortable: true
     },
     {
         name: 'Gas',
-        selector: 'gas',
+        selector: row => row.gas,
         sortable: true
     },
     {
         name: 'Estado',
-        selector: 'estado',
+        selector: row => row.estado,
         sortable: true
     },
 ]
@@ -185,6 +208,7 @@ const paginationComponentOptions = {
 };
 
 export default function TablePropiedades() {
+    let navigate = useNavigate()
 
     return (
 
@@ -193,16 +217,15 @@ export default function TablePropiedades() {
             <DataTable
                 columns={columnas}
                 data={tablaData}
-                onRowClicked={(e) => {
-                    console.log(e.id)
-                }}
                 highlightOnHover
+
                 fixedHeader
                 fixedHeaderScrollHeight='700px'
                 pagination
-                theme='solarized'
                 customStyles={customStyles}
                 onRowDoubleClicked={(e) => {
+                    let nav = `/propiedades/propiedad?=${e.id}`
+                    navigate(nav)
                 }}
                 paginationComponentOptions={paginationComponentOptions}
             />
