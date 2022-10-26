@@ -36,23 +36,23 @@ createTheme(
 
 const columnas = [
     {
-        name: 'Id',
-        selector: 'id',
+        name: 'Propiedad',
+        selector:  row => row.propiedad,
         sortable: true
     },
     {
-        name: 'Correo',
-        selector: 'correo',
+        name: 'Descripcion',
+        selector: row => row.descripcion,
         sortable: true
     },
     {
-        name: 'Nombre',
-        selector: 'nombre',
+        name: 'Fecha',
+        selector:  row => row.fecha,
         sortable: true
     },
     {
-        name: 'Apellido',
-        selector: 'apellido',
+        name: 'Urgencia',
+        selector:  row => row.urgencia,
         sortable: true
     },
 ]

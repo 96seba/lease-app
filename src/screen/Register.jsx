@@ -30,7 +30,7 @@ export default function Register() {
 
     return (
         <div className="">
-            <section className=  "flex" >
+            <section className="bg-slate-100 flex" >
                 <div className="flex items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                     <div className="flex flex-col flex-wrap p-8">
                         {/* <button href="#" className="flex place-self-center mb-6 text-2xl font-semibold text-white dark:text-white">

@@ -1,7 +1,9 @@
-
+import { useNavigate } from "react-router-dom"
 
 
 export default function Login() {
+
+    const navigate = useNavigate()
 
     return (
         <div className="w-screen h-[91.5vh] p-6 flex justify-center items-center">
@@ -21,7 +23,11 @@ export default function Login() {
                         <p className="text-red text-xs italic"></p>
                     </div>
                     <div className="flex items-center justify-between">
-                        <button className="bg-blue hover:bg-blue-dark text-slate font-bold py-2 px-4 rounded" type="button">
+                        <button
+                        onClick={()=>{
+                            navigate('/dashboard')
+                        }}
+                        className="bg-blue hover:bg-blue-dark text-slate font-bold py-2 px-4 rounded" type="button">
                             Iniciar sesion
                         </button>
                         <button className="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#" >

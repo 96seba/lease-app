@@ -43,22 +43,22 @@ const tablaData = [
 const columnas = [
     {
         name: 'Propiedad',
-        selector: 'propiedad',
+        selector: row => row.propiedad,
         sortable: true
     },
     {
         name: 'Descripcion',
-        selector: 'descripcion',
+        selector: row => row.descripcion,
         sortable: true
     },
     {
         name: 'Fecha',
-        selector: 'fecha',
+        selector: row => row.fecha,
         sortable: true
     },
     {
         name: 'Urgencia',
-        selector: 'urgencia',
+        selector: row => row.urgencia,
         sortable: true
     },
 ]
@@ -73,8 +73,6 @@ const paginationComponentOptions = {
 export default function TableToResolveNVisits() {
 
     return (
-
-
         <DataTable
             columns={columnas}
             data={tablaData}
@@ -84,7 +82,5 @@ export default function TableToResolveNVisits() {
             theme='solarized'
             paginationComponentOptions={paginationComponentOptions}
         />
-
-
     )
 } 

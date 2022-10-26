@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import TableCheck from '../components/TableCheck'
 import TableDebtors from '../components/TableDebtors'
@@ -8,17 +8,31 @@ import TableToResolveNVisits from '../components/TableToResolveNVisits';
 
 export default function Dashboard() {
 
+    const [dataCheck, setDataCheck] = useState([
+        { id: 26, descripcion: "Revisar la luz", estado: "No revisado" },
+        { id: 16, descripcion: "Revisar el agua", estado: "Revisado" },
+        { id: 63, descripcion: "LLevar ampolletas", estado: "Revisado" },
+        { id: 37, descripcion: "Echarlos de la casa", estado: "Revisado" },
+        { id: 59, descripcion: "Revisar la luz", estado: "No revisado" },
+        { id: 85, descripcion: "Revisar la ducha", estado: "No revisado" },
+        { id: 75, descripcion: "Revisar la luz", estado: "No revisado" },
+        { id: 72, descripcion: "Revisar la ducha", estado: "No revisado" },
+        { id: 71, descripcion: "Revisar la luz", estado: "No revisado" },
+        { id: 41, descripcion: "Revisar la ducha", estado: "No revisado" },
+        { id: 81, descripcion: "Revisar la luz", estado: "No revisado" },
+    ])
+
     return (
-        <div className="flex  h-[91.5vh] w-screen items-center justify-center">
+        <div className="flex  h-[91.5vh] bg-gray-50 w-screen items-center justify-center">
 
             <div className='flex w-3/4  h-[91.5vh] items-center justify-center flex-col'>
-                <div className='flex h-[46vh] w-full items-end justify-center flex-column p-4
+                <div className='flex h-[46vh] w-full  items-end justify-center flex-column p-4
                 '>
 
                     <TableDebtors />
 
                 </div>
-                <div className='flex h-[46vh] w-full items-center justify-center'>
+                <div className='flex flex-row h-[46vh] w-full items-center justify-center'>
                     <div className='flex w-1/2 h-full items-end justify-center
                     flex-column p-4'>
                         <TableToResolveNVisits />
@@ -35,7 +49,7 @@ export default function Dashboard() {
               items-end
               justify-start flex-column p-4
               '>
-                <TableCheck />
+                <TableCheck dataCheck={dataCheck} setDataCheck={setDataCheck} />
             </div>
         </div>
     )
