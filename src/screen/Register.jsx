@@ -21,8 +21,10 @@ export default function Register() {
 
     const [apellido, setApellido] = useState("")
 
+    let valorId = 5;
+
     const valores=()=>{
-        setTableData(current=>[...current,{id:6, correo: correo, nombre:nombre, apellido:apellido}])
+        setTableData(current=>[...current,{id:(valorId)+1, correo: correo, nombre:nombre, apellido:apellido}])
     }
 
 
