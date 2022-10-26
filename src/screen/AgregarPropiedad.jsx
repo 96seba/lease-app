@@ -1,16 +1,18 @@
 import { useState } from 'react'
+import ModalGuardar from '../components/ModalGuardar'
 
 export default function AgregarPropiedad() {
 
     const [estacionamiento, setEstacionamiento] = useState(false)
     const [bodega, setBodega] = useState(false)
+    const [baños, setBaños] = useState("")
     const [foto, setFoto] = useState("")
 
 
     return (
-        <div className='w-screen flex justify-center items-center bg-gray-100'>
+        <div className='w-screen flex justify-center items-center bg-white'>
             <div className="w-[100vw] sm:w-[100vw] md:w-[80vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[110.5vh] p-6  flex items-center">
-
+<ModalGuardar/>
                 <div className='w-1/2 h-full flex flex-col justify-start items-center'>
                     <p className="flex my-4 text-xl">
                         Datos de la propiedad
@@ -18,52 +20,55 @@ export default function AgregarPropiedad() {
 
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p>Id</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Id" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p>Direccion</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Dormitorios" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p>Nro piso</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Nro piso" />
                     </div>
                     <div className="mb-1 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Dormitorios</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
+                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
                                 placeholder="Dormitorios" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Baños</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
+                            <input
+                                value={baños}
+                                onChange={text => setBaños(text)}
+                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
                                 placeholder="Baños" />
                         </div>
                     </div>
                     <div className="mb-1 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Arrendador</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Arrendador" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Rut arrendador</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Rut arrendador" />
                         </div>
                     </div>
                     <div className="mb-1 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Arrendatario</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Arrendatario" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Rut arrendatario</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Rut arrendatario" />
                         </div>
                     </div>
@@ -72,7 +77,7 @@ export default function AgregarPropiedad() {
                         <label for="teal-toggle" class="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="teal-toggle" class="sr-only peer"
                                 checked={estacionamiento} onChange={() => { setEstacionamiento(!estacionamiento) }} />
-                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
+                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-pink-400"></div>
                             <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Estacionamiento</span>
                         </label>
 
@@ -80,7 +85,7 @@ export default function AgregarPropiedad() {
                         <label for="d-toggle" class="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="d-toggle" class="sr-only peer"
                                 checked={bodega} onChange={() => { setBodega(!bodega) }} />
-                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
+                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-pink-400"></div>
                             <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Bodega</span>
                         </label>
 
@@ -120,27 +125,27 @@ export default function AgregarPropiedad() {
                     </p>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Monto</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Monto" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Comision por administracion</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Comision por administracion" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Gastos comunes</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Gastos comunes" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Inicio de contrato</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Inicio de contrato" />
                     </div>
                     <div className="mb-20 w-[90%] flex flex-col justify-center items-start">
                         <p>Termino de contrato</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Termino de contrato" />
                     </div>
 
