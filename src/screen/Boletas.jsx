@@ -25,7 +25,10 @@ export default function Propiedades() {
                     Enviar boletas
                 </h2>
             </button>
-            <div className="flex px-4 items-end justify-start flex-col w-screen h-[85.5vh]">
+            <div className="flex px-4 items-end justify-start flex-col w-screen h-[85.5vh]
+            "><div>
+
+                </div>
                 <TableBoletas />
             </div>
         </div>

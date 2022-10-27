@@ -1,16 +1,16 @@
 import TablePropiedades from "../components/TablePropiedades"
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { getPokemon } from "../api/getPokemon"
 
 export default function Propiedades() {
 
     useEffect(() => {
-        const getPoke = async () => {
-            let pokemon = await getPokemon("ditto")
-            console.log(pokemon)
-        }
-        getPoke()
+        const options = { method: 'POST', body: '{"email":"deprueba","password":"deprueba"}' };
+
+        fetch('http://54.172.21.15:9000/api/v1/login', options)
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
 
     }, [])
 
@@ -19,8 +19,6 @@ export default function Propiedades() {
 
     return (
         <div>
-
-
             <button onClick={() => {
                 navigate("/propiedades/agregarPropiedad")
             }} className="flex items-center my-2 justify-start px-8 w-3/4 h-[6vh]">

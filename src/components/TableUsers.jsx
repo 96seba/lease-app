@@ -64,6 +64,24 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
+const customStyles = {
+    head: {
+        style: {
+            backgroundColor: '#FFFFFF',
+
+        },
+    },
+    rows: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#0d9488',
+        },
+    },
+
+};
+
 export default function TableUsers({tableData}) {
 
     return (
@@ -71,6 +89,7 @@ export default function TableUsers({tableData}) {
             <DataTable
                 columns={columnas}
                 data={tableData}
+                customStyles={customStyles}
                 highlightOnHover
                 fixedHeader
                 fixedHeaderScrollHeight='700px'
