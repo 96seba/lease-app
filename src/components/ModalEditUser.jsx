@@ -1,11 +1,32 @@
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useRef, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-export default function ModalEditUser() {
-    const [open, setOpen] = useState(true)
+export default function ModalEditUser({open,setOpen,dataRow}) {
+    const [correo, setCorreo] = useState('')
+
+    const [nombre, setNombre] = useState('')
+
+    const [apellido, setApellido] = useState('')
+
+    useEffect(() => {
+        
+        if(dataRow!==''){
+            setCorreo(dataRow.correo)
+            setNombre(dataRow.nombre)
+            setApellido(dataRow.apellido)
+            console.log("VIVA CHILE")
+            console.log(dataRow)
+        }
+    
+    }, [dataRow])
+    
+
 
     const cancelButtonRef = useRef(null)
 
+    if (dataRow===''){
+        return <>Error</>
+    }
     return (
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -33,37 +54,28 @@ export default function ModalEditUser() {
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
                             <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 flex justify-center">
-                                    <div className="sm:flex sm:items-start">
-
-                                        <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                            <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                                                Guardar propiedad
-                                            </Dialog.Title>
-                                            <div className="mt-2">
-                                                <p className="text-sm text-gray-500">
-                                                    ¿Estas seguro que quieres guardar la propiedad?
-                                                </p>
-                                            </div>
-                                        </div>
+                            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700 p-2 pb-4">
+                            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                                <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl dark:text-white  text-center">
+                                    Editar cuenta
+                                </h1>
+                                <div className="space-y-4 md:space-y-6" action="#">
+                                    <div className="">
+                                        <label for="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
+                                        <input value={correo}  onChange={event=>setCorreo(event.target.value)} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
                                     </div>
+                                    <div>
+                                        <label for="nombre" className="block mb-2 text-sm font-medium text-black dark:text-white">Nombre</label>
+                                        <input value={nombre}  onChange={event=>setNombre(event.target.value)} type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" required="" />
+                                    </div>
+                                    <div>
+                                        <label for="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
+                                        <input value={apellido} onChange={event=>setApellido(event.target.value)}  type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Apellido" required="" />
+                                    </div>                                    
+                                    <button className="w-full text-white bg-green-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Actualizar</button>
                                 </div>
-                                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse flex justify-center items-center sm:px-6">
-                                    <button
-                                        type="button"
-                                        className="w-[9vw] h-[4vh] rounded mx-2 text-white hover:bg-red-700 border-0 bg-red-600 focus:border-0"
-                                        onClick={() => setOpen(false)}
-                                    >
-                                        Guardar
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="w-[9vw] h-[4vh] rounded mx-2 text-black hover:bg-gray-600 bg-white border-black border-2"
-                                        onClick={() => setOpen(false)}
-                                    >
-                                        Cancelar
-                                    </button>
-                                </div>
+                            </div>
+                        </div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

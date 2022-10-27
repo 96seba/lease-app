@@ -64,7 +64,7 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TableUsers({tableData,setModal}) {
+export default function TableUsers({tableData,setOpen,openModal}) {
 
     return (
         <div className='shadow-lg'>
@@ -78,8 +78,8 @@ export default function TableUsers({tableData,setModal}) {
                 theme='solarized'
                 paginationComponentOptions={paginationComponentOptions}
                 onRowDoubleClicked={(e) => {
-                    console.log(e)
-                    setModal(true)
+                    
+                    openModal(e)
                 }}
             />
         </div>

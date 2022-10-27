@@ -17,12 +17,15 @@ export default function Register() {
 
     const [modal, setModal] = useState(false)
 
-
     const [correo, setCorreo] = useState("")
 
     const [nombre, setNombre] = useState("")
 
     const [apellido, setApellido] = useState("")
+
+    const [open, setOpen] = useState(false)
+
+    const [dataRow, setDataRow] = useState("")
 
     let valorId = 5;
 
@@ -30,6 +33,12 @@ export default function Register() {
         setTableData(current=>[...current,{id:(valorId)+1, correo: correo, nombre:nombre, apellido:apellido}])
     }
 
+    const openModal=(data)=>{
+        setDataRow(data)
+        setOpen(true)
+        console.log("AAAAAAAAAAAAAA")
+        console.log(data)
+    }
 
     return (
         <div className="">
@@ -84,11 +93,11 @@ export default function Register() {
                     </div>
                     <div className="flex flex-col items-center p-8 ">
                         <h4 className=' text-gray-800 pb-3'> Editar Usuarios </h4>
-                        <TableUsers tableData={tableData} setModal={setModal} />
+                        <TableUsers tableData={tableData} setOpen={setOpen} openModal={openModal}/>
                     </div>
                 </div>
             </section>
-            {modal===true? <ModalEditUser />: <></>}
+            <ModalEditUser open={open} setOpen={setOpen} dataRow={dataRow} />
         </div>
     )
 }
