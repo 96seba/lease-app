@@ -93,6 +93,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
             fixedHeaderScrollHeight='700px'
             pagination
             theme='solarized'
+            highlightOnHover
             paginationComponentOptions={paginationComponentOptions}
         />
     )

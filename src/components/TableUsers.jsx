@@ -64,13 +64,32 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TableUsers({tableData,setOpen,openModal}) {
+const customStyles = {
+    head: {
+        style: {
+            backgroundColor: '#FFFFFF',
+
+        },
+    },
+    rows: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#0d9488',
+        },
+    },
+
+};
+
+export default function TableUsers({tableData}) {
 
     return (
         <div className='shadow-lg'>
             <DataTable
                 columns={columnas}
                 data={tableData}
+                customStyles={customStyles}
                 highlightOnHover
                 fixedHeader
                 fixedHeaderScrollHeight='700px'

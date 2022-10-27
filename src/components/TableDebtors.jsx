@@ -131,6 +131,7 @@ export default function TableDebtors() {
                 fixedHeaderScrollHeight='700px'
                 pagination
                 theme='solarized'
+                highlightOnHover
                 paginationComponentOptions={paginationComponentOptions}
             />
     )

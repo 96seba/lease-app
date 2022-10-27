@@ -36,7 +36,7 @@ const tablaData = [
         mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
         agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
     },
-    
+
 ]
 
 
@@ -53,7 +53,7 @@ const columnas = [
     },
     {
         name: 'Monto',
-        selector: row => row.monto,
+        selector: row => <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
         sortable: true
     },
     {

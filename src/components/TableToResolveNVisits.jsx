@@ -70,16 +70,38 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
+const customStyles = {
+    head: {
+        style: {
+            backgroundColor: '#FFFFFF',
+
+        },
+    },
+    rows: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#0d9488',
+        },
+    },
+
+};
+
+
 export default function TableToResolveNVisits() {
 
     return (
         <DataTable
             columns={columnas}
             data={tablaData}
+            customStyles={customStyles}
+            className="bg-blue-500"
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
             theme='solarized'
+            highlightOnHover
             paginationComponentOptions={paginationComponentOptions}
         />
     )
