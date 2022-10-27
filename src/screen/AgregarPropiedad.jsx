@@ -8,11 +8,17 @@ export default function AgregarPropiedad() {
     const [baños, setBaños] = useState("")
     const [foto, setFoto] = useState("")
 
+    const [open, setOpen] = useState(false)
+
 
     return (
         <div className='w-screen flex justify-center items-center bg-white'>
-            <div className="w-[100vw] sm:w-[100vw] md:w-[80vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[110.5vh] p-6  flex items-center">
-<ModalGuardar/>
+            <div className="w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[110.5vh] p-6  flex items-center">
+
+                {open === true ?
+                    <ModalGuardar open={open} setOpen={setOpen} /> : <></>
+                }
+
                 <div className='w-1/2 h-full flex flex-col justify-start items-center'>
                     <p className="flex my-4 text-xl">
                         Datos de la propiedad
@@ -77,7 +83,7 @@ export default function AgregarPropiedad() {
                         <label for="teal-toggle" class="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="teal-toggle" class="sr-only peer"
                                 checked={estacionamiento} onChange={() => { setEstacionamiento(!estacionamiento) }} />
-                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-pink-400"></div>
+                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
                             <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Estacionamiento</span>
                         </label>
 
@@ -85,7 +91,7 @@ export default function AgregarPropiedad() {
                         <label for="d-toggle" class="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="d-toggle" class="sr-only peer"
                                 checked={bodega} onChange={() => { setBodega(!bodega) }} />
-                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-pink-400"></div>
+                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
                             <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Bodega</span>
                         </label>
 
@@ -149,11 +155,16 @@ export default function AgregarPropiedad() {
                             placeholder="Termino de contrato" />
                     </div>
 
+                    <div className='flex justify-center items-center h-[10vh] border-t-2 w-[90%] '>
 
-                    <button className='w-[50%] flex flex-row justify-center items-center h-[5vh] rounded-full bg-sky-300 active:bg-blue-500 hover:bg-sky-400'>
+                    <button
+                        type="button"
+                        className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                        onClick={() => setOpen(true)}
+                    >
                         Guardar
-
                     </button>
+                    </div>
 
                 </div>
             </div>

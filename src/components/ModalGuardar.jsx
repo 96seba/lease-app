@@ -1,8 +1,9 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { BsSaveFill } from "react-icons/bs";
 
-export default function ModalGuardar() {
-    const [open, setOpen] = useState(true)
+export default function ModalGuardar({ open, setOpen }) {
+
 
     const cancelButtonRef = useRef(null)
 
@@ -11,10 +12,10 @@ export default function ModalGuardar() {
             <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                 <Transition.Child
                     as={Fragment}
-                    enter="ease-out duration-300"
+                    enter="ease-out duration-1000"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"
-                    leave="ease-in duration-200"
+                    leave="ease-in duration-1000"
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
@@ -34,10 +35,13 @@ export default function ModalGuardar() {
                         >
                             <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 flex justify-center">
+
                                     <div className="sm:flex sm:items-start">
 
                                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                            <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+
+                                            <Dialog.Title as="h3" className="text-lg font-medium flex flex-col justify-center items-center leading-6 text-gray-900">
+                                                <BsSaveFill className='w-[4vh] h-[4vh] mb-4' />
                                                 Guardar propiedad
                                             </Dialog.Title>
                                             <div className="mt-2">
@@ -51,14 +55,14 @@ export default function ModalGuardar() {
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse flex justify-center items-center sm:px-6">
                                     <button
                                         type="button"
-                                        className="w-[9vw] h-[4vh] rounded mx-2 text-white hover:bg-red-700 border-0 bg-red-600 focus:border-0"
+                                        className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                         onClick={() => setOpen(false)}
                                     >
                                         Guardar
                                     </button>
                                     <button
                                         type="button"
-                                        className="w-[9vw] h-[4vh] rounded mx-2 text-black hover:bg-gray-600 bg-white border-black border-2"
+                                        className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-base font-medium text-teal-600 shadow-sm hover:bg-teal-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                         onClick={() => setOpen(false)}
                                     >
                                         Cancelar

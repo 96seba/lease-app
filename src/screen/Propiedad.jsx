@@ -29,7 +29,8 @@ export default function Propiedad() {
             let hour = newDate.getHours()
             let minutes = newDate.getMinutes()
 
-            let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}:${minutes}`
+
+            let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
             setLogs(current => [{ fecha: fecha, mensaje: inputLog }, ...current])
         }
     }
@@ -37,8 +38,8 @@ export default function Propiedad() {
 
     return (
         <div>
-            <div className="flex w-[80vw] bg-slate-100   flex-column justify-start items-center p-6">
-                <div className="flex my-10 justify-center rounded items-center w-[75vw] h-[40vh] bg-white shadow-md">
+            <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[80vw] bg-slate-100   flex-column justify-start items-center p-6">
+                <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh] bg-white shadow-md">
                     <div className="flex justify-center rounded-l items-center w-[35vw] h-[40vh] bg-white ">
                         <img alt="propiedad"
                             className='w-[35vw] h-[40vh] rounded-l' src={require('../assets/lamoneda.jpeg')} />
@@ -74,8 +75,8 @@ export default function Propiedad() {
                         </div>
                     </div>
                 </div>
-                <div className="flex  mb-10  rounded justify-between items-center w-[75vw] h-[36vh] ">
-                    <div className="flex flex-col justify-start items-start p-6 w-[22vw] h-[36vh] bg-white rounded shadow-md">
+                <div className="flex  mb-10  bg-blue-300  rounded justify-between items-center w-[96%]  ">
+                    <div className="flex flex-col justify-start items-start p-6 w-[22vw] sm:w-[28vw] md:w-[28vw]  lg:w-[24vw] h-[36vh] bg-white rounded shadow-md">
 
                         <p className='text-lg'>Ultimo pago</p>
                         <p className='text-sm'>Fecha de pago: (FECHA)</p>
@@ -84,7 +85,7 @@ export default function Propiedad() {
                         <p className='text-sm'>Agua: (MONTO)</p>
                         <p className='text-sm'>Gas: (MONTO)</p>
                     </div>
-                    <div className="flex flex-col justify-start items-start p-6 w-[22vw] h-[36vh] bg-white rounded shadow-md">
+                    <div className="flex flex-col justify-start items-start p-6 w-[22vw] sm:w-[28vw] md:w-[28vw] lg:w-[24vw] h-[36vh] bg-white rounded shadow-md">
 
                         <p>Contrato</p>
                         <div className='flex w-full h-full'>
@@ -108,7 +109,7 @@ export default function Propiedad() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center  items-start p-6 w-[22vw] h-[36vh] bg-white rounded shadow-md">
+                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[28vw] md:w-[28vw]  lg:w-[24vw] h-[36vh] bg-white rounded shadow-md">
 
                         <div className='flex w-[100%] h-[100%] rounded flex-col bg-white p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
@@ -131,14 +132,14 @@ export default function Propiedad() {
                     </div>
 
                 </div>
-                <div className='flex p-6 mb-10 flex-col justify-start items-end w-[75vw] h-[45vh] bg-white shadow-md'>
+                <div className='flex p-6 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white shadow-md'>
                     <div className='fles w-full'>
                         <p>Historial de pagos</p>
                     </div>
                     <TableBill />
 
                 </div>
-                <div className='flex p-6 flex-col justify-start items-end w-[75vw] h-[45vh] bg-white shadow-md'>
+                <div className='flex p-6 flex-col justify-start items-end w-[96%] h-[45vh] bg-white shadow-md'>
                     <div className='fles w-full'>
                         <p>Visitas</p>
                     </div>
