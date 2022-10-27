@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import TableUsers from "../components/TableUsers"
-
+import ModalEditUser from "../components/ModalEditUser"
 
 export default function Register() {
 
@@ -14,6 +14,9 @@ export default function Register() {
         ]
 
     )
+
+    const [modal, setModal] = useState(false)
+
 
     const [correo, setCorreo] = useState("")
 
@@ -30,7 +33,7 @@ export default function Register() {
 
     return (
         <div className="">
-            <section className="bg-slate-100 flex" >
+            <section className="flex" >
                 <div className="flex items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                     <div className="flex flex-col flex-wrap p-8">
                         {/* <button href="#" className="flex place-self-center mb-6 text-2xl font-semibold text-white dark:text-white">
@@ -81,11 +84,11 @@ export default function Register() {
                     </div>
                     <div className="flex flex-col items-center p-8 ">
                         <h4 className=' text-gray-800 pb-3'> Editar Usuarios </h4>
-                        <TableUsers tableData={tableData} />
+                        <TableUsers tableData={tableData} setModal={setModal} />
                     </div>
                 </div>
             </section>
-
+            {modal===true? <ModalEditUser />: <></>}
         </div>
     )
 }
