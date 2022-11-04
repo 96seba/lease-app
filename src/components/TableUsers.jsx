@@ -37,7 +37,7 @@ createTheme(
 const columnas = [
     {
         name: 'Id',
-        selector:  row => row.id,
+        selector: row => row.id,
         sortable: true
     },
     {
@@ -47,12 +47,12 @@ const columnas = [
     },
     {
         name: 'Nombre',
-        selector:  row => row.nombre,
+        selector: row => row.nombre,
         sortable: true
     },
     {
         name: 'Apellido',
-        selector:  row => row.apellido,
+        selector: row => row.apellido,
         sortable: true
     },
 ]
@@ -82,7 +82,7 @@ const customStyles = {
 
 };
 
-export default function TableUsers({tableData}) {
+export default function TableUsers({ tableData, openModal }) {
 
     return (
         <div className='shadow-lg'>
@@ -97,7 +97,7 @@ export default function TableUsers({tableData}) {
                 theme='solarized'
                 paginationComponentOptions={paginationComponentOptions}
                 onRowDoubleClicked={(e) => {
-                    
+
                     openModal(e)
                 }}
             />

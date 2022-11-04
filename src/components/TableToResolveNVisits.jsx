@@ -74,7 +74,6 @@ const customStyles = {
     head: {
         style: {
             backgroundColor: '#FFFFFF',
-
         },
     },
     rows: {
@@ -85,7 +84,16 @@ const customStyles = {
             backgroundColor: '#0d9488',
         },
     },
-
+    headRow: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
+    pagination: {
+		style: {
+			backgroundColor: '#FFFFFF',
+		},
+	},
 };
 
 
@@ -96,7 +104,6 @@ export default function TableToResolveNVisits() {
             columns={columnas}
             data={tablaData}
             customStyles={customStyles}
-            className="bg-blue-500"
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination

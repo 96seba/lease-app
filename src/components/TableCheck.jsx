@@ -31,7 +31,31 @@ createTheme(
     'dark',
 );
 
-
+const customStyles = {
+    head: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
+    rows: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#0d9488',
+        },
+    },
+    headRow: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
+    pagination: {
+		style: {
+			backgroundColor: '#FFFFFF',
+		},
+	},
+};
 
 
 
@@ -92,7 +116,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
-            theme='solarized'
+            customStyles={customStyles}
             highlightOnHover
             paginationComponentOptions={paginationComponentOptions}
         />
