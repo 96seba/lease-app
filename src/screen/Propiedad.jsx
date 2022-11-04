@@ -75,9 +75,8 @@ export default function Propiedad() {
                         </div>
                     </div>
                 </div>
-                <div className="flex  mb-10  bg-blue-300  rounded justify-between items-center w-[96%]  ">
-                    <div className="flex flex-col justify-start items-start p-6 w-[22vw] sm:w-[28vw] md:w-[28vw]  lg:w-[24vw] h-[36vh] bg-white rounded shadow-md">
-
+                <div className="flex mb-10 bg-white  rounded justify-between items-center w-[96%]  ">
+                    <div className="flex flex-col justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
                         <p className='text-lg'>Ultimo pago</p>
                         <p className='text-sm'>Fecha de pago: (FECHA)</p>
                         <p className='text-sm'>Monto: (MONTO)</p>
@@ -85,21 +84,16 @@ export default function Propiedad() {
                         <p className='text-sm'>Agua: (MONTO)</p>
                         <p className='text-sm'>Gas: (MONTO)</p>
                     </div>
-                    <div className="flex flex-col justify-start items-start p-6 w-[22vw] sm:w-[28vw] md:w-[28vw] lg:w-[24vw] h-[36vh] bg-white rounded shadow-md">
-
+                    <div className="flex flex-col p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw]  xl:w-[30vw]  h-[36vh] bg-slate-200 rounded shadow-md">
                         <p>Contrato</p>
                         <div className='flex w-full h-full'>
-
-                            <div className='flex w-1/2 h-full flex-col bg-white'>
+                            <div className='flex w-1/2 h-full flex-col '>
                                 <p className='text-sm'>Monto: (MONTO)</p>
                                 <p className='text-sm'>Gastos Comunes: (MONTO)</p>
                                 <p className='text-sm'>Comision por administracion: (MONTO)</p>
 
                             </div>
-                            <div className='flex w-1/2 h-full flex-col bg-white'>
-                                <div className=''>
-
-                                </div>
+                            <div className='flex w-1/2 h-full flex-col '>
                                 <div>
                                     <p className='text-sm'>Inicio de contrato: (FECHA)</p>
                                     <p className='text-sm'>Termino de contrato: (FECHA)</p>
@@ -112,10 +106,10 @@ export default function Propiedad() {
 
                 </div>
 
-                <div className="flex  mb-10  bg-blue-300  rounded justify-between items-center w-[96%]  ">
-                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-white rounded shadow-md">
+                <div className="flex mb-10 bg-white rounded justify-between items-center w-[96%]  ">
+                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
 
-                        <div className='flex w-[100%] h-[100%] rounded flex-col bg-white p-3 justify-start items-start '>
+                        <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <input
                                     onKeyDown={handleKeyDown}
@@ -124,16 +118,16 @@ export default function Propiedad() {
                                     type="text"
                                     id="large-input" className="block p-4 w-full h-10 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                             </div>
-                            <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2  bg-gray-200'>
+                            <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
                                     <p key={index} className='text-sm break-words'>{item.fecha} - {item.mensaje}</p>
                                 )}
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw]  xl:w-[30vw]  h-[36vh] bg-white rounded shadow-md">
+                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw]  xl:w-[30vw]  h-[36vh] bg-slate-200 rounded shadow-md">
 
-                        <div className='flex w-[100%] h-[100%] rounded flex-col bg-white p-3 justify-start items-start '>
+                        <div className='flex w-[100%] h-[100%] rounded flex-col p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
 
 
@@ -145,7 +139,7 @@ export default function Propiedad() {
                                     id="large-input" className="block p-4 w-full h-10 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
                             </div>
-                            <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2  bg-gray-200'>
+                            <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
                                 {logs.map((item, index) =>
                                     <p key={index} className='text-sm break-words'>{item.fecha} - {item.mensaje}</p>
                                 )}
