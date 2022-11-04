@@ -109,7 +109,29 @@ export default function Propiedad() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[28vw] md:w-[28vw]  lg:w-[24vw] h-[36vh] bg-white rounded shadow-md">
+
+                </div>
+
+                <div className="flex  mb-10  bg-blue-300  rounded justify-between items-center w-[96%]  ">
+                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-white rounded shadow-md">
+
+                        <div className='flex w-[100%] h-[100%] rounded flex-col bg-white p-3 justify-start items-start '>
+                            <div className="mb-6 w-full">
+                                <input
+                                    onKeyDown={handleKeyDown}
+                                    value={inputLog}
+                                    onChange={event => setInputLog(event.target.value)}
+                                    type="text"
+                                    id="large-input" className="block p-4 w-full h-10 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            </div>
+                            <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2  bg-gray-200'>
+                                {logs.map((item, index) =>
+                                    <p key={index} className='text-sm break-words'>{item.fecha} - {item.mensaje}</p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw]  xl:w-[30vw]  h-[36vh] bg-white rounded shadow-md">
 
                         <div className='flex w-[100%] h-[100%] rounded flex-col bg-white p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
@@ -130,8 +152,9 @@ export default function Propiedad() {
                             </div>
                         </div>
                     </div>
-
                 </div>
+
+
                 <div className='flex p-6 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white shadow-md'>
                     <div className='fles w-full'>
                         <p>Historial de pagos</p>
