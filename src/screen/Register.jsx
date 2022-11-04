@@ -1,6 +1,7 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import TableUsers from "../components/TableUsers"
 import ModalEditUser from "../components/ModalEditUser"
+import { createUser } from "../api/createUser"
 
 export default function Register() {
 
@@ -15,7 +16,8 @@ export default function Register() {
 
     )
 
-    const [modal, setModal] = useState(false)
+
+    // const [modal, setModal] = useState(false)
 
     const [correo, setCorreo] = useState("")
 
@@ -23,20 +25,46 @@ export default function Register() {
 
     const [apellido, setApellido] = useState("")
 
+    const [password, setPassword] = useState("")
+
     const [open, setOpen] = useState(false)
 
     const [dataRow, setDataRow] = useState("")
 
-    let valorId = 5;
+    const addUsers = async () => {
+        console.log("Hola")
+        console.log({correo})
+        console.log({password})
+        const resp= await createUser(correo,password)
+        console.log(resp)
+        // const options = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZXBydWViYSIsInR5cGUiOiJhZG1pbiIsImlhdCI6MTY2NzU4NjYwM30.am1CTA50fmK_M_eQw97JIk1KPUC_k2bKhVLzBnpqwvw'
+        //     },
+        //     body: '{"email":"cuartocorreo@deprueba.cl","password":"1234"}'
+        // };
 
-    const valores=()=>{
-        setTableData(current=>[...current,{id:(valorId)+1, correo: correo, nombre:nombre, apellido:apellido}])
+        // fetch('http://54.172.21.15:9000/api/v1/user/create', options)
+        //     .then(response => response.json())
+        //     .then(response => console.log(response))
+        //     .catch(err => console.error(err));
     }
 
-    const openModal=(data)=>{
+
+
+    let valorId = 5;
+
+    const valores = () => {
+
+        setTableData(current => [...current, { id: (valorId) + 1, correo: correo, nombre: nombre, apellido: apellido }])
+    }
+
+    const openModal = (data) => {
         setDataRow(data)
         setOpen(true)
-        console.log("AAAAAAAAAAAAAA")
+        // console.log("AAAAAAAAAAAAAA")
         console.log(data)
     }
 
@@ -57,19 +85,19 @@ export default function Register() {
                                 <div className="space-y-4 md:space-y-6" action="#">
                                     <div className="">
                                         <label for="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
-                                        <input value={correo} onChange={event=>setCorreo(event.target.value)} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
+                                        <input value={correo} onChange={event => setCorreo(event.target.value)} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
                                     </div>
                                     <div>
                                         <label for="nombre" className="block mb-2 text-sm font-medium text-black dark:text-white">Nombre</label>
-                                        <input value={nombre} onChange={event=>setNombre(event.target.value)} type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" required="" />
+                                        <input value={nombre} onChange={event => setNombre(event.target.value)} type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" required="" />
                                     </div>
                                     <div>
                                         <label for="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
-                                        <input value={apellido} onChange={event=>setApellido(event.target.value)} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Apellido" required="" />
+                                        <input value={apellido} onChange={event => setApellido(event.target.value)} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Apellido" required="" />
                                     </div>
                                     <div>
                                         <label for="password" className="block mb-2 text-sm font-medium text-black dark:text-white">Contraseña</label>
-                                        <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                                        <input value={password} onChange={event => setPassword(event.target.value)} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
                                     </div>
                                     {/* <div>
                                         <label for="confirm-password" className="block mb-2 text-sm font-medium text-black dark:text-white">Confirm password</label>
@@ -83,7 +111,7 @@ export default function Register() {
                                             <label for="terms" className="font-light text-gray-500 dark:text-gray-300">Acepto los <button className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Términos y Condiciones </button></label>
                                         </div>
                                     </div>
-                                    <button onClick={()=>{valores()}} className="w-full text-white bg-[#374151] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Crear cuenta</button>
+                                    <button onClick={() => { addUsers() }} className="w-full text-white bg-[#374151] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Crear cuenta</button>
                                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                         ¿Ya tienes una cuenta? <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Ingresa aquí</a>
                                     </p>
@@ -93,7 +121,7 @@ export default function Register() {
                     </div>
                     <div className="flex flex-col items-center p-8 ">
                         <h4 className=' text-gray-800 pb-3'> Editar Usuarios </h4>
-                        <TableUsers tableData={tableData} setOpen={setOpen} openModal={openModal}/>
+                        <TableUsers tableData={tableData} setOpen={setOpen} openModal={openModal} />
                     </div>
                 </div>
             </section>

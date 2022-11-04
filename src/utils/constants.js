@@ -1,2 +1,2 @@
 
-export const pokeApi = "https://pokeapi.co/api/v2/"
+export const API_HOST = "http://54.172.21.15:9000"

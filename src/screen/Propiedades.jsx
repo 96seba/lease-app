@@ -1,18 +1,11 @@
 import TablePropiedades from "../components/TablePropiedades"
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { getPokemon } from "../api/getPokemon"
+
 
 export default function Propiedades() {
 
-    useEffect(() => {
-        const getPoke = async () => {
-            let pokemon = await getPokemon("ditto")
-            console.log(pokemon)
-        }
-        getPoke()
-
-    }, [])
+    
 
 
     let navigate = useNavigate()
