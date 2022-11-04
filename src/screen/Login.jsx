@@ -24,10 +24,10 @@ export default function Login() {
                     </div>
                     <div className="flex items-center justify-between">
                         <button
-                        onClick={()=>{
-                            navigate('/dashboard')
-                        }}
-                        className="bg-blue hover:bg-blue-dark text-slate font-bold py-2 px-4 rounded" type="button">
+                            onClick={() => {
+                                navigate('/dashboard')
+                            }}
+                            className="bg-blue hover:bg-blue-dark text-slate font-bold py-2 px-4 rounded" type="button">
                             Iniciar sesion
                         </button>
                         <button className="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#" >

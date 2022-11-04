@@ -28,7 +28,7 @@ export default function ModalEditUser({open,setOpen,dataRow}) {
     const cancelButtonRef = useRef(null)
 
     if (dataRow===''){
-        return <>Error</>
+        return <></>
     }
     return (
         <Transition.Root show={open} as={Fragment}>
