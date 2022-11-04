@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import DataTable, { createTheme } from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 
 const customStyles = {
     head: {
@@ -22,10 +22,10 @@ const customStyles = {
         },
     },
     pagination: {
-		style: {
-			backgroundColor: '#FFFFFF',
-		},
-	},
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
 };
 
 const tablaData = [
@@ -121,15 +121,15 @@ const paginationComponentOptions = {
 export default function TableDebtors() {
 
     return (
-            <DataTable
-                columns={columnas}
-                data={tablaData}
-                fixedHeader
-                fixedHeaderScrollHeight='700px'
-                pagination
-                customStyles={customStyles}
-                highlightOnHover
-                paginationComponentOptions={paginationComponentOptions}
-            />
+        <DataTable
+            columns={columnas}
+            data={tablaData}
+            fixedHeader
+            fixedHeaderScrollHeight='700px'
+            pagination
+            customStyles={customStyles}
+            highlightOnHover
+            paginationComponentOptions={paginationComponentOptions}
+        />
     )
 } 
