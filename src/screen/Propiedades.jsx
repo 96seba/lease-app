@@ -2,7 +2,6 @@ import TablePropiedades from "../components/TablePropiedades"
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-export default function Propiedades() {
 
     useEffect(() => {
         const options = { method: 'POST', body: '{"email":"deprueba","password":"deprueba"}' };
@@ -12,7 +11,7 @@ export default function Propiedades() {
             .then(response => console.log(response))
             .catch(err => console.error(err));
 
-    }, [])
+    
 
 
     let navigate = useNavigate()

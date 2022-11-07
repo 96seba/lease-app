@@ -33,21 +33,17 @@ export default function Dashboard() {
 
                 </div>
                 <div className='flex flex-row h-[46vh] w-full items-center justify-center'>
-                    <div className='flex w-1/2 h-full items-end justify-center
-                    flex-column p-4'>
+                    <div className='flex w-1/2 h-full items-end justify-center flex-column p-4'>
                         <TableToResolveNVisits />
                     </div>
-                    <div className='flex w-1/2 h-full items-end justify-center 
-                    flex-column p-4'>
+                    <div className='flex w-1/2 h-full items-end justify-center flex-column p-4'>
 
                         <TableToResolveNVisits />
 
                     </div>
                 </div>
             </div>
-            <div className='flex w-1/4  h-[91.5vh]
-              items-end
-              justify-start flex-column p-4
+            <div className='flex w-1/4  h-[91.5vh] items-end justify-start flex-column p-4
               '>
                 <TableCheck dataCheck={dataCheck} setDataCheck={setDataCheck} />
             </div>

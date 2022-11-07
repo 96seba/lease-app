@@ -42,7 +42,7 @@ const columnas = [
     },
     {
         name: 'Correo',
-        selector: row => row.correo,
+        selector: row => row.email,
         sortable: true
     },
     {
