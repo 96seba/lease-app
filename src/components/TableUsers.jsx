@@ -37,22 +37,22 @@ createTheme(
 const columnas = [
     {
         name: 'Id',
-        selector:  row => row.id,
+        selector: row => row.id,
         sortable: true
     },
     {
         name: 'Correo',
-        selector: row => row.correo,
+        selector: row => row.email,
         sortable: true
     },
     {
         name: 'Nombre',
-        selector:  row => row.nombre,
+        selector: row => row.nombre,
         sortable: true
     },
     {
         name: 'Apellido',
-        selector:  row => row.apellido,
+        selector: row => row.apellido,
         sortable: true
     },
 ]
@@ -64,7 +64,7 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TableUsers({tableData,setOpen,openModal}) {
+export default function TableUsers({ tableData, setOpen, openModal }) {
 
     return (
         <div className='shadow-lg'>
@@ -78,7 +78,7 @@ export default function TableUsers({tableData,setOpen,openModal}) {
                 theme='solarized'
                 paginationComponentOptions={paginationComponentOptions}
                 onRowDoubleClicked={(e) => {
-                    
+
                     openModal(e)
                 }}
             />
