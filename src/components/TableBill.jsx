@@ -58,22 +58,22 @@ const columnas = [
     },
     {
         name: 'GG.CC',
-        selector: row => row.ggcc,
+        selector: row =>  <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
         sortable: true
     },
     {
         name: 'Agua',
-        selector: row => row.agua,
+        selector: row => <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
         sortable: true
     },
     {
         name: 'Luz',
-        selector: row => row.luz,
+        selector: row => <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
         sortable: true
     },
     {
         name: 'Gas',
-        selector: row => row.gas,
+        selector: row =>  <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
         sortable: true
     },
 ]
