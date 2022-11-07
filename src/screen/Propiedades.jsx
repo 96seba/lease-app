@@ -3,13 +3,7 @@ import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 
-    useEffect(() => {
-        const options = { method: 'POST', body: '{"email":"deprueba","password":"deprueba"}' };
-
-        fetch('http://54.172.21.15:9000/api/v1/login', options)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(err => console.error(err));
+export default function Propiedades() {
 
     
 
