@@ -70,7 +70,7 @@ const columnas = [
     },
     {
         name: 'Estado Visita',
-        selector:  row => row.estado,
+        selector: row => <button className='bg-green-300 w-20 h-7 rounded active:bg-green-600 active:text-white'>Realizada</button>,
         sortable: true
     },
     {

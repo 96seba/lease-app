@@ -35,6 +35,7 @@ export default function Register() {
 
     const addUsers = async () => {
         const resp = await createUser(correo, password)
+        console.log("PRUEBA")
         console.log(resp)
     }
 

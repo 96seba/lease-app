@@ -15,7 +15,16 @@ export default function Propiedad() {
 
     ])
 
+    const [data, setData] = useState([
+        { fecha: '23/04/2022  20:02', mensaje: "Prueba 1" },
+        { fecha: '13/02/2012  13:45:', mensaje: "Prueba 2" },
+        { fecha: '02/10/1925  15:10', mensaje: "Prueba 3" },
+
+    ])
+
     const [inputLog, setInputLog] = useState("")
+
+    const [inputData, setInputData] = useState("")
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -32,9 +41,28 @@ export default function Propiedad() {
 
             let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
             setLogs(current => [{ fecha: fecha, mensaje: inputLog }, ...current])
+
         }
     }
 
+    const handleKeyDownData = (event) => {
+        if (event.key === 'Enter') {
+            console.log(inputData)
+            setInputData("")
+            let separator = '/'
+            let newDate = new Date()
+            let date = newDate.getDate();
+            let month = newDate.getMonth() + 1;
+            let year = newDate.getFullYear();
+            let hour = newDate.getHours()
+            let minutes = newDate.getMinutes()
+
+
+            let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
+            setData(current => [{ fecha: fecha, mensaje: inputData }, ...current])
+
+        }
+    }
 
     return (
         <div>
@@ -108,7 +136,6 @@ export default function Propiedad() {
 
                 <div className="flex mb-10 bg-white rounded justify-between items-center w-[96%]  ">
                     <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
-
                         <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <input
@@ -126,21 +153,17 @@ export default function Propiedad() {
                         </div>
                     </div>
                     <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw]  xl:w-[30vw]  h-[36vh] bg-slate-200 rounded shadow-md">
-
                         <div className='flex w-[100%] h-[100%] rounded flex-col p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
-
-
                                 <input
-                                    onKeyDown={handleKeyDown}
-                                    value={inputLog}
-                                    onChange={event => setInputLog(event.target.value)}
+                                    onKeyDown={handleKeyDownData}
+                                    value={inputData}
+                                    onChange={event => setInputData(event.target.value)}
                                     type="text"
-                                    id="large-input" className="block p-4 w-full h-10 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-
+                                    id="large-input-data" className="block p-4 w-full h-10 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
-                                {logs.map((item, index) =>
+                                {data.map((item, index) =>
                                     <p key={index} className='text-sm break-words'>{item.fecha} - {item.mensaje}</p>
                                 )}
                             </div>
