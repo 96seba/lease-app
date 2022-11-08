@@ -34,6 +34,7 @@ createTheme(
 
 
 
+
 const columnas = [
     {
         name: 'Id',
@@ -64,25 +65,36 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-const customStyles = {
-    head: {
-        style: {
-            backgroundColor: '#FFFFFF',
 
-        },
-    },
-    rows: {
-        style: {
-            backgroundColor: '#FFFFFF',
-        },
-        highlightOnHoverStyle: {
-            backgroundColor: '#0d9488',
-        },
-    },
-
-};
 
 export default function TableUsers({ tableData, openModal }) {
+
+    const customStyles = {
+        head: {
+            style: {
+                backgroundColor: '#FFFFFF',
+            },
+        },
+        rows: {
+            style: {
+                backgroundColor: '#FFFFFF',
+            },
+            highlightOnHoverStyle: {
+                backgroundColor: '#0d9488',
+            },
+        },
+        headRow: {
+            style: {
+                backgroundColor: '#FFFFFF',
+            },
+        },
+        pagination: {
+            style: {
+                backgroundColor: '#FFFFFF',
+            },
+        },
+    };
+
 
     return (
         <div className='shadow-lg'>

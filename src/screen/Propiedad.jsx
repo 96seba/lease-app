@@ -1,12 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TableBill from '../components/TableBill'
 import TableVisits from '../components/TableVisits'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 
 export default function Propiedad() {
 
     let navigate = useNavigate()
+    const location = useLocation()
+
+    const [data, setData] = useState({})
+
+    useEffect(() => {
+        const getData = async () => {
+            let data = await location.state.data
+            console.log(data)
+            setData(data)
+        }
+        getData()
+
+
+    }, [])
+
 
     const [logs, setLogs] = useState([
         { fecha: '23/04/2022  20:02', mensaje: "Se cayo gente" },
@@ -35,7 +50,9 @@ export default function Propiedad() {
         }
     }
 
-
+    if (data === {}) {
+        return <></>
+    }
     return (
         <div>
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[80vw] shadow-lg bg-slate-100   flex-column justify-start items-center p-6">
@@ -47,16 +64,20 @@ export default function Propiedad() {
                     <div className="flex justify-center rounded-r items-center w-[55vw] h-[40vh] bg-white ">
                         <div className="flex  justify-between flex-column items-start p-6 w-[27vw] h-[40vh] bg-white ">
                             <div>
-                                <p>ID: 25</p>
-                                <p>Direccion: Maipu 852</p>
-                                <p>Dueño: Julian casablancas</p>
+                                <p>ID: {data.property_id}</p>
+                                <p>Direccion: {data.address}</p>
+                                <p>Dueño:  casablancas</p>
                                 <p>Arrendatario: Luis Gnecco</p>
                                 <p>Nro Piso: 25</p>
                             </div>
                             <div className='w-full '>
                                 <button onClick={() => {
                                     let nav = `/propiedades/propiedad/editarPropiedad`
-                                    navigate(nav)
+                                    navigate(nav, {
+                                        state: {
+                                            data: data
+                                        }
+                                    })
                                 }} className='bg-slate-200 active:bg-slate-100  w-full justify-center items-center flex rounded'>
                                     Editar propiedad
                                 </button>
@@ -79,7 +100,7 @@ export default function Propiedad() {
                     <div className="flex flex-col justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
                         <p className='text-lg'>Ultimo pago</p>
                         <p className='text-sm'>Fecha de pago: (FECHA)</p>
-                        <p className='text-sm'>Monto: (MONTO)</p>
+                        <p className='text-sm'>Monto: {data.amount_adm}</p>
                         <p className='text-sm'>Luz: (MONTO)</p>
                         <p className='text-sm'>Agua: (MONTO)</p>
                         <p className='text-sm'>Gas: (MONTO)</p>
@@ -88,9 +109,9 @@ export default function Propiedad() {
                         <p>Contrato</p>
                         <div className='flex w-full h-full'>
                             <div className='flex w-1/2 h-full flex-col '>
-                                <p className='text-sm'>Monto: (MONTO)</p>
+                                <p className='text-sm'>Monto: $ {data.amount_lease}</p>
                                 <p className='text-sm'>Gastos Comunes: (MONTO)</p>
-                                <p className='text-sm'>Comision por administracion: (MONTO)</p>
+                                <p className='text-sm'>Comision por administracion: $ {data.amount_adm}</p>
 
                             </div>
                             <div className='flex w-1/2 h-full flex-col '>

@@ -1,14 +1,28 @@
 import TablePropiedades from "../components/TablePropiedades"
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { getPropiedades } from "../api/getPropiedades"
 
 
 export default function Propiedades() {
 
-    
-
-
     let navigate = useNavigate()
+    const [dataProp, setDataProp] = useState("")
+
+
+    useEffect(() => {
+        const propiedades = async () => {
+            const resp = await getPropiedades()
+            setDataProp(resp.data.properties)
+            console.log(resp.data.properties)
+        }
+        propiedades()
+
+    }, [])
+
+
+
+
 
     return (
         <div>
@@ -25,7 +39,7 @@ export default function Propiedades() {
                 </h2>
             </button>
             <div className="flex px-4 items-end justify-start flex-col w-screen h-[82vh]">
-                <TablePropiedades />
+                <TablePropiedades dataProp={dataProp} />
             </div>
 
         </div>

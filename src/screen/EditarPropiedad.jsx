@@ -1,103 +1,216 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import ModalGuardar from '../components/ModalGuardar'
+import { editPropiedad } from '../api/editPropiedad'
+import { uploadPropiedadImagen } from '../api/uploadPropiedadImagen'
+import { useNavigate, useLocation } from 'react-router-dom'
+
 
 export default function EditarPropiedad() {
 
+    const location = useLocation()
+
+
+
     const [estacionamiento, setEstacionamiento] = useState(false)
     const [bodega, setBodega] = useState(false)
+    const [baños, setBaños] = useState("")
     const [foto, setFoto] = useState("")
+    const [fotoUri, setFotoUri] = useState("")
+
+    const [id, setId] = useState("")
+    const [direccion, setDireccion] = useState("")
+    const [correo, setCorreo] = useState("")
+    const [telefono, setTelefono] = useState("")
+    const [nombreArrendador, setNombreArrendador] = useState("")
+    const [rutArrendador, setRutArrendador] = useState("")
+
+    const [monto, setMonto] = useState("")
+    const [administracion, setAdministracion] = useState("")
+    const [fechaNac, setFechaNac] = useState("")
+
+    const [tipo, setTipo] = useState("tipo")
+
+    useEffect(() => {
+        const getData = async () => {
+            let data = await location.state.data
+            setId(data.property_id)
+            setDireccion(data.address)
+            setCorreo(data.owner.email)
+            setTelefono(data.owner.phone)
+            setAdministracion(data.amount_adm)
+            setMonto(data.amount_lease)
+            setNombreArrendador(data.owner.name + " " + data.owner.lastname)
+            setRutArrendador(data.owner.rut)
+            setFechaNac(data.owner.birthday.substring(0, 10))
+
+
+        }
+        getData()
+
+    }, [])
+
+    const uploadImage = async () => {
+
+        const form = new FormData();
+        form.append("id", "2");
+        form.append("image", "/Users/desarrollo2/Desktop/lease-app/public/logo512.png");
+
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001' }
+        };
+
+        options.body = form;
+
+        fetch('http://54.172.21.15:9000/api/v1/property/uploadImage', options)
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
+    }
+
+
+    const createPropiead = async () => {
+        let date = new Date(fechaNac)
+        let obj = {}
+        obj.property_id = id
+        obj.address = direccion
+        obj.amount_lease = Number(monto)
+        obj.amount_adm = Number(administracion)
+        obj.type_property = tipo
+        obj.rut = rutArrendador
+        obj.name = nombreArrendador
+        obj.lastname = "askd"
+        obj.birthday = date.toISOString()
+        obj.email = correo
+        obj.phone = telefono
+
+        console.log(obj)
+
+        const resp = await editPropiedad(obj)
+        console.log(resp)
+
+        if (resp.status === 200) {
+            setOpen(true)
+        }
+
+
+    }
+
+
+
+    const [open, setOpen] = useState(false)
 
 
     return (
-        <div className='w-screen flex justify-center items-center bg-gray-100'>
-            <div className="w-[100vw] sm:w-[100vw] md:w-[80vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[110.5vh] p-6 bg-white flex justify-between items-center">
+        <div className='w-screen flex justify-center items-center bg-white'>
+            <div className="w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[110.5vh] p-6  flex items-center">
+
+                {open === true ?
+                    <ModalGuardar open={open} setOpen={setOpen} /> : <></>
+                }
 
                 <div className='w-1/2 h-full flex flex-col justify-start items-center'>
                     <p className="flex my-4 text-xl">
                         Datos de la propiedad
                     </p>
-
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p>Id</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input
+                            value={id} onChange={text => { setId(text.target.value) }}
+                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Id" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p>Direccion</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input
+                            value={direccion} onChange={text => { setDireccion(text.target.value) }}
+                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Dormitorios" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p>Nro piso</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input
+
+                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Nro piso" />
                     </div>
                     <div className="mb-1 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Dormitorios</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
+                            <p>Correo</p>
+                            <input
+                                value={correo} onChange={text => { setCorreo(text.target.value) }}
+                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Dormitorios" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Baños</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
+                            <p>Telefono</p>
+                            <input
+                                value={telefono}
+                                onChange={text => setTelefono(text.target.value)}
+                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
                                 placeholder="Baños" />
                         </div>
                     </div>
                     <div className="mb-1 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Arrendador</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input
+                                value={nombreArrendador} onChange={text => setNombreArrendador(text.target.value)}
+                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Arrendador" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Rut arrendador</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input
+                                value={rutArrendador} onChange={text => setRutArrendador(text.target.value)}
+                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Rut arrendador" />
                         </div>
                     </div>
                     <div className="mb-1 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Arrendatario</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Arrendatario" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Rut arrendatario</p>
-                            <input className="appearance-none border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Rut arrendatario" />
                         </div>
                     </div>
 
                     <div className="my-3 w-[90%]">
-                        <label for="teal-toggle" class="inline-flex relative items-center mr-5 cursor-pointer">
-                            <input type="checkbox" value="" id="teal-toggle" class="sr-only peer"
+                        <label htmlFor="teal-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
+                            <input type="checkbox" value="" id="teal-toggle" className="sr-only peer"
                                 checked={estacionamiento} onChange={() => { setEstacionamiento(!estacionamiento) }} />
-                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
-                            <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Estacionamiento</span>
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
+                            <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Estacionamiento</span>
                         </label>
 
 
-                        <label for="d-toggle" class="inline-flex relative items-center mr-5 cursor-pointer">
-                            <input type="checkbox" value="" id="d-toggle" class="sr-only peer"
+                        <label htmlFor="d-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
+                            <input type="checkbox" value="" id="d-toggle" className="sr-only peer"
                                 checked={bodega} onChange={() => { setBodega(!bodega) }} />
-                            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
-                            <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Bodega</span>
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
+                            <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Bodega</span>
                         </label>
 
                     </div>
                     {foto === "" ?
-                        <div class="flex justify-center items-center mb-1 h-[25vh] w-[90%]">
-                            <label for="dropzone-file" class="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-100 hover:bg-gray-100 dark:border-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                                    <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                    <p class="mb-2 text-sm text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Presiona para subir un archivo</span> o arrastra y sueltalo</p>
-                                    <p class="text-xs text-gray-500 dark:text-gray-300">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                        <div className="flex justify-center items-center mb-1 h-[25vh] w-[90%]">
+                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-100 hover:bg-gray-100 dark:border-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <div className="flex flex-col justify-center items-center pt-5 pb-6">
+                                    <svg aria-hidden="true" className="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                    <p className="mb-2 text-sm text-center text-gray-500 dark:text-gray-400"><span className="font-semibold">Presiona para subir un archivo</span> o arrastra y sueltalo</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-300">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                 </div>
 
                                 <input id="dropzone-file" onChange={(e) => {
                                     console.log(e.target.files[0].name)
                                     setFoto(e.target.files[0].name)
-                                }} type="file" class="hidden" />
+                                    setFotoUri(e.target.files[0])
+                                }} type="file" className="hidden" />
                             </label>
                         </div>
                         : <div className='flex rounded justify-center flex-col  mb-1 items-center  h-[25vh] w-[90%] bg-gray-200'>
@@ -114,41 +227,56 @@ export default function EditarPropiedad() {
 
 
                 </div>
-                <div className='w-1/2 h-full flex flex-col border-l-2  justify-start items-center '>
+                <div className='w-1/2 h-full flex flex-col border-l-2   justify-start items-center '>
                     <p className="flex my-4 text-xl">
                         Contrato
                     </p>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Monto</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input
+                            value={monto} onChange={text => { setMonto(text.target.value) }}
+                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Monto" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Comision por administracion</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input
+                            value={administracion} onChange={text => { setAdministracion(text.target.value) }}
+                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Comision por administracion" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Gastos comunes</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Gastos comunes" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <p>Inicio de contrato</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                        <p>Fecha de nacimiento</p>
+                        <input
+                            value={fechaNac} onChange={text => { setFechaNac(text.target.value) }}
+                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Inicio de contrato" />
                     </div>
                     <div className="mb-20 w-[90%] flex flex-col justify-center items-start">
                         <p>Termino de contrato</p>
-                        <input className="appearance-none border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Termino de contrato" />
                     </div>
 
+                    <div className='flex justify-center items-center h-[10vh] border-t-2 w-[90%] '>
 
-                    <button className='w-[50%] flex flex-row justify-center items-center h-[5vh] rounded-full bg-sky-300 active:bg-blue-500 hover:bg-sky-400'>
-                        Guardar
-
-                    </button>
+                        <button
+                            type="button"
+                            className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                            onClick={() => {
+                                // createPropiead()
+                                uploadImage()
+                                // setOpen(true)
+                            }}
+                        >
+                            Guardar
+                        </button>
+                    </div>
 
                 </div>
             </div>

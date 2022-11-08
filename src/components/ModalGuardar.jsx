@@ -1,9 +1,12 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { BsSaveFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom"
 
 export default function ModalGuardar({ open, setOpen }) {
 
+
+    let navigate = useNavigate()
 
     const cancelButtonRef = useRef(null)
 
@@ -56,7 +59,10 @@ export default function ModalGuardar({ open, setOpen }) {
                                     <button
                                         type="button"
                                         className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
-                                        onClick={() => setOpen(false)}
+                                        onClick={() => {
+                                            setOpen(false)
+                                            navigate("/propiedades")
+                                        }}
                                     >
                                         Guardar
                                     </button>

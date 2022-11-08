@@ -34,27 +34,7 @@ createTheme(
 );
 
 const customStyles = {
-    // headRow: {
-    // 	style: {
-    // 		backgroundColor: '',
-    // 		minHeight: '52px',
-    // 		borderBottomWidth: '1px',
-    // 		borderBottomColor: theme.divider.default,
-    // 		borderBottomStyle: 'solid',
-    // 	},
-    // 	denseStyle: {
-    // 		minHeight: '32px',
-    // 	},
-    // },
-    // head: {
-    // 	style: {
-    // 		fontSize: '17px',
-    // 		backgroundColor: '#000000',
-    // 		minHeight: '50px',
-    // 		paddingLeft: '16px',
-    // 		paddingRight: '8px',
-    // 	},
-    // },
+
     rows: {
         style: {
             minHeight: '60px', // override the row height
@@ -148,19 +128,18 @@ const tablaData = [
 const columnas = [
     {
         name: 'Tipo',
-        selector: (row) => <p className='my-3'>{row.tipo}</p>,
-        // selector: 'tipo',
+        selector: row => row.id,
         sortable: true
     },
     {
         name: 'Direccion',
-        selector: row => row.direccion,
+        selector: row => row.address,
         sortable: true,
         grow: 1
     },
     {
         name: 'Arrendador',
-        selector: row => row.arrendador,
+        selector: row => row.owner.name + " " + row.owner.lastname,
         sortable: true
     },
     {
@@ -170,7 +149,8 @@ const columnas = [
     },
     {
         name: 'Monto',
-        selector: row => row.monto,
+        selector: row => "$ " + row.amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        ,
         sortable: true
     },
     {
@@ -207,23 +187,26 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TablePropiedades() {
+export default function TablePropiedades({ dataProp }) {
     let navigate = useNavigate()
 
     return (
         <div className='w-full shadow-sm rounded'>
             <DataTable
                 columns={columnas}
-                data={tablaData}
+                data={dataProp}
                 highlightOnHover
-
                 fixedHeader
                 fixedHeaderScrollHeight='700px'
                 pagination
                 customStyles={customStyles}
                 onRowDoubleClicked={(e) => {
                     let nav = `/propiedades/propiedad?=${e.id}`
-                    navigate(nav)
+                    navigate(nav, {
+                        state: {
+                            data: e
+                        }
+                    })
                 }}
                 paginationComponentOptions={paginationComponentOptions}
             />
