@@ -36,12 +36,12 @@ function Navbar() {
                                 <div className="flex flex-shrink-0 items-center">
                                     <img
                                         className="block h-8 w-auto lg:hidden"
-                                        src={require("../assets/mariologo.png")}
+                                        src={require("../assets/logo.jpg")}
                                         alt="Your Company"
                                     />
                                     <img
                                         className="hidden h-8 w-auto lg:block"
-                                        src={require("../assets/mariologo.png")}
+                                        src={require("../assets/logo.jpg")}
                                         alt="Your Company"
                                     />
                                 </div>
