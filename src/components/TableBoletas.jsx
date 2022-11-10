@@ -33,44 +33,18 @@ createTheme(
 
 const tablaData = [
     {
-        id: "1", costoadministracion:"$92.000", nroboleta:"20", nroboletaanterior:"14",
+        id: "1", costoadministracion: "$92.000", nroboleta: "20", nroboletaanterior: "14",
     },
     {
-        id: "2", costoadministracion:"$100.000", nroboleta:"13", nroboletaanterior:"8",
+        id: "2", costoadministracion: "$100.000", nroboleta: "13", nroboletaanterior: "8",
     },
     {
-        id: "3", costoadministracion:"$98.000", nroboleta:"10", nroboletaanterior:"15",
+        id: "3", costoadministracion: "$98.000", nroboleta: "10", nroboletaanterior: "15",
     },
 ]
 
 
-const columnas = [
-    {
-        name: 'ID Propiedad',
-        selector: 'id',
-        sortable: true
-    },
-    {
-        name: 'Costo por administración',
-        selector: 'costoadministracion',
-        sortable: true
-    },
-    {
-        name: 'Subir boleta',
-        selector: () => <input type="file"></input>,
-        sortable: true
-    },
-    {
-        name: 'Nro de boleta',
-        selector: 'nroboleta',
-        sortable: true,
-    },
-    {
-        name: 'Nro de boleto anterior',
-        selector: 'nroboletaanterior',
-        sortable: true
-    },
-]
+
 
 const paginationComponentOptions = {
     rangeSeparatorText: 'de',
@@ -79,7 +53,41 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TableBoletas() {
+export default function TableBoletas({ files }) {
+
+
+
+    const columnas = [
+        {
+            name: 'ID Propiedad',
+            selector: row => row.id,
+            sortable: true
+        },
+        {
+            name: 'Costo por administración',
+            selector: row => row.costoadministracion,
+            sortable: true
+        },
+        {
+            name: 'Subir boleta',
+            selector: () => <input onChange={e => {
+                console.log(e.target.files[0])
+                files.push(e.target.files[0])
+            }} type="file"></input>,
+            sortable: true
+        },
+        {
+            name: 'Nro de boleta',
+            selector: row => row.nroboleta,
+            sortable: true,
+        },
+        {
+            name: 'Nro de boleto anterior',
+            selector: row => row.nroboletaanterior,
+            sortable: true
+        },
+    ]
+
 
     return (
 

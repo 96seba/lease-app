@@ -1,18 +1,14 @@
 import { API_HOST, TOKEN } from '../utils/constants'
 
-export async function createUser(email, pass) {
+export async function getPropiedades() {
     try {
-        const response = await fetch(API_HOST + '/api/v1/user/create',
+        const response = await fetch(API_HOST + '/api/v1/property',
             {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + TOKEN
                 },
-                body: JSON.stringify({
-                    email: email,
-                    password: pass
-                })
             })
         const result = await response.json();
         return result
