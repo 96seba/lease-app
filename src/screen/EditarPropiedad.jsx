@@ -9,6 +9,7 @@ export default function EditarPropiedad() {
 
     const location = useLocation()
 
+    const [data, setData] = useState({})
 
 
     const [estacionamiento, setEstacionamiento] = useState(false)
@@ -33,6 +34,7 @@ export default function EditarPropiedad() {
     useEffect(() => {
         const getData = async () => {
             let data = await location.state.data
+            setData(data)
             setId(data.property_id)
             setDireccion(data.address)
             setCorreo(data.owner.email)
@@ -42,8 +44,6 @@ export default function EditarPropiedad() {
             setNombreArrendador(data.owner.name + " " + data.owner.lastname)
             setRutArrendador(data.owner.rut)
             setFechaNac(data.owner.birthday.substring(0, 10))
-
-
         }
         getData()
 
@@ -69,9 +69,10 @@ export default function EditarPropiedad() {
     }
 
 
-    const createPropiead = async () => {
+    const updatePropiedad = async () => {
         let date = new Date(fechaNac)
         let obj = {}
+        obj.id = data.id
         obj.property_id = id
         obj.address = direccion
         obj.amount_lease = Number(monto)
@@ -269,8 +270,8 @@ export default function EditarPropiedad() {
                             type="button"
                             className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                             onClick={() => {
-                                // createPropiead()
-                                uploadImage()
+                                updatePropiedad()
+                                // uploadImage()
                                 // setOpen(true)
                             }}
                         >

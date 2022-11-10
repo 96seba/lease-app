@@ -1,4 +1,4 @@
-import { API_HOST } from '../utils/constants'
+import { API_HOST, TOKEN } from '../utils/constants'
 
 export async function createPropiedad(body) {
     try {
@@ -7,7 +7,7 @@ export async function createPropiedad(body) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZXBydWViYSIsInR5cGUiOiJhZG1pbiIsImlhdCI6MTY2NzU4OTg3M30.Cchhyl-pRCUI2A6jzkLJDZ3i-rSEBhcGZE5OeizzXF8'
+                    Authorization: 'Bearer ' + TOKEN
                 },
                 body: JSON.stringify(body)
             })
