@@ -82,7 +82,7 @@ export default function Propiedad() {
     }
     return (
         <div>
-            <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[80vw] shadow-lg bg-slate-100   flex-column justify-start items-center p-6">
+            <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[80vw] shadow-lg bg-red-500   flex-column justify-start items-center p-6">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh] bg-white shadow-md">
                     <div className="flex justify-center rounded-l items-center w-[35vw] h-[40vh] bg-white ">
                         <img alt="propiedad"

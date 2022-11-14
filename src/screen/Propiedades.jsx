@@ -20,7 +20,7 @@ export default function Propiedades() {
     }, [])
 
     return (
-        <div>
+        <div className="bg-[#90E0EF]">
             <button onClick={() => {
                 navigate("/propiedades/agregarPropiedad")
             }} className="flex items-center my-2 justify-start px-8 w-3/4 h-[6vh]">
@@ -46,7 +46,6 @@ export default function Propiedades() {
                     </div>
                 }
             </div>
-
         </div>
     )
 }

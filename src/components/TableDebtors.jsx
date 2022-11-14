@@ -1,29 +1,59 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import DataTable from 'react-data-table-component';
+import DataTable, { createTheme } from 'react-data-table-component';
+
+createTheme(
+    'solarized',
+    {
+        text: {
+            primary: '#000000',
+            secondary: '#000000',
+        },
+        background: {
+            default: '#f0f9ff',
+        },
+        context: {
+            background: '#cb4b16',
+            text: '#FFFFFF',
+        },
+        divider: {
+            default: '#FFFFFF',
+        },
+        button: {
+            hover: '#059669',
+            focus: '#059669',
+            disabled: '#d1d5db',
+        },
+        sortFocus: {
+            default: '#000000',
+        },
+    },
+    'dark',
+);
+
 
 const customStyles = {
     head: {
         style: {
-            backgroundColor: '#FFFFFF',
+            backgroundColor: '#CAF0F8',
         },
     },
     rows: {
         style: {
-            backgroundColor: '#FFFFFF',
+            backgroundColor: '#CAF0F8',
         },
         highlightOnHoverStyle: {
-            backgroundColor: '#0d9488',
+            backgroundColor: '#023E8A',
         },
     },
     headRow: {
         style: {
-            backgroundColor: '#FFFFFF',
+            backgroundColor: '#CAF0F8',
         },
     },
     pagination: {
         style: {
-            backgroundColor: '#FFFFFF',
+            backgroundColor: '#CAF0F8',
         },
     },
 };
@@ -129,6 +159,7 @@ export default function TableDebtors() {
             pagination
             customStyles={customStyles}
             highlightOnHover
+            theme='solarized'
             paginationComponentOptions={paginationComponentOptions}
         />
     )
