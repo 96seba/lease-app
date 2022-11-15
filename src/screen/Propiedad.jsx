@@ -2,18 +2,25 @@ import { useState, useEffect } from 'react'
 import TableBill from '../components/TableBill'
 import TableVisits from '../components/TableVisits'
 import { useNavigate, useLocation } from 'react-router-dom'
-
+import { API_HOST } from '../utils/constants'
 
 export default function Propiedad() {
 
     let navigate = useNavigate()
     const location = useLocation()
 
+    const [fotoUrL, setFotoUrl] = useState("")
+    const [loaded, setLoaded] = useState(false)
+
+
+
     useEffect(() => {
         const getData = async () => {
             let data = await location.state.data
             console.log(data)
             setData(data)
+            console.log(data.image.slice(7, data.image.length))
+            setFotoUrl(API_HOST + data.image.slice(7, data.image.length))
         }
         getData()
 
@@ -85,8 +92,16 @@ export default function Propiedad() {
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[80vw] shadow-lg bg-slate-100   flex-column justify-start items-center p-6">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh] bg-white shadow-md">
                     <div className="flex justify-center rounded-l items-center w-[35vw] h-[40vh] bg-white ">
+
+
                         <img alt="propiedad"
-                            className='w-[35vw] h-[40vh] rounded-l' src={require('../assets/lamoneda.jpeg')} />
+                            onLoad={() => {
+                                console.log("SE CARGO")
+                                setLoaded(true)
+                            }}
+                            className='w-[35vw] h-[40vh] rounded-l' src={fotoUrL} />
+
+
                     </div>
                     <div className="flex justify-center rounded-r items-center w-[55vw] h-[40vh] bg-white ">
                         <div className="flex  justify-between flex-column items-start p-6 w-[27vw] h-[40vh] bg-white ">
@@ -94,7 +109,7 @@ export default function Propiedad() {
                                 <p>ID: {data.property_id}</p>
                                 <p>Direccion: {data.address}</p>
                                 <p>Dueño:  casablancas</p>
-                                <p>Arrendatario: Luis Gnecco</p>
+                                <p>Arrendatario: {data.name} {data.lastname}</p>
                                 <p>Nro Piso: 25</p>
                             </div>
                             <div className='w-full '>
@@ -183,9 +198,9 @@ export default function Propiedad() {
                                     id="large-input-data" className="block p-4 w-full h-10 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
-                                {data.map((item, index) =>
+                                {/* {data?.map((item, index) =>
                                     <p key={index} className='text-sm break-words'>{item.fecha} - {item.mensaje}</p>
-                                )}
+                                )} */}
                             </div>
                         </div>
                     </div>

@@ -1,28 +1,82 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { BsSaveFill } from "react-icons/bs";
-
+import * as XLSX from 'xlsx'
 
 
 
 
 export default function ModalGuardar({ open, setOpen }) {
 
-    const[file,setFile]=useState("");
+    const [file, setFile] = useState("");
 
     const cancelButtonRef = useRef(null);
 
+    // const getDataXlsx = async () => {
 
-    const checkExtension=(str)=>{
+    //     let data = []
+    //     const sheet = file.SheetNames[1]
+
+    //     const temp = reader.utils.sheet_to_json(file.Sheets[sheet])
+    //     temp.forEach(res => {
+    //         if (res.Id !== 0 && res['Comisión Administración'] && res['Monto Arriendo'])
+    //            data.push({ id: res.Id, comision: res['Comisión Administración'], arriendo: res['Monto Arriendo'] })
+    //     })
+
+    //     return data
+    // }
+
+
+    const getDataXlsx = async () => {
+        const promise = new Promise((resolve, reject) => {
+
+            let dataFinal = []
+
+            const fileReader = new FileReader()
+            fileReader.readAsArrayBuffer(file)
+
+            fileReader.onload = (e) => {
+                const bufferArray = e.target.result
+
+                const wb = XLSX.read(bufferArray, { type: 'buffer' })
+
+                const wsname = wb.SheetNames[1]
+
+                const ws = wb.Sheets[wsname]
+
+                const data = XLSX.utils.sheet_to_json(ws)
+
+                data.forEach(res => {
+                    if (res.Id !== 0 && res['Comisión Administración'] && res['Monto Arriendo'])
+                        dataFinal.push({ id: res.Id, comision: res['Comisión Administración'], arriendo: res['Monto Arriendo'] })
+                })
+                resolve(dataFinal)
+
+            }
+
+            fileReader.onerror = (error) => {
+                reject(error)
+            }
+
+        })
+
+        promise.then((d) => {
+            console.log(d)
+        })
+
+    }
+
+
+    const checkExtension = (str) => {
         let arr = str.split('.');
-        let ext = arr[arr.length-1];
+        let ext = arr[arr.length - 1];
         console.log(ext)
 
-        if(ext === 'xls' || ext === 'xlsx' || ext === 'csv'){
+        if (ext === 'xls' || ext === 'xlsx' || ext === 'csv') {
             setOpen(false)
             // llamar api
         }
-        else{
+        else {
             alert("El archivo debe ser de tipo excel (.xls, .xlsx o .csv)");
         }
 
@@ -62,10 +116,12 @@ export default function ModalGuardar({ open, setOpen }) {
                                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
 
                                             <Dialog.Title as="h3" className="text-lg font-medium flex flex-col justify-center items-center leading-6 text-gray-900">
-                                            <input value={file} onChange={e=>{setFile(e.target.value)
-                                            console.log(e.target.value.split('.'))
-                                                }} id="fileSelect" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                                                
+                                                <input
+                                                    onChange={e => {
+                                                        setFile(e.target.files[0])
+                                                        console.log(e.target.files[0])
+                                                    }} id="fileSelect" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+
                                             </Dialog.Title>
                                         </div>
                                     </div>
@@ -74,7 +130,10 @@ export default function ModalGuardar({ open, setOpen }) {
                                     <button
                                         type="button"
                                         className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
-                                        onClick={() => checkExtension(file)} >
+                                        onClick={() => {
+                                            getDataXlsx()
+                                            // checkExtension(file)
+                                        }} >
                                         Guardar
                                     </button>
                                     <button

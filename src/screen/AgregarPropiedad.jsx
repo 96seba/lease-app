@@ -16,37 +16,34 @@ export default function AgregarPropiedad() {
     const [dormitorios, setDormitorios] = useState("")
     const [foto, setFoto] = useState("")
     const [fotoUri, setFotoUri] = useState("")
+    const [nroPiso, setNroPiso] = useState("")
 
     //* Datos arrendador
 
     const [correo, setCorreo] = useState("")
     const [telefono, setTelefono] = useState("")
     const [nombreArrendador, setNombreArrendador] = useState("")
+    const [apellidoArrendador, setApellidoArrendador] = useState("")
     const [rutArrendador, setRutArrendador] = useState("")
-
-
-
 
     const [monto, setMonto] = useState("")
     const [administracion, setAdministracion] = useState("")
     const [fechaNacArrendador, setFechaNacArrendador] = useState("")
     const [fechaNacArrendatario, setFechaNacArrendatario] = useState("")
 
-    const [tipo, setTipo] = useState("tipo")
+    const [tipo, setTipo] = useState("")
 
     const uploadImage = async () => {
-        const form = new FormData()
-        console.log(fotoUri)
 
-        form.append("id", "2");
+        console.log(fotoUri)
+        const form = new FormData();
+        form.append("id", "1");
         form.append("image", fotoUri);
 
         const options = {
             method: 'POST',
-            headers: { 'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001' }
+            body: form
         };
-
-        options.body = form;
 
         fetch('http://54.172.21.15:9000/api/v1/property/uploadImage', options)
             .then(response => response.json())
@@ -65,11 +62,16 @@ export default function AgregarPropiedad() {
         obj.amount_adm = Number(administracion)
         obj.type_property = tipo
         obj.rut = rutArrendador
-        obj.lastname = "Casablancas"
+        obj.name = nombreArrendador
+        obj.lastname = apellidoArrendador
         obj.birthday = date.toISOString()
         obj.email = correo
         obj.phone = telefono
-        obj.bedrooms = baños
+        obj.bedrooms = dormitorios
+        obj.bathrooms = baños
+        obj.floor = nroPiso
+        obj.cellar = bodega
+        obj.parking = estacionamiento
 
 
         console.log(obj)
@@ -86,7 +88,7 @@ export default function AgregarPropiedad() {
 
     return (
         <div className='w-screen flex  justify-center items-center bg-white'>
-            <div className="w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[155.5vh] p-6  flex items-center">
+            <div className="w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[175.5vh] p-6  flex items-center">
 
                 {open === true ?
                     <ModalGuardar open={open} setOpen={setOpen} /> : <></>
@@ -111,9 +113,25 @@ export default function AgregarPropiedad() {
                             placeholder="Direccion" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
+                        <p>Tipo</p>
+                        <select
+                            onChange={e => {
+                                console.log(e.target.value)
+                                setTipo(e.target.value)
+                            }}
+                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker">
+                            <option value="Casa">Casa</option>
+                            <option value="Depto">Depto</option>
+                            <option value="Oficina">Oficina</option>
+                        </select>
+                    </div>
+                    <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p>Nro piso</p>
                         <input
-
+                            value={nroPiso}
+                            onChange={e => {
+                                setNroPiso(Number(e.target.value))
+                            }}
                             className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Nro piso" />
                     </div>
@@ -139,14 +157,14 @@ export default function AgregarPropiedad() {
                             <p>Baños</p>
                             <input
                                 value={baños} onChange={text => setBaños(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="number"
                                 placeholder="Baños" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Dormitorios</p>
                             <input
                                 value={dormitorios} onChange={text => setDormitorios(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="number"
                                 placeholder="Dormitorios" />
                         </div>
                     </div>
@@ -172,19 +190,27 @@ export default function AgregarPropiedad() {
 
                     <div className="mb-1 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Arrendador</p>
+                            <p>Nombre arrendador</p>
                             <input
                                 value={nombreArrendador} onChange={text => setNombreArrendador(text.target.value)}
                                 className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
-                                placeholder="Arrendador" />
+                                placeholder="Nombre" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Rut arrendador</p>
+                            <p>Apellido arrendador</p>
                             <input
-                                value={rutArrendador} onChange={text => setRutArrendador(text.target.value)}
+                                value={apellidoArrendador} onChange={text => setApellidoArrendador(text.target.value)}
                                 className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
-                                placeholder="Rut arrendador" />
+                                placeholder="Apellido" />
                         </div>
+                    </div>
+
+                    <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
+                        <p>Rut arrendador</p>
+                        <input
+                            value={rutArrendador} onChange={text => { setRutArrendador(text.target.value) }}
+                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            placeholder="Rut arrendador" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Fecha de nacimiento</p>
@@ -193,6 +219,7 @@ export default function AgregarPropiedad() {
                             className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Inicio de contrato" />
                     </div>
+
                     <div className="mb-4 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Correo</p>
@@ -222,9 +249,9 @@ export default function AgregarPropiedad() {
                                 </div>
 
                                 <input id="dropzone-file" onChange={(e) => {
-                                    console.log(e.target.files[0].name)
+                                    console.log(e.target.files[''])
                                     setFoto(e.target.files[0].name)
-                                    setFotoUri(e.target.value)
+                                    setFotoUri(e.target.files[0])
                                 }} type="file" className="hidden" />
                             </label>
                         </div>
@@ -244,7 +271,7 @@ export default function AgregarPropiedad() {
                             className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                             onClick={() => {
                                 createPropiedad()
-                                //  uploadImage()
+                                // uploadImage()
                                 // setOpen(true)
                             }}
                         >
