@@ -20,12 +20,12 @@ export default function Propiedad() {
             console.log(data)
             setData(data)
             setAlerts(data.alerts)
-            console.log(data.image.slice(7, data.image.length))
+            console.log(data.alerts, "asdka")
+            console.log(data.image?.slice(7, data.image.length))
             setFotoUrl(API_HOST + data.image.slice(7, data.image.length))
+            document.title = 'Propiedad ' + data.property_id;
         }
         getData()
-
-
     }, [])
 
 
@@ -35,7 +35,7 @@ export default function Propiedad() {
         { fecha: '02/10/1925  15:10', mensaje: "Se caio gente" },
     ])
 
-    const [alerts, setAlerts] =  ("")
+    const [alerts, setAlerts] = useState("")
 
     const [data, setData] = useState("")
 
@@ -51,9 +51,22 @@ export default function Propiedad() {
         return (
             alerts.map((item, index) =>
 
-                <p>{item.id +" "+item.note+" "+item.level}</p>
+                <p>{item.id + " " + item.note + " " + item.level}</p>
             )
         )
+    }
+
+
+    const parseAvaliable = (state) => {
+
+        console.log(state)
+        if (state === false) {
+            return "No"
+        }
+        else if (state === true) {
+            return "Si"
+        }
+
     }
 
     const handleKeyDown = (event) => {
@@ -132,6 +145,7 @@ export default function Propiedad() {
                                 <p>Dueño:  casablancas</p>
                                 <p>Arrendatario: {data.name} {data.lastname}</p>
                                 <p>Nro Piso: 25</p>
+                                <p>Tipo: {data.type_property}</p>
                             </div>
                             <div className='w-full '>
                                 <button onClick={() => {
@@ -153,8 +167,8 @@ export default function Propiedad() {
                             <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
                                 <p>Dormitorios:(DORMITORIOS)</p>
                                 <p>Baños: (Baños)</p>
-                                <p>Estacionamiento: (Est)</p>
-                                <p>Bodega: (Bodega)</p>
+                                <p>Estacionamiento: {parseAvaliable(data.parking)}</p>
+                                <p>Bodega: {parseAvaliable(data.cellar)}</p>
                             </div>
                         </div>
                     </div>
@@ -220,14 +234,8 @@ export default function Propiedad() {
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
                                 {alerts !== "" &&
-
                                     renderAlerts()
-
                                 }
-
-                                {/* {data.map((item, index) =>
-                                    <p key={index} className='text-sm break-words'>{item.fecha} - {item.mensaje}</p>
-                                )} */}
                             </div>
                         </div>
                     </div>
@@ -250,6 +258,6 @@ export default function Propiedad() {
 
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

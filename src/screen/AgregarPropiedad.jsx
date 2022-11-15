@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ModalGuardar from '../components/ModalGuardar'
 import { createPropiedad } from '../api/createPropiedad'
 import { uploadPropiedadImagen } from '../api/uploadPropiedadImagen'
@@ -33,6 +33,10 @@ export default function AgregarPropiedad() {
 
     const [tipo, setTipo] = useState("")
 
+    useEffect(() => {
+        document.title = 'Agrega una propiedad';
+    }, []);
+
     const uploadImage = async () => {
 
         console.log(fotoUri)
@@ -53,7 +57,7 @@ export default function AgregarPropiedad() {
     }
 
 
-    const createPropiedad = async () => {
+    const addPropiedad = async () => {
         let date = new Date(fechaNacArrendador)
         let obj = {}
         obj.property_id = id
@@ -76,8 +80,8 @@ export default function AgregarPropiedad() {
 
         console.log(obj)
 
-        // const resp = await createPropiedad(obj)
-        // console.log(resp)
+        const resp = await createPropiedad(obj)
+        console.log(resp)
 
     }
 
@@ -88,7 +92,7 @@ export default function AgregarPropiedad() {
 
     return (
         <div className='w-screen flex  justify-center items-center bg-white'>
-            <div className="w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[175.5vh] p-6  flex items-center">
+            <div className="w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[180.5vh] p-6  flex items-center">
 
                 {open === true ?
                     <ModalGuardar open={open} setOpen={setOpen} /> : <></>
@@ -270,7 +274,7 @@ export default function AgregarPropiedad() {
                             type="button"
                             className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                             onClick={() => {
-                                createPropiedad()
+                                addPropiedad()
                                 // uploadImage()
                                 // setOpen(true)
                             }}
