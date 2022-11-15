@@ -35,7 +35,7 @@ export default function Propiedad() {
         { fecha: '02/10/1925  15:10', mensaje: "Se caio gente" },
     ])
 
-    const [alerts, setAlerts] = useState("")
+    const [alerts, setAlerts] =  ("")
 
     const [data, setData] = useState("")
 
