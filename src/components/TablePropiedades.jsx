@@ -53,12 +53,12 @@ const customStyles = {
     },
     head: {
         style: {
-            backgroundColor: '#CAF0F8',
+            backgroundColor: '#FFFFFF',
         },
     },
     rows: {
         style: {
-            backgroundColor: '#CAF0F8',
+            backgroundColor: '#FFFFFF',
         },
         highlightOnHoverStyle: {
             backgroundColor: '#023E8A',
@@ -66,12 +66,12 @@ const customStyles = {
     },
     headRow: {
         style: {
-            backgroundColor: '#CAF0F8',
+            backgroundColor: '#FFFFFF',
         },
     },
     pagination: {
         style: {
-            backgroundColor: '#CAF0F8',
+            backgroundColor: '#FFFFFF',
         },
     },
 };

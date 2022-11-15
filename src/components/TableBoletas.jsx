@@ -31,6 +31,33 @@ createTheme(
     'dark',
 );
 
+const customStyles = {
+    head: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
+    rows: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#023E8A',
+        },
+    },
+    headRow: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
+    pagination: {
+		style: {
+			backgroundColor: '#FFFFFF',
+		},
+	},
+};
+
+
 const tablaData = [
     {
         id: "1", costoadministracion: "$92.000", nroboleta: "20", nroboletaanterior: "14",
@@ -103,6 +130,7 @@ export default function TableBoletas({ files }) {
             fixedHeaderScrollHeight='700px'
             pagination
             theme='solarized'
+            customStyles={customStyles}
             paginationComponentOptions={paginationComponentOptions}
         />
 
