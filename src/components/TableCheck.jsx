@@ -7,7 +7,8 @@ createTheme(
     {
         text: {
             primary: '#000000',
-            secondary: '#000000',
+            secondary: '#FFFFFF',
+            hover: '#FFFFFF',
         },
         background: {
             default: '#f0f9ff',
@@ -24,7 +25,7 @@ createTheme(
             disabled: '#2C8C99',
         },
         sortFocus: {
-            default: '#000000',
+            default: '#FFFFFF',
         },
     },
     'dark',
@@ -41,7 +42,8 @@ const customStyles = {
             backgroundColor: '#FFFFFF',
         },
         highlightOnHoverStyle: {
-            backgroundColor: '#F8A28C',
+            backgroundColor: '#3A4348',
+            text:'#FFFFFF',
         },
     },
     headRow: {
@@ -92,7 +94,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
                         }
                     });
                     setDataCheck(newDataCheck)
-                }} className='bg-[#00ff00] w-20 h-7 rounded active:bg-purple-500 '>Revisado</button> :
+                }} className='bg-[#00ff00] w-20 h-7 rounded '>Revisado</button> :
                 <button onClick={() => {
                     let newDataCheck = []
                     dataCheck.forEach((element, index) => {
@@ -103,7 +105,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
                         }
                     });
                     setDataCheck(newDataCheck)
-                }} className=' bg-[#ff0000] w-20 h-7 rounded active:bg-violet-600 text-white'>No revisado</button>,
+                }} className=' bg-[#ff0000] w-20 h-7 rounded '>No revisado</button>,
             sortable: true
         },
     ]
@@ -115,6 +117,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
+            theme='solarized'
             customStyles={customStyles}
             highlightOnHover
             paginationComponentOptions={paginationComponentOptions}

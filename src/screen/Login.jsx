@@ -72,12 +72,12 @@ export default function Login() {
 
                                 // navigate('/dashboard')
                             }}
-                            className="bg-[#023E8A] hover:bg-[#03045E] text-white font-bold py-2 px-4 rounded" type="button">
+                            className="bg-[#FF6F00] hover:bg-[#3A4348] text-white font-bold py-2 px-4 rounded" type="button">
                             Iniciar sesion
                         </button>
-                        <button className="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#" >
+                        {/* <button className="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#" >
                             ¿Olvidó su contraseña?
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>

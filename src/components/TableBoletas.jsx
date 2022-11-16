@@ -42,7 +42,7 @@ const customStyles = {
             backgroundColor: '#FFFFFF',
         },
         highlightOnHoverStyle: {
-            backgroundColor: '#F8A28C',
+            backgroundColor: '#3A4348',
         },
     },
     headRow: {

@@ -80,7 +80,7 @@ export default function TableUsers({ tableData, openModal }) {
                 backgroundColor: '#FFFFFF',
             },
             highlightOnHoverStyle: {
-                backgroundColor: '#023E8A',
+                backgroundColor: '#3A4348',
             },
         },
         headRow: {

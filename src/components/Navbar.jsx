@@ -52,7 +52,7 @@ function Navbar() {
                                                 key={item.name}
                                                 href={item.href}
                                                 className={classNames(
-                                                    item.current ? ' text-white' : 'text-gray-300 hover:bg-[#325D79] hover:text-white',
+                                                    item.current ? ' text-white' : 'text-gray-300 hover:bg-[#3a4348] hover:text-white',
                                                     'px-3 py-2 rounded-md text-sm font-medium'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}
