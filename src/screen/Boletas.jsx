@@ -8,7 +8,8 @@ export default function Propiedades() {
     let navigate = useNavigate()
 
     return (
-        <div className='bg-gray-100'>
+        <div className="h-[100vh] flex flex-col justify-start items-start p-4  sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw]  2xl:w-[80vw]">
+
             <button onClick={() => {
 
                 console.log(files)
@@ -22,10 +23,18 @@ export default function Propiedades() {
                     Enviar boletas
                 </h2>
             </button>
-            <div className="flex px-4 items-end justify-start flex-col w-screen h-[85.5vh]"><div>
-            </div>
+
+            <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[100%] h-[36vh] bg-white shadow-md'>
+                <div className='w-full'>
+                    <p>Boletas</p>
+                </div>
+
                 <TableBoletas files={files} />
+
             </div>
+            {/* <div className="flex px-4 items-end justify-start flex-col w-screen h-[85.5vh]">
+
+            </div> */}
         </div>
     )
 }

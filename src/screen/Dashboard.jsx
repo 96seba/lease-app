@@ -33,10 +33,15 @@ export default function Dashboard() {
 
     return (
         <div className="flex flex-col h-auto bg-gray-100 w-screen items-start justify-start">
-            <div className=" flex mt-3 bg-gray-100 w-screen justify-start px-6">
-                <button onClick={() => setOpen(true)} setOpen={setOpen} openModal={openModal} className="flex text-white bg-[#3A4348] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Subir Excel</button>
+            <div className='flex pt-4 px-12  flex-col justify-start items-start w-screen h-[8vh]'>
+                <button onClick={() => setOpen(true)} setOpen={setOpen} openModal={openModal}
+                    className="flex text-white bg-[#3A4348] hover:bg-primary-700 focus:ring-4 
+                    focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5
+                     py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    Subir Excel</button>
+
             </div>
-            <div className="flex h-[150.5vh] py-6 mt-4 w-screen items-center justify-start flex-col">
+            <div className="flex h-[150.5vh] py-6 w-screen items-center justify-start flex-col">
 
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[36vh] bg-white shadow-md'>
                     <div className='w-full'>
