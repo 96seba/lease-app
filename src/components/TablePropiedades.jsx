@@ -103,7 +103,7 @@ const columnas = [
     },
     {
         name: 'Monto',
-        selector: row => "$ " + row.amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+        selector: row => "$ " + row.amount_lease?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
         sortable: true
     },
     {
