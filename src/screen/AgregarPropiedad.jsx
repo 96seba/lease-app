@@ -100,21 +100,21 @@ export default function AgregarPropiedad() {
                         <p>Id</p>
                         <input
                             value={id} onChange={text => { setId(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Id" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p>Direccion</p>
                         <input
                             value={direccion} onChange={text => { setDireccion(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Direccion" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p>Nro piso</p>
                         <input
 
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Nro piso" />
                     </div>
                     <div className="my-4 w-[90%]">
@@ -139,14 +139,14 @@ export default function AgregarPropiedad() {
                             <p>Baños</p>
                             <input
                                 value={baños} onChange={text => setBaños(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Baños" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Dormitorios</p>
                             <input
                                 value={dormitorios} onChange={text => setDormitorios(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Dormitorios" />
                         </div>
                     </div>
@@ -154,19 +154,19 @@ export default function AgregarPropiedad() {
                         <p>Monto</p>
                         <input
                             value={monto} onChange={text => { setMonto(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Monto" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Comision por administracion</p>
                         <input
                             value={administracion} onChange={text => { setAdministracion(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Comision por administracion" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <p>Gastos comunes</p>
-                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Gastos comunes" />
                     </div>
 
@@ -175,14 +175,14 @@ export default function AgregarPropiedad() {
                             <p>Arrendador</p>
                             <input
                                 value={nombreArrendador} onChange={text => setNombreArrendador(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Arrendador" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Rut arrendador</p>
                             <input
                                 value={rutArrendador} onChange={text => setRutArrendador(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Rut arrendador" />
                         </div>
                     </div>
@@ -190,7 +190,7 @@ export default function AgregarPropiedad() {
                         <p>Fecha de nacimiento</p>
                         <input
                             value={fechaNacArrendador} onChange={text => { setFechaNacArrendador(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                            className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Inicio de contrato" />
                     </div>
                     <div className="mb-4 w-[90%] flex justify-around flex-row">
@@ -198,7 +198,7 @@ export default function AgregarPropiedad() {
                             <p>Correo</p>
                             <input
                                 value={correo} onChange={text => { setCorreo(text.target.value) }}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Correo" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
@@ -206,7 +206,7 @@ export default function AgregarPropiedad() {
                             <input
                                 value={telefono}
                                 onChange={text => setTelefono(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
+                                className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
                                 placeholder="Teléfono" />
                         </div>
                     </div>
@@ -262,12 +262,12 @@ export default function AgregarPropiedad() {
                     <div className="mb-1 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Arrendatario</p>
-                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Arrendatario" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
                             <p>Rut arrendatario</p>
-                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            <input className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Rut arrendatario" />
                         </div>
                     </div>
@@ -275,7 +275,7 @@ export default function AgregarPropiedad() {
                         <p>Fecha de nacimiento</p>
                         <input
                             value={fechaNacArrendatario} onChange={text => { setFechaNacArrendatario(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                            className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Inicio de contrato" />
                     </div>
                     <div className="mb-1 w-[90%] flex justify-around flex-row">
@@ -283,7 +283,7 @@ export default function AgregarPropiedad() {
                             <p>Correo</p>
                             <input
                                 value={correo} onChange={text => { setCorreo(text.target.value) }}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Correo" />
                         </div>
                         <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
@@ -291,18 +291,18 @@ export default function AgregarPropiedad() {
                             <input
                                 value={telefono}
                                 onChange={text => setTelefono(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
+                                className="appearance-none outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
                                 placeholder="Telefono" />
                         </div>
                     </div>
                     <div className="mb-4 w-[90%] flex flex-col justify-center items-start">
                         <p>Inicio de contrato</p>
-                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                        <input className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Inicio de contrato" />
                     </div>
                     <div className="mb-20 w-[90%] flex flex-col justify-center items-start">
                         <p>Termino de contrato</p>
-                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                        <input className="appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Termino de contrato" />
                     </div>
 
