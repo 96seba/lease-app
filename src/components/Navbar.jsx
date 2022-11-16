@@ -16,7 +16,7 @@ function classNames(...classes) {
 
 function Navbar() {
     return (
-        <Disclosure as="nav" className="bg-[#023E8A] p-0.5">
+        <Disclosure as="nav" className="bg-[#FF6F00] p-0.5">
             {({ open }) => (
                 <>
                     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -52,7 +52,7 @@ function Navbar() {
                                                 key={item.name}
                                                 href={item.href}
                                                 className={classNames(
-                                                    item.current ? ' text-white' : 'text-gray-300 hover:bg-[#03045E] hover:text-white',
+                                                    item.current ? ' text-white' : 'text-gray-300 hover:bg-[#325D79] hover:text-white',
                                                     'px-3 py-2 rounded-md text-sm font-medium'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}

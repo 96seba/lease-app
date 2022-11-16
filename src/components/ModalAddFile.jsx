@@ -73,13 +73,13 @@ export default function ModalGuardar({ open, setOpen }) {
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse flex justify-center items-center sm:px-6">
                                     <button
                                         type="button"
-                                        className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                                        className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-[#98D7D1] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#325D79] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                         onClick={() => checkExtension(file)} >
                                         Guardar
                                     </button>
                                     <button
                                         type="button"
-                                        className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-base font-medium text-teal-600 shadow-sm hover:bg-teal-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                                        className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-base font-medium text-[#98D7D1]shadow-sm hover:bg-[#325D79] hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                         onClick={() => setOpen(false)}
                                     >
                                         Cancelar
