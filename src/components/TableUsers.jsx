@@ -80,7 +80,7 @@ export default function TableUsers({ tableData, openModal }) {
                 backgroundColor: '#FFFFFF',
             },
             highlightOnHoverStyle: {
-                backgroundColor: '#0d9488',
+                backgroundColor: '#023E8A',
             },
         },
         headRow: {
@@ -97,7 +97,7 @@ export default function TableUsers({ tableData, openModal }) {
 
 
     return (
-        <div className='shadow-lg'>
+        <div className='shadow mt-2'>
             <DataTable
                 columns={columnas}
                 data={tableData}

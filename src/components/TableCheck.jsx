@@ -20,7 +20,6 @@ createTheme(
             default: '#FFFFFF',
         },
         button: {
-            hover: '#059669',
             focus: '#059669',
             disabled: '#2C8C99',
         },
@@ -42,7 +41,7 @@ const customStyles = {
             backgroundColor: '#FFFFFF',
         },
         highlightOnHoverStyle: {
-            backgroundColor: '#0d9488',
+            backgroundColor: '#F8A28C',
         },
     },
     headRow: {
@@ -93,7 +92,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
                         }
                     });
                     setDataCheck(newDataCheck)
-                }} className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button> :
+                }} className='bg-[#00ff00] w-20 h-7 rounded active:bg-purple-500 '>Revisado</button> :
                 <button onClick={() => {
                     let newDataCheck = []
                     dataCheck.forEach((element, index) => {
@@ -104,7 +103,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
                         }
                     });
                     setDataCheck(newDataCheck)
-                }} className='bg-red-400 w-20 h-7 rounded active:bg-violet-600 text-white'>No revisado</button>,
+                }} className=' bg-[#ff0000] w-20 h-7 rounded active:bg-violet-600 text-white'>No revisado</button>,
             sortable: true
         },
     ]

@@ -24,7 +24,7 @@ export default function Login() {
     }
 
     return (
-        <div className="w-screen h-[91.5vh] p-6 flex flex-col  justify-center items-center">
+        <div className=" bg-gray-100 w-screen h-[91.5vh] p-6 flex flex-col  justify-center items-center">
             {
                 error === true ?
 
@@ -43,8 +43,8 @@ export default function Login() {
                     </div>
                     : <></>
             }
-            <div className=" bg-white flex justify-center  sm:w-[70%] md:w-[55%] lg:w-[40%]">
-                <div className="bg-white-300 shadow-lg rounded px-8 pt-6 pb-8 m-auto w-full">
+            <div className=" bg-white flex justify-center sm:w-[70%] md:w-[55%] lg:w-[40%]">
+                <div className="bg-white shadow rounded-lg px-8 pt-6 pb-8 m-auto w-full">
                     <div className="mb-4">
                         <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
                             Usuario
@@ -72,7 +72,7 @@ export default function Login() {
 
                                 // navigate('/dashboard')
                             }}
-                            className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" type="button">
+                            className="bg-[#023E8A] hover:bg-[#03045E] text-white font-bold py-2 px-4 rounded" type="button">
                             Iniciar sesion
                         </button>
                         <button className="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#" >

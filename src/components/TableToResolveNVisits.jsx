@@ -81,7 +81,7 @@ const customStyles = {
             backgroundColor: '#FFFFFF',
         },
         highlightOnHoverStyle: {
-            backgroundColor: '#0d9488',
+            backgroundColor: '#F8A28C',
         },
     },
     headRow: {
