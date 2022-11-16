@@ -36,7 +36,11 @@ const customStyles = {
 
     rows: {
         style: {
-            minHeight: '60px', // override the row height
+            minHeight: '60px',
+            backgroundColor: '#FFFFFF',
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#3A4348',
         },
     },
     headCells: {
@@ -54,14 +58,6 @@ const customStyles = {
     head: {
         style: {
             backgroundColor: '#FFFFFF',
-        },
-    },
-    rows: {
-        style: {
-            backgroundColor: '#FFFFFF',
-        },
-        highlightOnHoverStyle: {
-            backgroundColor: '#3A4348',
         },
     },
     headRow: {
@@ -131,7 +127,7 @@ export default function TablePropiedades({ dataProp }) {
 
 
     return (
-        <div className='w-full shadow-sm rounded'>
+        <div className='w-full shadow-sm'>
 
             <DataTable
                 columns={columnas}
