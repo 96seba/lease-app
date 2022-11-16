@@ -17,7 +17,7 @@ export default function Propiedad() {
     useEffect(() => {
         const getData = async () => {
             let data = await location.state.data
-            console.log(data)
+            console.log(data.amounts.length)
             setData(data)
             setAlerts(data.alerts)
             console.log(data.alerts, "asdka")
@@ -51,7 +51,7 @@ export default function Propiedad() {
         return (
             alerts.map((item, index) =>
 
-                <p>{item.id + " " + item.note + " " + item.level}</p>
+                <p key={index}>{item.id + " " + item.note + " " + item.level}</p>
             )
         )
     }
@@ -107,7 +107,7 @@ export default function Propiedad() {
         }
     }
 
-    if (data === {}) {
+    if (data === "") {
         return <></>
     }
     return (
@@ -142,8 +142,8 @@ export default function Propiedad() {
                             <div>
                                 <p>ID: {data.property_id}</p>
                                 <p>Direccion: {data.address}</p>
-                                <p>Dueño:  casablancas</p>
-                                <p>Arrendatario: {data.name} {data.lastname}</p>
+                                <p>Dueño:  {data.owner?.name} {data.owner?.lastname} </p>
+                                <p>Arrendatario: </p>
                                 <p>Nro Piso: 25</p>
                                 <p>Tipo: {data.type_property}</p>
                             </div>
@@ -177,7 +177,7 @@ export default function Propiedad() {
                     <div className="flex flex-col justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
                         <p className='text-lg'>Ultimo pago</p>
                         <p className='text-sm'>Fecha de pago: (FECHA)</p>
-                        <p className='text-sm'>Monto: {data.amount_adm}</p>
+                        <p className='text-sm'>Monto: </p>
                         <p className='text-sm'>Luz: (MONTO)</p>
                         <p className='text-sm'>Agua: (MONTO)</p>
                         <p className='text-sm'>Gas: (MONTO)</p>
@@ -186,9 +186,10 @@ export default function Propiedad() {
                         <p>Contrato</p>
                         <div className='flex w-full h-full'>
                             <div className='flex w-1/2 h-full flex-col '>
-                                <p className='text-sm'>Monto: $ {data.amount_lease}</p>
+
+                                <p className='text-sm'>Monto: $ {data.amounts[0]?.amount_lease}</p>
                                 <p className='text-sm'>Gastos Comunes: (MONTO)</p>
-                                <p className='text-sm'>Comision por administracion: $ {data.amount_adm}</p>
+                                <p className='text-sm'>Comision por administracion: $ {data.amounts[0]?.amount_adm}</p>
 
                             </div>
                             <div className='flex w-1/2 h-full flex-col '>

@@ -38,19 +38,20 @@ const columnas = [
         sortable: true,
         grow: 1
     },
+    {
+        name: 'Arrendador',
+        selector: row => row.owner.name + " " + row.owner.lastname,
+        sortable: true
+    },
     // {
-    //     name: 'Arrendador',
-    //     selector: row => row.owner.name + " " + row.owner.lastname,
-    //     sortable: true
+    //     name: 'Arrendatario',
+    //     selector: row => row.arrendatario,
+    //     sortable: true,
     // },
     {
-        name: 'Arrendatario',
-        selector: row => row.arrendatario,
-        sortable: true,
-    },
-    {
         name: 'Monto',
-        selector: row => "$ " + row.amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+        selector: row => "$ " + row.amounts[0]?.amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+        // selector: row => "$ " + row.amounts[0].amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
         sortable: true
     },
     {
