@@ -31,6 +31,32 @@ createTheme(
     'dark',
 );
 
+const customStyles = {
+    head: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
+    rows: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#3A4348',
+        },
+    },
+    headRow: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
+    pagination: {
+		style: {
+			backgroundColor: '#FFFFFF',
+		},
+	},
+};
+
 const tablaData = [
     {
         mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
@@ -53,27 +79,27 @@ const columnas = [
     },
     {
         name: 'Monto',
-        selector: row => <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
+        selector: row => <button className='bg-[#00ff00] w-20 h-7 rounded active:text-white'>Revisado</button>,
         sortable: true
     },
     {
         name: 'GG.CC',
-        selector: row =>  <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
+        selector: row =>  <button className='bg-[#00ff00] w-20 h-7 rounded active:text-white'>Revisado</button>,
         sortable: true
     },
     {
         name: 'Agua',
-        selector: row => <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
+        selector: row => <button className='bg-[#00ff00] w-20 h-7 rounded active:text-white'>Revisado</button>,
         sortable: true
     },
     {
         name: 'Luz',
-        selector: row => <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
+        selector: row => <button className='bg-[#00ff00] w-20 h-7 rounded  active:text-white'>Revisado</button>,
         sortable: true
     },
     {
         name: 'Gas',
-        selector: row =>  <button className='bg-green-300 w-20 h-7 rounded active:bg-purple-500 active:text-white'>Revisado</button>,
+        selector: row =>  <button className='bg-[#00ff00] w-20 h-7 rounded  active:text-white'>Revisado</button>,
         sortable: true
     },
 ]
@@ -100,7 +126,9 @@ export default function TableBill() {
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
+            highlightOnHover
             theme='solarized'
+            customStyles={customStyles}
             paginationComponentOptions={paginationComponentOptions}
         />
 

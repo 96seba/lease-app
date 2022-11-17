@@ -111,10 +111,10 @@ export default function Propiedad() {
         return <></>
     }
     return (
-        <div className='bg-blue-400'>
-            <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw]  2xl:w-[80vw] shadow-lg bg-red-500 flex-column justify-start items-center p-8">
-                <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh] bg-blue-500 shadow-md ">
-                    <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] bg-green-400">
+        <div className=''>
+            <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[100vw] bg-[#EFEEEE] flex-column justify-start items-center p-8">
+                <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
+                    <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] ">
                         <img alt="propiedad"
                             onLoad={() => {
                                 console.log("SE CARGO")
@@ -122,7 +122,7 @@ export default function Propiedad() {
                             }}
                             className='w-[35vw] h-[40vh] rounded-l' src={fotoUrL} />
                         {loaded === false &&
-                            <div className='w-[33vw] h-[40vh] absolute rounded-l bg-purple-500 flex justify-center items-center' >
+                            <div className='w-[33vw] h-[40vh] absolute rounded-l  flex justify-center items-center' >
                                 <div role="status">
                                     <svg className="inline mr-2 w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
@@ -133,7 +133,7 @@ export default function Propiedad() {
                             </div>
                         }
                     </div>
-                        <div className="flex  justify-between flex-column items-start p-6 w-[27vw] h-[40vh] bg-white ">
+                        <div className="flex  justify-between flex-column items-start p-6 w-[32vw] 2xl:w-[32vw] h-[40vh] bg-white ">
                             <div>
                                 <p>ID: {data.property_id}</p>
                                 <p>Direccion: {data.address}</p>
@@ -176,7 +176,7 @@ export default function Propiedad() {
                         <p className='text-sm'>Agua: (MONTO)</p>
                         <p className='text-sm'>Gas: (MONTO)</p>
                     </div> */}
-                    <div className="flex flex-col p-6 w-[96%] sm:w-[38vw] md:w-[40vw] lg:w-[34vw]  xl:w-[100%]  h-[20vh] bg-slate-200 rounded shadow-md">
+                    <div className="flex flex-col p-6 w-[96%] sm:w-[100%] md:w-[100%] lg:w-[100%]  xl:w-[100%]  h-[20vh] bg-slate-200 rounded shadow-md">
                         <b>Contrato</b>
                         <div className='flex w-full h-full pt-'>
                             <div className='flex w-1/2 h-full flex-col '>

@@ -32,6 +32,33 @@ createTheme(
     'dark',
 );
 
+const customStyles = {
+    head: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
+    rows: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#3A4348',
+        },
+    },
+    headRow: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
+    pagination: {
+		style: {
+			backgroundColor: '#FFFFFF',
+		},
+	},
+};
+
+
 const tablaData = [
     {
         descripcion: "NO PUEDO CREERLO", fechap: "25/02/2021", fechae: "10/03/2021", estado: "Realizada",  anotaciones: "Increible"
@@ -70,7 +97,7 @@ const columnas = [
     },
     {
         name: 'Estado Visita',
-        selector: row => <button className='bg-green-300 w-20 h-7 rounded active:bg-green-600 active:text-white'>Realizada</button>,
+        selector: row => <button className='bg-[#00ff00] w-20 h-7 rounded active:bg-green-600 active:text-white'>Realizada</button>,
         sortable: true
     },
     {
@@ -103,6 +130,8 @@ export default function TableVisits() {
             fixedHeaderScrollHeight='700px'
             pagination
             theme='solarized'
+            customStyles={customStyles}
+            highlightOnHover
             paginationComponentOptions={paginationComponentOptions}
         />
 
