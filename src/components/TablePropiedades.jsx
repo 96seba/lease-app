@@ -92,11 +92,11 @@ const columnas = [
         selector: row => row.owner.name + " " + row.owner.lastname,
         sortable: true
     },
-    // {
-    //     name: 'Arrendatario',
-    //     selector: row => row.arrendatario,
-    //     sortable: true,
-    // },
+    {
+        name: 'Arrendatario',
+        selector: row => row.arrendatario,
+        sortable: true,
+    },
     {
         name: 'Monto',
         selector: row => "$ " + row.amounts[0]?.amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
@@ -127,7 +127,7 @@ export default function TablePropiedades({ dataProp }) {
 
 
     return (
-        <div className='w-full shadow-sm'>
+        <div className='w-full rounded'>
 
             <DataTable
                 columns={columnas}

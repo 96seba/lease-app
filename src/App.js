@@ -19,7 +19,7 @@ function App() {
 				</header>
 
 
-				<div className="flex w-screen overflow-y-hidden
+				<div className="flex w-screen overflow-y-hidden bg-gray-100 
 				 justify-center items-center">
 
 

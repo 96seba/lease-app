@@ -7,24 +7,26 @@ import { API_HOST } from '../utils/constants'
 export default function Propiedad() {
 
     let navigate = useNavigate()
-    const location = useLocation()
+
 
     const [fotoUrL, setFotoUrl] = useState("")
     const [loaded, setLoaded] = useState(false)
 
 
+    const location = useLocation()
+    const getData = async () => {
+
+        let data = await location.state.data
+        console.log(data.amounts.length)
+        setData(data)
+        setAlerts(data.alerts)
+        console.log(data.alerts, "asdka")
+        console.log(data.image?.slice(7, data.image.length))
+        setFotoUrl(API_HOST + data.image.slice(7, data.image.length))
+        document.title = 'Propiedad ' + data.property_id;
+    }
 
     useEffect(() => {
-        const getData = async () => {
-            let data = await location.state.data
-            console.log(data.amounts.length)
-            setData(data)
-            setAlerts(data.alerts)
-            console.log(data.alerts, "asdka")
-            console.log(data.image?.slice(7, data.image.length))
-            setFotoUrl(API_HOST + data.image.slice(7, data.image.length))
-            document.title = 'Propiedad ' + data.property_id;
-        }
         getData()
     }, [])
 
@@ -236,17 +238,23 @@ export default function Propiedad() {
                     </div>
                 </div>
 
+                <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white rounded-lg shadow-sm'>
+                    <div className='w-full'>
+                        <p className='text-lg font-semibold'>Historial de pagos</p>
+                    </div>
+                    <TableBill />
+                </div>
 
-                <div className='flex p-6 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white shadow-md'>
+                {/* <div className='flex p-6 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white shadow-md'>
                     <div className='fles w-full'>
                         <p>Historial de pagos</p>
                     </div>
-                    <TableBill />
+                 
 
-                </div>
-                <div className='flex p-6 flex-col justify-start items-end w-[96%] h-[45vh] bg-white shadow-md'>
-                    <div className='fles w-full'>
-                        <p>Visitas</p>
+                </div> */}
+                <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white rounded-lg shadow-sm'>
+                    <div className='w-full'>
+                        <p className='text-lg font-semibold'>Visitas</p>
                     </div>
 
                     <TableVisits />
