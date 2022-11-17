@@ -1,6 +1,5 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { BsSaveFill } from "react-icons/bs";
 import * as XLSX from 'xlsx'
 
 
@@ -87,10 +86,10 @@ export default function ModalGuardar({ open, setOpen }) {
             <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                 <Transition.Child
                     as={Fragment}
-                    enter="ease-out duration-1000"
+                    enter="ease-out duration-300"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"
-                    leave="ease-in duration-1000"
+                    leave="ease-in duration-300"
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >

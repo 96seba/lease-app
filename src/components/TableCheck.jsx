@@ -51,6 +51,11 @@ const customStyles = {
             backgroundColor: '#FFFFFF',
         },
     },
+    cells: {
+		style: {
+			paddingLeft: '26px',
+		}
+	},
     pagination: {
 		style: {
 			backgroundColor: '#FFFFFF',

@@ -2,12 +2,15 @@ import TablePropiedades from "../components/TablePropiedades"
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { getPropiedades } from "../api/getPropiedades"
+import ModalAddFile from '../components/ModalAddFile';
 
 
 export default function Propiedades() {
 
     let navigate = useNavigate()
     const [dataProp, setDataProp] = useState("")
+
+    const [open, setOpen] = useState(false)
 
 
     useEffect(() => {
@@ -20,23 +23,42 @@ export default function Propiedades() {
     }, [])
 
     return (
-        <div className="bg-white h-[100vh] flex flex-col justify-start items-start p-4  sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw]  2xl:w-[80vw]">
-            <button onClick={() => {
-                navigate("/propiedades/agregarPropiedad")
-            }} className="py-5 flex items-center justify-start px-8 w-3/4 h-[6vh]">
-                <div type="button" className="text-white bg-[#FF6F00] hover:bg-[#3A4348]  focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 ">
-                    <svg aria-hidden="true" className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-                    <span className="sr-only">Icon description</span>
-                </div>
+        <div className="bg-slate-100 h-[100vh] flex flex-col justify-start items-start p-1  
+        sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw] 2xl:w-[80vw]">
 
-                <h2 className="text-2xl">
-                    Agregar propiedad
-                </h2>
-            </button>
+            <div className="flex items-end justify-end w-full h-[10vh] mb-4">
+                <button onClick={() => {
+                    navigate("/propiedades/agregarPropiedad")
+                }}
+                    className="group relative h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">
+                    <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                    <span className="relative group-hover:text-white">Agregar propiedad</span>
+                </button>
+                <button
+                    onClick={() => setOpen(true)}
+                    className="group relative ml-4 h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">
+                    <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                    <span className="relative group-hover:text-white">Subir excel</span>
+                </button>
 
-            <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-start w-[100%] h-[36vh] bg-white shadow-md'>
+                {/* <button onClick={() => {
+                    navigate("/propiedades/agregarPropiedad")
+                }} className="py-5 flex items-center justify-start px-8 w-3/4 h-[6vh]">
+                    <div type="button" className="text-white bg-[#FF6F00] hover:bg-[#3A4348]  focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 ">
+                        <svg aria-hidden="true" className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+                        <span className="sr-only">Icon description</span>
+                    </div>
+
+                    <h2 className="text-2xl">
+                        Agregar propiedad
+                    </h2>
+                </button> */}
+            </div>
+
+
+            <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-start w-[100%] h-[36vh] bg-white rounded-lg shadow-sm'>
                 <div className='w-full'>
-                    <p>Propiedades</p>
+                    <p className='text-lg font-semibold'>Propiedades</p>
                 </div>
                 {dataProp !== "" ?
                     <TablePropiedades dataProp={dataProp} />
@@ -52,6 +74,7 @@ export default function Propiedades() {
                     </div>
                 }
             </div>
+            <ModalAddFile open={open} setOpen={setOpen} />
         </div>
     )
 }
