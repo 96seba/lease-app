@@ -113,8 +113,8 @@ export default function Propiedad() {
         return <></>
     }
     return (
-        <div className=''>
-            <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[100vw] bg-[#EFEEEE] flex-column justify-start items-center p-8">
+        <div className='bg-gray-100 w-[100vw] flex justify-center'>
+            <div className="flex sm:w-[80vw] md:w-[80vw] lg:w-[80vw] xl:w-[80vw]  2xl:w-[80vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
                     <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] ">
                         <img alt="propiedad"
@@ -201,7 +201,7 @@ export default function Propiedad() {
 
                 </div>
 
-                <div className="flex mb-10 bg-white rounded justify-between items-center w-[96%]  ">
+                <div className="flex mb-10  rounded justify-between items-center w-[96%]  ">
                     <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
