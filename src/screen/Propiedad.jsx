@@ -113,8 +113,8 @@ export default function Propiedad() {
         return <></>
     }
     return (
-        <div className=''>
-            <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[100vw] bg-[#EFEEEE] flex-column justify-start items-center p-8">
+        <div className='bg-gray-100 w-[100vw] flex justify-center'>
+            <div className="flex sm:w-[80vw] md:w-[80vw] lg:w-[80vw] xl:w-[80vw]  2xl:w-[80vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
                     <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] ">
                         <img alt="propiedad"
@@ -178,7 +178,7 @@ export default function Propiedad() {
                         <p className='text-sm'>Agua: (MONTO)</p>
                         <p className='text-sm'>Gas: (MONTO)</p>
                     </div> */}
-                    <div className="flex flex-col p-6 w-[96%] sm:w-[100%] md:w-[100%] lg:w-[100%]  xl:w-[100%]  h-[20vh] bg-slate-200 rounded shadow-md">
+                    <div className="flex flex-col p-6 w-[96%] sm:w-[100%] md:w-[100%] lg:w-[100%]  xl:w-[100%]  h-[20vh] bg-white rounded shadow-md">
                         <b>Contrato</b>
                         <div className='flex w-full h-full pt-'>
                             <div className='flex w-1/2 h-full flex-col '>
@@ -201,8 +201,8 @@ export default function Propiedad() {
 
                 </div>
 
-                <div className="flex mb-10 bg-white rounded justify-between items-center w-[96%]  ">
-                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
+                <div className="flex mb-10  rounded justify-between items-center w-[96%]  ">
+                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <input
@@ -210,7 +210,7 @@ export default function Propiedad() {
                                     value={inputLog}
                                     onChange={event => setInputLog(event.target.value)}
                                     type="text"
-                                    id="large-input" className="block p-4 w-full h-10 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                    id="large-input" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#FF6F00] focus:outline-2 sm:text-md " />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
@@ -219,7 +219,7 @@ export default function Propiedad() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw]  xl:w-[30vw]  h-[36vh] bg-slate-200 rounded shadow-md">
+                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw]  xl:w-[30vw]  h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <input
@@ -227,7 +227,7 @@ export default function Propiedad() {
                                     value={inputData}
                                     onChange={event => setInputData(event.target.value)}
                                     type="text"
-                                    id="large-input-data" className="block p-4 w-full h-10 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                    id="large-input-data" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#FF6F00] focus:outline-2 sm:text-md " />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
                                 {alerts !== "" &&
