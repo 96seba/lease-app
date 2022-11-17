@@ -1,6 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable, { createTheme } from 'react-data-table-component';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCloudArrowUp, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
 createTheme(
     'solarized',
@@ -51,10 +53,10 @@ const customStyles = {
         },
     },
     pagination: {
-		style: {
-			backgroundColor: '#FFFFFF',
-		},
-	},
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
 };
 
 
@@ -80,7 +82,9 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TableBoletas({ files }) {
+
+
+export default function TableBoletas({ files, setFile }) {
 
 
 
@@ -97,10 +101,44 @@ export default function TableBoletas({ files }) {
         },
         {
             name: 'Subir boleta',
-            selector: () => <input onChange={e => {
-                console.log(e.target.files[0])
-                files.push(e.target.files[0])
-            }} type="file"></input>,
+            selector: () => {
+                if (files.length === 0) {
+                    return (
+                        <div className="flex justify-center items-center mb-1 h-7 w-44">
+                            <label htmlFor="dropzone-file" className="flex flex-col
+     justify-center items-center w-full h-full bg-gray-50 rounded-lg 
+   cursor-pointer dark:bg-gray-300 dark:hover:bg-[#FF6F00]">
+                                <div className='h-[100%] w-[100%] flex justify-center items-center'>
+                                    <FontAwesomeIcon icon={faCloudArrowUp} />
+                                    <span className='text-sm mx-2'>
+                                        Elige un archivo...
+                                    </span>
+                                    <input id="dropzone-file" onChange={(e) => {
+                                        setFile(current => [e.target.files[0], ...current])
+                                    }} type="file" className="hidden" />
+                                </div>
+                            </label>
+                        </div>
+                    )
+                } else {
+                    return (
+                        <button onClick={() => {
+                            setFile([])
+                        }} className="flex justify-center items-center mb-1 h-7 w-44">
+                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg 
+            cursor-pointer dark:bg-[#00ff00]  dark:hover:bg-slate-200">
+                                <div className='h-[100%] w-[100%] flex justify-center items-center'>
+                                    <FontAwesomeIcon icon={faCircleCheck} />
+                                    <span className='text-sm mx-2'>
+                                        {files[0].name}
+                                    </span>
+
+                                </div>
+                            </label>
+                        </button>
+                    )
+                }
+            },
             sortable: true
         },
         {

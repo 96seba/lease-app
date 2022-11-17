@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import TableBoletas from '../components/TableBoletas'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudArrowUp, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
 export default function Propiedades() {
     const [files, setFile] = useState([])
@@ -12,7 +10,7 @@ export default function Propiedades() {
         <div className="h-[100vh] flex flex-col justify-start items-start p-1  sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw]  2xl:w-[80vw]">
             <div className="flex  items-end justify-end w-full h-[10vh] mb-4 ">
 
-                {
+                {/* {
                     files.length === 0 ?
                         <div className="flex justify-center items-center mb-1 h-7 w-44">
                             <label htmlFor="dropzone-file" className="flex flex-col
@@ -45,7 +43,7 @@ export default function Propiedades() {
                                 </div>
                             </label>
                         </div>
-                }
+                } */}
                 {/* <div className="flex justify-center items-center mb-1 h-7 w-44">
                     <label htmlFor="dropzone-file" className="flex flex-col
                      justify-center items-center w-full h-full bg-gray-50 rounded-lg 
@@ -79,7 +77,7 @@ export default function Propiedades() {
                 <div className='w-full'>
                     <p className='text-lg font-semibold'>Boletas</p>
                 </div>
-                <TableBoletas files={files} />
+                <TableBoletas files={files} setFile={setFile} />
             </div>
         </div>
     )
