@@ -36,11 +36,7 @@ const customStyles = {
 
     rows: {
         style: {
-            minHeight: '60px',
-            backgroundColor: '#FFFFFF',
-        },
-        highlightOnHoverStyle: {
-            backgroundColor: '#3A4348',
+            minHeight: '60px', // override the row height
         },
     },
     headCells: {
@@ -58,6 +54,14 @@ const customStyles = {
     head: {
         style: {
             backgroundColor: '#FFFFFF',
+        },
+    },
+    rows: {
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#3A4348',
         },
     },
     headRow: {

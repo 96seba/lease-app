@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { getPropiedades } from "../api/getPropiedades"
 import ModalAddFile from '../components/ModalAddFile';
-
+import TableDebtors from "../components/TableDebtors";
 
 export default function Propiedades() {
 
@@ -53,12 +53,12 @@ export default function Propiedades() {
                         Agregar propiedad
                     </h2>
                 </button> */}
+
             </div>
 
-
-            <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-start w-[100%] h-[36vh] bg-white rounded-lg shadow-sm'>
+            <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[99%] h-[36vh] bg-white rounded-lg shadow-sm '>
                 <div className='w-full'>
-                    <p className='text-lg font-semibold'>Propiedades</p>
+                    <p className='text-lg font-semibold'>Propiedades a revisar</p>
                 </div>
                 {dataProp !== "" ?
                     <TablePropiedades dataProp={dataProp} />
