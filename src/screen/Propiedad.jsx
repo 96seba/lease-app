@@ -145,6 +145,7 @@ export default function Propiedad() {
                             <p>Tipo: {data.type_property}</p>
                         </div>
                         <div className='w-full '>
+
                             <button onClick={() => {
                                 let nav = `/propiedades/propiedad/editarPropiedad`
                                 navigate(nav, {
@@ -152,14 +153,26 @@ export default function Propiedad() {
                                         data: data
                                     }
                                 })
-                            }} className='bg-slate-200 active:bg-slate-100  w-full justify-center items-center flex rounded'>
-                                Editar propiedad
+                            }}
+                                className="group relative h-12 w-48 overflow-hidden rounded-lg bg-[#FF6F00] text-lg shadow-sm">
+                                <div className="absolute inset-0 w-0 bg-gray-100  group-hover:w-full"></div>
+                                <span className="relative text-white">Editar propiedad</span>
                             </button>
+
                         </div>
                     </div>
                     <div className="flex justify-center flex-col rounded-r p-6 items-start w-[28vw] h-[40vh] bg-white">
-                        <button className='w-full mb-3 h-[4vh] rounded-lg flex justify-center item-center bg-slate-100'>
-                            Ver boletas de honorarios
+                        <button onClick={() => {
+                            let nav = `/propiedades/propiedad/editarPropiedad`
+                            navigate(nav, {
+                                state: {
+                                    data: data
+                                }
+                            })
+                        }}
+                            className="group relative h-12 w-64 mb-2 overflow-hidden rounded-lg bg-[#FF6F00] text-lg shadow-sm">
+                            <div className="absolute inset-0 w-0 bg-gray-100  group-hover:w-full"></div>
+                            <span className="relative text-white">Ver boleta de honorarios</span>
                         </button>
                         <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
                             <p>Dormitorios:(DORMITORIOS)</p>
@@ -204,6 +217,9 @@ export default function Propiedad() {
                     <div className="flex justify-center  items-start p-6 w-[48%] h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
+                                <div className='w-full'>
+                                    <p className='text-lg font-semibold'>Pendientes criticos</p>
+                                </div>
                                 <input
                                     onKeyDown={handleKeyDown}
                                     value={inputLog}
@@ -221,6 +237,9 @@ export default function Propiedad() {
                     <div className="flex justify-center  items-start p-6 w-[48%] h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
+                                <div className='w-full'>
+                                    <p className='text-lg font-semibold'>Anotaciones</p>
+                                </div>
                                 <input
                                     onKeyDown={handleKeyDownData}
                                     value={inputData}

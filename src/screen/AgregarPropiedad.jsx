@@ -42,7 +42,7 @@ export default function AgregarPropiedad() {
 
         console.log(fotoUri)
         const form = new FormData();
-        form.append("id", "1");
+        form.append("id", "23");
         form.append("image", fotoUri);
 
         const options = {
@@ -239,7 +239,6 @@ export default function AgregarPropiedad() {
                                     setFotoUri(e.target.files[0])
 
                                     let fileImg = e.target.files[0]
-                                    fileImg.id = 2333
                                     console.log(fileImg)
                                 }} type="file" className="hidden" />
                             </label>
@@ -258,8 +257,8 @@ export default function AgregarPropiedad() {
                             type="button"
                             className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                             onClick={() => {
-                                addPropiedad()
-                                // uploadImage()
+                                // addPropiedad()
+                                uploadImage()
                                 // setOpen(true)
                             }}
                         >
