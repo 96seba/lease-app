@@ -253,9 +253,12 @@ export default function AgregarPropiedad() {
                                 </div>
 
                                 <input id="dropzone-file" onChange={(e) => {
-                                    console.log(e.target.files[''])
                                     setFoto(e.target.files[0].name)
                                     setFotoUri(e.target.files[0])
+
+                                    let fileImg = e.target.files[0]
+                                    fileImg.id = 2333
+                                    console.log(fileImg)
                                 }} type="file" className="hidden" />
                             </label>
                         </div>

@@ -62,7 +62,46 @@ const tablaData = [
         mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
         agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
     },
-
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
+    {
+        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
+        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
+    },
 ]
 
 

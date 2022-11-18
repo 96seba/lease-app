@@ -60,17 +60,6 @@ const customStyles = {
 };
 
 
-const tablaData = [
-    {
-        id: "1", costoadministracion: "$92.000", nroboleta: "20", nroboletaanterior: "14",
-    },
-    {
-        id: "2", costoadministracion: "$100.000", nroboleta: "13", nroboletaanterior: "8",
-    },
-    {
-        id: "3", costoadministracion: "$98.000", nroboleta: "10", nroboletaanterior: "15",
-    },
-]
 
 
 
@@ -84,7 +73,9 @@ const paginationComponentOptions = {
 
 
 
-export default function TableBoletas({ files, setFile }) {
+export default function TableBoletas({ files, setFile, tablaData }) {
+
+
 
 
 
@@ -92,64 +83,80 @@ export default function TableBoletas({ files, setFile }) {
         {
             name: 'ID Propiedad',
             selector: row => row.id,
-            sortable: true
+            sortable: true,
+            width: "9vw",
+            center: true
         },
         {
             name: 'Costo por administración',
             selector: row => row.costoadministracion,
-            sortable: true
+            sortable: true,
+            center: true
         },
         {
             name: 'Subir boleta',
-            selector: () => {
-                if (files.length === 0) {
+            selector: (row, index) => {
+                let result = files.filter(file => file.id === index)
+                if (result.length !== 0) {
+                    return (
+                        <button onClick={() => {
+                            setFile(current =>
+                                current.filter(file => {
+                                    console.log(file.id, index)
+                                    return file.id !== index;
+                                }),
+                            );
+
+                        }} className="flex justify-center items-center mb-1 h-7 w-44">
+                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg 
+                cursor-pointer dark:bg-[#00ff00]  dark:hover:bg-[#ff0000]">
+                                <div className='h-[100%] w-[100%] flex justify-start pl-4 items-center'>
+                                    <FontAwesomeIcon icon={faCircleCheck} />
+                                    <span className='text-sm mx-2'>
+                                        {result[0].name}
+                                    </span>
+                                </div>
+                            </label>
+                        </button>
+                    )
+                } else {
                     return (
                         <div className="flex justify-center items-center mb-1 h-7 w-44">
-                            <label htmlFor="dropzone-file" className="flex flex-col
-     justify-center items-center w-full h-full bg-gray-50 rounded-lg 
-   cursor-pointer dark:bg-gray-300 dark:hover:bg-[#FF6F00]">
-                                <div className='h-[100%] w-[100%] flex justify-center items-center'>
+                            <label htmlFor={"dropzone-file" + index} className="flex flex-col 
+                            justify-center items-center w-full h-full bg-gray-50 rounded-lg 
+                     cursor-pointer dark:bg-gray-300 dark:hover:bg-[#FF6F00]">
+                                <div className='h-[100%] w-[100%] flex justify-start pl-4 items-center'>
                                     <FontAwesomeIcon icon={faCloudArrowUp} />
                                     <span className='text-sm mx-2'>
                                         Elige un archivo...
                                     </span>
-                                    <input id="dropzone-file" onChange={(e) => {
-                                        setFile(current => [e.target.files[0], ...current])
+                                    <input id={"dropzone-file" + index} onChange={(e) => {
+                                        let file = e.target.files[0]
+                                        file.id = index
+                                        console.log(file, index)
+                                        setFile(current => [...current, file])
                                     }} type="file" className="hidden" />
                                 </div>
                             </label>
                         </div>
                     )
-                } else {
-                    return (
-                        <button onClick={() => {
-                            setFile([])
-                        }} className="flex justify-center items-center mb-1 h-7 w-44">
-                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg 
-            cursor-pointer dark:bg-[#00ff00]  dark:hover:bg-slate-200">
-                                <div className='h-[100%] w-[100%] flex justify-center items-center'>
-                                    <FontAwesomeIcon icon={faCircleCheck} />
-                                    <span className='text-sm mx-2'>
-                                        {files[0].name}
-                                    </span>
-
-                                </div>
-                            </label>
-                        </button>
-                    )
                 }
             },
-            sortable: true
+            sortable: true,
+            width: "26vw",
+            center: true
         },
         {
             name: 'Nro de boleta',
             selector: row => row.nroboleta,
             sortable: true,
+            center: true
         },
         {
             name: 'Nro de boleto anterior',
             selector: row => row.nroboletaanterior,
-            sortable: true
+            sortable: true,
+            center: true
         },
     ]
 

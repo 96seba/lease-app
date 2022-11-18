@@ -114,7 +114,7 @@ export default function Propiedad() {
     }
     return (
         <div className='bg-gray-100 w-[100vw] flex justify-center'>
-            <div className="flex sm:w-[80vw] md:w-[80vw] lg:w-[80vw] xl:w-[80vw]  2xl:w-[80vw] bg-gray-100 flex-column justify-start items-center p-8">
+            <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[80vw]  2xl:w-[75vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
                     <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] ">
                         <img alt="propiedad"
@@ -135,39 +135,39 @@ export default function Propiedad() {
                             </div>
                         }
                     </div>
-                        <div className="flex  justify-between flex-column items-start p-6 w-[32vw] 2xl:w-[32vw] h-[40vh] bg-white ">
-                            <div>
-                                <p>ID: {data.property_id}</p>
-                                <p>Direccion: {data.address}</p>
-                                <p>Dueño:  {data.owner?.name} {data.owner?.lastname} </p>
-                                <p>Arrendatario: </p>
-                                <p>Nro Piso: 25</p>
-                                <p>Tipo: {data.type_property}</p>
-                            </div>
-                            <div className='w-full '>
-                                <button onClick={() => {
-                                    let nav = `/propiedades/propiedad/editarPropiedad`
-                                    navigate(nav, {
-                                        state: {
-                                            data: data
-                                        }
-                                    })
-                                }} className='bg-slate-200 active:bg-slate-100  w-full justify-center items-center flex rounded'>
-                                    Editar propiedad
-                                </button>
-                            </div>
+                    <div className="flex  justify-between flex-column items-start p-6 w-[32vw] 2xl:w-[32vw] h-[40vh] bg-white ">
+                        <div>
+                            <p>ID: {data.property_id}</p>
+                            <p>Direccion: {data.address}</p>
+                            <p>Dueño:  {data.owner?.name} {data.owner?.lastname} </p>
+                            <p>Arrendatario: </p>
+                            <p>Nro Piso: 25</p>
+                            <p>Tipo: {data.type_property}</p>
                         </div>
-                        <div className="flex justify-center flex-col rounded-r p-6 items-start w-[28vw] h-[40vh] bg-white">
-                            <button className='w-full mb-3 h-[4vh] rounded-lg flex justify-center item-center bg-slate-100'>
-                                Ver boletas de honorarios
+                        <div className='w-full '>
+                            <button onClick={() => {
+                                let nav = `/propiedades/propiedad/editarPropiedad`
+                                navigate(nav, {
+                                    state: {
+                                        data: data
+                                    }
+                                })
+                            }} className='bg-slate-200 active:bg-slate-100  w-full justify-center items-center flex rounded'>
+                                Editar propiedad
                             </button>
-                            <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
-                                <p>Dormitorios:(DORMITORIOS)</p>
-                                <p>Baños: (Baños)</p>
-                                <p>Estacionamiento: {parseAvaliable(data.parking)}</p>
-                                <p>Bodega: {parseAvaliable(data.cellar)}</p>
-                            </div>
                         </div>
+                    </div>
+                    <div className="flex justify-center flex-col rounded-r p-6 items-start w-[28vw] h-[40vh] bg-white">
+                        <button className='w-full mb-3 h-[4vh] rounded-lg flex justify-center item-center bg-slate-100'>
+                            Ver boletas de honorarios
+                        </button>
+                        <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
+                            <p>Dormitorios:(DORMITORIOS)</p>
+                            <p>Baños: (Baños)</p>
+                            <p>Estacionamiento: {parseAvaliable(data.parking)}</p>
+                            <p>Bodega: {parseAvaliable(data.cellar)}</p>
+                        </div>
+                    </div>
                 </div>
                 <div className="flex mb-10 bg-blue-500 rounded items-center max-w-full w-[96%]">
                     {/* <div className="flex flex-col justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
@@ -178,22 +178,21 @@ export default function Propiedad() {
                         <p className='text-sm'>Agua: (MONTO)</p>
                         <p className='text-sm'>Gas: (MONTO)</p>
                     </div> */}
-                    <div className="flex flex-col p-6 w-[96%] sm:w-[100%] md:w-[100%] lg:w-[100%]  xl:w-[100%]  h-[20vh] bg-white rounded shadow-md">
-                        <b>Contrato</b>
+                    <div className="flex flex-col p-6 w-[96%] sm:w-[100%] md:w-[100%] lg:w-[100%]  xl:w-[100%]  h-[12vh] bg-white rounded shadow-md">
+                        <b className='mb-2'>Contrato</b>
                         <div className='flex w-full h-full pt-'>
                             <div className='flex w-1/2 h-full flex-col '>
-
-                                <p className='text-sm'>Monto: $ {data.amounts[0]?.amount_lease}</p>
-                                <p className='text-sm'>Gastos Comunes: (MONTO)</p>
-                                <p className='text-sm'>Comision por administracion: $ {data.amounts[0]?.amount_adm}</p>
-
+                                <p className='text-sm'>Monto de arriendo: $ {data.amounts[0]?.amount_lease}</p>
                             </div>
                             <div className='flex w-1/2 h-full flex-col '>
                                 <div>
-                                    <p className='text-sm'>Inicio de contrato: (FECHA)</p>
-                                    <p className='text-sm'>Termino de contrato: (FECHA)</p>
-                                    <p className='text-sm'>Proximo pago: (Fecha)</p>
+                                    <p className='text-sm'>Comision por administracion: $ {data.amounts[0]?.amount_adm}</p>
                                 </div>
+                            </div>
+                            <div className='flex w-1/2 h-full flex-col '>
+
+                                <p className='text-sm'>Inicio: 25/22/2222 - Termino : 25/22/2222</p>
+                                {/* <p className='text-sm'>Termino de contrato: (FECHA)</p> */}
 
                             </div>
                         </div>
@@ -202,7 +201,7 @@ export default function Propiedad() {
                 </div>
 
                 <div className="flex mb-10  rounded justify-between items-center w-[96%]  ">
-                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-white rounded shadow-md">
+                    <div className="flex justify-center  items-start p-6 w-[48%] h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <input
@@ -210,7 +209,7 @@ export default function Propiedad() {
                                     value={inputLog}
                                     onChange={event => setInputLog(event.target.value)}
                                     type="text"
-                                    id="large-input" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#FF6F00] focus:outline-2 sm:text-md " />
+                                    id="large-input" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-gray-400 focus:outline-2 sm:text-md " />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
@@ -219,7 +218,7 @@ export default function Propiedad() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw] lg:w-[34vw]  xl:w-[30vw]  h-[36vh] bg-white rounded shadow-md">
+                    <div className="flex justify-center  items-start p-6 w-[48%] h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <input
@@ -227,7 +226,7 @@ export default function Propiedad() {
                                     value={inputData}
                                     onChange={event => setInputData(event.target.value)}
                                     type="text"
-                                    id="large-input-data" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#FF6F00] focus:outline-2 sm:text-md " />
+                                    id="large-input-data" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-gray-400 focus:outline-2 sm:text-md " />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
                                 {alerts !== "" &&
