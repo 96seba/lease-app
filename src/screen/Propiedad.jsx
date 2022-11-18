@@ -210,7 +210,7 @@ export default function Propiedad() {
                                     value={inputLog}
                                     onChange={event => setInputLog(event.target.value)}
                                     type="text"
-                                    id="large-input" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#FF6F00] focus:outline-2 sm:text-md " />
+                                    id="large-input" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md " />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
@@ -227,7 +227,7 @@ export default function Propiedad() {
                                     value={inputData}
                                     onChange={event => setInputData(event.target.value)}
                                     type="text"
-                                    id="large-input-data" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#FF6F00] focus:outline-2 sm:text-md " />
+                                    id="large-input-data" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md " />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
                                 {alerts !== "" &&
