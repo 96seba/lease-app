@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: false },
@@ -15,6 +15,9 @@ function classNames(...classes) {
 }
 
 function Navbar() {
+
+    let navigate = useNavigate()
+
     return (
         <Disclosure as="nav" className="bg-[#FF6F00] p-0.5">
             {({ open }) => (
@@ -48,17 +51,20 @@ function Navbar() {
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">
                                         {navigation.map((item) => (
-                                            <a
+                                            <button
                                                 key={item.name}
+                                                onClick={() => {
+                                                    navigate(item.href)
+                                                }}
                                                 href={item.href}
                                                 className={classNames(
-                                                    item.current ? ' text-white' : 'text-gray-300 hover:bg-[#3a4348] hover:text-white',
+                                                    item.current ? ' text-white' : 'text-white hover:bg-[#3a4348] hover:text-white',
                                                     'px-3 py-2 rounded-md text-sm font-medium'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}
                                             >
                                                 {item.name}
-                                            </a>
+                                            </button>
                                         ))}
                                     </div>
                                 </div>
