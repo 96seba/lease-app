@@ -100,29 +100,29 @@ export default function AgregarPropiedad() {
                 }
 
                 <div className='w-1/2 h-full flex flex-col justify-start items-center'>
-                    <p className="flex my-4 text-xl">
+                    <p className="flex mb-[7.3vh] mt-4 text-xl">
                         Datos de la propiedad
                     </p>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={id} onChange={text => { setId(text.target.value) }}
-                            className="bg-gray-100 appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="bg-gray-100 appearance-none outline-[023E8A] border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Id" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start py-2">
                         <input
                             value={direccion} onChange={text => { setDireccion(text.target.value) }}
-                            className=" bg-gray-100 appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className=" bg-gray-100 appearance-none outline-[023E8A] border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Direccion" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
-                        <p>Tipo</p>
+                        <p className='font-medium'>Tipo</p>
                         <select
                             onChange={e => {
                                 console.log(e.target.value)
                                 setTipo(e.target.value)
                             }}
-                            className="bg-gray-100 appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker">
+                            className="bg-gray-100 appearance-none outline-[023E8A] border  h-[4vh]  rounded-sm w-[95%]  px-3 text-grey-darker">
                             <option value="Casa">Casa</option>
                             <option value="Depto">Depto</option>
                             <option value="Oficina">Oficina</option>
@@ -134,7 +134,7 @@ export default function AgregarPropiedad() {
                             onChange={e => {
                                 setNroPiso(Number(e.target.value))
                             }}
-                            className="bg-gray-100 appearance-none outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="bg-gray-100 appearance-none outline-[023E8A] border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Nro piso" />
                     </div>
                     <div className="py-2 w-[90%]">
@@ -151,77 +151,77 @@ export default function AgregarPropiedad() {
                             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Bodega</span>
                         </label>
                     </div>
-                    <div className="w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
+                    <div className="w-[90%] mb-3 flex justify-around flex-row">
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={baños} onChange={text => setBaños(text.target.value)}
-                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] px-3 text-grey-darker" id="username" type="number" min={0}
+                                className="appearance-none bg-gray-100 outline-[023E8A] border  h-[4vh]  rounded-sm w-[90%] px-3 text-grey-darker" id="username" type="number" min={0}
                                 placeholder="Baños" />
                         </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={dormitorios} onChange={text => setDormitorios(text.target.value)}
-                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] px-3 text-grey-darker" id="username" type="number" min={0}
+                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[90%] px-3 text-grey-darker" id="username" type="number" min={0}
                                 placeholder="Dormitorios" />
                         </div>
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={monto} onChange={text => { setMonto(text.target.value) }}
-                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="appearance-none bg-gray-100 outline-[023E8A] border  h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Monto" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={administracion} onChange={text => { setAdministracion(text.target.value) }}
-                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="appearance-none bg-gray-100 outline-[023E8A] border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Comision por administracion" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Gastos comunes" />
                     </div>
-                    <b>Datos Arrendador</b>
-                    <div className="mb-1 w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
+                    <b className='mb-3'>Datos Arrendador</b>
+                    <div className="mb-3 w-[90%] flex justify-around flex-row">
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={nombreArrendador} onChange={text => setNombreArrendador(text.target.value)}
-                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Nombre" />
                         </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={apellidoArrendador} onChange={text => setApellidoArrendador(text.target.value)}
-                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Apellido" />
                         </div>
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={rutArrendador} onChange={text => { setRutArrendador(text.target.value) }}
-                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Rut" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <p>Fecha de nacimiento</p>
+                        <p className='font-medium'>Fecha de nacimiento</p>
                         <input
                             value={fechaNacArrendador} onChange={text => { setFechaNacArrendador(text.target.value) }}
-                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[95%]  px-3 text-grey-darker" id="username" type="date"
                             placeholder="Inicio de contrato" />
                     </div>
 
                     <div className="mb-4 w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={correo} onChange={text => { setCorreo(text.target.value) }}
-                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Correo" />
                         </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={telefono}
                                 onChange={text => setTelefono(text.target.value)}
-                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
+                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
                                 placeholder="Teléfono" />
                         </div>
                     </div>
@@ -252,7 +252,7 @@ export default function AgregarPropiedad() {
                                 className='bg-teal-300 w-2/4 rounded-lg h-[10%] hover:bg-red-600  hover:text-white active:bg-blue-600'>Eliminar foto</button>
                         </div>
                     }
-                    <div className='flex justify-center items-center h-[10vh] border-t-2 w-[90%] '>
+                    <div className='flex justify-center items-center h-[10vh] w-[90%]'>
                         <button
                             type="button"
                             className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
@@ -270,52 +270,52 @@ export default function AgregarPropiedad() {
                     <p className="flex my-4 text-xl">
                         Contrato
                     </p>
-                    <b>Datos Arrendatario</b>
-                    <div className="mb-1 w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                    <b className='mb-3'>Datos Arrendatario</b>
+                    <div className="mb-3 w-[90%] flex justify-around flex-row">
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
+                            <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Nombre" />
                         </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
+                            <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Apellido" />
                         </div>
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
-                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
                             placeholder="Rut" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <p>Fecha de nacimiento</p>
+                        <p className='font-medium'>Fecha de nacimiento</p>
                         <input
                             value={fechaNacArrendatario} onChange={text => { setFechaNacArrendatario(text.target.value) }}
-                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                            className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Inicio de contrato" />
                     </div>
-                    <div className="mb-1 w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
+                    <div className="mb-3 w-[90%] flex justify-around flex-row">
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={correo} onChange={text => { setCorreo(text.target.value) }}
-                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
                                 placeholder="Correo" />
                         </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={telefono}
                                 onChange={text => setTelefono(text.target.value)}
-                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
+                                className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
                                 placeholder="Telefono" />
                         </div>
                     </div>
                     <div className="mb-4 w-[90%] flex flex-col justify-center items-start">
-                        <p>Inicio de contrato</p>
-                        <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                        <p className='font-medium'>Inicio de contrato</p>
+                        <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Inicio de contrato" />
                     </div>
                     <div className="mb-20 w-[90%] flex flex-col justify-center items-start">
-                        <p>Termino de contrato</p>
-                        <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
+                        <p className='font-medium'>Termino de contrato</p>
+                        <input className="appearance-none bg-gray-100 outline-[023E8A] border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
                             placeholder="Termino de contrato" />
                     </div>
                     <div className='flex justify-center items-center h-[10vh] border-t-2 w-[90%] '>
