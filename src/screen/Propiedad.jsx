@@ -154,9 +154,7 @@ export default function Propiedad() {
                                     }
                                 })
                             }}
-                                className="group relative h-12 w-48 overflow-hidden rounded-lg bg-[#FF6F00] text-lg shadow-sm">
-                                <div className="absolute inset-0 w-0 bg-gray-100  group-hover:w-full"></div>
-                                <span className="relative text-white">Editar propiedad</span>
+                                className="group relative h-12 w-48 overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm">Editar Propiedad
                             </button>
 
                         </div>
@@ -170,9 +168,7 @@ export default function Propiedad() {
                                 }
                             })
                         }}
-                            className="group relative h-12 w-64 mb-2 overflow-hidden rounded-lg bg-[#FF6F00] text-lg shadow-sm">
-                            <div className="absolute inset-0 w-0 bg-gray-100  group-hover:w-full"></div>
-                            <span className="relative text-white">Ver boleta de honorarios</span>
+                            className="group relative h-12 w-full mb-2 overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm " >Ver boleta 
                         </button>
                         <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
                             <p>Dormitorios:(DORMITORIOS)</p>
