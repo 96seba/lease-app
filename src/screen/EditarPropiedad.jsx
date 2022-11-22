@@ -308,7 +308,7 @@ export default function EditarPropiedad() {
 
 
 
-                <div className='w-1/2 h-full flex flex-col border-l-2   justify-start items-center '>
+                <div className='w-1/2 h-full flex flex-col border-l-2 justify-start items-center '>
                     <p className="flex my-4 text-xl">
                         Contrato
                     </p>
