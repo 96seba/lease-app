@@ -125,7 +125,6 @@ export default function TablePropiedades({ dataProp }) {
     let navigate = useNavigate()
 
     React.useEffect(() => {
-
         console.log(dataProp)
     }, [])
 

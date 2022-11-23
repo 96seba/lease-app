@@ -3,28 +3,30 @@ import React, { useState } from 'react'
 
 
 
-export default function ArrendatarioFinder() {
+export default function ArrendatarioFinder({ selected, setSelected }) {
 
     const [buscar, setBuscar] = useState("")
 
+
+
     const [data, setData] = useState([
-        { rut: 205916326, name: "Julian Casablancas" },
-        { rut: 204316326, name: "Padre Casablancas" },
-        { rut: 205923326, name: "Main Casablancas" },
-        { rut: 204568355, name: "Reberto Casablancas" },
-        { rut: 205978626, name: "Sebastian Acosta Cruz" },
-        { rut: 205916321, name: "Julian Casablancas" },
-        { rut: 264354322, name: "Jul Cas" }
+        { id: 1, rut: 205916326, name: "Julian Casablancas" },
+        { id: 2, rut: 204316326, name: "Padre Casablancas" },
+        { id: 3, rut: 205923326, name: "Main Casablancas" },
+        { id: 4, rut: 204568355, name: "Reberto Casablancas" },
+        { id: 5, rut: 205978626, name: "Sebastian Acosta Cruz" },
+        { id: 6, rut: 205916321, name: "Julian Casablancas" },
+        { id: 7, rut: 264354322, name: "Jul Cas" }
     ])
 
     const [tablaArrendatarios, setTableArrendatarios] = useState([
-        { rut: 205916326, name: "Julian Casablancas" },
-        { rut: 204316326, name: "Padre Casablancas" },
-        { rut: 205923326, name: "Main Casablancas" },
-        { rut: 204568355, name: "Reberto Casablancas" },
-        { rut: 205978626, name: "Sebastian Acosta Cruz" },
-        { rut: 205916321, name: "Julian Casablancas" },
-        { rut: 264354322, name: "Jul Cas" }
+        { id: 1, rut: 205916326, name: "Julian Casablancas" },
+        { id: 2, rut: 204316326, name: "Padre Casablancas" },
+        { id: 3, rut: 205923326, name: "Main Casablancas" },
+        { id: 4, rut: 204568355, name: "Reberto Casablancas" },
+        { id: 5, rut: 205978626, name: "Sebastian Acosta Cruz" },
+        { id: 6, rut: 205916321, name: "Julian Casablancas" },
+        { id: 7, rut: 264354322, name: "Jul Cas" }
     ])
 
     const filtrar = (terminoBusqueda) => {
@@ -48,16 +50,21 @@ export default function ArrendatarioFinder() {
                     setBuscar(e.target.value)
                 }}
                 id="username"
-                placeholder="Rut"
+                placeholder="Rut o nombre"
             />
 
-            <div className='flex mb-4 justify-start items-start  flex-col w-[85%] h-[16vh] bg-slate-200'>
+            <div className='flex mb-4 justify-start items-start  flex-col w-[84%] h-[16vh] bg-slate-200'>
                 <div className='h-auto overflow-auto w-full'>
 
                     {data.map((user, index) => (
                         <button key={index}
-                            className='bg-gray-100 w-full  h-[5vh] flex justify-start items-center  px-4 hover:bg-gray-200'
-                        >{user.name}</button>
+                            onClick={e => {
+                                console.log(user)
+                                setSelected(user)
+                            }}
+                            className={` w-full  h-[5vh] flex justify-start items-center  px-4 
+                            ${selected === user ? 'bg-[#FF6F00] text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
+                        > {user.rut} - {user.name} </button>
                     ))}
 
 
@@ -66,7 +73,7 @@ export default function ArrendatarioFinder() {
                 </div>
 
             </div>
-        </div>
+        </div >
     )
 
 

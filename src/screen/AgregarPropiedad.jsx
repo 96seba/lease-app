@@ -33,19 +33,34 @@ export default function AgregarPropiedad() {
         telefono: ""
     })
 
-    const [correo, setCorreo] = useState("")
-    const [telefono, setTelefono] = useState("")
-    const [nombreArrendador, setNombreArrendador] = useState("")
-    const [apellidoArrendador, setApellidoArrendador] = useState("")
-    const [rutArrendador, setRutArrendador] = useState("")
+    //* Datos arrendatario
+
+    const [arrendatario, setArrendatario] = useState({
+        nombre: "",
+        apellido: "",
+        rut: "",
+        fechaNacArrendatario: "",
+        correo: "",
+        telefono: ""
+    })
+
+    //* Datos contrato
+
+    const [inicioContrato, setInicioContrato] = useState("")
+    const [terminoContrato, setTerminoContrato] = useState("")
+
+    const [arrendadorIncomplete, setArrendadorIncomplete] = useState(false)
+    const [arrendatarioIncomplete, setArrendatarioIncomplete] = useState(false)
+    const [contratoIncomplete, setContratoIncomplete] = useState(false)
+
+    const [selected, setSelected] = useState("")
 
     const [monto, setMonto] = useState("")
     const [administracion, setAdministracion] = useState("")
     const [ggcc, setGgcc] = useState("")
-    const [fechaNacArrendador, setFechaNacArrendador] = useState("")
-    const [fechaNacArrendatario, setFechaNacArrendatario] = useState("")
 
-    const [tipo, setTipo] = useState("Depto")
+
+    const [tipo, setTipo] = useState("Tipo")
 
     const [newContrato, setNewContrato] = useState(false)
     const [newArrendatario, setNewArrendatario] = useState(false)
@@ -56,7 +71,7 @@ export default function AgregarPropiedad() {
     const inputRef = useRef(null)
 
     useEffect(() => {
-        document.title = 'Agrega una propiedad';
+        document.title = 'Agrega una propiedad'
     }, []);
 
     const uploadImage = async () => {
@@ -81,58 +96,126 @@ export default function AgregarPropiedad() {
 
     const addPropiedad = async () => {
 
-
-        // console.log(error)
-
-        if (id.length === 0 || direccion.length === 0 || monto.length === 0 || administracion.length === 0) {
+        if (id.length === 0 || direccion.length === 0 || monto.length === 0 || administracion.length === 0 || tipo === "Tipo") {
             setError(true)
             inputRef.current?.scrollIntoView({ behavior: 'smooth' })
         } else {
-            let date = new Date(fechaNacArrendador)
-            let obj = {}
-            let objClean = {}
-            obj.property_id = id
-            obj.address = direccion
-            obj.amount_lease = Number(monto)
-            obj.amount_adm = Number(administracion)
-            obj.type_property = tipo
-            obj.rut = rutArrendador
-            obj.name = nombreArrendador
-            obj.lastname = apellidoArrendador
-            obj.email = correo
-            obj.phone = telefono
-            obj.bedrooms = dormitorios
-            obj.bathrooms = baños
-            obj.floor = nroPiso
-            // obj.cellar = bodega
-            // obj.parking = estacionamiento
+            //* Se revisa si el objeto de arrendador tiene algun campo sin completar
 
-            if (fechaNacArrendador !== "") {
-                obj.birthday = date?.toISOString()
-            }
-
-
-            for (const property in obj) {
-                let prop = String(`${obj[property]}`)
-                let propName = `${property}`
-                if (prop.length !== 0) {
-                    let isnum = /^\d+$/.test(prop);
-                    console.log(propName, prop, isnum)
-                    if (isnum === true && propName !== 'property_id') {
-                        objClean[propName] = Number(prop)
-                    } else {
-                        objClean[propName] = prop
-                    }
-
+            let contArrendador = 0
+            for (var key in arrendador) {
+                if (arrendador[key] === "") {
+                    contArrendador += 1
                 }
             }
 
-            objClean.type_property = tipo
+            if (contArrendador > 0 && contArrendador < 6) {
+                //* Se ingreso un dato, pero los demas estan vacios
+                setArrendadorIncomplete(true)
+            }
+            else if (contArrendador === 0 || contArrendador === 6) {
+                //* Bien hecho, llenaste todos los campos o no llenaste ninguno wtff
+                setArrendadorIncomplete(false)
+                var objContrato = {}
+                var contArrendatario = 0
+                if (newContrato === true) {
+                    if (inicioContrato !== "" && terminoContrato !== "") {
+                        //* El contrato tiene los datos bien
+                        console.log("El contrato tiene los datos bien")
+                        let init = new Date(inicioContrato)
+                        let endy = new Date(terminoContrato)
+                        objContrato.initial_date = init.toISOString()
+                        objContrato.end_date = endy.toISOString()
 
-            console.log(objClean)
-            const resp = await createPropiedad(objClean)
-            console.log(resp)
+                        console.log(objContrato)
+                    } else {
+                        //*El contrato tiene los datos incompletos
+                        console.log("El contrato no tiene los datos buenos")
+                        setContratoIncomplete(true)
+                    }
 
+                    if (newArrendatario === true) {
+                        //*El contrato esta abierto 
+                        console.log("ES CON ARRENDATARIO NUEVO PARGELA")
+                        for (var key in arrendatario) {
+                            if (arrendatario[key] === "") {
+                                contArrendatario += 1
+                                console.log(arrendatario[key])
+                            }
+                        }
+
+                        if (contArrendatario !== 0) {
+                            //* Arrendatario  incompleto dios mio 
+                            setArrendatarioIncomplete(true)
+                        } else if (contArrendatario === 0) {
+                            objContrato.rut = arrendatario.rut
+                            objContrato.name = arrendatario.nombre
+                            objContrato.lastname = arrendatario.apellido
+                            objContrato.email = arrendatario.correo
+                            objContrato.phone = arrendatario.telefono
+                        }
+                        console.log(objContrato)
+                    } else {
+                        console.log("ES CON ARRENDATARIO YA creado")
+
+                        objContrato.leaseholderId = selected.id
+                        console.log(objContrato)
+                    }
+
+                    console.log("El contrato esta activo god")
+                } else if (newContrato === false) {
+                    console.log("El contrato no esta activo lolaso")
+                }
+
+                let date = new Date(arrendador.fechaNacArrendador)
+
+                //* Objeto para agregar todos los input
+                let obj = {}
+                //* Objeto limpio de inputs vacios
+                let objClean = {}
+
+                //* Se agregan todos los inputs al objeto (obj)
+                obj.property_id = id
+                obj.address = direccion
+                obj.amount_lease = Number(monto)
+                obj.amount_adm = Number(administracion)
+                obj.type_property = tipo
+                obj.rut = arrendador.rut
+                obj.name = arrendador.nombre
+                obj.lastname = arrendador.apellido
+                obj.email = arrendador.correo
+                obj.phone = arrendador.telefono
+                obj.bedrooms = dormitorios
+                obj.bathrooms = baños
+                obj.floor = nroPiso
+                obj.cellar = bodega
+                obj.parking = estacionamiento
+
+                // if (arrendador.fechaNacArrendador !== "") {
+                //     obj.birthday = date.toISOString()
+                // }
+
+                // for (const property in obj) {
+                //     let prop = String(`${obj[property]}`)
+                //     let propName = `${property}`
+                //     if (prop.length !== 0) {
+                //         let isnum = /^\d+$/.test(prop);
+                //         console.log(propName, prop, isnum)
+                //         if (isnum === true && propName !== 'property_id') {
+                //             objClean[propName] = Number(prop)
+                //         } else {
+                //             objClean[propName] = prop
+                //         }
+
+                //     }
+                // }
+
+                // objClean.type_property = tipo
+
+                // console.log(objClean)
+                // const resp = await createPropiedad(objClean)
+                // console.log(resp)
+            }
         }
 
 
@@ -190,7 +273,9 @@ export default function AgregarPropiedad() {
                                 console.log(e.target.value)
                                 setTipo(e.target.value)
                             }}
-                            className="bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[95%]  px-3 text-grey-darker">
+                            className={`bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[95%]  px-3 text-grey-darker
+                            ${error && tipo === 'Tipo' && " outline outline-2 outline-red-300"}`}>
+                            <option value="Tipo">Tipo</option>
                             <option value="Casa">Casa</option>
                             <option value="Depto">Depto</option>
                             <option value="Oficina">Oficina</option>
@@ -202,7 +287,7 @@ export default function AgregarPropiedad() {
                             onChange={e => {
                                 setNroPiso(Number(e.target.value))
                             }}
-                            className={`bg-gray-100 appearance-none border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                            className={`bg-gray-100 appearance-none border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="number"
                             placeholder="Nro piso" />
                     </div>
                     <div className="py-2 w-[90%]">
@@ -264,14 +349,17 @@ export default function AgregarPropiedad() {
                             <input
                                 value={arrendador.nombre} onChange={text => setArrendador({ ...arrendador, nombre: text.target.value })}
                                 className={`appearance-none bg-gray-100  
-                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                ${arrendadorIncomplete && arrendador.nombre.length <= 0 && " outline outline-2 outline-red-300"}
+                                `} id="username" type="text"
                                 placeholder="Nombre" />
                         </div>
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={arrendador.apellido} onChange={text => setArrendador({ ...arrendador, apellido: text.target.value })}
                                 className={`appearance-none bg-gray-100
-                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                ${arrendadorIncomplete && arrendador.apellido.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
                                 placeholder="Apellido" />
                         </div>
                     </div>
@@ -279,7 +367,8 @@ export default function AgregarPropiedad() {
                         <input
                             value={arrendador.rut} onChange={text => { setArrendador({ ...arrendador, rut: text.target.value }) }}
                             className={`appearance-none bg-gray-100 
-                            border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                            border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                            ${arrendadorIncomplete && arrendador.rut.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
                             placeholder="Rut" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
@@ -287,8 +376,9 @@ export default function AgregarPropiedad() {
                         <input
                             value={arrendador.fechaNacArrendador} onChange={text => { setArrendador({ ...arrendador, fechaNacArrendador: text.target.value }) }}
                             className={`appearance-none bg-gray-100 
-                            border h-[4vh] rounded-sm w-[95%]  px-3 text-grey-darker`} id="username" type="date"
-                            placeholder="Inicio de contrato" />
+                            border h-[4vh] rounded-sm w-[95%]  px-3 text-grey-darker
+                            ${arrendadorIncomplete && arrendador.fechaNacArrendador.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="date"
+                        />
                     </div>
 
                     <div className="mb-4 w-[90%] flex justify-around flex-row">
@@ -296,7 +386,8 @@ export default function AgregarPropiedad() {
                             <input
                                 value={arrendador.correo} onChange={text => { setArrendador({ ...arrendador, correo: text.target.value }) }}
                                 className={`appearance-none bg-gray-100 
-                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                ${arrendadorIncomplete && arrendador.correo.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
                                 placeholder="Correo" />
                         </div>
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -304,7 +395,8 @@ export default function AgregarPropiedad() {
                                 value={arrendador.telefono}
                                 onChange={text => setArrendador({ ...arrendador, telefono: text.target.value })}
                                 className={`appearance-none bg-gray-100 
-                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="Number"
+                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                ${arrendadorIncomplete && arrendador.telefono.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="Number"
                                 placeholder="Teléfono" />
                         </div>
                     </div>
@@ -321,7 +413,6 @@ export default function AgregarPropiedad() {
                                     <input id="dropzone-file" onChange={(e) => {
                                         setFoto(e.target.files[0].name)
                                         setFotoUri(e.target.files[0])
-
                                         let fileImg = e.target.files[0]
                                         console.log(fileImg)
                                     }} type="file" className="hidden" />
@@ -357,19 +448,27 @@ export default function AgregarPropiedad() {
                         </button>
                         {newContrato == true &&
 
-                            <div ref={bottomRef} className='flex justify-between   outline outline-3  outline-gray-100 items-center w-[95%] h-auto  '>
+                            <div ref={bottomRef} className='flex justify-between shadow-md items-center w-[95%] h-auto  '>
                                 <div className='w-full h-full flex flex-col justify-start items-center '>
                                     <p className="flex my-4 text-xl">
                                         Contrato
                                     </p>
                                     <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
                                         <p className='font-medium'>Inicio de contrato</p>
-                                        <input className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="date"
+                                        <input
+                                            value={inicioContrato}
+                                            onChange={e => { setInicioContrato(e.target.value) }}
+                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                                            ${contratoIncomplete === true && inicioContrato === "" && "outline outline-2 outline-red-300"}`} id="username" type="date"
                                             placeholder="Inicio de contrato" />
                                     </div>
                                     <div className="mb-5 w-[85%] flex flex-col justify-center items-start">
                                         <p className='font-medium'>Termino de contrato</p>
-                                        <input className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="date"
+                                        <input
+                                            value={terminoContrato}
+                                            onChange={e => { setTerminoContrato(e.target.value) }}
+                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                                            ${contratoIncomplete === true && terminoContrato === "" && "outline outline-2 outline-red-300"}`} id="username" type="date"
                                             placeholder="Termino de contrato" />
                                     </div>
 
@@ -377,7 +476,10 @@ export default function AgregarPropiedad() {
                                         className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
                                         <button className={`h-full w-1/2  flex justify-center items-center
                                        ${newArrendatario === false && 'bg-white'}`}
-                                            onClick={() => { setNewArrendatario(false) }}
+                                            onClick={() => {
+                                                setNewArrendatario(false)
+                                                setArrendatarioIncomplete(false)
+                                            }}
                                         >
                                             Buscar arrendatario
                                         </button>
@@ -395,61 +497,66 @@ export default function AgregarPropiedad() {
                                                 <b className='mb-3'>Datos Arrendatario</b>
                                                 <div className="mb-3 w-[85%] flex justify-around flex-row">
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
-                                                        <input className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                                                        <input
+                                                            value={arrendatario.nombre}
+                                                            onChange={text => { setArrendatario({ ...arrendatario, nombre: text.target.value }) }}
+                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                                            ${arrendatarioIncomplete && arrendatario.nombre.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            id="username" type="text"
                                                             placeholder="Nombre" />
                                                     </div>
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
-                                                        <input className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                                                        <input
+                                                            value={arrendatario.apellido}
+                                                            onChange={text => { setArrendatario({ ...arrendatario, apellido: text.target.value }) }}
+                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                                            ${arrendatarioIncomplete && arrendatario.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            id="username" type="text"
                                                             placeholder="Apellido" />
                                                     </div>
                                                 </div>
                                                 <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
                                                     <input
-                                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                                                        value={arrendatario.rut}
+                                                        onChange={text => { setArrendatario({ ...arrendatario, rut: text.target.value }) }}
+                                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                                                        ${arrendatarioIncomplete && arrendatario.rut.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                        id="username" type="text"
                                                         placeholder="Rut" />
                                                 </div>
                                                 <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
                                                     <p className='font-medium'>Fecha de nacimiento</p>
                                                     <input
-                                                        value={fechaNacArrendatario} onChange={text => { setFechaNacArrendatario(text.target.value) }}
-                                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="date"
+                                                        value={arrendatario.fechaNacArrendatario}
+                                                        onChange={text => { setArrendatario({ ...arrendatario, fechaNacArrendatario: text.target.value }) }}
+                                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                                                        ${arrendatarioIncomplete && arrendatario.fechaNacArrendatario.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                        id="username" type="date"
                                                         placeholder="Inicio de contrato" />
                                                 </div>
                                                 <div className="mb-5 w-[85%] flex justify-around flex-row">
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                                                         <input
-                                                            value={correo} onChange={text => { setCorreo(text.target.value) }}
-                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                                                            value={arrendatario.correo}
+                                                            onChange={text => { setArrendatario({ ...arrendatario, correo: text.target.value }) }}
+                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                                            ${arrendatarioIncomplete && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
                                                             placeholder="Correo" />
                                                     </div>
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                                                         <input
-                                                            value={telefono}
-                                                            onChange={text => setTelefono(text.target.value)}
-                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="Number"
+                                                            value={arrendatario.telefono}
+                                                            onChange={text => { setArrendatario({ ...arrendatario, telefono: text.target.value }) }}
+                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                                            ${arrendatarioIncomplete && arrendatario.telefono.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="Number"
                                                             placeholder="Telefono" />
                                                     </div>
                                                 </div>
                                             </div>
                                             :
-                                            <ArrendatarioFinder />
+                                            <ArrendatarioFinder selected={selected} setSelected={setSelected} />
                                         }
                                     </div>
-
-
-
-
-                                    {/* <button onClick={() => {
-                                    setNewArrendatario(!newArrendatario)
-                                }}
-                                    className='flex justify-between px-4 items-center w-[100%] h-[5vh] bg-gray-100 hover:bg-gray-200'>
-                                    <span className='font-bold'>
-                                        Agregar arrendatario
-                                    </span>
-                                    <span className='text-2xl'>
-                                        <FontAwesomeIcon icon={faCirclePlus} />
-                                    </span>
-                                </button> */}
                                 </div>
                             </div>
 
@@ -457,53 +564,8 @@ export default function AgregarPropiedad() {
                     </div>
 
 
-                    {/* agregar arrendatario */}
-                    {/* {newArrendatario === true &&
-                        <div ref={bottomRef} className='flex justify-between outline outline-3 outline-gray-100 items-center w-[89.4%] h-auto'>
-                            <div className='w-full h-full flex flex-col justify-start items-center '>
-                                <b className='mb-3'>Datos Arrendatario</b>
-                                <div className="mb-3 w-[85%] flex justify-around flex-row">
-                                    <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
-                                        <input className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="text"
-                                            placeholder="Nombre" />
-                                    </div>
-                                    <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
-                                        <input className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="text"
-                                            placeholder="Apellido" />
-                                    </div>
-                                </div>
-                                <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
-                                    <input
-                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
-                                        placeholder="Rut" />
-                                </div>
-                                <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
-                                    <p className='font-medium'>Fecha de nacimiento</p>
-                                    <input
-                                        value={fechaNacArrendatario} onChange={text => { setFechaNacArrendatario(text.target.value) }}
-                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="date"
-                                        placeholder="Inicio de contrato" />
-                                </div>
-                                <div className="mb-5 w-[85%] flex justify-around flex-row">
-                                    <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
-                                        <input
-                                            value={correo} onChange={text => { setCorreo(text.target.value) }}
-                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="text"
-                                            placeholder="Correo" />
-                                    </div>
-                                    <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
-                                        <input
-                                            value={telefono}
-                                            onChange={text => setTelefono(text.target.value)}
-                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker`} id="username" type="Number"
-                                            placeholder="Telefono" />
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                    } */}
-                    <div className='flex justify-center items-center h-[10vh] w-[90%]'>
+                    <div className='flex justify-center items-center h-[10vh] w-[85%]'>
                         <button
                             type="button"
                             className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
