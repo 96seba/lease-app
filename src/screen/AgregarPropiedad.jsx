@@ -5,6 +5,8 @@ import { uploadPropiedadImagen } from '../api/uploadPropiedadImagen'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import ArrendatarioFinder from '../components/ArrendatarioFinder'
+import { addLease } from '../api/addLease'
+import { addLeaseholder } from '../api/addLeaseholder'
 
 
 
@@ -14,8 +16,8 @@ export default function AgregarPropiedad() {
 
     const [id, setId] = useState("")
     const [estacionamiento, setEstacionamiento] = useState(false)
-    const [direccion, setDireccion] = useState("")
     const [bodega, setBodega] = useState(false)
+    const [direccion, setDireccion] = useState("")
     const [baños, setBaños] = useState("")
     const [dormitorios, setDormitorios] = useState("")
     const [foto, setFoto] = useState("")
@@ -74,11 +76,11 @@ export default function AgregarPropiedad() {
         document.title = 'Agrega una propiedad'
     }, []);
 
-    const uploadImage = async () => {
+    const uploadImage = async (id) => {
 
         console.log(fotoUri)
         const form = new FormData();
-        form.append("id", "23");
+        form.append("id", id);
         form.append("image", fotoUri);
 
         const options = {
@@ -95,13 +97,11 @@ export default function AgregarPropiedad() {
 
 
     const addPropiedad = async () => {
-
         if (id.length === 0 || direccion.length === 0 || monto.length === 0 || administracion.length === 0 || tipo === "Tipo") {
             setError(true)
             inputRef.current?.scrollIntoView({ behavior: 'smooth' })
         } else {
             //* Se revisa si el objeto de arrendador tiene algun campo sin completar
-
             let contArrendador = 0
             for (var key in arrendador) {
                 if (arrendador[key] === "") {
@@ -118,6 +118,7 @@ export default function AgregarPropiedad() {
                 setArrendadorIncomplete(false)
                 var objContrato = {}
                 var contArrendatario = 0
+                var objHolder = {}
                 if (newContrato === true) {
                     if (inicioContrato !== "" && terminoContrato !== "") {
                         //* El contrato tiene los datos bien
@@ -126,7 +127,6 @@ export default function AgregarPropiedad() {
                         let endy = new Date(terminoContrato)
                         objContrato.initial_date = init.toISOString()
                         objContrato.end_date = endy.toISOString()
-
                         console.log(objContrato)
                     } else {
                         //*El contrato tiene los datos incompletos
@@ -143,21 +143,23 @@ export default function AgregarPropiedad() {
                                 console.log(arrendatario[key])
                             }
                         }
-
                         if (contArrendatario !== 0) {
                             //* Arrendatario  incompleto dios mio 
                             setArrendatarioIncomplete(true)
                         } else if (contArrendatario === 0) {
-                            objContrato.rut = arrendatario.rut
-                            objContrato.name = arrendatario.nombre
-                            objContrato.lastname = arrendatario.apellido
-                            objContrato.email = arrendatario.correo
-                            objContrato.phone = arrendatario.telefono
+                            //* Se agrega una nuevo arrendatario al objeto
+                            objHolder.rut = arrendatario.rut
+                            objHolder.name = arrendatario.nombre
+                            objHolder.lastname = arrendatario.apellido
+                            objHolder.email = arrendatario.correo
+                            objHolder.phone = arrendatario.telefono
+                            let date = new Date(arrendatario.fechaNacArrendatario)
+                            objHolder.birthday = date.toISOString()
                         }
-                        console.log(objContrato)
+                        console.log(objHolder)
                     } else {
+                        //* Se selecciona un arrendatario ya creado
                         console.log("ES CON ARRENDATARIO YA creado")
-
                         objContrato.leaseholderId = selected.id
                         console.log(objContrato)
                     }
@@ -191,30 +193,82 @@ export default function AgregarPropiedad() {
                 obj.cellar = bodega
                 obj.parking = estacionamiento
 
-                // if (arrendador.fechaNacArrendador !== "") {
-                //     obj.birthday = date.toISOString()
+                if (arrendador.fechaNacArrendador !== "") {
+                    obj.birthday = date.toISOString()
+                }
+
+                //* Se agregan los datos no vacios al objClean
+                for (const property in obj) {
+                    let prop = String(`${obj[property]}`)
+                    let propName = `${property}`
+                    if (prop.length !== 0) {
+                        let isnum = /^\d+$/.test(prop);
+                        // console.log(propName, prop, isnum)
+                        if (isnum === true && propName !== 'property_id') {
+                            objClean[propName] = Number(prop)
+                        } else {
+                            if (prop === 'true') {
+                                objClean[propName] = true
+                            } else if (prop === 'false') {
+                                objClean[propName] = false
+                            } else {
+                                objClean[propName] = prop
+                            }
+                        }
+
+                    }
+                }
+
+                objClean.type_property = tipo
+
+
+                console.log("Propiedad: ", objClean)
+                console.log("Leaseholder: ", objHolder)
+
+
+                //* Se crea la propiedad
+                const respProp = await createPropiedad(objClean)
+
+                console.log(respProp)
+                uploadImage(respProp.data.property.id)
+                console.log(respProp.data.property.id)
+
+                var respHolder
+
+                if (newArrendatario === true && contArrendatario === 0) {
+                    // objHolder.name = objContrato.name
+                    // objHolder.lastname = objContrato.lastname
+                    // objHolder.rut = objContrato.rut
+                    // objHolder.phone = objContrato.phone
+                    // objHolder.email = objContrato.email
+                    // objHolder.birthday = objContrato.birthday
+
+                    respHolder = await addLeaseholder(objHolder)
+                    console.log(respHolder)
+                    objContrato.propertyId = respHolder.data.leaseholder.id
+                }
+
+                //* Se crea el contrato
+                const respLease = await addLease(objContrato)
+                console.log(respLease)
+
+                // if (newArrendatario === true && contArrendatario === 0) {
+                //     // objHolder.name = objContrato.name
+                //     // objHolder.lastname = objContrato.lastname
+                //     // objHolder.rut = objContrato.rut
+                //     // objHolder.phone = objContrato.phone
+                //     // objHolder.email = objContrato.email
+                //     // objHolder.birthday = objContrato.birthday
+
+
+                //     objContrato.propertyId = respHolder.data.leaseholder.id
+                // } else {
+                //     //* Se agrega el id de la propiedad creada al objeto de contrato
+                //     objContrato.propertyId = respProp.data.property.id
                 // }
+                // console.log("Contrato: ", objContrato)
 
-                // for (const property in obj) {
-                //     let prop = String(`${obj[property]}`)
-                //     let propName = `${property}`
-                //     if (prop.length !== 0) {
-                //         let isnum = /^\d+$/.test(prop);
-                //         console.log(propName, prop, isnum)
-                //         if (isnum === true && propName !== 'property_id') {
-                //             objClean[propName] = Number(prop)
-                //         } else {
-                //             objClean[propName] = prop
-                //         }
 
-                //     }
-                // }
-
-                // objClean.type_property = tipo
-
-                // console.log(objClean)
-                // const resp = await createPropiedad(objClean)
-                // console.log(resp)
             }
         }
 
@@ -293,13 +347,15 @@ export default function AgregarPropiedad() {
                     <div className="py-2 w-[90%]">
                         <label htmlFor="teal-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="teal-toggle" className="sr-only peer"
-                                checked={estacionamiento} onChange={() => { setEstacionamiento(!estacionamiento) }} />
+                                checked={estacionamiento} onChange={(e) => {
+                                    setEstacionamiento(e.target.checked)
+                                }} />
                             <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#FF6F00]"></div>
                             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Estacionamiento</span>
                         </label>
                         <label htmlFor="d-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="d-toggle" className="sr-only peer"
-                                checked={bodega} onChange={() => { setBodega(!bodega) }} />
+                                checked={bodega} onChange={(e) => { setBodega(e.target.checked) }} />
                             <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#FF6F00]"></div>
                             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Bodega</span>
                         </label>

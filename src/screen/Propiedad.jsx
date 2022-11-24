@@ -22,7 +22,7 @@ export default function Propiedad() {
         setAlerts(data.alerts)
         console.log(data.alerts, "asdka")
         console.log(data.image?.slice(7, data.image.length))
-        setFotoUrl(API_HOST + data.image.slice(7, data.image.length))
+        setFotoUrl(API_HOST + data.image)
         document.title = 'Propiedad ' + data.property_id;
     }
 
