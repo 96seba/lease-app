@@ -45,6 +45,12 @@ export default function Propiedad() {
 
     const [priority, setPriority] = useState("")
     
+    const [dataAlerts, setDataAlerts] = useState({
+        note:'',
+        level:'',
+        id:''
+    })
+    
     const [inputLog, setInputLog] = useState("")
 
     const [inputData, setInputData] = useState("")
@@ -57,6 +63,9 @@ export default function Propiedad() {
             )
         )
     }
+
+
+    useEffect(()=>{console.log(priority)},[priority])
 
 
     const parseAvaliable = (state) => {
