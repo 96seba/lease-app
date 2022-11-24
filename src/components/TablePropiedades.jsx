@@ -93,7 +93,7 @@ const columnas = [
     },
     {
         name: 'Arrendador',
-        selector: row => row.owner.name + " " + row.owner.lastname,
+        selector: row => row.owner?.name + " " + row.owner?.lastname,
         sortable: true
     },
     {

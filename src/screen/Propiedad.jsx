@@ -3,6 +3,8 @@ import TableBill from '../components/TableBill'
 import TableVisits from '../components/TableVisits'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { API_HOST } from '../utils/constants'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default function Propiedad() {
 
@@ -41,18 +43,16 @@ export default function Propiedad() {
 
     const [data, setData] = useState("")
 
+    const [priority, setPriority] = useState("")
+    
     const [inputLog, setInputLog] = useState("")
 
     const [inputData, setInputData] = useState("")
 
     const renderAlerts = () => {
-
-
         console.log(alerts, 23)
-
         return (
             alerts.map((item, index) =>
-
                 <p key={index}>{item.id + " " + item.note + " " + item.level}</p>
             )
         )
@@ -71,9 +71,8 @@ export default function Propiedad() {
 
     }
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            console.log(inputLog)
+    const addAlert= () => {
+        
             setInputLog("")
             let separator = '/'
             let newDate = new Date()
@@ -83,11 +82,10 @@ export default function Propiedad() {
             let hour = newDate.getHours()
             let minutes = newDate.getMinutes()
 
-
             let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
             setLogs(current => [{ fecha: fecha, mensaje: inputLog }, ...current])
 
-        }
+        
     }
 
     const handleKeyDownData = (event) => {
@@ -168,7 +166,7 @@ export default function Propiedad() {
                                 }
                             })
                         }}
-                            className="group relative h-12 w-full mb-2 overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm " >Ver boleta 
+                            className="group relative h-12 w-full mb-2 overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm " >Ver boleta
                         </button>
                         <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
                             <p>Dormitorios:(DORMITORIOS)</p>
@@ -214,14 +212,21 @@ export default function Propiedad() {
                         <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <div className='w-full'>
-                                    <p className='text-lg font-semibold'>Pendientes criticos</p>
+                                    <p className='text-lg font-semibold'>Pendientes críticos</p>
                                 </div>
-                                <input
-                                    onKeyDown={handleKeyDown}
-                                    value={inputLog}
-                                    onChange={event => setInputLog(event.target.value)}
-                                    type="text"
-                                    id="large-input" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md " />
+                                <div className='flex flex-row'>
+                                    <input
+                                        value={inputLog} 
+                                        onChange={event => setInputLog(event.target.value)}
+                                        type="text"
+                                        id="large-input" className="block p-4 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md " />
+                                    <select name="priority" onChange={e=>{setPriority(e.target.value)}} className='w-[18%] ml-1 border-2 border-gray-400 outline-gray-400 outline-1'>
+                                        <option value="Alta">Alta</option>
+                                        <option value="Media">Media</option>
+                                        <option value="Baja">Baja</option>
+                                    </select>
+                                    <button><FontAwesomeIcon onClick={()=>addAlert()} value={priority} className="w-[100%] ml-1 text-orange-500" icon={faPlus} /></button>
+                                </div>
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
@@ -262,17 +267,14 @@ export default function Propiedad() {
                 {/* <div className='flex p-6 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white shadow-md'>
                     <div className='fles w-full'>
                         <p>Historial de pagos</p>
-                    </div>
-                 
+                    </div>      
 
                 </div> */}
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white rounded-lg shadow-sm'>
                     <div className='w-full'>
                         <p className='text-lg font-semibold'>Visitas</p>
                     </div>
-
                     <TableVisits />
-
                 </div>
             </div>
         </div >

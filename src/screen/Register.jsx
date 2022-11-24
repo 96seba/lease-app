@@ -54,7 +54,7 @@ export default function Register() {
                     <div className="flex justify-center items-end flex-col flex-wrap p-8  h-[78vh] w-5/12 ">
                         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 p-2">
                             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                                <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl dark:text-white  text-center">
+                                <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-base dark:text-white text-center ">
                                     Crea una cuenta
                                 </h1>
                                 <div className="space-y-4 md:space-y-6" action="#">
@@ -79,7 +79,7 @@ export default function Register() {
                                             <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="" />
                                         </div>
                                         <div className="ml-3 text-sm">
-                                            <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">Acepto los <button className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Términos y Condiciones </button></label>
+                                            <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300 text-xs">Acepto los <button className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Términos y Condiciones </button></label>
                                         </div>
                                     </div>
                                     <button onClick={() => { addUsers() }} className="w-full text-white bg-[#FF6F00] hover:bg-[#3A4348] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Crear cuenta</button>
@@ -90,7 +90,8 @@ export default function Register() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-start items-center h-[78vh] w-7/12 p-8">
+                    <div className="flex flex-col justify-start items-center h-[85vh] w-7/12 p-8">
+                        <h4>Usuarios</h4>
                         {
                             tableData !== "" ?
                                 <TableUsers tableData={tableData} setOpen={setOpen} openModal={openModal} />
