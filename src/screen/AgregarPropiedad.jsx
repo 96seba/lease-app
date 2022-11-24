@@ -97,7 +97,9 @@ export default function AgregarPropiedad() {
 
 
     const addPropiedad = async () => {
+
         if (id.length === 0 || direccion.length === 0 || monto.length === 0 || administracion.length === 0 || tipo === "Tipo") {
+            //* Minimo un dato esta vacio de la propiedad
             setError(true)
             inputRef.current?.scrollIntoView({ behavior: 'smooth' })
         } else {
@@ -230,6 +232,7 @@ export default function AgregarPropiedad() {
                 const respProp = await createPropiedad(objClean)
 
                 console.log(respProp)
+                //* Se sube a la imagen, se espera a que se cree la propiedad antes
                 uploadImage(respProp.data.property.id)
                 console.log(respProp.data.property.id)
 
