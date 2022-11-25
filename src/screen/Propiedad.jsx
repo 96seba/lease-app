@@ -34,9 +34,9 @@ export default function Propiedad() {
 
 
     const [logs, setLogs] = useState([
-        { fecha: '23/04/2022  20:02', mensaje: "Se cayo gente", level:"Alta"},
-        { fecha: '13/02/2012  13:45:', mensaje: "Se callo gente" ,level:"Media"},
-        { fecha: '02/10/1925  15:10', mensaje: "Se caio gente" , level:"Alta"},
+        { fecha: '23/04/2022  20:02', mensaje: "Se cayo gente", level: "Alta" },
+        { fecha: '13/02/2012  13:45:', mensaje: "Se callo gente", level: "Media" },
+        { fecha: '02/10/1925  15:10', mensaje: "Se caio gente", level: "Alta" },
     ])
 
     const [alerts, setAlerts] = useState("")
@@ -44,13 +44,13 @@ export default function Propiedad() {
     const [data, setData] = useState("")
 
     const [priority, setPriority] = useState("")
-    
+
     const [dataAlerts, setDataAlerts] = useState({
-        note:'',
-        level:'',
-        id:''
+        note: '',
+        level: '',
+        id: ''
     })
-    
+
     const [inputLog, setInputLog] = useState("")
 
     const [inputData, setInputData] = useState("")
@@ -65,7 +65,7 @@ export default function Propiedad() {
     }
 
 
-    useEffect(()=>{console.log(priority)},[priority])
+    useEffect(() => { console.log(priority) }, [priority])
 
 
     const parseAvaliable = (state) => {
@@ -80,21 +80,25 @@ export default function Propiedad() {
 
     }
 
-    const addAlert= () => {
-        
-            setInputLog("")
-            let separator = '/'
-            let newDate = new Date()
-            let date = newDate.getDate();
-            let month = newDate.getMonth() + 1;
-            let year = newDate.getFullYear();
-            let hour = newDate.getHours()
-            let minutes = newDate.getMinutes()
+    const addAlert = () => {
 
-            let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-            setLogs(current => [{ fecha: fecha, level:priority, mensaje: inputLog }, ...current])
+        if(inputLog==="" || priority===""){
+            console.log("ERROR TE FALTA UN DATO")
+        }
 
-        
+        setInputLog("")
+        let separator = '/'
+        let newDate = new Date()
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        let hour = newDate.getHours()
+        let minutes = newDate.getMinutes()
+
+        let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
+        setLogs(current => [{ fecha: fecha, level: priority, mensaje: inputLog }, ...current])
+
+
     }
 
     const handleKeyDownData = (event) => {
@@ -215,7 +219,7 @@ export default function Propiedad() {
                     </div>
 
                 </div>
-
+                {/* Pendientes críticos */}
                 <div className="flex mb-10  rounded justify-between items-center w-[96%]  ">
                     <div className="flex justify-center  items-start p-6 w-[48%] h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
@@ -225,16 +229,17 @@ export default function Propiedad() {
                                 </div>
                                 <div className='flex flex-row'>
                                     <input
-                                        value={inputLog} 
+                                        value={inputLog}
                                         onChange={event => setInputLog(event.target.value)}
                                         type="text"
                                         id="large-input" className="block p-4 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md " />
-                                    <select name="priority" onChange={e=>{setPriority(e.target.value)}} className='w-[18%] ml-1 border-2 border-gray-400 outline-gray-400 outline-1'>
+                                    <select name="priority" onChange={e => { setPriority(e.target.value) }} className='w-[18%] ml-1 border-2 border-gray-400 outline-gray-400 outline-1'>
+                                        <option value="" disabled selected hidden>Prioridad</option>
                                         <option value="Alta">Alta</option>
                                         <option value="Media">Media</option>
                                         <option value="Baja">Baja</option>
                                     </select>
-                                    <button><FontAwesomeIcon onClick={()=>addAlert()} value={priority} className="w-[100%] ml-1 text-orange-500" icon={faPlus} /></button>
+                                    <button><FontAwesomeIcon onClick={() => addAlert()} className="w-[100%] ml-1 text-orange-500" icon={faPlus} /></button>
                                 </div>
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
@@ -244,6 +249,7 @@ export default function Propiedad() {
                             </div>
                         </div>
                     </div>
+                    {/* Anotaciones */}
                     <div className="flex justify-center  items-start p-6 w-[48%] h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
