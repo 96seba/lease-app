@@ -34,9 +34,9 @@ export default function Propiedad() {
 
 
     const [logs, setLogs] = useState([
-        { fecha: '23/04/2022  20:02', mensaje: "Se cayo gente" },
-        { fecha: '13/02/2012  13:45:', mensaje: "Se callo gente" },
-        { fecha: '02/10/1925  15:10', mensaje: "Se caio gente" },
+        { fecha: '23/04/2022  20:02', mensaje: "Se cayo gente", level:"Alta"},
+        { fecha: '13/02/2012  13:45:', mensaje: "Se callo gente" ,level:"Media"},
+        { fecha: '02/10/1925  15:10', mensaje: "Se caio gente" , level:"Alta"},
     ])
 
     const [alerts, setAlerts] = useState("")
@@ -56,7 +56,7 @@ export default function Propiedad() {
     const [inputData, setInputData] = useState("")
 
     const renderAlerts = () => {
-        console.log(alerts, 23)
+        // console.log(alerts, 23)
         return (
             alerts.map((item, index) =>
                 <p key={index}>{item.id + " " + item.note + " " + item.level}</p>
@@ -92,7 +92,7 @@ export default function Propiedad() {
             let minutes = newDate.getMinutes()
 
             let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-            setLogs(current => [{ fecha: fecha, mensaje: inputLog }, ...current])
+            setLogs(current => [{ fecha: fecha, level:priority, mensaje: inputLog }, ...current])
 
         
     }
@@ -239,7 +239,7 @@ export default function Propiedad() {
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
-                                    <p key={index} className='text-sm break-words'>{item.fecha} - {item.mensaje}</p>
+                                    <p key={index} className='text-sm break-words'>{item.fecha} - {item.level} - {item.mensaje}</p>
                                 )}
                             </div>
                         </div>
