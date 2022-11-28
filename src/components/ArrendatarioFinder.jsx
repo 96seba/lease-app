@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 
 
-export default function ArrendatarioFinder({ selected, setSelected }) {
+export default function ArrendatarioFinder({ selected, setSelected, selectIncomplete, setSelectIncomplete }) {
 
     const [buscar, setBuscar] = useState("")
 
@@ -41,9 +41,15 @@ export default function ArrendatarioFinder({ selected, setSelected }) {
 
     return (
         <div className='flex justify-center items-center flex-col'>
-            <p className='text-xl'>Buscar Arrendatario</p>
+            <div className='w-full h-[6vh] flex justify-start items-center flex-col'>
+                <p className='text-xl mb-0'>Buscar Arrendatario</p>
+                <p className={`text-xs ${selectIncomplete === true ? 'block' : 'hidden'}`}>Debes seleccionar un arrendatario </p>
+            </div>
+            {/* <p className='text-xl'>Buscar Arrendatario</p>
+            <p className='text-xs absolute'>Debes seleccionar un arrendatario </p> */}
             <input
-                className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[85%] py-2 px-3  text-grey-darker`}
+                className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[85%] py-2 px-3 m-2 text-grey-darker
+                ${selectIncomplete === true && 'outline outline-2 outline-red-400'}`}
                 value={buscar}
                 onChange={e => {
                     filtrar(e.target.value)
@@ -53,7 +59,7 @@ export default function ArrendatarioFinder({ selected, setSelected }) {
                 placeholder="Rut o nombre"
             />
 
-            <div className='flex mb-4 justify-start items-start  flex-col w-[84%] h-[16vh] bg-slate-200'>
+            <div className='flex mb-4 justify-start items-start  flex-col w-[85%] h-[16vh] bg-slate-200'>
                 <div className='h-auto overflow-auto w-full'>
 
                     {data.map((user, index) => (
@@ -61,6 +67,7 @@ export default function ArrendatarioFinder({ selected, setSelected }) {
                             onClick={e => {
                                 console.log(user)
                                 setSelected(user)
+                                setSelectIncomplete(false)
                             }}
                             className={` w-full  h-[5vh] flex justify-start items-center  px-4 
                             ${selected === user ? 'bg-[#FF6F00] text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
