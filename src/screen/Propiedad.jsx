@@ -55,6 +55,8 @@ export default function Propiedad() {
 
     const [inputData, setInputData] = useState("")
 
+    const[inputLogIncomplete, setInputLogIncomplete] = useState(false)
+
     const renderAlerts = () => {
         // console.log(alerts, 23)
         return (
@@ -84,9 +86,12 @@ export default function Propiedad() {
 
         if(inputLog==="" || priority===""){
             console.log("ERROR TE FALTA UN DATO")
-        }
+            setInputLogIncomplete(true)
 
-        setInputLog("")
+        }
+        else{
+            setInputLogIncomplete(false)
+            setInputLog("")
         let separator = '/'
         let newDate = new Date()
         let date = newDate.getDate();
@@ -97,6 +102,21 @@ export default function Propiedad() {
 
         let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
         setLogs(current => [{ fecha: fecha, level: priority, mensaje: inputLog }, ...current])
+        }
+
+        // setInputLog("")
+        // let separator = '/'
+        // let newDate = new Date()
+        // let date = newDate.getDate();
+        // let month = newDate.getMonth() + 1;
+        // let year = newDate.getFullYear();
+        // let hour = newDate.getHours()
+        // let minutes = newDate.getMinutes()
+
+        // let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
+        // setLogs(current => [{ fecha: fecha, level: priority, mensaje: inputLog }, ...current])
+        // setDataAlerts(current => [{ fecha: fecha, level: priority, note: inputLog }, ...current])
+
 
 
     }
@@ -112,7 +132,6 @@ export default function Propiedad() {
             let year = newDate.getFullYear();
             let hour = newDate.getHours()
             let minutes = newDate.getMinutes()
-
 
             let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
             setAlerts(current => [{ fecha: fecha, mensaje: inputData }, ...current])
@@ -232,8 +251,8 @@ export default function Propiedad() {
                                         value={inputLog}
                                         onChange={event => setInputLog(event.target.value)}
                                         type="text"
-                                        id="large-input" className="block p-4 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md " />
-                                    <select name="priority" onChange={e => { setPriority(e.target.value) }} className='w-[18%] ml-1 border-2 border-gray-400 outline-gray-400 outline-1'>
+                                        id="large-input" className={`block p-4 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md ${inputLogIncomplete===true&&'outline outline-[2.5px] outline-red-400'}`} />
+                                    <select name="priority" onChange={e => { setPriority(e.target.value) }} className={`w-[18%] ml-1  ${inputLogIncomplete===true&&'outline outline-[2.5px] outline-red-400'}`}>
                                         <option value="" disabled selected hidden>Prioridad</option>
                                         <option value="Alta">Alta</option>
                                         <option value="Media">Media</option>
