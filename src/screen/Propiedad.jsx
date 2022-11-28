@@ -57,6 +57,8 @@ export default function Propiedad() {
 
     const[inputLogIncomplete, setInputLogIncomplete] = useState(false)
 
+    const[inputPriorityIncomplete, setInputPriorityIncomplete] =useState(false)
+
     const renderAlerts = () => {
         // console.log(alerts, 23)
         return (
@@ -85,8 +87,14 @@ export default function Propiedad() {
     const addAlert = () => {
 
         if(inputLog==="" || priority===""){
+            if(inputLog===""){
+                setInputLogIncomplete(true)
+            }
+            if(priority===""){
+                setInputPriorityIncomplete(true)
+            }
             console.log("ERROR TE FALTA UN DATO")
-            setInputLogIncomplete(true)
+            
 
         }
         else{
@@ -252,7 +260,7 @@ export default function Propiedad() {
                                         onChange={event => setInputLog(event.target.value)}
                                         type="text"
                                         id="large-input" className={`block p-4 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md ${inputLogIncomplete===true&&'outline outline-[2.5px] outline-red-400'}`} />
-                                    <select name="priority" onChange={e => { setPriority(e.target.value) }} className={`w-[18%] ml-1  ${inputLogIncomplete===true&&'outline outline-[2.5px] outline-red-400'}`}>
+                                    <select name="priority" onChange={e => { setPriority(e.target.value) }} className={`w-[18%] ml-1  ${inputPriorityIncomplete===true&&'outline outline-[2.5px] outline-red-400'}`}>
                                         <option value="" disabled selected hidden>Prioridad</option>
                                         <option value="Alta">Alta</option>
                                         <option value="Media">Media</option>
