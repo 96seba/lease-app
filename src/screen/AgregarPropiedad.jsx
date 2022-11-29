@@ -98,7 +98,6 @@ export default function AgregarPropiedad() {
 
 
     const addPropiedad = async () => {
-
         if (id.length === 0 || direccion.length === 0 || monto.length === 0 || administracion.length === 0 || tipo === "Tipo") {
             //* Minimo un input required esta vacio de la propiedad
             setError(true)
@@ -127,13 +126,11 @@ export default function AgregarPropiedad() {
             objProp.cellar = bodega
             objProp.parking = estacionamiento
             objProp.type_property = tipo
-
             let date = new Date(arrendador.fechaNacArrendador)
+            
             if (arrendador.fechaNacArrendador !== "") {
                 objProp.birthday = date.toISOString()
             }
-
-
             //* Se verifica si el arrendador esta vacio o completo, en el caso de estar completo se agrega al objeto de la propiedad
             let contArrendador = 0
             for (var key in arrendador) {

@@ -1,19 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ModalGuardar from '../components/ModalGuardar'
+import { createPropiedad } from '../api/createPropiedad'
+// import { uploadPropiedadImagen } from '../api/uploadPropiedadImagen'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import ArrendatarioFinder from '../components/ArrendatarioFinder'
+import { addLease } from '../api/addLease'
 import { useLocation } from 'react-router-dom'
-import { editPropiedad } from '../api/editPropiedad'
+
 
 
 export default function EditarPropiedad() {
 
     const location = useLocation()
 
+    const [dataProp, setDataProp] = useState("")
+
     //* Datos propiedad
 
     const [id, setId] = useState("")
     const [estacionamiento, setEstacionamiento] = useState(false)
-    const [direccion, setDireccion] = useState("")
     const [bodega, setBodega] = useState(false)
+    const [direccion, setDireccion] = useState("")
     const [baños, setBaños] = useState("")
     const [dormitorios, setDormitorios] = useState("")
     const [foto, setFoto] = useState("")
@@ -22,49 +30,68 @@ export default function EditarPropiedad() {
 
     //* Datos arrendador
 
-    const [correo, setCorreo] = useState("")
-    const [telefono, setTelefono] = useState("")
-    const [nombreArrendador, setNombreArrendador] = useState("")
-    const [apellidoArrendador, setApellidoArrendador] = useState("")
-    const [rutArrendador, setRutArrendador] = useState("")
+    const [arrendador, setArrendador] = useState({
+        nombre: "",
+        apellido: "",
+        rut: "",
+        fechaNacArrendador: "",
+        correo: "",
+        telefono: ""
+    })
+
+    //* Datos arrendatario
+
+    const [arrendatario, setArrendatario] = useState({
+        nombre: "",
+        apellido: "",
+        rut: "",
+        fechaNacArrendatario: "",
+        correo: "",
+        telefono: ""
+    })
+
+    //* Datos contrato
+
+    const [inicioContrato, setInicioContrato] = useState("")
+    const [terminoContrato, setTerminoContrato] = useState("")
+
+    const [arrendadorIncomplete, setArrendadorIncomplete] = useState(false)
+    const [arrendatarioIncomplete, setArrendatarioIncomplete] = useState(false)
+    const [contratoIncomplete, setContratoIncomplete] = useState(false)
+    const [selectIncomplete, setSelectIncomplete] = useState(false)
+
+    const [selected, setSelected] = useState("")
 
     const [monto, setMonto] = useState("")
     const [administracion, setAdministracion] = useState("")
-    const [fechaNacArrendador, setFechaNacArrendador] = useState("")
-    const [fechaNacArrendatario, setFechaNacArrendatario] = useState("")
+    const [ggcc, setGgcc] = useState("")
 
-    const [tipo, setTipo] = useState("")
+
+    const [tipo, setTipo] = useState("Tipo")
+
+    const [newContrato, setNewContrato] = useState(false)
+    const [newArrendatario, setNewArrendatario] = useState(false)
+
+    const [error, setError] = useState(false)
+
+    const bottomRef = useRef(null)
+    const inputRef = useRef(null)
 
     useEffect(() => {
+        document.title = 'Agrega una propiedad'
         const getData = async () => {
             let data = await location.state.data
-            console.log(data, "2112")
-            setId(data.property_id)
-            setDireccion(data.address)
-            setMonto(data.amount_lease)
-            setAdministracion(data.amount_adm)
-            setEstacionamiento(data.parking)
-            setBodega(data.cellar)
+            console.log(data.id)
+            setDataProp(data)
         }
         getData()
-    }, [])
+    }, []);
 
-
-    const parseAvaliable = (state) => {
-        console.log(state)
-        if (state === false) {
-            return "No"
-        }
-        else if (state === true) {
-            return "Si"
-        }
-    }
-
-    const uploadImage = async () => {
+    const uploadImage = async (id) => {
 
         console.log(fotoUri)
         const form = new FormData();
-        form.append("id", "1");
+        form.append("id", id);
         form.append("image", fotoUri);
 
         const options = {
@@ -80,301 +107,553 @@ export default function EditarPropiedad() {
     }
 
 
-    const updatePropiedad = async () => {
-        let date = new Date(fechaNacArrendador)
-        let obj = {}
-        obj.property_id = id
-        obj.address = direccion
-        obj.amount_lease = Number(monto)
-        obj.amount_adm = Number(administracion)
-        obj.type_property = tipo
-        obj.rut = rutArrendador
-        obj.name = nombreArrendador
-        obj.lastname = apellidoArrendador
-        obj.birthday = date.toISOString()
-        obj.email = correo
-        obj.phone = telefono
-        obj.bedrooms = dormitorios
-        obj.bathrooms = baños
-        obj.floor = nroPiso
-        obj.cellar = bodega
-        obj.parking = estacionamiento
-        console.log(obj)
+    const addPropiedad = async () => {
+        if (id.length === 0 || direccion.length === 0 || monto.length === 0 || administracion.length === 0 || tipo === "Tipo") {
+            //* Minimo un input required esta vacio de la propiedad
+            setError(true)
+            inputRef.current?.scrollIntoView({ behavior: 'smooth' })
+        } else {
+            //* Objeto de propiedad
+            var objProp = {}
+            //* Objeto de propiedad sin propiedades null o ""
+            var objPropClean = {}
+            //* Objeto de contrato
+            var objContrato = {}
+            //* Objeto de arrendatario
+            var objHolder = {}
+            //* Contador de campos nulos del arrendatario 
+            var contArrendatario = 0
+
+            //* Se agregan los campos al objPropiedad
+            objProp.property_id = id
+            objProp.address = direccion
+            objProp.amount_lease = Number(monto)
+            objProp.amount_adm = Number(administracion)
+            objProp.type_property = tipo
+            objProp.bedrooms = dormitorios
+            objProp.bathrooms = baños
+            objProp.floor = nroPiso
+            objProp.cellar = bodega
+            objProp.parking = estacionamiento
+            objProp.type_property = tipo
+            let date = new Date(arrendador.fechaNacArrendador)
+
+            if (arrendador.fechaNacArrendador !== "") {
+                objProp.birthday = date.toISOString()
+            }
+            //* Se verifica si el arrendador esta vacio o completo, en el caso de estar completo se agrega al objeto de la propiedad
+            let contArrendador = 0
+            for (var key in arrendador) {
+                if (arrendador[key] === "") {
+                    contArrendador += 1
+                }
+            }
+
+            if (contArrendador > 0 && contArrendador < 6) {
+                //* Se ingreso un dato, pero los demas estan vacios
+                setArrendadorIncomplete(true)
+            } else if (contArrendador === 6) {
+                //* El contrato esta vacio
+                setArrendadorIncomplete(false)
+            }
+            else if (contArrendador === 0) {
+                //* El contrato esta completo
+                setArrendadorIncomplete(false)
+                objProp.rut = arrendador.rut
+                objProp.name = arrendador.nombre
+                objProp.lastname = arrendador.apellido
+                objProp.email = arrendador.correo
+                objProp.phone = arrendador.telefono
+            }
+
+            //* Se agregan los datos no vacios al objPropClean
+            for (const property in objProp) {
+                let prop = String(`${objProp[property]}`)
+                let propName = `${property}`
+                if (prop.length !== 0) {
+                    let isnum = /^\d+$/.test(prop);
+                    // console.log(propName, prop, isnum)
+                    if (isnum === true && propName !== 'property_id') {
+                        objPropClean[propName] = Number(prop)
+                    } else {
+                        if (prop === 'true') {
+                            objPropClean[propName] = true
+                        } else if (prop === 'false') {
+                            objPropClean[propName] = false
+                        } else {
+                            objPropClean[propName] = prop
+                        }
+                    }
+                }
+            }
+
+            //* Se comprueba si la propiedad es con contrato o sin contrato
+            if (newContrato === true) {
+                if (inicioContrato !== "" && terminoContrato !== "") {
+                    //* El contrato tiene las fechas completas
+                    let init = new Date(inicioContrato)
+                    let endy = new Date(terminoContrato)
+                    objContrato.initial_date = init.toISOString()
+                    objContrato.end_date = endy.toISOString()
+                } else {
+                    //*El contrato tiene los datos incompletos
+                    console.log("El contrato no tiene los datos buenos")
+                    setContratoIncomplete(true)
+                }
+                if (newArrendatario === false) {
+                    //* Se selecciona un arrendatario ya creado
+                    console.log("ES CON ARRENDATARIO YA creado")
+                    // setSelectIncomplete
+                    if (selected === "") {
+                        setSelectIncomplete(true)
+                    } else {
+                        objContrato.leaseholderId = selected.id
+                    }
+                } else {
+
+                    //* El contrato es con arrendatario nuevo
+                    for (var key1 in arrendatario) {
+                        if (arrendatario[key1] === "") {
+                            contArrendatario += 1
+                            console.log(arrendatario[key1])
+                        }
+                    }
+                    if (contArrendatario !== 0) {
+                        //* Arrendatario  incompleto dios mio 
+                        setArrendatarioIncomplete(true)
+                    } else if (contArrendatario === 0) {
+                        setArrendatarioIncomplete(false)
+                        //* Se agrega una nuevo arrendatario al objeto
+                        objHolder.rut = arrendatario.rut
+                        objHolder.name = arrendatario.nombre
+                        objHolder.lastname = arrendatario.apellido
+                        objHolder.email = arrendatario.correo
+                        objHolder.phone = arrendatario.telefono
+                        let date = new Date(arrendatario.fechaNacArrendatario)
+                        objHolder.birthday = date.toISOString()
+                    }
+                }
+            }
 
 
-        const resp = await editPropiedad(obj)
-        console.log(resp)
+            //* Ejecucion de fetchs para crear propiedad, uploadImage y leaseholder 
+            if (contArrendador === 0 || contArrendador === 6) {
+                //* Se crea la propiedad con el objeto limpio de props vacios
+                const respProp = await createPropiedad(objPropClean)
+                console.log("respProp", respProp)
+                //* Se agrega el id de la propiedad al objeto del contrato
+                objContrato.propertyId = respProp.data.property.id
+                //* Se verifica si se eligio una imagen para la propiedad
+                if (fotoUri !== "") {
+                    uploadImage(respProp.data.property.id)
+                }
+                //* Se crea el arrendatario en el caso de que se eliga agregar arrendatario nuevo
+                if (newContrato === true) {
+                    if (newArrendatario === true) {
+                        //* Se crea el arrendatario
+                        //* Se agregan los datos del nuevo arrendatario al objeto del contrato
+                        objContrato.rut = arrendatario.rut
+                        objContrato.name = arrendatario.nombre
+                        objContrato.lastname = arrendatario.apellido
+                        objContrato.email = arrendatario.correo
+                        objContrato.phone = arrendatario.telefono
+                        let date = new Date(arrendatario.fechaNacArrendatario)
+                        objContrato.birthday = date.toISOString()
+                        //* Se crea el contrato
+                        if (contArrendatario === 0) {
+                            const respLease = await addLease(objContrato)
+                            console.log("respLease", respLease)
+                        }
+                    } else {
+                        //* Se agrega el id del leaseHolder seleccionado al objContrato
+                        objContrato.leaseholderId = selected.id
+                        if (selected.id !== '') {
+                            //* Se crea el contrato
+                            const respLease = await addLease(objContrato)
+                            console.log("respLease", respLease)
+                        }
+                    }
+                }
+                // console.log(objContrato)
+                // console.log(objPropClean)
+                // console.log(objHolder)
+            }
+        }
     }
+
+    useEffect(() => {
+        if (newContrato === true) {
+            console.log(newContrato, "Arrendatario")
+            bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }
+    }, [newContrato])
 
 
 
     const [open, setOpen] = useState(false)
 
+    if (dataProp !== "") {
+        <></>
+    }
 
     return (
         <div className='w-screen flex  justify-center items-center bg-white'>
-            <div className="w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[80vw] xl:w-[65vw] shadow-lg h-[180.5vh] p-6  flex items-center">
+            <div className={`w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[60vw] xl:w-[55vw] shadow-lg 
+            ${newContrato ? "h-[230.5vh]" : "h-[160.5vh]"}
+            p-6 flex items-center`}>
+
 
                 {open === true ?
                     <ModalGuardar open={open} setOpen={setOpen} /> : <></>
                 }
-
-                <div className='w-1/2 h-full flex flex-col justify-start items-center'>
-                    <p className="flex my-4 text-xl">
+                <div className='w-full h-full flex flex-col justify-start items-center 
+                 sm:px-4 md:px-20 lg:px-6 xl:px-32
+              '>
+                    <p ref={inputRef} className="flex mb-[7.3vh] mt-4 text-xl">
                         Datos de la propiedad
                     </p>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
-                        <p>Id</p>
                         <input
                             value={id} onChange={text => { setId(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
-                            placeholder="Id" />
+                            className={`bg-gray-100 appearance-none
+                            ${error && id.length <= 0 && " outline outline-2 outline-red-300"}
+
+                            border h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`}
+                            id="username" type="text"
+                            placeholder="Id*" />
                     </div>
-                    <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
-                        <p>Direccion</p>
+                    <div className="mb-1 w-[90%] flex flex-col justify-center items-start py-2">
                         <input
                             value={direccion} onChange={text => { setDireccion(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
-                            placeholder="Direccion" />
+                            className={`bg-gray-100 appearance-none h-[4vh] border  
+                             ${error && direccion.length <= 0 && " outline outline-2 outline-red-300"}
+                             rounded-sm w-[95%] py-2 px-3 text-grey-darke`} id="username" type="text"
+                            placeholder="Direccion*" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
-                        <p>Tipo</p>
+                        <p className='font-medium'>Tipo</p>
                         <select
-                            value={tipo}
                             onChange={e => {
                                 console.log(e.target.value)
                                 setTipo(e.target.value)
                             }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker">
+                            className={`bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[95%]  px-3 text-grey-darker
+                            ${error && tipo === 'Tipo' && " outline outline-2 outline-red-300"}`}>
+                            <option value="Tipo">Tipo</option>
                             <option value="Casa">Casa</option>
                             <option value="Depto">Depto</option>
                             <option value="Oficina">Oficina</option>
                         </select>
                     </div>
-                    <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
-                        <p>Nro piso</p>
+                    <div className="mb-1 w-[90%] flex flex-col justify-center items-start py-2">
                         <input
                             value={nroPiso}
                             onChange={e => {
                                 setNroPiso(Number(e.target.value))
                             }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                            className={`bg-gray-100 appearance-none border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="number"
                             placeholder="Nro piso" />
                     </div>
-                    <div className="my-4 w-[90%]">
+                    <div className="py-2 w-[90%]">
                         <label htmlFor="teal-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="teal-toggle" className="sr-only peer"
-                                checked={estacionamiento} onChange={() => { setEstacionamiento(!estacionamiento) }} />
-                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
+                                checked={estacionamiento} onChange={(e) => {
+                                    setEstacionamiento(e.target.checked)
+                                }} />
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#FF6F00]"></div>
                             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Estacionamiento</span>
                         </label>
-
-
                         <label htmlFor="d-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="d-toggle" className="sr-only peer"
-                                checked={bodega} onChange={() => { setBodega(!bodega) }} />
-                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
+                                checked={bodega} onChange={(e) => { setBodega(e.target.checked) }} />
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#FF6F00]"></div>
                             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Bodega</span>
                         </label>
-
                     </div>
-                    <div className="mb-1 w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Baños</p>
+                    <div className="w-[90%] mb-3 flex justify-around flex-row">
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={baños} onChange={text => setBaños(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="number"
+                                className={`appearance-none bg-gray-100 
+                                border  h-[4vh]  rounded-sm w-[90%] px-3 text-grey-darker`} id="username" type="number" min={0}
                                 placeholder="Baños" />
                         </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Dormitorios</p>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={dormitorios} onChange={text => setDormitorios(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="number"
+                                className={`appearance-none bg-gray-100 
+                                border h-[4vh] rounded-sm w-[90%] px-3 text-grey-darker`} id="username" type="number" min={0}
                                 placeholder="Dormitorios" />
                         </div>
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <p>Monto</p>
                         <input
                             value={monto} onChange={text => { setMonto(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
-                            placeholder="Monto" />
+                            className={`appearance-none bg-gray-100
+                            ${error && monto.length <= 0 && " outline outline-2 outline-red-300"}
+                            border  h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                            placeholder="Monto*" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <p>Comision por administracion</p>
                         <input
                             value={administracion} onChange={text => { setAdministracion(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
-                            placeholder="Comision por administracion" />
+                            className={`appearance-none bg-gray-100 
+                            ${error && administracion.length <= 0 && " outline outline-2 outline-red-300"}
+                            border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                            placeholder="Comision por administracion*" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <p>Gastos comunes</p>
-                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
+                        <input
+                            value={ggcc} onChange={text => setGgcc(text.target.value)}
+                            className={`appearance-none bg-gray-100 
+                        border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
                             placeholder="Gastos comunes" />
                     </div>
-
-                    <div className="mb-1 w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Nombre arrendador</p>
+                    <b className='mb-3'>Datos Arrendador</b>
+                    <div className="mb-3 w-[90%] flex justify-around flex-row">
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
-                                value={nombreArrendador} onChange={text => setNombreArrendador(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                value={arrendador.nombre} onChange={text => setArrendador({ ...arrendador, nombre: text.target.value })}
+                                className={`appearance-none bg-gray-100  
+                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                ${arrendadorIncomplete && arrendador.nombre.length <= 0 && " outline outline-2 outline-red-300"}
+                                `} id="username" type="text"
                                 placeholder="Nombre" />
                         </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Apellido arrendador</p>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
-                                value={apellidoArrendador} onChange={text => setApellidoArrendador(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                value={arrendador.apellido} onChange={text => setArrendador({ ...arrendador, apellido: text.target.value })}
+                                className={`appearance-none bg-gray-100
+                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                ${arrendadorIncomplete && arrendador.apellido.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
                                 placeholder="Apellido" />
                         </div>
                     </div>
-
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <p>Rut arrendador</p>
                         <input
-                            value={rutArrendador} onChange={text => { setRutArrendador(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="text"
-                            placeholder="Rut arrendador" />
+                            value={arrendador.rut} onChange={text => { setArrendador({ ...arrendador, rut: text.target.value }) }}
+                            className={`appearance-none bg-gray-100 
+                            border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                            ${arrendadorIncomplete && arrendador.rut.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
+                            placeholder="Rut" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <p>Fecha de nacimiento</p>
+                        <p className='font-medium'>Fecha de nacimiento</p>
                         <input
-                            value={fechaNacArrendador} onChange={text => { setFechaNacArrendador(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
-                            placeholder="Inicio de contrato" />
+                            value={arrendador.fechaNacArrendador} onChange={text => { setArrendador({ ...arrendador, fechaNacArrendador: text.target.value }) }}
+                            className={`appearance-none bg-gray-100 
+                            border h-[4vh] rounded-sm w-[95%]  px-3 text-grey-darker
+                            ${arrendadorIncomplete && arrendador.fechaNacArrendador.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="date"
+                        />
                     </div>
 
                     <div className="mb-4 w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Correo</p>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
-                                value={correo} onChange={text => { setCorreo(text.target.value) }}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
+                                value={arrendador.correo} onChange={text => { setArrendador({ ...arrendador, correo: text.target.value }) }}
+                                className={`appearance-none bg-gray-100 
+                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                ${arrendadorIncomplete && arrendador.correo.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
                                 placeholder="Correo" />
                         </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Teléfono</p>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
-                                value={telefono}
-                                onChange={text => setTelefono(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
+                                value={arrendador.telefono}
+                                onChange={text => setArrendador({ ...arrendador, telefono: text.target.value })}
+                                className={`appearance-none bg-gray-100 
+                                border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                ${arrendadorIncomplete && arrendador.telefono.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="Number"
                                 placeholder="Teléfono" />
                         </div>
                     </div>
-
-
-                    {foto === "" ?
-                        <div className="flex justify-center items-center mb-1 h-[25vh] w-[90%]">
-                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-100 hover:bg-gray-100 dark:border-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                <div className="flex flex-col justify-center items-center pt-5 pb-6">
-                                    <svg aria-hidden="true" className="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                    <p className="mb-2 text-sm text-center text-gray-500 dark:text-gray-400"><span className="font-semibold">Presiona para subir un archivo</span> o arrastra y sueltalo</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-300">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-                                </div>
-
-                                <input id="dropzone-file" onChange={(e) => {
-                                    console.log(e.target.files[''])
-                                    setFoto(e.target.files[0].name)
-                                    setFotoUri(e.target.files[0])
-                                }} type="file" className="hidden" />
-                            </label>
-                        </div>
-                        : <div className='flex rounded justify-center flex-col  mb-1 items-center  h-[25vh] w-[90%] bg-gray-200'>
-                            <p>{foto}</p>
-                            <button
-                                onClick={() => {
-                                    setFoto("")
-                                }}
-                                className='bg-teal-300 w-2/4 rounded-lg h-[10%] hover:bg-red-600  hover:text-white active:bg-blue-600'>Eliminar foto</button>
-                        </div>
-                    }
-                    <div className='flex justify-center items-center h-[10vh]  w-[90%] '>
-
-                        <button
-                            type="button"
-                            className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
-                            onClick={() => {
-                                updatePropiedad()
-                                // uploadImage()
-                                // setOpen(true)
-                            }}
-                        >
-                            Guardar
-                        </button>
-                    </div>
-                </div>
-
-
-
-                <div className='w-1/2 h-full flex flex-col border-l-2 justify-start items-center '>
-                    <p className="flex my-4 text-xl">
-                        Contrato
-                    </p>
-                    <div className="mb-1 w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Arrendatario</p>
-                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
-                                placeholder="Arrendatario" />
-                        </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Rut arrendatario</p>
-                            <input className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
-                                placeholder="Rut arrendatario" />
-                        </div>
-                    </div>
+                    <b className='pb-4'> Foto de la propiedad</b>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <p>Fecha de nacimiento</p>
-                        <input
-                            value={fechaNacArrendatario} onChange={text => { setFechaNacArrendatario(text.target.value) }}
-                            className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
-                            placeholder="Inicio de contrato" />
+                        {foto === "" ?
+                            <div className="flex justify-center items-center mb-1 h-[25vh] w-[95%] ">
+                                <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-100 hover:bg-gray-100 dark:border-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    <div className="flex flex-col justify-center items-center pt-5 pb-6">
+                                        <svg aria-hidden="true" className="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                        <p className="mb-2 text-sm text-center text-gray-500 dark:text-gray-400"><span className="font-semibold">Presiona para subir un archivo</span></p>
+                                        <p className="text-xs text-gray-500 dark:text-gray-300">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                    </div>
+                                    <input id="dropzone-file" onChange={(e) => {
+                                        setFoto(e.target.files[0].name)
+                                        setFotoUri(e.target.files[0])
+                                        let fileImg = e.target.files[0]
+                                        console.log(fileImg)
+                                    }} type="file" className="hidden" />
+                                </label>
+                            </div>
+                            : <div className='flex rounded justify-center flex-col  mb-1 items-center  h-[25vh] w-[95%] bg-gray-200'>
+                                <p>{foto}</p>
+                                <button
+                                    onClick={() => {
+                                        setFoto("")
+                                    }}
+                                    className='bg-teal-300 w-2/4 rounded-lg h-[10%] hover:bg-red-600  hover:text-white active:bg-blue-600'>Eliminar foto</button>
+                            </div>
+                        }
+
                     </div>
-                    <div className="mb-1 w-[90%] flex justify-around flex-row">
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Correo</p>
-                            <input
-                                value={correo} onChange={text => { setCorreo(text.target.value) }}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="text"
-                                placeholder="Correo" />
-                        </div>
-                        <div className='w-1/2 h-[10vh] flex flex-col justify-center items-start'>
-                            <p>Telefono</p>
-                            <input
-                                value={telefono}
-                                onChange={text => setTelefono(text.target.value)}
-                                className="appearance-none outline-pink-400 border h-[40%] rounded-sm w-[90%] py-2 px-3 text-grey-darker" id="username" type="Number"
-                                placeholder="Telefono" />
-                        </div>
-                    </div>
-                    <div className="mb-4 w-[90%] flex flex-col justify-center items-start">
-                        <p>Inicio de contrato</p>
-                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
-                            placeholder="Inicio de contrato" />
-                    </div>
-                    <div className="mb-20 w-[90%] flex flex-col justify-center items-start">
-                        <p>Termino de contrato</p>
-                        <input className="appearance-none outline-pink-400 border h-[90%] rounded-sm w-[95%] py-2 px-3 text-grey-darker" id="username" type="date"
-                            placeholder="Termino de contrato" />
+                    {/* Agregar contrato  */}
+
+                    <div className='w-[90%] h-auto mt-5 flex flex-col items-start justify-center'>
+                        <button onClick={() => {
+                            setNewContrato(!newContrato)
+                            setNewArrendatario(false)
+                        }}
+                            className='flex justify-between px-4 items-center w-[95%] h-[5vh] bg-gray-100 
+                        hover:bg-gray-200
+                        '>
+                            <span className='font-bold'>
+                                Agregar contrato
+                            </span>
+                            <span className='text-2xl'>
+                                <FontAwesomeIcon icon={faCirclePlus} />
+                            </span>
+                        </button>
+                        {newContrato === true &&
+
+                            <div ref={bottomRef} className='flex justify-between shadow-md items-center w-[95%] h-auto  '>
+                                <div className='w-full h-full flex flex-col justify-start items-center '>
+                                    <p className="flex my-4 text-xl">
+                                        Contrato
+                                    </p>
+                                    <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
+                                        <p className='font-medium'>Inicio de contrato</p>
+                                        <input
+                                            value={inicioContrato}
+                                            onChange={e => { setInicioContrato(e.target.value) }}
+                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                                            ${contratoIncomplete === true && inicioContrato === "" && "outline outline-2 outline-red-300"}`} id="username" type="date"
+                                            placeholder="Inicio de contrato" />
+                                    </div>
+                                    <div className="mb-5 w-[85%] flex flex-col justify-center items-start">
+                                        <p className='font-medium'>Termino de contrato</p>
+                                        <input
+                                            value={terminoContrato}
+                                            onChange={e => { setTerminoContrato(e.target.value) }}
+                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                                            ${contratoIncomplete === true && terminoContrato === "" && "outline outline-2 outline-red-300"}`} id="username" type="date"
+                                            placeholder="Termino de contrato" />
+                                    </div>
+
+                                    <div
+                                        className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
+                                        <button className={`h-full w-1/2  flex justify-center items-center
+                                       ${newArrendatario === false && 'bg-white'}`}
+                                            onClick={() => {
+                                                setNewArrendatario(false)
+                                                setArrendatarioIncomplete(false)
+                                            }}
+                                        >
+                                            Buscar arrendatario
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                setSelected("")
+                                                setNewArrendatario(true)
+                                            }}
+                                            className={`h-full w-1/2 bg-slate-50  flex justify-center items-center hover:bg-gray-300
+                                            ${newArrendatario === true && 'bg-white'}`}>
+                                            Agregar arrendatario
+                                        </button>
+
+                                    </div>
+                                    <div className='h-auto w-full pt-4'>
+                                        {newArrendatario === true ?
+                                            <div className='w-full h-full flex flex-col justify-start items-center '>
+                                                <b className='mb-3'>Datos Arrendatario</b>
+                                                <div className="mb-3 w-[85%] flex justify-around flex-row">
+                                                    <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
+                                                        <input
+                                                            value={arrendatario.nombre}
+                                                            onChange={text => { setArrendatario({ ...arrendatario, nombre: text.target.value }) }}
+                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                                            ${arrendatarioIncomplete && arrendatario.nombre.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            id="username" type="text"
+                                                            placeholder="Nombre" />
+                                                    </div>
+                                                    <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
+                                                        <input
+                                                            value={arrendatario.apellido}
+                                                            onChange={text => { setArrendatario({ ...arrendatario, apellido: text.target.value }) }}
+                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                                            ${arrendatarioIncomplete && arrendatario.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            id="username" type="text"
+                                                            placeholder="Apellido" />
+                                                    </div>
+                                                </div>
+                                                <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
+                                                    <input
+                                                        value={arrendatario.rut}
+                                                        onChange={text => { setArrendatario({ ...arrendatario, rut: text.target.value }) }}
+                                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                                                        ${arrendatarioIncomplete && arrendatario.rut.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                        id="username" type="text"
+                                                        placeholder="Rut" />
+                                                </div>
+                                                <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
+                                                    <p className='font-medium'>Fecha de nacimiento</p>
+                                                    <input
+                                                        value={arrendatario.fechaNacArrendatario}
+                                                        onChange={text => { setArrendatario({ ...arrendatario, fechaNacArrendatario: text.target.value }) }}
+                                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
+                                                        ${arrendatarioIncomplete && arrendatario.fechaNacArrendatario.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                        id="username" type="date"
+                                                        placeholder="Inicio de contrato" />
+                                                </div>
+                                                <div className="mb-5 w-[85%] flex justify-around flex-row">
+                                                    <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
+                                                        <input
+                                                            value={arrendatario.correo}
+                                                            onChange={text => { setArrendatario({ ...arrendatario, correo: text.target.value }) }}
+                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                                            ${arrendatarioIncomplete && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
+                                                            placeholder="Correo" />
+                                                    </div>
+                                                    <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
+                                                        <input
+                                                            value={arrendatario.telefono}
+                                                            onChange={text => { setArrendatario({ ...arrendatario, telefono: text.target.value }) }}
+                                                            className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
+                                                            ${arrendatarioIncomplete && arrendatario.telefono.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="Number"
+                                                            placeholder="Telefono" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            :
+                                            <ArrendatarioFinder selected={selected} setSelected={setSelected}
+                                                selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete} />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
                     </div>
 
-                    <div className='flex justify-center items-center h-[10vh] border-t-2 w-[90%] '>
 
+
+                    <div className='flex justify-center items-center h-[10vh] w-[85%]'>
                         <button
                             type="button"
                             className="inline-flex w-[70%] justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                             onClick={() => {
-                                // createPropiedad()
-                                uploadImage()
-                                // setOpen(true)
+                                // addPropiedad()
+                                console.log(dataProp.id)
                             }}
                         >
                             Guardar
                         </button>
                     </div>
 
+
+
                 </div>
+
+
+
             </div>
         </div>
     )
