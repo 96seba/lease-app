@@ -81,8 +81,9 @@ export default function EditarPropiedad() {
         document.title = 'Agrega una propiedad'
         const getData = async () => {
             let data = await location.state.data
-            console.log(data.id)
-            setDataProp(data)
+            console.log(data)
+            setId(data.id)
+            setDireccion(data.address)
         }
         getData()
     }, []);

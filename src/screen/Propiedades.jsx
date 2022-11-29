@@ -23,7 +23,7 @@ export default function Propiedades() {
     }, [])
 
     return (
-        <div className="bg-slate-100 h-[100vh] flex flex-col justify-start items-start p-1  
+        <div className="bg-gray-100 h-[100vh] flex flex-col justify-start items-start p-1  
         sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw] 2xl:w-[80vw]">
 
             <div className="flex items-end justify-end w-full pr-[0.8vw] h-[10vh] mb-4">

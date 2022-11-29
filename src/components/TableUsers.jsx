@@ -97,7 +97,7 @@ export default function TableUsers({ tableData, openModal }) {
 
 
     return (
-        <div className='shadow mt-2'>
+        <div className='w-[96%]'>
             <DataTable
                 columns={columnas}
                 data={tableData}
