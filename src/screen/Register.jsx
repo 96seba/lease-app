@@ -36,7 +36,7 @@ export default function Register() {
     const addUsers = async () => {
         const resp = await createUser(correo, password)
         console.log(resp)
-        
+
     }
 
 
@@ -54,7 +54,7 @@ export default function Register() {
                     <div className="flex justify-center items-end flex-col flex-wrap p-8  h-[78vh] w-5/12 ">
                         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 p-2">
                             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                                <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-base dark:text-white text-center ">
+                                <h1 className="text-lg font-semibold text-center">
                                     Crea una cuenta
                                 </h1>
                                 <div className="space-y-4 md:space-y-6" action="#">
@@ -91,7 +91,9 @@ export default function Register() {
                         </div>
                     </div>
                     <div className="flex flex-col justify-start items-center h-[85vh] w-7/12 p-8">
-                        <h4>Usuarios</h4>
+                        
+                            <p className='text-lg font-semibold'>Propiedades a revisar</p>
+                        
                         {
                             tableData !== "" ?
                                 <TableUsers tableData={tableData} setOpen={setOpen} openModal={openModal} />
