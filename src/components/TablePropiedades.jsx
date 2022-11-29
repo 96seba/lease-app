@@ -82,7 +82,7 @@ const customStyles = {
 const columnas = [
     {
         name: 'Tipo',
-        selector: row => row.id,
+        selector: row => Number(row.property_id),
         sortable: true
     },
     {
@@ -125,7 +125,6 @@ export default function TablePropiedades({ dataProp }) {
     let navigate = useNavigate()
 
     React.useEffect(() => {
-
         console.log(dataProp)
     }, [])
 

@@ -26,7 +26,7 @@ export default function Propiedades() {
         <div className="bg-slate-100 h-[100vh] flex flex-col justify-start items-start p-1  
         sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw] 2xl:w-[80vw]">
 
-            <div className="flex items-end justify-end w-full h-[10vh] mb-4">
+            <div className="flex items-end justify-end w-full pr-[0.8vw] h-[10vh] mb-4">
                 <button onClick={() => {
                     navigate("/propiedades/agregarPropiedad")
                 }}
@@ -40,23 +40,9 @@ export default function Propiedades() {
                     <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[250ms] ease-out group-hover:w-full"></div>
                     <span className="relative group-hover:text-white">Subir excel</span>
                 </button>
-
-                {/* <button onClick={() => {
-                    navigate("/propiedades/agregarPropiedad")
-                }} className="py-5 flex items-center justify-start px-8 w-3/4 h-[6vh]">
-                    <div type="button" className="text-white bg-[#FF6F00] hover:bg-[#3A4348]  focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 ">
-                        <svg aria-hidden="true" className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-                        <span className="sr-only">Icon description</span>
-                    </div>
-
-                    <h2 className="text-2xl">
-                        Agregar propiedad
-                    </h2>
-                </button> */}
-
             </div>
 
-            <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[99%] h-[36vh] bg-white rounded-lg shadow-sm '>
+            <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[99%] h-auto bg-white rounded-lg shadow-sm '>
                 <div className='w-full'>
                     <p className='text-lg font-semibold'>Propiedades a revisar</p>
                 </div>
