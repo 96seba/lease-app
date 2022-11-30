@@ -12,7 +12,7 @@ export default function Login() {
 
     const loginUser = async () => {
         let resp = await LoginUser(user, pass)
-        console.log(resp.msg)
+        console.log(resp)
         if (resp.msg === "Error en los datos ingresados") {
             setError(true)
         } else {

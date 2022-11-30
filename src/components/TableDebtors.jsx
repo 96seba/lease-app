@@ -58,44 +58,7 @@ const customStyles = {
     },
 };
 
-const tablaData = [
-    {
-        propiedad: 26, fecha: "27/02/2022",
-        monto: "$ 50.000", ggcc: "$ 0",
-        luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
-    },
-    {
-        propiedad: 26, fecha: "27/02/2022",
-        monto: "$ 50.000", ggcc: "$ 0",
-        luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
-    },
-    {
-        propiedad: 26, fecha: "27/02/2022",
-        monto: "$ 50.000", ggcc: "$ 0",
-        luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
-    },
-    {
-        propiedad: 26, fecha: "27/02/2022",
-        monto: "$ 50.000", ggcc: "$ 0",
-        luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
-    },
-    {
-        propiedad: 26, fecha: "27/02/2022",
-        monto: "$ 50.000", ggcc: "$ 0",
-        luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
-    },
-    {
-        propiedad: 26, fecha: "27/02/2022",
-        monto: "$ 50.000", ggcc: "$ 0",
-        luz: "$ 0", agua: "$ 0",
-        gas: "$ 0", estado: "Deuda",
-    },
-]
+
 
 
 const columnas = [
@@ -148,12 +111,12 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TableDebtors() {
+export default function TableDebtors({debtorData}) {
 
     return (
         <DataTable
             columns={columnas}
-            data={tablaData}
+            data={debtorData}
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
