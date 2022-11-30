@@ -305,7 +305,7 @@ export default function AgregarPropiedad() {
                             ${error && id.length <= 0 && " outline outline-2 outline-red-300"}
 
                             border h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`}
-                            id="username" type="text"
+                             type="text"
                             placeholder="Id*" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start py-2">
@@ -313,7 +313,7 @@ export default function AgregarPropiedad() {
                             value={direccion} onChange={text => { setDireccion(text.target.value) }}
                             className={`bg-gray-100 appearance-none h-[4vh] border  
                              ${error && direccion.length <= 0 && " outline outline-2 outline-red-300"}
-                             rounded-sm w-[95%] py-2 px-3 text-grey-darke`} id="username" type="text"
+                             rounded-sm w-[95%] py-2 px-3 text-grey-darke`}  type="text"
                             placeholder="Direccion*" />
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
@@ -337,7 +337,7 @@ export default function AgregarPropiedad() {
                             onChange={e => {
                                 setNroPiso(Number(e.target.value))
                             }}
-                            className={`bg-gray-100 appearance-none border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="number"
+                            className={`bg-gray-100 appearance-none border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`}  type="number"
                             placeholder="Nro piso" />
                     </div>
                     <div className="py-2 w-[90%]">
@@ -361,14 +361,14 @@ export default function AgregarPropiedad() {
                             <input
                                 value={baños} onChange={text => setBaños(text.target.value)}
                                 className={`appearance-none bg-gray-100 
-                                border  h-[4vh]  rounded-sm w-[90%] px-3 text-grey-darker`} id="username" type="number" min={0}
+                                border  h-[4vh]  rounded-sm w-[90%] px-3 text-grey-darker`}  type="number" min={0}
                                 placeholder="Baños" />
                         </div>
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={dormitorios} onChange={text => setDormitorios(text.target.value)}
                                 className={`appearance-none bg-gray-100 
-                                border h-[4vh] rounded-sm w-[90%] px-3 text-grey-darker`} id="username" type="number" min={0}
+                                border h-[4vh] rounded-sm w-[90%] px-3 text-grey-darker`} type="number" min={0}
                                 placeholder="Dormitorios" />
                         </div>
                     </div>
@@ -377,7 +377,7 @@ export default function AgregarPropiedad() {
                             value={monto} onChange={text => { setMonto(text.target.value) }}
                             className={`appearance-none bg-gray-100
                             ${error && monto.length <= 0 && " outline outline-2 outline-red-300"}
-                            border  h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                            border  h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} type="number"
                             placeholder="Monto*" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
@@ -385,14 +385,14 @@ export default function AgregarPropiedad() {
                             value={administracion} onChange={text => { setAdministracion(text.target.value) }}
                             className={`appearance-none bg-gray-100 
                             ${error && administracion.length <= 0 && " outline outline-2 outline-red-300"}
-                            border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                            border  h-[4vh]  rounded-sm w-[95%] py-2 px-3 text-grey-darker`}  type="number"
                             placeholder="Comision por administracion*" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={ggcc} onChange={text => setGgcc(text.target.value)}
                             className={`appearance-none bg-gray-100 
-                        border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
+                        border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`}  type="number"
                             placeholder="Gastos comunes" />
                     </div>
                     <b className='mb-3'>Datos Arrendador</b>
@@ -403,7 +403,7 @@ export default function AgregarPropiedad() {
                                 className={`appearance-none bg-gray-100  
                                 border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
                                 ${arrendadorIncomplete && arrendador.nombre.length <= 0 && " outline outline-2 outline-red-300"}
-                                `} id="username" type="text"
+                                `}  type="text"
                                 placeholder="Nombre" />
                         </div>
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -411,7 +411,7 @@ export default function AgregarPropiedad() {
                                 value={arrendador.apellido} onChange={text => setArrendador({ ...arrendador, apellido: text.target.value })}
                                 className={`appearance-none bg-gray-100
                                 border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
-                                ${arrendadorIncomplete && arrendador.apellido.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
+                                ${arrendadorIncomplete && arrendador.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}  type="text"
                                 placeholder="Apellido" />
                         </div>
                     </div>
@@ -420,7 +420,7 @@ export default function AgregarPropiedad() {
                             value={arrendador.rut} onChange={text => { setArrendador({ ...arrendador, rut: text.target.value }) }}
                             className={`appearance-none bg-gray-100 
                             border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                            ${arrendadorIncomplete && arrendador.rut.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
+                            ${arrendadorIncomplete && arrendador.rut.length <= 0 && " outline outline-2 outline-red-300"}`}  type="text"
                             placeholder="Rut" />
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
@@ -429,7 +429,7 @@ export default function AgregarPropiedad() {
                             value={arrendador.fechaNacArrendador} onChange={text => { setArrendador({ ...arrendador, fechaNacArrendador: text.target.value }) }}
                             className={`appearance-none bg-gray-100 
                             border h-[4vh] rounded-sm w-[95%]  px-3 text-grey-darker
-                            ${arrendadorIncomplete && arrendador.fechaNacArrendador.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="date"
+                            ${arrendadorIncomplete && arrendador.fechaNacArrendador.length <= 0 && " outline outline-2 outline-red-300"}`}  type="date"
                         />
                     </div>
 
@@ -439,7 +439,7 @@ export default function AgregarPropiedad() {
                                 value={arrendador.correo} onChange={text => { setArrendador({ ...arrendador, correo: text.target.value }) }}
                                 className={`appearance-none bg-gray-100 
                                 border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
-                                ${arrendadorIncomplete && arrendador.correo.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
+                                ${arrendadorIncomplete && arrendador.correo.length <= 0 && " outline outline-2 outline-red-300"}`}  type="email"
                                 placeholder="Correo" />
                         </div>
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -448,7 +448,7 @@ export default function AgregarPropiedad() {
                                 onChange={text => setArrendador({ ...arrendador, telefono: text.target.value })}
                                 className={`appearance-none bg-gray-100 
                                 border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
-                                ${arrendadorIncomplete && arrendador.telefono.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="Number"
+                                ${arrendadorIncomplete && arrendador.telefono.length <= 0 && " outline outline-2 outline-red-300"}`}  type="tel"
                                 placeholder="Teléfono" />
                         </div>
                     </div>
@@ -511,7 +511,7 @@ export default function AgregarPropiedad() {
                                             value={inicioContrato}
                                             onChange={e => { setInicioContrato(e.target.value) }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                            ${contratoIncomplete === true && inicioContrato === "" && "outline outline-2 outline-red-300"}`} id="username" type="date"
+                                            ${contratoIncomplete === true && inicioContrato === "" && "outline outline-2 outline-red-300"}`}  type="date"
                                             placeholder="Inicio de contrato" />
                                     </div>
                                     <div className="mb-5 w-[85%] flex flex-col justify-center items-start">
@@ -520,7 +520,7 @@ export default function AgregarPropiedad() {
                                             value={terminoContrato}
                                             onChange={e => { setTerminoContrato(e.target.value) }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                            ${contratoIncomplete === true && terminoContrato === "" && "outline outline-2 outline-red-300"}`} id="username" type="date"
+                                            ${contratoIncomplete === true && terminoContrato === "" && "outline outline-2 outline-red-300"}`}  type="date"
                                             placeholder="Termino de contrato" />
                                     </div>
 
@@ -557,7 +557,7 @@ export default function AgregarPropiedad() {
                                                             onChange={text => { setArrendatario({ ...arrendatario, nombre: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
                                                             ${arrendatarioIncomplete && arrendatario.nombre.length <= 0 && " outline outline-2 outline-red-300"}`}
-                                                            id="username" type="text"
+                                                             type="text"
                                                             placeholder="Nombre" />
                                                     </div>
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -566,7 +566,7 @@ export default function AgregarPropiedad() {
                                                             onChange={text => { setArrendatario({ ...arrendatario, apellido: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
                                                             ${arrendatarioIncomplete && arrendatario.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}
-                                                            id="username" type="text"
+                                                             type="text"
                                                             placeholder="Apellido" />
                                                     </div>
                                                 </div>
@@ -576,7 +576,7 @@ export default function AgregarPropiedad() {
                                                         onChange={text => { setArrendatario({ ...arrendatario, rut: text.target.value }) }}
                                                         className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
                                                         ${arrendatarioIncomplete && arrendatario.rut.length <= 0 && " outline outline-2 outline-red-300"}`}
-                                                        id="username" type="text"
+                                                         type="text"
                                                         placeholder="Rut" />
                                                 </div>
                                                 <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
@@ -586,7 +586,7 @@ export default function AgregarPropiedad() {
                                                         onChange={text => { setArrendatario({ ...arrendatario, fechaNacArrendatario: text.target.value }) }}
                                                         className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
                                                         ${arrendatarioIncomplete && arrendatario.fechaNacArrendatario.length <= 0 && " outline outline-2 outline-red-300"}`}
-                                                        id="username" type="date"
+                                                         type="date"
                                                         placeholder="Inicio de contrato" />
                                                 </div>
                                                 <div className="mb-5 w-[85%] flex justify-around flex-row">
@@ -595,7 +595,7 @@ export default function AgregarPropiedad() {
                                                             value={arrendatario.correo}
                                                             onChange={text => { setArrendatario({ ...arrendatario, correo: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="text"
+                                                            ${arrendatarioIncomplete && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`}  type="text"
                                                             placeholder="Correo" />
                                                     </div>
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -603,7 +603,7 @@ export default function AgregarPropiedad() {
                                                             value={arrendatario.telefono}
                                                             onChange={text => { setArrendatario({ ...arrendatario, telefono: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.telefono.length <= 0 && " outline outline-2 outline-red-300"}`} id="username" type="Number"
+                                                            ${arrendatarioIncomplete && arrendatario.telefono.length <= 0 && " outline outline-2 outline-red-300"}`}  type="Number"
                                                             placeholder="Telefono" />
                                                     </div>
                                                 </div>
