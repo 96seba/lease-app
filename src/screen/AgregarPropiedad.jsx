@@ -569,19 +569,12 @@ export default function AgregarPropiedad() {
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
-<<<<<<< HEAD
-                            value={arrendador.rut} onChange={text => {
-                                // setArrendador({ ...arrendador, rut: text.target.value })
-                                checkRut(text.target.value)
-                            }}
-=======
                             value={arrendador.rut} onChange={(text) => {
                                 setArrendador({ ...arrendador, rut: text.target.value })
                                 let resp = checkRut(text.target.value)
                                 setArrendador({ ...arrendador, rut: resp })
                             }}
 
->>>>>>> apiEditarPropiedad
                             className={`appearance-none bg-gray-100 
                             border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
                             ${arrendadorIncomplete && arrendador.rut.length <= 0 && " outline outline-2 outline-red-300"}
