@@ -109,7 +109,9 @@ const columnas = [
     {
         name: 'Mes',
         selector: row => row.mes,
-        sortable: true
+        sortable: true,
+        width: '8%',
+        compact:true
     },
     {
         name: 'Arrendatario',

@@ -21,6 +21,7 @@ export default function Login() {
         } else {
             localStorage.setItem('token', resp.data.token)
             let token = localStorage.getItem('token')
+            
             navigate('/dashboard')
             setLoading(false)
         }
