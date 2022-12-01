@@ -430,7 +430,7 @@ export default function AgregarPropiedad() {
                         border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} id="username" type="text"
                             placeholder="Gastos comunes" />
                     </div>
-                    <b className='mb-3'>Datos Arrendador</b>
+                    <b className='mb-3'>Datos Dueño</b>
                     <div className="mb-3 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input

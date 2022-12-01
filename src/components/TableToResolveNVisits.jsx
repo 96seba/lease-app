@@ -33,33 +33,48 @@ createTheme(
 
 const tablaData = [
     { propiedad: 29, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
-    { propiedad: 19, descripcion: "El dia que murio la razon", fecha: "18/10/2019", urgencia: "Nivel 2" },
+    {
+        propiedad: 19, descripcion: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto reiciendis illo doloribus",
+        fecha: "18/10/2019", urgencia: "Nivel 2"
+    },
     { propiedad: 27, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
     { propiedad: 74, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
     { propiedad: 94, descripcion: "La moneda", fecha: "11/09/1973", urgencia: "Nivel 2" },
 ]
 
 
+
+
 const columnas = [
     {
-        name: 'Propiedad',
+        name: 'Id',
         selector: row => row.propiedad,
-        sortable: true
+        sortable: true,
+        center: true,
+        compact: true,
+        width: '7vw'
     },
     {
         name: 'Descripcion',
         selector: row => row.descripcion,
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: 'Fecha',
         selector: row => row.fecha,
-        sortable: true
+        sortable: true,
+        center: true,
+        compact: true,
+        width: '16vw'
     },
     {
         name: 'Urgencia',
         selector: row => row.urgencia,
-        sortable: true
+        sortable: true,
+        center: true,
+        compact: true,
+        width: '16vw'
     },
 ]
 
@@ -90,10 +105,10 @@ const customStyles = {
         },
     },
     pagination: {
-		style: {
-			backgroundColor: '#FFFFFF',
-		},
-	},
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
 };
 
 

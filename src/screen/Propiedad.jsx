@@ -24,7 +24,7 @@ export default function Propiedad() {
         setData(data)
         setLogs(data.alerts)
         console.log(data.alerts, "asdka")
-        setFotoUrl(API_HOST + data?.image?.slice(7, data.image.length) || '')
+        setFotoUrl(API_HOST + data?.image || '')
         document.title = 'Propiedad ' + data.property_id;
     }
 
@@ -202,7 +202,7 @@ export default function Propiedad() {
                         </div>
                     </div>
                     <div className="flex justify-center flex-col rounded-r p-6 items-start w-[28vw] h-[40vh] bg-white">
-                        <button onClick={() => {
+                        {/* <button onClick={() => {
                             let nav = `/propiedades/propiedad/editarPropiedad`
                             navigate(nav, {
                                 state: {
@@ -211,7 +211,7 @@ export default function Propiedad() {
                             })
                         }}
                             className="group relative h-12 w-full mb-2 overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm " >Ver boleta
-                        </button>
+                        </button> */}
                         <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
                             <p>Dormitorios: {data.bedrooms || "Sin data"}</p>
                             <p>Baños: {data.bathrooms || "Sin data"}</p>

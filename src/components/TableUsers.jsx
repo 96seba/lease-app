@@ -39,22 +39,31 @@ const columnas = [
     {
         name: 'Id',
         selector: row => row.id,
-        sortable: true
+        sortable: true,
+        width: '8%',
+        center: true,
+        compact: true
     },
     {
         name: 'Correo',
         selector: row => row.email,
-        sortable: true
+        sortable: true,
+        center: true,
+        compact: true
     },
     {
         name: 'Nombre',
         selector: row => row.nombre,
-        sortable: true
+        sortable: true,
+        center: true,
+        compact: true
     },
     {
         name: 'Apellido',
         selector: row => row.apellido,
-        sortable: true
+        sortable: true,
+        center: true,
+        compact: true
     },
 ]
 
