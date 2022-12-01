@@ -83,7 +83,8 @@ const columnas = [
     {
         name: 'Tipo',
         selector: row => Number(row.property_id),
-        sortable: true
+        sortable: true,
+        width: '8%'
     },
     {
         name: 'Direccion',
@@ -105,12 +106,17 @@ const columnas = [
         name: 'Monto',
         selector: row => "$ " + row.amounts[0]?.amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
         // selector: row => "$ " + row.amounts[0].amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
-        sortable: true
+        sortable: true,
+        width: '13%'
     },
     {
         name: 'Estado',
-        selector: row => row.estado,
-        sortable: true
+        selector: row => <button onClick={() => {
+
+        }} className='bg-[#00ff00] w-20 h-7 rounded '>Al dia</button>,
+        sortable: true,
+        center: true,
+        width: '12%'
     },
 ]
 

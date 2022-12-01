@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Navbar from "./components/Navbar.jsx";
 import Login from "./screen/Login";
 import Dashboard from "./screen/Dashboard.jsx";
@@ -8,15 +9,26 @@ import Register from "./screen/Register.jsx";
 import Boletas from "./screen/Boletas.jsx";
 import EditarPropiedad from "./screen/EditarPropiedad.jsx";
 import { Routes, Route } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 
 
 function App() {
+
+	const location = useLocation();
+
+	useEffect(() => {
+		console.log(location.pathname)
+	}, [location])
+
+
 	return (
 		<div className="bg-white overflow-x-hidden">
 			<div className="">
-				<header className="w-screen">
-					<Navbar />
-				</header>
+				{location.pathname !== '/login' &&
+					<header className="w-screen">
+						<Navbar />
+					</header>
+				}
 
 
 				<div className="flex w-screen overflow-y-hidden bg-gray-100 
@@ -30,7 +42,7 @@ function App() {
 						<Route path="/propiedades/propiedad" element={<Propiedad />} />
 						<Route path="/propiedades/agregarPropiedad" element={<AgregarPropiedad />} />
 						<Route path="/propiedades/propiedad/editarPropiedad" element={<EditarPropiedad />} />
-                        <Route path="/usuarios" element={<Register />} />
+						<Route path="/usuarios" element={<Register />} />
 						<Route path="/boletas" element={<Boletas />} />
 
 					</Routes>

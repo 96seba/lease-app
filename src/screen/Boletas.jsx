@@ -31,6 +31,9 @@ export default function Propiedades() {
                 <button onClick={() => {
 
                     console.log(tablaData.length, files.length)
+                    files.forEach(element => {
+                        console.log(element)
+                    });
                     if (tablaData.length === files.length) {
                         alert("Boletas enviadas")
                     } else {

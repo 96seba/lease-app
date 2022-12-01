@@ -9,22 +9,33 @@ export default function Login() {
     const [user, setUser] = useState("")
     const [pass, setPass] = useState("")
     const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const loginUser = async () => {
+        setLoading(true)
         let resp = await LoginUser(user, pass)
-        console.log(resp.msg)
+        console.log(resp)
         if (resp.msg === "Error en los datos ingresados") {
             setError(true)
+            setLoading(false)
         } else {
             localStorage.setItem('token', resp.data.token)
             let token = localStorage.getItem('token')
             navigate('/dashboard')
+            setLoading(false)
         }
 
     }
 
+    const addAnotacion = (event) => {
+        if (event.key === 'Enter') {
+            console.log(user, pass)
+            loginUser()
+        }
+    }
+
     return (
-        <div className=" bg-gray-100 w-screen h-[91.5vh] p-6 flex flex-col  justify-center items-center">
+        <div className=" bg-gray-100 w-screen h-screen p-6 flex flex-col  justify-center items-center">
             {
                 error === true ?
 
@@ -43,6 +54,20 @@ export default function Login() {
                     </div>
                     : <></>
             }
+
+
+            {loading === true &&
+                <div className="absolute w-screen h-screen bg-gray-200 bg-opacity-50 flex justify-center items-center">
+                    <div class="flex justify-center items-center">
+                        <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+
+                    </div>
+                    <p className="font-bold my-0 mx-4">Cargando...</p>
+                </div>
+            }
+
             <div className=" bg-white flex justify-center sm:w-[70%] md:w-[55%] lg:w-[40%]">
                 <div className="bg-white shadow rounded-lg px-8 pt-6 pb-8 m-auto w-full">
                     <div className="mb-4">
@@ -61,6 +86,7 @@ export default function Login() {
                         <input
                             value={pass}
                             onChange={(e) => { setPass(e.target.value) }}
+                            onKeyDown={event => addAnotacion(event)}
                             className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" placeholder="******************" />
                         <p className="text-red text-xs italic"></p>
                     </div>

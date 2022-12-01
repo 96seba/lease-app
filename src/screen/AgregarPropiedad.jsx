@@ -6,11 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import ArrendatarioFinder from '../components/ArrendatarioFinder'
 import { addLease } from '../api/addLease'
+import { useNavigate } from "react-router-dom"
 import { addLeaseholder } from '../api/addLeaseholder'
 
 
 
 export default function AgregarPropiedad() {
+
+    let navigate = useNavigate()
 
     //* Datos propiedad
 
@@ -152,11 +155,11 @@ export default function AgregarPropiedad() {
             else if (contArrendador === 0) {
                 //* El contrato esta completo
                 setArrendadorIncomplete(false)
-                objProp.rut = arrendador.rut
+                objProp.rut = String(arrendador.rut)
                 objProp.name = arrendador.nombre
                 objProp.lastname = arrendador.apellido
                 objProp.email = arrendador.correo
-                objProp.phone = arrendador.telefono
+                objProp.phone = String(arrendador.telefono)
             }
 
             //* Se agregan los datos no vacios al objPropClean
@@ -166,7 +169,7 @@ export default function AgregarPropiedad() {
                 if (prop.length !== 0) {
                     let isnum = /^\d+$/.test(prop);
                     // console.log(propName, prop, isnum)
-                    if (isnum === true && propName !== 'property_id') {
+                    if (isnum === true && propName !== 'property_id' && propName !== 'rut' && propName !== 'phone') {
                         objPropClean[propName] = Number(prop)
                     } else {
                         if (prop === 'true') {
@@ -217,7 +220,7 @@ export default function AgregarPropiedad() {
                     } else if (contArrendatario === 0) {
                         setArrendatarioIncomplete(false)
                         //* Se agrega una nuevo arrendatario al objeto
-                        objHolder.rut = arrendatario.rut
+                        objHolder.rut = (arrendatario.rut)
                         objHolder.name = arrendatario.nombre
                         objHolder.lastname = arrendatario.apellido
                         objHolder.email = arrendatario.correo
@@ -231,9 +234,16 @@ export default function AgregarPropiedad() {
 
             //* Ejecucion de fetchs para crear propiedad, uploadImage y leaseholder 
             if (contArrendador === 0 || contArrendador === 6) {
+                //* El id de compañia va por defecto en developer mode
+                objPropClean.companyId = 1
+                console.log(objContrato)
+                console.log(objPropClean)
                 //* Se crea la propiedad con el objeto limpio de props vacios
                 const respProp = await createPropiedad(objPropClean)
                 console.log("respProp", respProp)
+                if (respProp.status === 200) {
+                    navigate("/propiedades")
+                }
                 //* Se agrega el id de la propiedad al objeto del contrato
                 objContrato.propertyId = respProp.data.property.id
                 //* Se verifica si se eligio una imagen para la propiedad
@@ -245,11 +255,11 @@ export default function AgregarPropiedad() {
                     if (newArrendatario === true) {
                         //* Se crea el arrendatario
                         //* Se agregan los datos del nuevo arrendatario al objeto del contrato
-                        objContrato.rut = arrendatario.rut
+                        objContrato.rut = String(arrendatario.rut)
                         objContrato.name = arrendatario.nombre
                         objContrato.lastname = arrendatario.apellido
                         objContrato.email = arrendatario.correo
-                        objContrato.phone = arrendatario.telefono
+                        objContrato.phone = String(arrendatario.telefono)
                         let date = new Date(arrendatario.fechaNacArrendatario)
                         objContrato.birthday = date.toISOString()
                         //* Se crea el contrato
@@ -267,8 +277,7 @@ export default function AgregarPropiedad() {
                         }
                     }
                 }
-                // console.log(objContrato)
-                // console.log(objPropClean)
+
                 // console.log(objHolder)
             }
         }
@@ -371,6 +380,31 @@ export default function AgregarPropiedad() {
     }, [newContrato])
 
 
+    function checkRut(rut) {
+
+        var actual = rut.replace(/^0+/, "");
+        if (actual != '' && actual.length > 1) {
+            var sinPuntos = actual.replace(/\./g, "");
+            var actualLimpio = sinPuntos.replace(/-/g, "");
+            var inicio = actualLimpio.substring(0, actualLimpio.length - 1);
+            var rutPuntos = "";
+            var i = 0;
+            var j = 1;
+            for (i = inicio.length - 1; i >= 0; i--) {
+                var letra = inicio.charAt(i);
+                rutPuntos = letra + rutPuntos;
+                if (j % 3 == 0 && j <= inicio.length - 1) {
+                    rutPuntos = "." + rutPuntos;
+                }
+                j++;
+            }
+            var dv = actualLimpio.substring(actualLimpio.length - 1);
+            rutPuntos = rutPuntos + "-" + dv;
+        }
+        console.log(rutPuntos)
+        return rutPuntos;
+    }
+
 
     const [open, setOpen] = useState(false)
 
@@ -413,6 +447,7 @@ export default function AgregarPropiedad() {
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p className='font-medium'>Tipo</p>
                         <select
+                            defaultValue={'Tipo'}
                             onChange={e => {
                                 console.log(e.target.value)
                                 setTipo(e.target.value)
@@ -512,7 +547,7 @@ export default function AgregarPropiedad() {
                         border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker`} type="number"
                             placeholder="Gastos comunes" />
                     </div>
-                    <b className='mb-3'>Datos Arrendador</b>
+                    <b className='mb-3'>Datos Dueño</b>
                     <div className="mb-3 w-[90%] flex justify-around flex-row">
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
@@ -534,10 +569,19 @@ export default function AgregarPropiedad() {
                     </div>
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
+<<<<<<< HEAD
                             value={arrendador.rut} onChange={text => {
                                 // setArrendador({ ...arrendador, rut: text.target.value })
                                 checkRut(text.target.value)
                             }}
+=======
+                            value={arrendador.rut} onChange={(text) => {
+                                setArrendador({ ...arrendador, rut: text.target.value })
+                                let resp = checkRut(text.target.value)
+                                setArrendador({ ...arrendador, rut: resp })
+                            }}
+
+>>>>>>> apiEditarPropiedad
                             className={`appearance-none bg-gray-100 
                             border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
                             ${arrendadorIncomplete && arrendador.rut.length <= 0 && " outline outline-2 outline-red-300"}

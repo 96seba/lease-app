@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { API_HOST } from '../utils/constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { addAlerts } from '../api/addAlerts'
 
 export default function Propiedad() {
 
@@ -21,10 +22,9 @@ export default function Propiedad() {
         let data = await location.state.data
         console.log(data.amounts.length)
         setData(data)
-        setAlerts(data.alerts)
+        setLogs(data.alerts)
         console.log(data.alerts, "asdka")
-        console.log(data.image?.slice(7, data.image.length))
-        setFotoUrl(API_HOST + data.image.slice(7, data.image.length))
+        setFotoUrl(API_HOST + data?.image || '')
         document.title = 'Propiedad ' + data.property_id;
     }
 
@@ -33,17 +33,13 @@ export default function Propiedad() {
     }, [])
 
 
-    const [logs, setLogs] = useState([
-        { fecha: '23/04/2022  20:02', mensaje: "Se cayo gente", level: "Alta" },
-        { fecha: '13/02/2012  13:45:', mensaje: "Se callo gente", level: "Media" },
-        { fecha: '02/10/1925  15:10', mensaje: "Se caio gente", level: "Alta" },
-    ])
+    const [logs, setLogs] = useState([])
 
     const [alerts, setAlerts] = useState("")
 
     const [data, setData] = useState("")
 
-    const [priority, setPriority] = useState("")
+    const [priority, setPriority] = useState("priority")
 
     const [dataAlerts, setDataAlerts] = useState({
         note: '',
@@ -55,9 +51,9 @@ export default function Propiedad() {
 
     const [inputData, setInputData] = useState("")
 
-    const[inputLogIncomplete, setInputLogIncomplete] = useState(false)
+    const [inputLogIncomplete, setInputLogIncomplete] = useState(false)
 
-    const[inputPriorityIncomplete, setInputPriorityIncomplete] =useState(false)
+    const [inputPriorityIncomplete, setInputPriorityIncomplete] = useState(false)
 
     const renderAlerts = () => {
         // console.log(alerts, 23)
@@ -69,12 +65,7 @@ export default function Propiedad() {
     }
 
 
-    useEffect(() => { console.log(priority) }, [priority])
-
-
     const parseAvaliable = (state) => {
-
-        console.log(state)
         if (state === false) {
             return "No"
         }
@@ -84,32 +75,45 @@ export default function Propiedad() {
 
     }
 
-    const addAlert = () => {
+    const addAlert = async () => {
 
-        if(inputLog==="" || priority===""){
-            if(inputLog===""){
+        if (inputLog === "" || priority === "") {
+            if (inputLog === "") {
                 setInputLogIncomplete(true)
             }
-            if(priority===""){
+            if (priority === "priority") {
                 setInputPriorityIncomplete(true)
             }
             console.log("ERROR TE FALTA UN DATO")
-            
+
 
         }
-        else{
-            setInputLogIncomplete(false)
-            setInputLog("")
-        let separator = '/'
-        let newDate = new Date()
-        let date = newDate.getDate();
-        let month = newDate.getMonth() + 1;
-        let year = newDate.getFullYear();
-        let hour = newDate.getHours()
-        let minutes = newDate.getMinutes()
+        else {
 
-        let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-        setLogs(current => [{ fecha: fecha, level: priority, mensaje: inputLog }, ...current])
+
+            let obj = {}
+            obj.propertyId = data.id
+            obj.note = inputLog
+            obj.level = priority.toUpperCase()
+
+            console.log(obj)
+            const respAlert = await addAlerts(obj)
+            console.log(respAlert)
+
+            // let separator = '/'
+            // let newDate = new Date()
+            // let date = newDate.getDate();
+            // let month = newDate.getMonth() + 1;
+            // let year = newDate.getFullYear();
+            // let hour = newDate.getHours()
+            // let minutes = newDate.getMinutes()
+
+            // let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
+            // setLogs(current => [{ fecha: fecha, level: priority, mensaje: inputLog }, ...current])
+
+            // setInputLogIncomplete(false)
+            // setInputLog("")
+            // setPriority('priority')
         }
 
         // setInputLog("")
@@ -129,7 +133,7 @@ export default function Propiedad() {
 
     }
 
-    const handleKeyDownData = (event) => {
+    const addAnotacion = (event) => {
         if (event.key === 'Enter') {
             console.log(inputData)
             setInputData("")
@@ -175,12 +179,12 @@ export default function Propiedad() {
                     </div>
                     <div className="flex  justify-between flex-column items-start p-6 w-[32vw] 2xl:w-[32vw] h-[40vh] bg-white ">
                         <div>
-                            <p>ID: {data.property_id}</p>
-                            <p>Direccion: {data.address}</p>
+                            <p>ID: {data?.property_id}</p>
+                            <p>Direccion: {data?.address}</p>
                             <p>Dueño:  {data.owner?.name} {data.owner?.lastname} </p>
                             <p>Arrendatario: </p>
-                            <p>Nro Piso: 25</p>
-                            <p>Tipo: {data.type_property}</p>
+                            <p>Nro Piso: {data?.floor}</p>
+                            <p>Tipo: {data?.type_property}</p>
                         </div>
                         <div className='w-full '>
 
@@ -198,7 +202,7 @@ export default function Propiedad() {
                         </div>
                     </div>
                     <div className="flex justify-center flex-col rounded-r p-6 items-start w-[28vw] h-[40vh] bg-white">
-                        <button onClick={() => {
+                        {/* <button onClick={() => {
                             let nav = `/propiedades/propiedad/editarPropiedad`
                             navigate(nav, {
                                 state: {
@@ -207,10 +211,10 @@ export default function Propiedad() {
                             })
                         }}
                             className="group relative h-12 w-full mb-2 overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm " >Ver boleta
-                        </button>
+                        </button> */}
                         <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
-                            <p>Dormitorios:(DORMITORIOS)</p>
-                            <p>Baños: (Baños)</p>
+                            <p>Dormitorios: {data.bedrooms || "Sin data"}</p>
+                            <p>Baños: {data.bathrooms || "Sin data"}</p>
                             <p>Estacionamiento: {parseAvaliable(data.parking)}</p>
                             <p>Bodega: {parseAvaliable(data.cellar)}</p>
                         </div>
@@ -259,19 +263,21 @@ export default function Propiedad() {
                                         value={inputLog}
                                         onChange={event => setInputLog(event.target.value)}
                                         type="text"
-                                        id="large-input" className={`block p-4 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md ${inputLogIncomplete===true&&'outline outline-[2.5px] outline-red-500'}`} />
-                                    <select name="priority" onChange={e => { setPriority(e.target.value) }} className={`w-[18%] ml-1  ${inputPriorityIncomplete===true&&'outline outline-[2.5px] outline-red-500'}`}>
-                                        <option value="" disabled selected hidden>Prioridad</option>
+                                        id="large-input" className={`block p-4 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md ${inputLogIncomplete === true && inputLog === '' && 'outline outline-[2.5px] outline-red-500'}`} />
+                                    <select value={priority} name="priority" onChange={e => { setPriority(e.target.value) }} className={`w-[18%] ml-1  ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
+                                        <option value="priority" disabled selected hidden>Prioridad</option>
                                         <option value="Alta">Alta</option>
                                         <option value="Media">Media</option>
                                         <option value="Baja">Baja</option>
                                     </select>
-                                    <button><FontAwesomeIcon onClick={() => addAlert()} className="w-[100%] ml-1 text-orange-500" icon={faPlus} /></button>
+                                    <button><FontAwesomeIcon onClick={() => {
+                                        addAlert()
+                                    }} className="w-[100%] ml-1 text-orange-500" icon={faPlus} /></button>
                                 </div>
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
-                                    <p key={index} className='text-sm break-words'>{item.fecha} - {item.level} - {item.mensaje}</p>
+                                    <p key={index} className='text-sm break-words'>{item.fecha} - {item.level} - {item.note}</p>
                                 )}
                             </div>
                         </div>
@@ -284,7 +290,7 @@ export default function Propiedad() {
                                     <p className='text-lg font-semibold'>Anotaciones</p>
                                 </div>
                                 <input
-                                    onKeyDown={handleKeyDownData}
+                                    onKeyDown={addAnotacion}
                                     value={inputData}
                                     onChange={event => setInputData(event.target.value)}
                                     type="text"

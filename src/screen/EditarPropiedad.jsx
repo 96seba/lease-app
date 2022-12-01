@@ -68,6 +68,7 @@ export default function EditarPropiedad() {
 
 
     const [tipo, setTipo] = useState("Tipo")
+    const tipoRef = useRef()
 
     const [newContrato, setNewContrato] = useState(false)
     const [newArrendatario, setNewArrendatario] = useState(false)
@@ -81,8 +82,25 @@ export default function EditarPropiedad() {
         document.title = 'Agrega una propiedad'
         const getData = async () => {
             let data = await location.state.data
-            console.log(data.id)
-            setDataProp(data)
+            console.log(data)
+            setId(data?.property_id)
+            setDireccion(data?.address)
+            setTipo(data?.type_property)
+            setArrendador({
+                nombre: data.owner.name || '',
+                apellido: data.owner.lastname || '',
+                rut: data.owner.rut || '',
+                fechaNacArrendador: data.owner.birthday.substring(0, 10) || '',
+                correo: data.owner.email || '',
+                telefono: Number(data.owner.phone) || ''
+            })
+            tipoRef.current.value = data?.type_property
+            setMonto(data?.amounts[0]?.amount_adm)
+            setAdministracion(data?.amounts[0]?.amount_lease)
+            setEstacionamiento(data?.parking)
+            setBodega(data?.cellar)
+
+
         }
         getData()
     }, []);
@@ -333,6 +351,8 @@ export default function EditarPropiedad() {
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p className='font-medium'>Tipo</p>
                         <select
+                            defaultValue={"Tipo"}
+                            ref={tipoRef}
                             onChange={e => {
                                 console.log(e.target.value)
                                 setTipo(e.target.value)
@@ -642,6 +662,7 @@ export default function EditarPropiedad() {
                             onClick={() => {
                                 // addPropiedad()
                                 console.log(dataProp.id)
+
                             }}
                         >
                             Guardar

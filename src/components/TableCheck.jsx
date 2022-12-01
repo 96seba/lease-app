@@ -43,7 +43,7 @@ const customStyles = {
         },
         highlightOnHoverStyle: {
             backgroundColor: '#3A4348',
-            text:'#FFFFFF',
+            text: '#FFFFFF',
         },
     },
     headRow: {
@@ -51,16 +51,12 @@ const customStyles = {
             backgroundColor: '#FFFFFF',
         },
     },
-    cells: {
-		style: {
-			paddingLeft: '26px',
-		}
-	},
+
     pagination: {
-		style: {
-			backgroundColor: '#FFFFFF',
-		},
-	},
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
 };
 
 
@@ -79,12 +75,14 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
         {
             name: 'Id',
             selector: row => row.id,
-            sortable: true
+            sortable: true,
+            width: '10%'
         },
         {
             name: 'Descripcion',
             selector: row => row.descripcion,
-            sortable: true
+            sortable: true,
+            wrap:true
         },
         {
             name: 'Estado',
@@ -111,7 +109,9 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
                     });
                     setDataCheck(newDataCheck)
                 }} className=' bg-[#ff0000] w-20 h-7 rounded '>No revisado</button>,
-            sortable: true
+            sortable: true,
+            width: '18%',
+            compact:true
         },
     ]
 

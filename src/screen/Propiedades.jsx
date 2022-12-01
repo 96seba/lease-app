@@ -23,7 +23,7 @@ export default function Propiedades() {
     }, [])
 
     return (
-        <div className="bg-slate-100 h-[100vh] flex flex-col justify-start items-start p-1  
+        <div className="bg-gray-100 h-[100vh] flex flex-col justify-start items-start p-1  
         sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw] 2xl:w-[80vw]">
 
             <div className="flex items-end justify-end w-full pr-[0.8vw] h-[10vh] mb-4">
@@ -44,10 +44,16 @@ export default function Propiedades() {
 
             <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[99%] h-auto bg-white rounded-lg shadow-sm '>
                 <div className='w-full'>
-                    <p className='text-lg font-semibold'>Propiedades a revisar</p>
+                    <p className='text-lg font-semibold'>Propiedades</p>
                 </div>
                 {dataProp !== "" ?
-                    <TablePropiedades dataProp={dataProp} />
+                    dataProp.length !== 0 ?
+                    <TablePropiedades dataProp={dataProp} />: 
+                    <div className="w-full h-[20vh] flex justify-center items-center flex-col">
+                        <p>No hay propiedades aun :/</p>
+                        <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'}  alt="" />
+                    </div>
+
                     :
                     <div className="w-full h-full flex justify-center items-center">
                         <div role="status">

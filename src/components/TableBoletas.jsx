@@ -84,14 +84,15 @@ export default function TableBoletas({ files, setFile, tablaData }) {
             name: 'ID Propiedad',
             selector: row => row.id,
             sortable: true,
-            width: "9vw",
-            center: true
+            width: "9%",
         },
         {
             name: 'Costo por administración',
             selector: row => row.costoadministracion,
             sortable: true,
-            center: true
+            center: true,
+            width: '25%',
+            compact: true
         },
         {
             name: 'Subir boleta',
@@ -143,20 +144,25 @@ export default function TableBoletas({ files, setFile, tablaData }) {
                 }
             },
             sortable: true,
-            width: "26vw",
-            center: true
+            width: "26%",
+            center: true,
+            compact: true
         },
         {
             name: 'Nro de boleta',
             selector: row => row.nroboleta,
             sortable: true,
-            center: true
+            center: true,
+            width: "15%",
+            compact: true
         },
         {
             name: 'Nro de boleto anterior',
             selector: row => row.nroboletaanterior,
             sortable: true,
-            center: true
+            center: true,
+            width: "20%",
+            compact: true
         },
     ]
 
