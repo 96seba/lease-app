@@ -21,8 +21,8 @@ createTheme(
             default: '#FFFFFF',
         },
         button: {
-            focus: '#059669',
-            disabled: '#2C8C99',
+            focus: '#FF6F00',
+            disabled: '#FFFFFF',
         },
         sortFocus: {
             default: '#FFFFFF',
@@ -51,7 +51,6 @@ const customStyles = {
             backgroundColor: '#FFFFFF',
         },
     },
-
     pagination: {
         style: {
             backgroundColor: '#FFFFFF',

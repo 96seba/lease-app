@@ -5,11 +5,15 @@ import TableDebtors from '../components/TableDebtors'
 import TableToResolveNVisits from '../components/TableToResolveNVisits';
 import ModalAddFile from '../components/ModalAddFile';
 import { getDebtors } from '../api/getDebtors';
+import { use } from 'react-router-dom';
+
 
 
 
 export default function Dashboard() {
     const [debtorData, setDebtorData] = useState([])
+
+
 
 
     const [dataCheck, setDataCheck] = useState([
@@ -34,6 +38,9 @@ export default function Dashboard() {
             const respDebtors = await getDebtors()
             console.log(respDebtors)
             setDebtorData(respDebtors.data)
+            // localStorage.removeItem('token')
+            let token = localStorage.getItem('token')
+            console.log(token)
         }
         getData()
     }, [])
@@ -41,7 +48,7 @@ export default function Dashboard() {
 
     return (
         <div className="flex bg-gray-100 mt-3 flex-col h-auto sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw] 2xl:w-[80vw] items-start justify-start">
-            <div className="flex h-[185.5vh] sm:h-[195.5vh] md:h-[165.5vh] lg:h-[125.5vh]  py-6  w-full items-center justify-start flex-col">
+            <div className="flex h-[185.5vh] sm:h-[170.5vh] md:h-[165.5vh] lg:h-[125.5vh]  py-6  w-full items-center justify-start flex-col">
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[99%] h-[36vh] bg-white rounded-lg shadow-sm '>
                     <div className='w-full'>
                         <p className='text-lg font-semibold'>Propiedades a revisar</p>
