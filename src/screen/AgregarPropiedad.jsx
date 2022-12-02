@@ -71,6 +71,7 @@ export default function AgregarPropiedad() {
 
     const [newContrato, setNewContrato] = useState(false)
     const [newArrendatario, setNewArrendatario] = useState(false)
+    const [newDueno, setNewDueno] = useState(false)
 
     const [error, setError] = useState(false)
 
@@ -388,7 +389,7 @@ export default function AgregarPropiedad() {
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={id} onChange={text => {
-                                if (text.target.value.length < 10 && text.target.value > 0) {
+                                if (text.target.value.length < 10 && text.target.value >= 0) {
                                     setId(text.target.value)
                                 }
                             }}
@@ -426,7 +427,7 @@ export default function AgregarPropiedad() {
                         <input
                             value={nroPiso}
                             onChange={e => {
-                                if (e.target.value.length < 3 && e.target.value > 0) {
+                                if (e.target.value.length < 3 && e.target.value >= 0) {
                                     setNroPiso(e.target.value)
                                 }
                             }}
@@ -453,7 +454,7 @@ export default function AgregarPropiedad() {
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={baños} onChange={text => {
-                                    if (text.target.value.length < 3 && text.target.value > 0) {
+                                    if (text.target.value.length < 3 && text.target.value >= 0) {
                                         setBaños(text.target.value)
                                     }
                                 }}
@@ -464,7 +465,7 @@ export default function AgregarPropiedad() {
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                             <input
                                 value={dormitorios} onChange={text => {
-                                    if (text.target.value.length < 3 && text.target.value > 0) {
+                                    if (text.target.value.length < 3 && text.target.value >= 0) {
                                         setDormitorios(text.target.value)
                                     }
                                 }}
@@ -476,7 +477,7 @@ export default function AgregarPropiedad() {
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={monto} onChange={text => {
-                                if (text.target.value > 0) {
+                                if (text.target.value >= 0) {
                                     setMonto(text.target.value)
                                 }
                             }}
@@ -488,7 +489,7 @@ export default function AgregarPropiedad() {
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={administracion} onChange={text => {
-                                if (text.target.value > 0) {
+                                if (text.target.value >= 0) {
                                     setAdministracion(text.target.value)
                                 }
                             }
@@ -501,7 +502,7 @@ export default function AgregarPropiedad() {
                     <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={ggcc} onChange={text => {
-                                if (text.target.value > 0) {
+                                if (text.target.value >= 0) {
                                     setGgcc(text.target.value)
                                 }
                             }}
@@ -577,9 +578,9 @@ export default function AgregarPropiedad() {
                         <div
                             className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
                             <button className={`h-full w-1/2  flex justify-center items-center
-                                       ${newArrendatario === false && 'bg-white'}`}
+                                        ${newDueno === false && 'bg-white'}`}
                                 onClick={() => {
-                                    setNewArrendatario(false)
+                                    setNewDueno(false)
                                     setArrendatarioIncomplete(false)
                                 }}
                             >
@@ -588,7 +589,7 @@ export default function AgregarPropiedad() {
                             <button
                                 onClick={() => {
                                     setSelected("")
-                                    setNewArrendatario(true)
+                                    setNewDueno(true)
                                 }}
                                 className={`h-full w-1/2 bg-slate-50  flex justify-center items-center hover:bg-gray-300
                                             ${newArrendatario === true && 'bg-white'}`}>
@@ -597,8 +598,8 @@ export default function AgregarPropiedad() {
 
                         </div>
                         <div className='h-auto w-full pt-4 mb-4 shadow-md'>
-                            {newArrendatario === true ?
-                                <div className='w-full h-full flex flex-col justify-start items-center '>
+                            {newDueno === true ?
+                                <div className='w-[full] h-[32vh] flex flex-col justify-start items-center '>
                                     <b className='mb-3'>Datos Dueño</b>
                                     <div className="mb-3 w-[85%] flex justify-around flex-row">
                                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -659,7 +660,10 @@ export default function AgregarPropiedad() {
                                     </div>
                                 </div>
                                 :
-                                <p className='text-center'><i>Proximamente</i></p>
+                                <div className='h-[32vh]'>
+                                    <p className='text-center'><i>Proximamente</i></p>
+                                </div>
+
                             }
                         </div>
                     </div>
@@ -694,7 +698,7 @@ export default function AgregarPropiedad() {
                     </div>
                     {/* Agregar contrato  */}
 
-                    <div className='w-[90%] h-auto mt-5 flex flex-col items-start justify-center'>
+                    <div className='w-[90%] h-auto mt-2 flex flex-col items-start justify-center'>
                         <button onClick={() => {
                             setNewContrato(!newContrato)
                             setNewArrendatario(false)
@@ -710,7 +714,6 @@ export default function AgregarPropiedad() {
                             </span>
                         </button>
                         {newContrato === true &&
-
                             <div ref={bottomRef} className='flex justify-between shadow-md items-center w-[100%] h-auto  '>
                                 <div className='w-full h-full flex flex-col justify-start items-center '>
                                     <p className="flex my-4 text-xl">
@@ -759,7 +762,7 @@ export default function AgregarPropiedad() {
                                     </div>
                                     <div className='h-auto w-full pt-4'>
                                         {newArrendatario === true ?
-                                            <div className='w-full h-full flex flex-col justify-start items-center '>
+                                            <div className='w-full h-[32vh] flex flex-col justify-start items-center '>
                                                 <b className='mb-3'>Datos Arrendatario</b>
                                                 <div className="mb-3 w-[85%] flex justify-around flex-row">
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -820,8 +823,11 @@ export default function AgregarPropiedad() {
                                                 </div>
                                             </div>
                                             :
-                                            <ArrendatarioFinder selected={selected} setSelected={setSelected}
-                                                selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete} />
+                                            <div className='h-[32vh]'>
+                                                <ArrendatarioFinder selected={selected} setSelected={setSelected}
+                                                    selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete} />
+                                            </div>
+
                                         }
                                     </div>
                                 </div>
@@ -832,10 +838,10 @@ export default function AgregarPropiedad() {
 
 
 
-                    <div className='flex justify-center items-center h-[10vh] w-[85%]'>
+                    <div className='flex justify-center items-center h-[12vh] w-[85%]'>
                         <button
                             type="button"
-                            className="inline-flex w-[70%] mt-4 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                            className="inline-flex w-[70%] mt-4 mb-4 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                             onClick={async () => {
                                 // addPropiedad()
                                 // uploadImage()
