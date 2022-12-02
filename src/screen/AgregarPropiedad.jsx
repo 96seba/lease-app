@@ -28,7 +28,7 @@ export default function AgregarPropiedad() {
     const [fotoUri, setFotoUri] = useState("")
     const [nroPiso, setNroPiso] = useState("")
 
-    //* Datos arrendador
+    //* Datos Dueño
 
     const [arrendador, setArrendador] = useState({
         nombre: "",
@@ -71,7 +71,7 @@ export default function AgregarPropiedad() {
 
     const [newContrato, setNewContrato] = useState(false)
     const [newArrendatario, setNewArrendatario] = useState(false)
-    const [newDueno, setNewDueno] = useState(false)
+    const [newDueno, setNewDueno] = useState(true)
 
     const [error, setError] = useState(false)
 
@@ -108,7 +108,7 @@ export default function AgregarPropiedad() {
 
 
     const addPropiedad = async () => {
-        if (id.length === 0 || direccion.length === 0 || monto.length === 0 || administracion.length === 0 || tipo === "Tipo") {
+        if (id.length === 0 || direccion.length === 0 || monto.length === 0 || administracion.length === 0 || tipo === "Tipo" || arrendador.nombre === "" || arrendador.apellido === "" || arrendador.correo === "" || arrendador.fechaNacArrendador === "" || arrendador.rut.length === 0 || arrendador.telefono === "") {
             //* Minimo un input required esta vacio de la propiedad
             setError(true)
             inputRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -592,7 +592,7 @@ export default function AgregarPropiedad() {
                                     setNewDueno(true)
                                 }}
                                 className={`h-full w-1/2 bg-slate-50  flex justify-center items-center hover:bg-gray-300
-                                            ${newArrendatario === true && 'bg-white'}`}>
+                                            ${newDueno === true && 'bg-white'}`}>
                                 Agregar dueño
                             </button>
 
@@ -604,57 +604,64 @@ export default function AgregarPropiedad() {
                                     <div className="mb-3 w-[85%] flex justify-around flex-row">
                                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                                             <input
-                                                value={arrendatario.nombre}
-                                                onChange={text => { setArrendatario({ ...arrendatario, nombre: text.target.value }) }}
+                                                value={arrendador.nombre}
+                                                onChange={text => { setArrendador({ ...arrendador, nombre: text.target.value }) }}
                                                 className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.nombre.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            ${error && arrendador.nombre.length <= 0 && " outline outline-2 outline-red-300"}`}
                                                 type="text"
                                                 placeholder="Nombre" />
                                         </div>
                                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                                             <input
-                                                value={arrendatario.apellido}
-                                                onChange={text => { setArrendatario({ ...arrendatario, apellido: text.target.value }) }}
+                                                value={arrendador.apellido}
+                                                onChange={text => { setArrendador({ ...arrendador, apellido: text.target.value }) }}
                                                 className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            ${error && arrendador.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}
                                                 type="text"
                                                 placeholder="Apellido" />
                                         </div>
                                     </div>
                                     <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
                                         <input
-                                            value={arrendatario.rut}
-                                            onChange={text => { setArrendatario({ ...arrendatario, rut: text.target.value }) }}
+                                            value={arrendador.rut}
+                                            onChange={text => {
+                                                console.log(text.target.value.length, "AYUA")
+                                                if (text.target.value.length < 13) {
+                                                    let resp = checkRut(text.target.value)
+                                                    setArrendador({ ...arrendador, rut: resp })
+                                                }
+                                            }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                        ${arrendatarioIncomplete && arrendatario.rut.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                        ${error && arrendador.rut.length <= 0 && " outline outline-2 outline-red-300"}`
+                                            }
                                             type="text"
                                             placeholder="Rut" />
                                     </div>
                                     <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
                                         <p className='font-medium'>Fecha de nacimiento</p>
                                         <input
-                                            value={arrendatario.fechaNacArrendatario}
-                                            onChange={text => { setArrendatario({ ...arrendatario, fechaNacArrendatario: text.target.value }) }}
+                                            value={arrendador.fechaNacArrendador}
+                                            onChange={text => { setArrendador({ ...arrendador, fechaNacArrendador: text.target.value }) }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                        ${arrendatarioIncomplete && arrendatario.fechaNacArrendatario.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                        ${error && arrendador.fechaNacArrendador.length <= 0 && " outline outline-2 outline-red-300"}`}
                                             type="date"
                                             placeholder="Inicio de contrato" />
                                     </div>
                                     <div className="mb-5 w-[85%] flex justify-around flex-row">
                                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                                             <input
-                                                value={arrendatario.correo}
-                                                onChange={text => { setArrendatario({ ...arrendatario, correo: text.target.value }) }}
+                                                value={arrendador.correo}
+                                                onChange={text => { setArrendador({ ...arrendador, correo: text.target.value }) }}
                                                 className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`} type="text"
+                                                            ${error && arrendador.correo.length <= 0 && " outline outline-2 outline-red-300"}`} type="text"
                                                 placeholder="Correo" />
                                         </div>
                                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                                             <input
-                                                value={arrendatario.telefono}
-                                                onChange={text => { setArrendatario({ ...arrendatario, telefono: text.target.value }) }}
+                                                value={arrendador.telefono}
+                                                onChange={text => { setArrendador({ ...arrendador, telefono: text.target.value }) }}
                                                 className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.telefono.length <= 0 && " outline outline-2 outline-red-300"}`} type="Number"
+                                                            ${error && arrendador.telefono.length <= 0 && " outline outline-2 outline-red-300"}`} type="Number"
                                                 placeholder="Telefono" />
                                         </div>
                                     </div>
