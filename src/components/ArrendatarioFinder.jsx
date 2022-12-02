@@ -42,7 +42,7 @@ export default function ArrendatarioFinder({ selected, setSelected, selectIncomp
     return (
         <div className='flex justify-center items-center flex-col'>
             <div className='w-full h-[6vh] flex justify-start items-center flex-col'>
-                <p className='text-xl mb-0'>Buscar Arrendatario</p>
+                <p className='mb-0 font-bold'>Buscar Arrendatario</p>
                 <p className={`text-xs ${selectIncomplete === true ? 'block' : 'hidden'}`}>Debes seleccionar un arrendatario </p>
             </div>
             {/* <p className='text-xl'>Buscar Arrendatario</p>
