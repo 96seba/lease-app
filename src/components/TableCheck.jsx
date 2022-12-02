@@ -1,35 +1,33 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import DataTable, { createTheme } from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 
-createTheme(
-    'solarized',
-    {
-        text: {
-            primary: '#000000',
-            secondary: '#FFFFFF',
-            hover: '#FFFFFF',
-        },
-        background: {
-            default: '#f0f9ff',
-        },
-        context: {
-            background: '#cb4b16',
-            text: '#FFFFFF',
-        },
-        divider: {
-            default: '#FFFFFF',
-        },
-        button: {
-            focus: '#FF6F00',
-            disabled: '#FFFFFF',
-        },
-        sortFocus: {
-            default: '#FFFFFF',
-        },
-    },
-    'dark',
-);
+// createTheme(
+//     'solarized',
+//     {
+//         text: {
+//             primary: '#000000',
+//             secondary: '#000000',
+//         },
+//         background: {
+//             default: '#f0f9ff',
+//         },
+//         context: {
+//             background: '#cb4b16',
+//             text: '#FFFFFF',
+//         },
+//         divider: {
+//             default: '#FFFFFF',
+//         },
+//         button: {
+//             hover: '#686f73',
+//             focus: '#3A4348',
+//             disabled: '#d1d5db',
+//             default: '#ff0000',
+//         },
+//     },
+//     'dark',
+// );
 
 const customStyles = {
     head: {
@@ -40,20 +38,45 @@ const customStyles = {
     rows: {
         style: {
             backgroundColor: '#FFFFFF',
+            borderBottomColor: '#FFFFFF',
+            '&:not(:last-of-type)': {
+                borderStyle: 'none',
+                borderBottomWidth: '1px',
+                borderBottomColor: '#FFFFFF',
+            },
+
         },
         highlightOnHoverStyle: {
             backgroundColor: '#3A4348',
-            text: '#FFFFFF',
+            color: '#FFFFFF',
         },
     },
     headRow: {
         style: {
             backgroundColor: '#FFFFFF',
+            borderStyle: 'none',
+            borderBottomWidth: '1px',
+            borderBottomColor: '#FFFFFF',
         },
     },
     pagination: {
         style: {
             backgroundColor: '#FFFFFF',
+            borderStyle: 'none',
+            borderBottomWidth: '1px',
+            borderBottomColor: '#FFFFFF',
+        },
+        pageButtonsStyle: {
+            color: '#FF0000',
+            fill: '#FF6F00',
+            '&:hover:not(:disabled)': {
+                backgroundColor: '#3A4348',
+                fill: '#FFFFFF',
+            },
+            '&:focus': {
+                outline: 'none',
+                backgroundColor: '#FF0000',
+            },
         },
     },
 };
@@ -81,7 +104,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
             name: 'Descripcion',
             selector: row => row.descripcion,
             sortable: true,
-            wrap:true
+            wrap: true
         },
         {
             name: 'Estado',
@@ -110,7 +133,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
                 }} className=' bg-[#ff0000] w-20 h-7 rounded '>No revisado</button>,
             sortable: true,
             width: '18%',
-            compact:true
+            compact: true
         },
     ]
 
@@ -121,7 +144,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
-            theme='solarized'
+            // theme='solarized'
             customStyles={customStyles}
             highlightOnHover
             paginationComponentOptions={paginationComponentOptions}
