@@ -6,6 +6,7 @@ import { API_HOST } from '../utils/constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { addAlerts } from '../api/addAlerts'
+import { addAnnotations } from '../api/addAnnotations'
 
 export default function Propiedad() {
 
@@ -59,7 +60,7 @@ export default function Propiedad() {
         // console.log(alerts, 23)
         return (
             alerts.map((item, index) =>
-                <p key={index}>{item.id + " " + item.note + " " + item.level}</p>
+                <p key={index}>{item.data + " -- " + item.user}</p>
             )
         )
     }
@@ -98,7 +99,12 @@ export default function Propiedad() {
 
             console.log(obj)
             const respAlert = await addAlerts(obj)
-            console.log(respAlert)
+            console.log(respAlert.data.alert)
+            setLogs(current => [{
+                level: respAlert.data.alert.level,
+                note: respAlert.data.alert.note
+            }, ...current])
+
 
             // let separator = '/'
             // let newDate = new Date()
@@ -133,21 +139,15 @@ export default function Propiedad() {
 
     }
 
-    const addAnotacion = (event) => {
+    const addAnotacion = async (event) => {
         if (event.key === 'Enter') {
-            console.log(inputData)
-            setInputData("")
-            let separator = '/'
-            let newDate = new Date()
-            let date = newDate.getDate();
-            let month = newDate.getMonth() + 1;
-            let year = newDate.getFullYear();
-            let hour = newDate.getHours()
-            let minutes = newDate.getMinutes()
-
-            let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-            setAlerts(current => [{ fecha: fecha, mensaje: inputData }, ...current])
-
+            let body = {}
+            body.propertyId = data.id
+            body.value = inputData
+            let resp = await addAnnotations(body)
+            console.log(resp)
+            setAlerts(current => [{ data: resp.data.annotation.value, user: resp.data.annotation.by }, ...current])
+            setInputData('')
         }
     }
 
@@ -201,17 +201,9 @@ export default function Propiedad() {
 
                         </div>
                     </div>
+                    <div>
+                    </div>
                     <div className="flex justify-center flex-col rounded-r p-6 items-start w-[28vw] h-[40vh] bg-white">
-                        {/* <button onClick={() => {
-                            let nav = `/propiedades/propiedad/editarPropiedad`
-                            navigate(nav, {
-                                state: {
-                                    data: data
-                                }
-                            })
-                        }}
-                            className="group relative h-12 w-full mb-2 overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm " >Ver boleta
-                        </button> */}
                         <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
                             <p>Dormitorios: {data.bedrooms || "Sin data"}</p>
                             <p>Baños: {data.bathrooms || "Sin data"}</p>

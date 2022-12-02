@@ -114,7 +114,8 @@ const columnas = [
     {
         name: 'Arrendatario',
         selector: row => row.arrendatario,
-        sortable: true
+        sortable: true,
+        hide:'md'
     },
     {
         name: 'Monto',

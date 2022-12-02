@@ -74,7 +74,7 @@ const columnas = [
         sortable: true,
         center: true,
         compact: true,
-        width: '16%'
+        width: '16%',
     },
 ]
 

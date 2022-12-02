@@ -1,6 +1,6 @@
 import { API_HOST, TOKEN } from '../utils/constants'
 
-export async function addAlerts(body) {
+export async function addAnnotations(body) {
     try {
         const response = await fetch(API_HOST + '/api/v1/property/annotations/add',
             {
