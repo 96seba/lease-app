@@ -52,7 +52,7 @@ const columnas = [
         sortable: true,
         center: true,
         compact: true,
-        width: '7vw'
+        width: '7%'
     },
     {
         name: 'Descripcion',
@@ -66,7 +66,7 @@ const columnas = [
         sortable: true,
         center: true,
         compact: true,
-        width: '16vw'
+        width: '16%'
     },
     {
         name: 'Urgencia',
@@ -74,7 +74,7 @@ const columnas = [
         sortable: true,
         center: true,
         compact: true,
-        width: '16vw'
+        width: '16%'
     },
 ]
 
