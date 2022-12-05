@@ -1,6 +1,7 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import * as XLSX from 'xlsx'
+import { updateForFile } from '../api/updateForFile';
 
 
 
@@ -59,8 +60,9 @@ export default function ModalGuardar({ open, setOpen }) {
 
         })
 
-        promise.then((d) => {
-            console.log(d)
+        promise.then(async (d) => {
+            const resp = await updateForFile(d)
+            console.log(resp)
         })
 
     }

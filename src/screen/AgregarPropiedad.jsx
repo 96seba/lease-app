@@ -72,11 +72,13 @@ export default function AgregarPropiedad() {
     const [newContrato, setNewContrato] = useState(false)
     const [newArrendatario, setNewArrendatario] = useState(false)
     const [newDueno, setNewDueno] = useState(true)
+    const [newDuenoError, setNewDuenoError] = useState(false)
 
     const [error, setError] = useState(false)
 
     const bottomRef = useRef(null)
     const inputRef = useRef(null)
+    const newDuenoRef = useRef(null)
 
     const [rutArrendadorCheck, setRutArrendadorCheck] = useState(false)
 
@@ -108,185 +110,197 @@ export default function AgregarPropiedad() {
 
 
     const addPropiedad = async () => {
-        if (id.length === 0 || direccion.length === 0 || monto.length === 0 ||
-            administracion.length === 0 || tipo === "Tipo" || arrendador.nombre === "" ||
-            arrendador.apellido === "" || arrendador.correo === "" ||
-            arrendador.fechaNacArrendador === "" || arrendador.rut.length === 0 ||
-            arrendador.telefono === "") {
-            //* Minimo un input required esta vacio de la propiedad
-            setError(true)
-            inputRef.current?.scrollIntoView({ behavior: 'smooth' })
+        if (newDueno === false) {
+            //* Se debe ingresar un dueño 
+            setNewDuenoError(true)
+            newDuenoRef.current?.scrollIntoView({ behavior: 'smooth' })
+
         } else {
-            //* Objeto de propiedad
-            var objProp = {}
-            //* Objeto de propiedad sin propiedades null o ""
-            var objPropClean = {}
-            //* Objeto de contrato
-            var objContrato = {}
-            //* Objeto de arrendatario
-            var objHolder = {}
-            //* Contador de campos nulos del arrendatario 
-            var contArrendatario = 0
 
-            //* Se agregan los campos al objPropiedad
-            objProp.property_id = id
-            objProp.address = direccion
-            objProp.amount_lease = Number(monto)
-            objProp.amount_adm = Number(administracion)
-            objProp.type_property = tipo
-            objProp.bedrooms = dormitorios
-            objProp.bathrooms = baños
-            objProp.floor = nroPiso
-            objProp.cellar = bodega
-            objProp.parking = estacionamiento
-            objProp.type_property = tipo
-            let date = new Date(arrendador.fechaNacArrendador)
 
-            if (arrendador.fechaNacArrendador !== "") {
-                objProp.birthday = date.toISOString()
-            }
-            //* Se verifica si el arrendador esta vacio o completo, en el caso de estar completo se agrega al objeto de la propiedad
-            let contArrendador = 0
-            for (var key in arrendador) {
-                if (arrendador[key] === "") {
-                    contArrendador += 1
+            if (id.length === 0 || direccion.length === 0 || monto.length === 0 ||
+                administracion.length === 0 || tipo === "Tipo" || arrendador.nombre === "" ||
+                arrendador.apellido === "" || arrendador.correo === "" ||
+                arrendador.fechaNacArrendador === "" || arrendador.rut.length === 0 ||
+                arrendador.telefono === "") {
+                //* Minimo un input required esta vacio de la propiedad
+                setError(true)
+                inputRef.current?.scrollIntoView({ behavior: 'smooth' })
+            } else {
+                //* Objeto de propiedad
+                var objProp = {}
+                //* Objeto de propiedad sin propiedades null o ""
+                var objPropClean = {}
+                //* Objeto de contrato
+                var objContrato = {}
+                //* Objeto de arrendatario
+                var objHolder = {}
+                //* Contador de campos nulos del arrendatario 
+                var contArrendatario = 0
+
+                //* Se agregan los campos al objPropiedad
+                objProp.property_id = id
+                objProp.address = direccion
+                objProp.amount_lease = Number(monto)
+                objProp.amount_adm = Number(administracion)
+                objProp.type_property = tipo
+                objProp.bedrooms = dormitorios
+                objProp.bathrooms = baños
+                objProp.floor = nroPiso
+                objProp.cellar = bodega
+                objProp.parking = estacionamiento
+                objProp.type_property = tipo
+                let date = new Date(arrendador.fechaNacArrendador)
+
+                if (arrendador.fechaNacArrendador !== "") {
+                    objProp.birthday = date.toISOString()
                 }
-            }
+                //* Se verifica si el arrendador esta vacio o completo, en el caso de estar completo se agrega al objeto de la propiedad
+                let contArrendador = 0
+                for (var key in arrendador) {
+                    if (arrendador[key] === "") {
+                        contArrendador += 1
+                    }
+                }
 
-            if (contArrendador > 0 && contArrendador < 6) {
-                //* Se ingreso un dato, pero los demas estan vacios
-                setArrendadorIncomplete(true)
-            } else if (contArrendador === 6) {
-                //* El contrato esta vacio
-                setArrendadorIncomplete(false)
-            }
-            else if (contArrendador === 0) {
-                //* El contrato esta completo
-                setArrendadorIncomplete(false)
-                objProp.rut = String(arrendador.rut)
-                objProp.name = arrendador.nombre
-                objProp.lastname = arrendador.apellido
-                objProp.email = arrendador.correo
-                objProp.phone = String(arrendador.telefono)
-            }
+                if (contArrendador > 0 && contArrendador < 6) {
+                    //* Se ingreso un dato, pero los demas estan vacios
+                    setArrendadorIncomplete(true)
+                } else if (contArrendador === 6) {
+                    //* El contrato esta vacio
+                    setArrendadorIncomplete(false)
+                }
+                else if (contArrendador === 0) {
+                    //* El contrato esta completo
+                    setArrendadorIncomplete(false)
+                    objProp.rut = String(arrendador.rut)
+                    objProp.name = arrendador.nombre
+                    objProp.lastname = arrendador.apellido
+                    objProp.email = arrendador.correo
+                    objProp.phone = String(arrendador.telefono)
+                }
 
-            //* Se agregan los datos no vacios al objPropClean
-            for (const property in objProp) {
-                let prop = String(`${objProp[property]}`)
-                let propName = `${property}`
-                if (prop.length !== 0) {
-                    let isnum = /^\d+$/.test(prop);
-                    // console.log(propName, prop, isnum)
-                    if (isnum === true && propName !== 'property_id' && propName !== 'rut' && propName !== 'phone') {
-                        objPropClean[propName] = Number(prop)
-                    } else {
-                        if (prop === 'true') {
-                            objPropClean[propName] = true
-                        } else if (prop === 'false') {
-                            objPropClean[propName] = false
+                //* Se agregan los datos no vacios al objPropClean
+                for (const property in objProp) {
+                    let prop = String(`${objProp[property]}`)
+                    let propName = `${property}`
+                    if (prop.length !== 0) {
+                        let isnum = /^\d+$/.test(prop);
+                        // console.log(propName, prop, isnum)
+                        if (isnum === true && propName !== 'property_id' && propName !== 'rut' && propName !== 'phone') {
+                            objPropClean[propName] = Number(prop)
                         } else {
-                            objPropClean[propName] = prop
+                            if (prop === 'true') {
+                                objPropClean[propName] = true
+                            } else if (prop === 'false') {
+                                objPropClean[propName] = false
+                            } else {
+                                objPropClean[propName] = prop
+                            }
                         }
                     }
                 }
-            }
 
-            //* Se comprueba si la propiedad es con contrato o sin contrato
-            if (newContrato === true) {
-                if (inicioContrato !== "" && terminoContrato !== "") {
-                    //* El contrato tiene las fechas completas
-                    let init = new Date(inicioContrato)
-                    let endy = new Date(terminoContrato)
-                    objContrato.initial_date = init.toISOString()
-                    objContrato.end_date = endy.toISOString()
-                } else {
-                    //*El contrato tiene los datos incompletos
-                    console.log("El contrato no tiene los datos buenos")
-                    setContratoIncomplete(true)
-                }
-                if (newArrendatario === false) {
-                    //* Se selecciona un arrendatario ya creado
-                    console.log("ES CON ARRENDATARIO YA creado")
-                    // setSelectIncomplete
-                    if (selected === "") {
-                        setSelectIncomplete(true)
+                //* Se comprueba si la propiedad es con contrato o sin contrato
+                if (newContrato === true) {
+                    if (inicioContrato !== "" && terminoContrato !== "") {
+                        //* El contrato tiene las fechas completas
+                        let init = new Date(inicioContrato)
+                        let endy = new Date(terminoContrato)
+                        objContrato.initial_date = init.toISOString()
+                        objContrato.end_date = endy.toISOString()
                     } else {
-                        objContrato.leaseholderId = selected.id
+                        //*El contrato tiene los datos incompletos
+                        console.log("El contrato no tiene los datos buenos")
+                        setContratoIncomplete(true)
                     }
-                } else {
+                    if (newArrendatario === false) {
+                        //* Se selecciona un arrendatario ya creado
+                        console.log("ES CON ARRENDATARIO YA creado")
+                        // setSelectIncomplete
+                        if (selected === "") {
+                            setSelectIncomplete(true)
+                        } else {
+                            objContrato.leaseholderId = selected.id
+                        }
+                    } else {
 
-                    //* El contrato es con arrendatario nuevo
-                    for (var key1 in arrendatario) {
-                        if (arrendatario[key1] === "") {
-                            contArrendatario += 1
-                            console.log(arrendatario[key1])
+                        //* El contrato es con arrendatario nuevo
+                        for (var key1 in arrendatario) {
+                            if (arrendatario[key1] === "") {
+                                contArrendatario += 1
+                                console.log(arrendatario[key1])
+                            }
+                        }
+                        if (contArrendatario !== 0) {
+                            //* Arrendatario  incompleto dios mio 
+                            setArrendatarioIncomplete(true)
+                        } else if (contArrendatario === 0) {
+                            setArrendatarioIncomplete(false)
+                            //* Se agrega una nuevo arrendatario al objeto
+                            objHolder.rut = (arrendatario.rut)
+                            objHolder.name = arrendatario.nombre
+                            objHolder.lastname = arrendatario.apellido
+                            objHolder.email = arrendatario.correo
+                            objHolder.phone = arrendatario.telefono
+                            let date = new Date(arrendatario.fechaNacArrendatario)
+                            objHolder.birthday = date.toISOString()
                         }
                     }
-                    if (contArrendatario !== 0) {
-                        //* Arrendatario  incompleto dios mio 
-                        setArrendatarioIncomplete(true)
-                    } else if (contArrendatario === 0) {
-                        setArrendatarioIncomplete(false)
-                        //* Se agrega una nuevo arrendatario al objeto
-                        objHolder.rut = (arrendatario.rut)
-                        objHolder.name = arrendatario.nombre
-                        objHolder.lastname = arrendatario.apellido
-                        objHolder.email = arrendatario.correo
-                        objHolder.phone = arrendatario.telefono
-                        let date = new Date(arrendatario.fechaNacArrendatario)
-                        objHolder.birthday = date.toISOString()
-                    }
                 }
-            }
 
-
-            //* Ejecucion de fetchs para crear propiedad, uploadImage y leaseholder 
-            if (contArrendador === 0 || contArrendador === 6) {
-                //* El id de compañia va por defecto en developer mode
-                objPropClean.companyId = 1
                 console.log(objContrato)
                 console.log(objPropClean)
-                //* Se crea la propiedad con el objeto limpio de props vacios
-                const respProp = await createPropiedad(objPropClean)
-                console.log("respProp", respProp)
-                if (respProp.status === 200) {
-                    navigate("/propiedades")
-                }
-                //* Se agrega el id de la propiedad al objeto del contrato
-                objContrato.propertyId = respProp.data.property.id
-                //* Se verifica si se eligio una imagen para la propiedad
-                if (fotoUri !== "") {
-                    uploadImage(respProp.data.property.id)
-                }
-                //* Se crea el arrendatario en el caso de que se eliga agregar arrendatario nuevo
-                if (newContrato === true) {
-                    if (newArrendatario === true) {
-                        //* Se crea el arrendatario
-                        //* Se agregan los datos del nuevo arrendatario al objeto del contrato
-                        objContrato.rut = String(arrendatario.rut)
-                        objContrato.name = arrendatario.nombre
-                        objContrato.lastname = arrendatario.apellido
-                        objContrato.email = arrendatario.correo
-                        objContrato.phone = String(arrendatario.telefono)
-                        let date = new Date(arrendatario.fechaNacArrendatario)
-                        objContrato.birthday = date.toISOString()
-                        //* Se crea el contrato
-                        if (contArrendatario === 0) {
-                            const respLease = await addLease(objContrato)
-                            console.log("respLease", respLease)
-                        }
-                    } else {
-                        //* Se agrega el id del leaseHolder seleccionado al objContrato
-                        objContrato.leaseholderId = selected.id
-                        if (selected.id !== '') {
-                            //* Se crea el contrato
-                            const respLease = await addLease(objContrato)
-                            console.log("respLease", respLease)
-                        }
-                    }
-                }
 
-                // console.log(objHolder)
+
+                // //* Ejecucion de fetchs para crear propiedad, uploadImage y leaseholder 
+                // if (contArrendador === 0 || contArrendador === 6) {
+                //     //* El id de compañia va por defecto en developer mode
+                //     objPropClean.companyId = 1
+                //     console.log(objContrato)
+                //     console.log(objPropClean)
+                //     //* Se crea la propiedad con el objeto limpio de props vacios
+                //     const respProp = await createPropiedad(objPropClean)
+                //     console.log("respProp", respProp)
+                //     if (respProp.status === 200) {
+                //         navigate("/propiedades")
+                //     }
+                //     //* Se agrega el id de la propiedad al objeto del contrato
+                //     objContrato.propertyId = respProp.data.property.id
+                //     //* Se verifica si se eligio una imagen para la propiedad
+                //     if (fotoUri !== "") {
+                //         uploadImage(respProp.data.property.id)
+                //     }
+                //     //* Se crea el arrendatario en el caso de que se eliga agregar arrendatario nuevo
+                //     if (newContrato === true) {
+                //         if (newArrendatario === true) {
+                //             //* Se crea el arrendatario
+                //             //* Se agregan los datos del nuevo arrendatario al objeto del contrato
+                //             objContrato.rut = String(arrendatario.rut)
+                //             objContrato.name = arrendatario.nombre
+                //             objContrato.lastname = arrendatario.apellido
+                //             objContrato.email = arrendatario.correo
+                //             objContrato.phone = String(arrendatario.telefono)
+                //             let date = new Date(arrendatario.fechaNacArrendatario)
+                //             objContrato.birthday = date.toISOString()
+                //             //* Se crea el contrato
+                //             if (contArrendatario === 0) {
+                //                 const respLease = await addLease(objContrato)
+                //                 console.log("respLease", respLease)
+                //             }
+                //         } else {
+                //             //* Se agrega el id del leaseHolder seleccionado al objContrato
+                //             objContrato.leaseholderId = selected.id
+                //             if (selected.id !== '') {
+                //                 //* Se crea el contrato
+                //                 const respLease = await addLease(objContrato)
+                //                 console.log("respLease", respLease)
+                //             }
+                //         }
+                //     }
+
+                //     // console.log(objHolder)
+                // }
             }
         }
     }
@@ -392,10 +406,10 @@ export default function AgregarPropiedad() {
                 }
                 <div className='w-full h-full flex flex-col justify-start items-center 
                 sm:px-4 md:px-20 lg:px-6 xl:px-32'>
-                    <p ref={inputRef} className="flex mb-[7.3vh] mt-4 text-xl">
+                    <p className="flex mb-[7.3vh] mt-4 text-xl">
                         Datos de la propiedad
                     </p>
-                    <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
+                    <div ref={inputRef} className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={id} onChange={text => {
                                 if (text.target.value.length < 10 && text.target.value >= 0) {
@@ -482,7 +496,7 @@ export default function AgregarPropiedad() {
                                 placeholder="Dormitorios" />
                         </div>
                     </div>
-                    <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
+                    <div ref={newDuenoRef} className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={monto} onChange={text => {
                                 if (text.target.value >= 0) {
@@ -535,8 +549,11 @@ export default function AgregarPropiedad() {
                                 onClick={() => {
                                     setSelected("")
                                     setNewDueno(true)
+                                    setNewDuenoError(false)
                                 }}
-                                className={`h-full w-1/2 bg-slate-50  flex justify-center items-center hover:bg-gray-300
+                                className={`h-full w-1/2 bg-slate-50 
+                                ${newDuenoError && ' outline outline-2 outline-red-400 rounded-sm'}
+                                 flex justify-center items-center hover:bg-gray-300
                                             ${newDueno === true && 'bg-white'}`}>
                                 Agregar dueño
                             </button>
@@ -620,6 +637,9 @@ export default function AgregarPropiedad() {
                                 :
                                 <div className='h-[36vh]'>
                                     <p className='text-center'><i>Proximamente</i></p>
+                                    <p className={`text-center text-red-500
+                                    ${newDuenoError ? 'block' : 'hidden'}
+                                    `}>Debes seleccionar al opcion agregar dueño</p>
                                 </div>
 
                             }

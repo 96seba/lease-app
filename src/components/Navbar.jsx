@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link, useNavigate } from 'react-router-dom'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: false },
@@ -70,14 +70,6 @@ function Navbar() {
                                 </div>
                             </div>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                {/* <button
-                                    type="button"
-                                    className="rounded-full bg-red-500 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                >
-                                    <span className="sr-only">View notifications</span>
-                                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                                </button> */}
-                                {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">
                                     <div>
                                         <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -102,31 +94,12 @@ function Navbar() {
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <button
-                                                        href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                        onClick={() => { navigate('/login') }}
+                                                        className={classNames(active ? 'bg-gray-100' : '', 'block text-left px-4 w-full py-2 text-sm text-gray-700')}
                                                     >
-                                                        Your Profile
+                                                      Cerrar sesión
+
                                                     </button>
-                                                )}
-                                            </Menu.Item>
-                                            <Menu.Item>
-                                                {({ active }) => (
-                                                    <button
-                                                        href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                                                    >
-                                                        Settings
-                                                    </button>
-                                                )}
-                                            </Menu.Item>
-                                            <Menu.Item>
-                                                {({ active }) => (
-                                                    <Link
-                                                        to="/login"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                                                    >
-                                                        Sign out
-                                                    </Link>
                                                 )}
                                             </Menu.Item>
                                         </Menu.Items>
@@ -140,7 +113,7 @@ function Navbar() {
                             {navigation.map((item) => (
                                 <Disclosure.Button
                                     key={item.name}
-                                    onClick={()=>{navigate(item.href)}}
+                                    onClick={() => { navigate(item.href) }}
                                     href={item.href}
                                     className={classNames(
                                         item.current ? 'bg-gray-900 text-white' : 'text-white hover:bg-gray-700 hover:text-white',

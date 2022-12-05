@@ -5,6 +5,7 @@ import TableDebtors from '../components/TableDebtors'
 import TableToResolveNVisits from '../components/TableToResolveNVisits';
 import ModalAddFile from '../components/ModalAddFile';
 import { getDebtors } from '../api/getDebtors';
+import { getVisitsPending } from '../api/getVisitsPending';
 import { use } from 'react-router-dom';
 
 
@@ -12,6 +13,7 @@ import { use } from 'react-router-dom';
 
 export default function Dashboard() {
     const [debtorData, setDebtorData] = useState([])
+    const [visitsData, setVisitsData] = useState([])
 
 
 
@@ -38,9 +40,10 @@ export default function Dashboard() {
             const respDebtors = await getDebtors()
             console.log(respDebtors)
             setDebtorData(respDebtors.data)
-            // localStorage.removeItem('token')
-            let token = localStorage.getItem('token')
-            console.log(token)
+            const respVisits = await getVisitsPending()
+            // setVisitsData(respVisits.data.visits)
+            console.log(respVisits)
+
         }
         getData()
     }, [])
@@ -74,13 +77,20 @@ export default function Dashboard() {
                         <div className='w-full'>
                             <p className='text-lg font-semibold'>Visitas pendientes</p>
                         </div>
-                        <TableToResolveNVisits />
+                        {visitsData === [] ?
+                            <TableToResolveNVisits data={visitsData}/> :
+                            <div className="w-full h-[20vh] flex justify-center items-center flex-col">
+                                <p>No hay visitas aun :/</p>
+                                <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />
+                            </div>
+
+                        }
                     </div>
                     <div className='flex  flex-col  pt-3 px-4 justify-start items-end h-full sm:w-full md:w-full lg:w-[48%] rounded-lg shadow-sm bg-white'>
                         <div className='w-full'>
                             <p className='text-lg font-semibold'>Pendientes criticos</p>
                         </div>
-                        <TableToResolveNVisits />
+                        {/* <TableToResolveNVisits /> */}
                     </div>
                 </div>
             </div>
