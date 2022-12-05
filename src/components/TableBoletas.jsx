@@ -104,7 +104,7 @@ export default function TableBoletas({ files, setFile, tablaData }) {
                             );
 
                         }} className="flex justify-center items-center mb-1 h-7 w-44">
-                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg 
+                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-[#00ff00] rounded-lg 
                 cursor-pointer dark:bg-[#00ff00]  dark:hover:bg-[#ff0000]">
                                 <div className='h-[100%] w-[100%] flex justify-start pl-4 items-center'>
                                     <FontAwesomeIcon icon={faCircleCheck} />
@@ -122,8 +122,8 @@ export default function TableBoletas({ files, setFile, tablaData }) {
                             justify-center items-center w-full h-full bg-gray-50 rounded-lg 
                             cursor-pointer dark:bg-gray-300 dark:hover:bg-[#FF6F00]">
                                 <div className='h-[100%] w-[100%] flex justify-start pl-4 items-center'>
-                                    <FontAwesomeIcon icon={faCloudArrowUp} />
-                                    <span className='text-sm mx-2'>
+                                    <FontAwesomeIcon icon={faCloudArrowUp} className='text-black'/>
+                                    <span className='text-sm mx-2 text-black'>
                                         Elige un archivo...
                                     </span>
                                     <input id={"dropzone-file" + index} onChange={(e) => {
