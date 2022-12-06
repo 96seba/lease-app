@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable, { createTheme } from 'react-data-table-component';
 import Drop from '../components/Drop'
+import { getExpensesId } from '../api/getExpensesId';
 
 createTheme(
     'solarized',
@@ -58,58 +59,13 @@ const customStyles = {
     },
 };
 
-const tablaData = [
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-    {
-        mes: "Enero", arrendatario: "Samuel L Jackson", monto: "$ 200000", ggcc: "$ 30000",
-        agua: "$ 6000", luz: "$ 40000", gas: "$ 10000"
-    },
-]
+
 
 
 const columnas = [
     {
         name: 'Mes',
-        selector: row => row.mes,
+        selector: row => getMonth(row.period),
         sortable: true,
         width: '8%',
         compact: true
@@ -129,22 +85,22 @@ const columnas = [
     },
     {
         name: 'GG.CC',
-        selector: row => <Drop />,
+        selector: row => <Drop status={row.gastos_comunes}/>,
         sortable: true
     },
     {
         name: 'Agua',
-        selector: row => <Drop />,
+        selector: row => <Drop status={row.agua}/>,
         sortable: true
     },
     {
         name: 'Luz',
-        selector: row => <Drop />,
+        selector: row => <Drop status={row.luz}/>,
         sortable: true
     },
     {
         name: 'Gas',
-        selector: row => <Drop />,
+        selector: row => <Drop status={row.gas}/>,
         sortable: true
     },
 ]
@@ -156,9 +112,42 @@ const paginationComponentOptions = {
     noRowsPerPage: true
 };
 
-export default function TableBill() {
+const getMonth=(period)=>{
+
+    let monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    
+    const d = new Date();
+    console.log(monthNames[d.getMonth()])
+    
+    return (<p className='pt-3'>{monthNames[d.getMonth()]}</p>)
+    
+    }
+
+export default function TableBill({id}) {
+
+const [data, setData] = useState("");
+
+useEffect(() => {
+    const getData= async (params) => {
+        const resp = await getExpensesId(id)
+        setData(resp.data.expenses)
+        console.log(resp)
+        console.log("viva el bicho")
+    }
+    getData()
+},[])
+
+// const getMonth=(period)=>{
+
+// let monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+// "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+// const d = new Date();
+// console.log(monthNames[d.getMonth()])
 
 
+// }
 
 
 
@@ -167,7 +156,7 @@ export default function TableBill() {
 
         <DataTable
             columns={columnas}
-            data={tablaData}
+            data={data}
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination

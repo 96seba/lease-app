@@ -310,7 +310,7 @@ export default function Propiedad() {
                     <div className='w-full'>
                         <p className='text-lg font-semibold'>Historial de pagos</p>
                     </div>
-                    <TableBill />
+                    <TableBill id={data.id}/>
                 </div>
 
                 {/* <div className='flex p-6 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white shadow-md'>
