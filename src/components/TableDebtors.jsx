@@ -97,11 +97,6 @@ const columnas = [
         selector: row => row.gas,
         sortable: true
     },
-    {
-        name: 'Estado',
-        selector: row => row.estado,
-        sortable: true
-    },
 ]
 
 const paginationComponentOptions = {

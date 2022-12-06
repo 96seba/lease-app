@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import TableBill from '../components/TableBill'
 import TableVisits from '../components/TableVisits'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -7,8 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { addAlerts } from '../api/addAlerts'
 import { addAnnotations } from '../api/addAnnotations'
+import { getExpensesId } from '../api/getExpensesId'
 
 export default function Propiedad() {
+
+    const selectRef = useRef()
 
     let navigate = useNavigate()
 
@@ -27,6 +30,10 @@ export default function Propiedad() {
         console.log(data.alerts, "asdka")
         setFotoUrl(API_HOST + data?.image || '')
         document.title = 'Propiedad ' + data.property_id;
+
+        const respExpenses = await getExpensesId(data.id)
+        console.log(data.property_id)
+        console.log(respExpenses)
     }
 
     useEffect(() => {
@@ -296,6 +303,8 @@ export default function Propiedad() {
                         </div>
                     </div>
                 </div>
+
+
 
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white rounded-lg shadow-sm'>
                     <div className='w-full'>

@@ -34,16 +34,20 @@ export default function Register() {
     const [dataRow, setDataRow] = useState("")
 
     const addUsers = async () => {
-        const resp = await createUser(correo, password)
+        let obj = {}
+        obj.email = correo
+        obj.password = password
+        obj.name = nombre
+        obj.lastname = apellido
+        console.log(obj)
+        const resp = await createUser(obj)
         console.log(resp)
-
     }
 
 
     const openModal = (data) => {
         setDataRow(data)
         setOpen(true)
-        // console.log("AAAAAAAAAAAAAA")
         console.log(data)
     }
 
@@ -87,7 +91,7 @@ export default function Register() {
 
                 <div className="flex justify-start items-center flex-col h-[80%] bg-white w-[45%] rounded-lg shadow py-5">
                     <h1 className="text-lg font-semibold text-center mb-4">
-                     Usuarios
+                        Usuarios
                     </h1>
                     {
                         tableData !== "" ?

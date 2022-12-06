@@ -75,7 +75,7 @@ export default function ModalGuardar({ open, setOpen }) {
 
         if (ext === 'xls' || ext === 'xlsx' || ext === 'csv') {
             setOpen(false)
-            // llamar api
+            getDataXlsx()
         }
         else {
             alert("El archivo debe ser de tipo excel (.xls, .xlsx o .csv)");
@@ -132,7 +132,7 @@ export default function ModalGuardar({ open, setOpen }) {
                                         type="button"
                                         className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                         onClick={() => {
-                                            getDataXlsx()
+                                            checkExtension(file.name)
                                             // checkExtension(file)
                                         }} >
                                         Guardar

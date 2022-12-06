@@ -43,7 +43,9 @@ export default function Dashboard() {
             const respVisits = await getVisitsPending()
             // setVisitsData(respVisits.data.visits)
             console.log(respVisits)
+            let token = localStorage.getItem('token')
 
+            console.log(token)
         }
         getData()
     }, [])
@@ -78,7 +80,7 @@ export default function Dashboard() {
                             <p className='text-lg font-semibold'>Visitas pendientes</p>
                         </div>
                         {visitsData === [] ?
-                            <TableToResolveNVisits data={visitsData}/> :
+                            <TableToResolveNVisits data={visitsData} /> :
                             <div className="w-full h-[20vh] flex justify-center items-center flex-col">
                                 <p>No hay visitas aun :/</p>
                                 <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />

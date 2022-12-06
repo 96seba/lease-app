@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable, { createTheme } from 'react-data-table-component';
+import Drop from '../components/Drop'
 
 createTheme(
     'solarized',
@@ -51,10 +52,10 @@ const customStyles = {
         },
     },
     pagination: {
-		style: {
-			backgroundColor: '#FFFFFF',
-		},
-	},
+        style: {
+            backgroundColor: '#FFFFFF',
+        },
+    },
 };
 
 const tablaData = [
@@ -111,37 +112,39 @@ const columnas = [
         selector: row => row.mes,
         sortable: true,
         width: '8%',
-        compact:true
+        compact: true
     },
     {
         name: 'Arrendatario',
         selector: row => row.arrendatario,
         sortable: true,
-        hide:'md'
+        hide: 'md'
     },
     {
         name: 'Monto',
-        selector: row => <button className='bg-[#00ff00] w-20 h-7 rounded active:text-white'>Revisado</button>,
+        selector: row =>
+            <Drop />
+        ,
         sortable: true
     },
     {
         name: 'GG.CC',
-        selector: row =>  <button className='bg-[#00ff00] w-20 h-7 rounded active:text-white'>Revisado</button>,
+        selector: row => <Drop />,
         sortable: true
     },
     {
         name: 'Agua',
-        selector: row => <button className='bg-[#00ff00] w-20 h-7 rounded active:text-white'>Revisado</button>,
+        selector: row => <Drop />,
         sortable: true
     },
     {
         name: 'Luz',
-        selector: row => <button className='bg-[#00ff00] w-20 h-7 rounded  active:text-white'>Revisado</button>,
+        selector: row => <Drop />,
         sortable: true
     },
     {
         name: 'Gas',
-        selector: row =>  <button className='bg-[#00ff00] w-20 h-7 rounded  active:text-white'>Revisado</button>,
+        selector: row => <Drop />,
         sortable: true
     },
 ]

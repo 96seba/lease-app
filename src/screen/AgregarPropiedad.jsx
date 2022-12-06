@@ -439,7 +439,7 @@ export default function AgregarPropiedad() {
                             }}
                             className={`bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[100%] py-0  px-3 text-grey-darker
                             ${error && tipo === 'Tipo' && " outline outline-2 outline-red-300"}`}>
-                            <option value="Tipo">Tipo</option>
+                            <option selected disabled  value="Tipo">Tipo</option>
                             <option value="Casa">Casa</option>
                             <option value="Depto">Depto</option>
                             <option value="Oficina">Oficina</option>
