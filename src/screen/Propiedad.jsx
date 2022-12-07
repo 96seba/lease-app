@@ -8,10 +8,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { addAlerts } from '../api/addAlerts'
 import { addAnnotations } from '../api/addAnnotations'
 import { getExpensesId } from '../api/getExpensesId'
+import Drop from '../components/Drop'
 
 export default function Propiedad() {
 
-    const selectRef = useRef()
+    //* Array de objetos para enviar los gastos por mes
+    var arrayExpenses = []
+
 
     let navigate = useNavigate()
 
@@ -305,20 +308,22 @@ export default function Propiedad() {
                     </div>
                 </div>
 
-
-
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white rounded-lg shadow-sm'>
-                    <div className='w-full'>
+                    <div className='w-full flex flex-row justify-between items-center'>
                         <p className='text-lg font-semibold'>Historial de pagos</p>
-                    </div>
-                    <TableBill id={data.id}/>
-                </div>
+                        <div className='h-full w-[30%] flex justify-end items-center'>
+                            <button
+                                onClick={() => {
 
-                {/* <div className='flex p-6 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white shadow-md'>
-                    <div className='fles w-full'>
-                        <p>Historial de pagos</p>
-                    </div>      
-                </div> */}
+                                }}
+                                className='h-[4vh]  w-40 bg-[#00ff00]
+                             hover:bg-green-500 text-white rounded'>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                    <TableBill id={data.id} arrayExpenses={arrayExpenses} />
+                </div>
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white rounded-lg shadow-sm'>
                     <div className='w-full'>
                         <p className='text-lg font-semibold'>Visitas</p>
