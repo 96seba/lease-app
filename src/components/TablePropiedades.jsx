@@ -93,13 +93,13 @@ const columnas = [
         grow: 1
     },
     {
-        name: 'Arrendador',
-        selector: row => row.owner?.name + " " + row.owner?.lastname,
+        name: 'Arrendador',        
+        selector: row => validaArrendador(row.owner?.name, row.owner?.lastname),
         sortable: true,
     },
     {
         name: 'Arrendatario',
-        selector: row => row.arrendatario,
+        selector: row => validaArrendatario(row.arrendatario),
         sortable: true,
     },
     {
@@ -119,6 +119,24 @@ const columnas = [
         width: '12%'
     },
 ]
+
+const validaArrendador=(userName, userLastName)=>{
+    if(userName == "undefined" && userLastName == "undefined" || userName == null && userLastName == null){
+        return <p className=' pt-3'>No hay arrendador</p>
+    }
+    else{
+        return <p className=' pt-3'> {userName} {userLastName}</p>
+    }
+}
+
+const validaArrendatario=(user)=>{
+    if(user == "" || user == null){
+        return <p className='pt-3'> No hay arrendatario</p>
+    }
+    else{
+        return <p className='pt-3'> {user}</p>
+    }
+}
 
 const paginationComponentOptions = {
     rangeSeparatorText: 'de',

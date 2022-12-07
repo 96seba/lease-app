@@ -72,15 +72,13 @@ const columnas = [
     },
     {
         name: 'Arrendatario',
-        selector: row => row.arrendatario,
+        selector: row => validaArriendo(row.arrendatario),
         sortable: true,
         hide: 'md'
     },
     {
         name: 'Monto',
-        selector: row =>
-            <Drop />
-        ,
+        selector: row => <Drop status={row.arriendo}/> ,
         sortable: true
     },
     {
@@ -111,6 +109,18 @@ const paginationComponentOptions = {
     selectAllRowsItemText: 'Todos',
     noRowsPerPage: true
 };
+
+const validaArriendo=(arriendo)=>{
+    console.log(arriendo)
+    console.log("AYUA")
+    if(arriendo == null){
+        return <p className='pt-3'> No hay arrendatario</p>
+    }
+    else{
+        return <p className='pt-3'>{arriendo}</p>
+    }
+}
+
 
 const getMonth=(period)=>{
 

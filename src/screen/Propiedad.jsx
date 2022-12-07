@@ -84,13 +84,14 @@ export default function Propiedad() {
     }
 
     const addAlert = async () => {
-
-        if (inputLog === "" || priority === "") {
+        if (inputLog === "" || priority === "priority") {
             if (inputLog === "") {
                 setInputLogIncomplete(true)
+                console.log("TE FALTA EL MENSAJE")
             }
             if (priority === "priority") {
                 setInputPriorityIncomplete(true)
+                console.log("TE FALTA LA PRIORIDAD")
             }
             console.log("ERROR TE FALTA UN DATO")
 
@@ -276,7 +277,7 @@ export default function Propiedad() {
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
-                                    <p key={index} className='text-sm break-words'>{item.fecha} - {item.level} - {item.note}</p>
+                                    <p key={index} className='text-sm break-words'>{item.level} - {item.note}</p>
                                 )}
                             </div>
                         </div>
