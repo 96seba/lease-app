@@ -553,7 +553,7 @@ export default function AgregarPropiedad() {
                                 }}
                                 className={`h-full w-1/2 bg-slate-50 
                                 ${newDuenoError && ' outline outline-2 outline-red-400 rounded-sm'}
-                                 flex justify-center items-center hover:bg-gray-300
+                                flex justify-center items-center hover:bg-gray-300
                                             ${newDueno === true && 'bg-white'}`}>
                                 Agregar dueño
                             </button>

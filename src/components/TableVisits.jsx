@@ -2,62 +2,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable, { createTheme } from 'react-data-table-component';
-
-createTheme(
-    'solarized',
-    {
-        text: {
-            primary: '#000000',
-            secondary: '#000000',
-        },
-        background: {
-            default: '#f0f9ff',
-        },
-        context: {
-            background: '#cb4b16',
-            text: '#FFFFFF',
-        },
-        divider: {
-            default: '#FFFFFF',
-        },
-        button: {
-            hover: '#059669',
-            focus: '#059669',
-            disabled: '#2C8C99',
-        },
-        sortFocus: {
-            default: '#000000',
-        },
-    },
-    'dark',
-);
-
-const customStyles = {
-    head: {
-        style: {
-            backgroundColor: '#FFFFFF',
-        },
-    },
-    rows: {
-        style: {
-            backgroundColor: '#FFFFFF',
-        },
-        highlightOnHoverStyle: {
-            backgroundColor: '#3A4348',
-        },
-    },
-    headRow: {
-        style: {
-            backgroundColor: '#FFFFFF',
-        },
-    },
-    pagination: {
-        style: {
-            backgroundColor: '#FFFFFF',
-        },
-    },
-};
-
+import { customStyles, paginationComponentOptions} from '../utils/constants';
 
 const tablaData = [
     {
@@ -77,7 +22,6 @@ const tablaData = [
     },
 
 ]
-
 
 const columnas = [
     {
@@ -125,22 +69,8 @@ const columnas = [
     },
 ]
 
-const paginationComponentOptions = {
-    rangeSeparatorText: 'de',
-    selectAllRowsItem: true,
-    selectAllRowsItemText: 'Todos',
-    noRowsPerPage: true
-};
-
 export default function TableVisits() {
-
-
-
-
-
     return (
-
-
         <DataTable
             columns={columnas}
             data={tablaData}
@@ -152,7 +82,5 @@ export default function TableVisits() {
             highlightOnHover
             paginationComponentOptions={paginationComponentOptions}
         />
-
-
     )
 } 

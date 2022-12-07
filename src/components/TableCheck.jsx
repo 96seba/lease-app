@@ -1,95 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
-
-// createTheme(
-//     'solarized',
-//     {
-//         text: {
-//             primary: '#000000',
-//             secondary: '#000000',
-//         },
-//         background: {
-//             default: '#f0f9ff',
-//         },
-//         context: {
-//             background: '#cb4b16',
-//             text: '#FFFFFF',
-//         },
-//         divider: {
-//             default: '#FFFFFF',
-//         },
-//         button: {
-//             hover: '#686f73',
-//             focus: '#3A4348',
-//             disabled: '#d1d5db',
-//             default: '#ff0000',
-//         },
-//     },
-//     'dark',
-// );
-
-const customStyles = {
-    head: {
-        style: {
-            backgroundColor: '#FFFFFF',
-        },
-    },
-    rows: {
-        style: {
-            backgroundColor: '#FFFFFF',
-            borderBottomColor: '#FFFFFF',
-            '&:not(:last-of-type)': {
-                borderStyle: 'none',
-                borderBottomWidth: '1px',
-                borderBottomColor: '#FFFFFF',
-            },
-
-        },
-        highlightOnHoverStyle: {
-            backgroundColor: '#3A4348',
-            color: '#FFFFFF',
-        },
-    },
-    headRow: {
-        style: {
-            backgroundColor: '#FFFFFF',
-            borderStyle: 'none',
-            borderBottomWidth: '1px',
-            borderBottomColor: '#FFFFFF',
-        },
-    },
-    pagination: {
-        style: {
-            backgroundColor: '#FFFFFF',
-            borderStyle: 'none',
-            borderBottomWidth: '1px',
-            borderBottomColor: '#FFFFFF',
-        },
-        pageButtonsStyle: {
-            color: '#FF0000',
-            fill: '#FF6F00',
-            '&:hover:not(:disabled)': {
-                backgroundColor: '#3A4348',
-                fill: '#FFFFFF',
-            },
-            '&:focus': {
-                outline: 'none',
-                backgroundColor: '#FF0000',
-            },
-        },
-    },
-};
-
-
-
-
-const paginationComponentOptions = {
-    rangeSeparatorText: 'de',
-    selectAllRowsItem: true,
-    selectAllRowsItemText: 'Todos',
-    noRowsPerPage: true
-};
+import { customStyles, paginationComponentOptions } from '../utils/constants';
 
 export default function TableCheck({ dataCheck, setDataCheck }) {
 
@@ -144,7 +56,6 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
-            // theme='solarized'
             customStyles={customStyles}
             highlightOnHover
             paginationComponentOptions={paginationComponentOptions}

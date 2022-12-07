@@ -4,35 +4,7 @@ import DataTable, { createTheme } from 'react-data-table-component';
 import Drop from '../components/Drop'
 import { getExpensesId } from '../api/getExpensesId';
 import { dateFormatNames } from '@progress/kendo-intl';
-
-createTheme(
-    'solarized',
-    {
-        text: {
-            primary: '#000000',
-            secondary: '#000000',
-        },
-        background: {
-            default: '#f0f9ff',
-        },
-        context: {
-            background: '#cb4b16',
-            text: '#FFFFFF',
-        },
-        divider: {
-            default: '#FFFFFF',
-        },
-        button: {
-            hover: '#059669',
-            focus: '#059669',
-            disabled: '#2C8C99',
-        },
-        sortFocus: {
-            default: '#000000',
-        },
-    },
-    'dark',
-);
+import { customStyles , paginationComponentOptions} from '../utils/constants';
 
 
 const columnas = [
@@ -76,13 +48,6 @@ const columnas = [
     },
 ]
 
-const paginationComponentOptions = {
-    rangeSeparatorText: 'de',
-    selectAllRowsItem: true,
-    selectAllRowsItemText: 'Todos',
-    noRowsPerPage: true
-};
-
 const getMonth = (period) => {
     let m = Number(period.slice(0, 2)) - 1
     let monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -103,33 +68,6 @@ export default function TableBill({ id, arrayExpenses }) {
         arrayExpenses[index] = obj
     }
 
-
-
-    const customStyles = {
-        head: {
-            style: {
-                backgroundColor: '#FFFFFF',
-            },
-        },
-        rows: {
-            style: {
-                backgroundColor: '#FFFFFF',
-            },
-            highlightOnHoverStyle: {
-                backgroundColor: '#3A4348',
-            },
-        },
-        headRow: {
-            style: {
-                backgroundColor: '#FFFFFF',
-            },
-        },
-        pagination: {
-            style: {
-                backgroundColor: '#FFFFFF',
-            },
-        },
-    };
 
     const columnas = [
         {
@@ -242,7 +180,6 @@ export default function TableBill({ id, arrayExpenses }) {
             fixedHeaderScrollHeight='700px'
             pagination
             highlightOnHover
-            theme='solarized'
             customStyles={customStyles}
             paginationComponentOptions={paginationComponentOptions}
         />

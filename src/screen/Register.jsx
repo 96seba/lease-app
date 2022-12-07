@@ -110,7 +110,7 @@ export default function Register() {
                             <input value={correo} onChange={event => {setEmailUserError(false)
                             setCorreo(event.target.value)}} type="email" name="email" id="email" 
                             className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
-                            ${emailUserError == true && "outline outline-2 outline-red-500"}`}
+                            ${emailUserError == true && "outline outline-2 outline-red-400"}`}
                             placeholder="name@company.com" required="" />
                         </div>
                         <div>
@@ -118,7 +118,7 @@ export default function Register() {
                             <input value={nombre} onChange={event => {setNombreCheck(true)
                             setNombre(event.target.value)}} type="text" name="nombre" id="nombre" 
                             className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
-                            ${nombreCheck == false && "outline outline-2 outline-red-500"}`}
+                            ${nombreCheck == false && "outline outline-2 outline-red-400"}`}
                             placeholder="Nombre" required="" />
                         </div>
                         <div>
@@ -126,7 +126,7 @@ export default function Register() {
                             <input value={apellido} onChange={event => {setApellidoCheck(true)
                             setApellido(event.target.value)}} type="text" name="apellido" id="apellido" 
                             className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
-                            ${apellidoCheck == false && "outline outline-2 outline-red-500"}`}
+                            ${apellidoCheck == false && "outline outline-2 outline-red-400"}`}
                             placeholder="Apellido" required="" />
                         </div>
                         <div >
@@ -134,7 +134,7 @@ export default function Register() {
                             <input value={password} onChange={event => {setPasswordCheck(true)
                             setPassword(event.target.value)}} type="password" name="password" id="password" placeholder="••••••••" 
                             className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
-                            ${passwordCheck == false && "outline outline-2 outline-red-500"}`} 
+                            ${passwordCheck == false && "outline outline-2 outline-red-400"}`} 
                             required="" />
                         </div>
                         {/* <div className="flex items-start">
