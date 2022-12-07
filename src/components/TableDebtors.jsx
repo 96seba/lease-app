@@ -1,35 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import DataTable, { createTheme } from 'react-data-table-component';
-
-createTheme(
-    'solarized',
-    {
-        text: {
-            primary: '#000000',
-            secondary: '#000000',
-        },
-        background: {
-            default: '#f0f9ff',
-        },
-        context: {
-            background: '#cb4b16',
-            text: '#FFFFFF',
-        },
-        divider: {
-            default: '#FFFFFF',
-        },
-        button: {
-            hover: '#059669',
-            focus: '#059669',
-            disabled: '#d1d5db',
-        },
-        sortFocus: {
-            default: '#000000',
-        },
-    },
-    'dark',
-);
+import DataTable from 'react-data-table-component';
 
 
 const customStyles = {
@@ -41,19 +12,45 @@ const customStyles = {
     rows: {
         style: {
             backgroundColor: '#FFFFFF',
+            borderBottomColor: '#FFFFFF',
+            '&:not(:last-of-type)': {
+                borderStyle: 'none',
+                borderBottomWidth: '1px',
+                borderBottomColor: '#FFFFFF',
+            },
+
         },
         highlightOnHoverStyle: {
             backgroundColor: '#3A4348',
+            color: '#FFFFFF',
         },
     },
     headRow: {
         style: {
             backgroundColor: '#FFFFFF',
+            borderStyle: 'none',
+            borderBottomWidth: '1px',
+            borderBottomColor: '#FFFFFF',
         },
     },
     pagination: {
         style: {
             backgroundColor: '#FFFFFF',
+            borderStyle: 'none',
+            borderBottomWidth: '1px',
+            borderBottomColor: '#FFFFFF',
+        },
+        pageButtonsStyle: {
+            color: '#FF0000',
+            fill: '#FF6F00',
+            '&:hover:not(:disabled)': {
+                backgroundColor: '#3A4348',
+                fill: '#FFFFFF',
+            },
+            '&:focus': {
+                outline: 'none',
+                backgroundColor: '#FF0000',
+            },
         },
     },
 };
@@ -117,7 +114,6 @@ export default function TableDebtors({debtorData}) {
             pagination
             customStyles={customStyles}
             highlightOnHover
-            theme='solarized'
             paginationComponentOptions={paginationComponentOptions}
         />
     )

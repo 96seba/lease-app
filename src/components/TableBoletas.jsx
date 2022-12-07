@@ -1,37 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import DataTable, { createTheme } from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudArrowUp, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
-createTheme(
-    'solarized',
-    {
-        text: {
-            primary: '#000000',
-            secondary: '#000000',
-        },
-        background: {
-            default: '#f0f9ff',
-        },
-        context: {
-            background: '#cb4b16',
-            text: '#FFFFFF',
-        },
-        divider: {
-            default: '#FFFFFF',
-        },
-        button: {
-            hover: '#059669',
-            focus: '#059669',
-            disabled: '#2C8C99',
-        },
-        sortFocus: {
-            default: '#000000',
-        },
-    },
-    'dark',
-);
 
 const customStyles = {
     head: {
@@ -42,25 +14,48 @@ const customStyles = {
     rows: {
         style: {
             backgroundColor: '#FFFFFF',
+            borderBottomColor: '#FFFFFF',
+            '&:not(:last-of-type)': {
+                borderStyle: 'none',
+                borderBottomWidth: '1px',
+                borderBottomColor: '#FFFFFF',
+            },
+
         },
         highlightOnHoverStyle: {
             backgroundColor: '#3A4348',
+            color: '#FFFFFF',
         },
     },
     headRow: {
         style: {
             backgroundColor: '#FFFFFF',
+            borderStyle: 'none',
+            borderBottomWidth: '1px',
+            borderBottomColor: '#FFFFFF',
         },
     },
     pagination: {
         style: {
             backgroundColor: '#FFFFFF',
+            borderStyle: 'none',
+            borderBottomWidth: '1px',
+            borderBottomColor: '#FFFFFF',
+        },
+        pageButtonsStyle: {
+            color: '#FF0000',
+            fill: '#FF6F00',
+            '&:hover:not(:disabled)': {
+                backgroundColor: '#3A4348',
+                fill: '#FFFFFF',
+            },
+            '&:focus': {
+                outline: 'none',
+                backgroundColor: '#FF0000',
+            },
         },
     },
 };
-
-
-
 
 
 
@@ -109,7 +104,7 @@ export default function TableBoletas({ files, setFile, tablaData }) {
                             );
 
                         }} className="flex justify-center items-center mb-1 h-7 w-44">
-                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg 
+                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-[#00ff00] rounded-lg 
                 cursor-pointer dark:bg-[#00ff00]  dark:hover:bg-[#ff0000]">
                                 <div className='h-[100%] w-[100%] flex justify-start pl-4 items-center'>
                                     <FontAwesomeIcon icon={faCircleCheck} />
@@ -125,10 +120,10 @@ export default function TableBoletas({ files, setFile, tablaData }) {
                         <div className="flex justify-center items-center mb-1 h-7 w-44">
                             <label htmlFor={"dropzone-file" + index} className="flex flex-col 
                             justify-center items-center w-full h-full bg-gray-50 rounded-lg 
-                     cursor-pointer dark:bg-gray-300 dark:hover:bg-[#FF6F00]">
+                            cursor-pointer dark:bg-gray-300 dark:hover:bg-[#FF6F00]">
                                 <div className='h-[100%] w-[100%] flex justify-start pl-4 items-center'>
-                                    <FontAwesomeIcon icon={faCloudArrowUp} />
-                                    <span className='text-sm mx-2'>
+                                    <FontAwesomeIcon icon={faCloudArrowUp} className='text-black'/>
+                                    <span className='text-sm mx-2 text-black'>
                                         Elige un archivo...
                                     </span>
                                     <input id={"dropzone-file" + index} onChange={(e) => {
@@ -180,7 +175,6 @@ export default function TableBoletas({ files, setFile, tablaData }) {
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
-            theme='solarized'
             customStyles={customStyles}
             paginationComponentOptions={paginationComponentOptions}
         />
