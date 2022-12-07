@@ -150,6 +150,26 @@ export default function Propiedad() {
 
     }
 
+    const validateDueno=(userName, userLastName)=>{
+        if(userName == "undefined" && userLastName == "undefined" || userName == null && userLastName == null){
+            return <p className=' inline text-gray-300'>Sin registro</p>
+        }
+        else{
+            return <p className=' pt-3'> {userName} {userLastName}</p>
+        }
+    }
+
+    const validateArrendatario=(userName, userLastName)=>{
+        if(userName == "undefined" && userLastName == "undefined" || userName == null && userLastName == null){
+            return <p className=' inline text-gray-300'>Sin registro</p>
+        }
+        else{
+            return <p className=' pt-3'> {userName} {userLastName}</p>
+        }
+    }
+
+
+    
     const addAnotacion = async (event) => {
         if (event.key === 'Enter') {
             let body = {}
@@ -192,8 +212,8 @@ export default function Propiedad() {
                         <div>
                             <p>ID: {data?.property_id}</p>
                             <p>Direccion: {data?.address}</p>
-                            <p>Dueño:  {data.owner?.name} {data.owner?.lastname} </p>
-                            <p>Arrendatario: </p>
+                            <p>Dueño: {validateDueno(data.owner?.name, data.owner?.lastname)}</p>
+                            <p>Arrendatario: {validateArrendatario(data.owner?.name, data.owner?.lastname)}</p>
                             <p>Nro Piso: {data?.floor}</p>
                             <p>Tipo: {data?.type_property}</p>
                         </div>
@@ -317,7 +337,7 @@ export default function Propiedad() {
 
                                 }}
                                 className='h-[4vh]  w-40 bg-[#00ff00]
-                             hover:bg-green-500 text-white rounded'>
+                            hover:bg-green-500 text-white rounded'>
                                 Guardar
                             </button>
                         </div>
