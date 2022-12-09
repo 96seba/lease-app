@@ -8,17 +8,18 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { addAlerts } from '../api/addAlerts'
 import { addAnnotations } from '../api/addAnnotations'
 import { getExpensesId } from '../api/getExpensesId'
-import Drop from '../components/Drop'
+import { editExpenses } from '../api/editExpenses'
 
 export default function Propiedad() {
 
     //* Array de objetos para enviar los gastos por mes
-    var arrayExpenses = []
+    var [arrayExpenses, setArrayExpenses] = useState([])
+
+    const [dataExp, setDataExp] = useState("")
+
 
 
     let navigate = useNavigate()
-
-
     const [fotoUrL, setFotoUrl] = useState("")
     const [loaded, setLoaded] = useState(false)
 
@@ -32,16 +33,24 @@ export default function Propiedad() {
         setLogs(data.alerts)
         console.log(data.alerts, "asdka")
         setFotoUrl(API_HOST + data?.image || '')
-        document.title = 'Propiedad ' + data.property_id;
+        document.title = 'Propiedad ' + data.property_id
 
         const respExpenses = await getExpensesId(data.id)
-        console.log(data.property_id)
-        console.log(respExpenses)
+        setDataExp(respExpenses.data.expenses)
+        console.log(respExpenses.data.expenses.length)
+
+        // respExpenses.data.expenses.forEach((element, index) => {
+        //     arrayExpenses[index] = { id: element.id }
+        // });
+
+        // console.log(arrayExpenses)
+
     }
 
     useEffect(() => {
         getData()
     }, [])
+
 
 
     const [logs, setLogs] = useState([])
@@ -97,12 +106,8 @@ export default function Propiedad() {
                 console.log("TE FALTA LA PRIORIDAD")
             }
             console.log("ERROR TE FALTA UN DATO")
-
-
         }
         else {
-
-
             let obj = {}
             obj.propertyId = data.id
             obj.note = inputLog
@@ -115,39 +120,7 @@ export default function Propiedad() {
                 level: respAlert.data.alert.level,
                 note: respAlert.data.alert.note
             }, ...current])
-
-
-            // let separator = '/'
-            // let newDate = new Date()
-            // let date = newDate.getDate();
-            // let month = newDate.getMonth() + 1;
-            // let year = newDate.getFullYear();
-            // let hour = newDate.getHours()
-            // let minutes = newDate.getMinutes()
-
-            // let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-            // setLogs(current => [{ fecha: fecha, level: priority, mensaje: inputLog }, ...current])
-
-            // setInputLogIncomplete(false)
-            // setInputLog("")
-            // setPriority('priority')
         }
-
-        // setInputLog("")
-        // let separator = '/'
-        // let newDate = new Date()
-        // let date = newDate.getDate();
-        // let month = newDate.getMonth() + 1;
-        // let year = newDate.getFullYear();
-        // let hour = newDate.getHours()
-        // let minutes = newDate.getMinutes()
-
-        // let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-        // setLogs(current => [{ fecha: fecha, level: priority, mensaje: inputLog }, ...current])
-        // setDataAlerts(current => [{ fecha: fecha, level: priority, note: inputLog }, ...current])
-
-
-
     }
 
     const addAnotacion = async (event) => {
@@ -160,6 +133,15 @@ export default function Propiedad() {
             setAlerts(current => [{ data: resp.data.annotation.value, user: resp.data.annotation.by }, ...current])
             setInputData('')
         }
+    }
+
+    const updateExpenses = async () => {
+        console.log(arrayExpenses)
+        arrayExpenses.forEach(async (element) => {
+            console.log(element)
+            const resp = await editExpenses(element)
+            console.log(resp)
+        });
     }
 
     if (data === "") {
@@ -224,14 +206,6 @@ export default function Propiedad() {
                     </div>
                 </div>
                 <div className="flex mb-10 bg-blue-500 rounded items-center max-w-full w-[96%]">
-                    {/* <div className="flex flex-col justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
-                        <p className='text-lg'>Ultimo pago</p>
-                        <p className='text-sm'>Fecha de pago: (FECHA)</p>
-                        <p className='text-sm'>Monto: </p>
-                        <p className='text-sm'>Luz: (MONTO)</p>
-                        <p className='text-sm'>Agua: (MONTO)</p>
-                        <p className='text-sm'>Gas: (MONTO)</p>
-                    </div> */}
                     <div className="flex flex-col p-6 w-[96%] sm:w-[100%] md:w-[100%] lg:w-[100%]  xl:w-[100%]  h-[12vh] bg-white rounded shadow-md">
                         <b className='mb-2'>Contrato</b>
                         <div className='flex w-full h-full pt-'>
@@ -246,7 +220,6 @@ export default function Propiedad() {
                             <div className='flex w-1/2 h-full flex-col '>
 
                                 <p className='text-sm'>Inicio: 25/22/2222 - Termino : 25/22/2222</p>
-                                {/* <p className='text-sm'>Termino de contrato: (FECHA)</p> */}
 
                             </div>
                         </div>
@@ -314,7 +287,7 @@ export default function Propiedad() {
                         <div className='h-full w-[30%] flex justify-end items-center'>
                             <button
                                 onClick={() => {
-
+                                    updateExpenses()
                                 }}
                                 className='h-[4vh]  w-40 bg-[#00ff00]
                              hover:bg-green-500 text-white rounded'>
@@ -322,7 +295,7 @@ export default function Propiedad() {
                             </button>
                         </div>
                     </div>
-                    <TableBill id={data.id} arrayExpenses={arrayExpenses} />
+                    <TableBill id={data.id} arrayExpenses={arrayExpenses} setArrayExpenses={setArrayExpenses} dataExp={dataExp} />
                 </div>
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white rounded-lg shadow-sm'>
                     <div className='w-full'>

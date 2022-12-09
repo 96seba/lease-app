@@ -1,8 +1,9 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function Drop({ status, index, name, setArray }) {
+export default function Drop({ status, index, name, setArray, id }) {
 
     const [value, setValue] = useState(status)
+
 
     return (
         <select
@@ -10,6 +11,7 @@ export default function Drop({ status, index, name, setArray }) {
             onChange={e => {
                 console.log(e.target.value)
                 setValue(e.target.value)
+                setArray(index, name, e.target.value, id)
             }}
             className={`w-[8vw]  text-black rounded-md px-2
                 ${value === 'PAGADO' && 'bg-green-300'}

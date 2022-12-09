@@ -2,32 +2,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 
-// createTheme(
-//     'solarized',
-//     {
-//         text: {
-//             primary: '#000000',
-//             secondary: '#000000',
-//         },
-//         background: {
-//             default: '#f0f9ff',
-//         },
-//         context: {
-//             background: '#cb4b16',
-//             text: '#FFFFFF',
-//         },
-//         divider: {
-//             default: '#FFFFFF',
-//         },
-//         button: {
-//             hover: '#686f73',
-//             focus: '#3A4348',
-//             disabled: '#d1d5db',
-//             default: '#ff0000',
-//         },
-//     },
-//     'dark',
-// );
 
 const customStyles = {
     head: {

@@ -253,54 +253,54 @@ export default function AgregarPropiedad() {
                 console.log(objPropClean)
 
 
-                // //* Ejecucion de fetchs para crear propiedad, uploadImage y leaseholder 
-                // if (contArrendador === 0 || contArrendador === 6) {
-                //     //* El id de compañia va por defecto en developer mode
-                //     objPropClean.companyId = 1
-                //     console.log(objContrato)
-                //     console.log(objPropClean)
-                //     //* Se crea la propiedad con el objeto limpio de props vacios
-                //     const respProp = await createPropiedad(objPropClean)
-                //     console.log("respProp", respProp)
-                //     if (respProp.status === 200) {
-                //         navigate("/propiedades")
-                //     }
-                //     //* Se agrega el id de la propiedad al objeto del contrato
-                //     objContrato.propertyId = respProp.data.property.id
-                //     //* Se verifica si se eligio una imagen para la propiedad
-                //     if (fotoUri !== "") {
-                //         uploadImage(respProp.data.property.id)
-                //     }
-                //     //* Se crea el arrendatario en el caso de que se eliga agregar arrendatario nuevo
-                //     if (newContrato === true) {
-                //         if (newArrendatario === true) {
-                //             //* Se crea el arrendatario
-                //             //* Se agregan los datos del nuevo arrendatario al objeto del contrato
-                //             objContrato.rut = String(arrendatario.rut)
-                //             objContrato.name = arrendatario.nombre
-                //             objContrato.lastname = arrendatario.apellido
-                //             objContrato.email = arrendatario.correo
-                //             objContrato.phone = String(arrendatario.telefono)
-                //             let date = new Date(arrendatario.fechaNacArrendatario)
-                //             objContrato.birthday = date.toISOString()
-                //             //* Se crea el contrato
-                //             if (contArrendatario === 0) {
-                //                 const respLease = await addLease(objContrato)
-                //                 console.log("respLease", respLease)
-                //             }
-                //         } else {
-                //             //* Se agrega el id del leaseHolder seleccionado al objContrato
-                //             objContrato.leaseholderId = selected.id
-                //             if (selected.id !== '') {
-                //                 //* Se crea el contrato
-                //                 const respLease = await addLease(objContrato)
-                //                 console.log("respLease", respLease)
-                //             }
-                //         }
-                //     }
+                //* Ejecucion de fetchs para crear propiedad, uploadImage y leaseholder 
+                if (contArrendador === 0 || contArrendador === 6) {
+                    //* El id de compañia va por defecto en developer mode
+                    objPropClean.companyId = 1
+                    console.log(objContrato)
+                    console.log(objPropClean)
+                    //* Se crea la propiedad con el objeto limpio de props vacios
+                    const respProp = await createPropiedad(objPropClean)
+                    console.log("respProp", respProp)
+                    if (respProp.status === 200) {
+                        navigate("/propiedades")
+                    }
+                    //* Se agrega el id de la propiedad al objeto del contrato
+                    objContrato.propertyId = respProp.data.property.id
+                    //* Se verifica si se eligio una imagen para la propiedad
+                    if (fotoUri !== "") {
+                        uploadImage(respProp.data.property.id)
+                    }
+                    //* Se crea el arrendatario en el caso de que se eliga agregar arrendatario nuevo
+                    if (newContrato === true) {
+                        if (newArrendatario === true) {
+                            //* Se crea el arrendatario
+                            //* Se agregan los datos del nuevo arrendatario al objeto del contrato
+                            objContrato.rut = String(arrendatario.rut)
+                            objContrato.name = arrendatario.nombre
+                            objContrato.lastname = arrendatario.apellido
+                            objContrato.email = arrendatario.correo
+                            objContrato.phone = String(arrendatario.telefono)
+                            let date = new Date(arrendatario.fechaNacArrendatario)
+                            objContrato.birthday = date.toISOString()
+                            //* Se crea el contrato
+                            if (contArrendatario === 0) {
+                                const respLease = await addLease(objContrato)
+                                console.log("respLease", respLease)
+                            }
+                        } else {
+                            //* Se agrega el id del leaseHolder seleccionado al objContrato
+                            objContrato.leaseholderId = selected.id
+                            if (selected.id !== '') {
+                                //* Se crea el contrato
+                                const respLease = await addLease(objContrato)
+                                console.log("respLease", respLease)
+                            }
+                        }
+                    }
 
-                //     // console.log(objHolder)
-                // }
+                    // console.log(objHolder)
+                }
             }
         }
     }

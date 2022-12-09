@@ -5,81 +5,60 @@ import Drop from '../components/Drop'
 import { getExpensesId } from '../api/getExpensesId';
 import { dateFormatNames } from '@progress/kendo-intl';
 
-createTheme(
-    'solarized',
-    {
-        text: {
-            primary: '#000000',
-            secondary: '#000000',
-        },
-        background: {
-            default: '#f0f9ff',
-        },
-        context: {
-            background: '#cb4b16',
-            text: '#FFFFFF',
-        },
-        divider: {
-            default: '#FFFFFF',
-        },
-        button: {
-            hover: '#059669',
-            focus: '#059669',
-            disabled: '#2C8C99',
-        },
-        sortFocus: {
-            default: '#000000',
+const customStyles = {
+    head: {
+        style: {
+            backgroundColor: '#FFFFFF',
         },
     },
-    'dark',
-);
+    rows: {
+        style: {
+            backgroundColor: '#FFFFFF',
+            borderBottomColor: '#FFFFFF',
+            '&:not(:last-of-type)': {
+                borderStyle: 'none',
+                borderBottomWidth: '1px',
+                borderBottomColor: '#FFFFFF',
+            },
 
+        },
+        highlightOnHoverStyle: {
+            backgroundColor: '#3A4348',
+            color: '#FFFFFF',
+        },
+    },
+    headRow: {
+        style: {
+            backgroundColor: '#FFFFFF',
+            borderStyle: 'none',
+            borderBottomWidth: '1px',
+            borderBottomColor: '#FFFFFF',
+        },
+    },
+    pagination: {
+        style: {
+            backgroundColor: '#FFFFFF',
+            borderStyle: 'none',
+            borderBottomWidth: '1px',
+            borderBottomColor: '#FFFFFF',
+        },
+        pageButtonsStyle: {
+            color: '#FF0000',
+            fill: '#FF6F00',
+            '&:hover:not(:disabled)': {
+                backgroundColor: '#3A4348',
+                fill: '#FFFFFF',
+            },
+            '&:focus': {
+                outline: 'none',
+                backgroundColor: '#FF0000',
+            },
+        },
+    },
+};
 
-const columnas = [
-    {
-        name: 'Mes',
-        selector: row => getMonth(row.period),
-        sortable: true,
-        width: '8%',
-        compact: true
-    },
-    {
-        name: 'Arrendatario',
-        selector: row => row.arrendatario,
-        sortable: true,
-        hide: 'md'
-    },
-    {
-        name: 'Monto',
-        selector: row => <Drop status={row.arriendo}/> ,
-        sortable: true
-    },
-    {
-        name: 'GG.CC',
-        selector: row => <Drop status={row.gastos_comunes}/>,
-        sortable: true
-    },
-    {
-        name: 'Agua',
-        selector: row => <Drop status={row.agua}/>,
-        sortable: true
-    },
-    {
-        name: 'Luz',
-        selector: row => <Drop status={row.luz}/>,
-        sortable: true
-    },
-    {
-        name: 'Gas',
-        selector: row => <Drop status={row.gas}/>,
-        sortable: true
-    },
-]
 
 const paginationComponentOptions = {
-    rangeSeparatorText: 'de',
-    selectAllRowsItem: true,
-    selectAllRowsItemText: 'Todos',
     noRowsPerPage: true
 };
 
@@ -89,47 +68,40 @@ const getMonth = (period) => {
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
 
-    return <p className='pt-3'>{monthNames[m]}</p>
+    return monthNames[m]
 }
 
-export default function TableBill({ id, arrayExpenses }) {
+export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp }) {
 
     const [data, setData] = useState("");
 
-    const setArray = (index, name, data) => {
-        let obj = {}
-        obj[name] = data
-
-        arrayExpenses[index] = obj
+    const setArray = (index, name, data, id) => {
+        console.log(index, name, data, id)
+        //* Funcion para obtener el index a cambiar
+        const idFind = (element) => element.id == id
+        //* Se ejecuta la funcion para obtener el index y se guarda en indexArr
+        let indexArr = arrayExpenses.findIndex(idFind)
+        //* Se crea una copia del arrayExpenses
+        let newArr = [...arrayExpenses]
+        console.log(newArr)
+        if (indexArr !== -1) {
+            //* se crea una copia del objeto a actualizar
+            let newObj = newArr[indexArr]
+            newObj[name] = data
+            console.log(newObj, "el index es:", indexArr)
+            newArr[indexArr] = newObj
+        } else {
+            //* se actualiza el registro por primera vez
+            let newObj = {}
+            newObj.id = id
+            newObj[name] = data
+            console.log(newObj, "el index es:", indexArr)
+            newArr.push(newObj)
+        }
+        //* Se setea el arrayExpenses con la nueva informacion
+        setArrayExpenses(newArr)
     }
 
-
-
-    const customStyles = {
-        head: {
-            style: {
-                backgroundColor: '#FFFFFF',
-            },
-        },
-        rows: {
-            style: {
-                backgroundColor: '#FFFFFF',
-            },
-            highlightOnHoverStyle: {
-                backgroundColor: '#3A4348',
-            },
-        },
-        headRow: {
-            style: {
-                backgroundColor: '#FFFFFF',
-            },
-        },
-        pagination: {
-            style: {
-                backgroundColor: '#FFFFFF',
-            },
-        },
-    };
 
     const columnas = [
         {
@@ -141,7 +113,8 @@ export default function TableBill({ id, arrayExpenses }) {
         },
         {
             name: 'Arrendatario',
-            selector: row => row.arrendatario,
+            // selector: row => row.arrendatario,
+            selector: row => row.id,
             sortable: true,
             compact: true,
             wrap: true,
@@ -156,93 +129,45 @@ export default function TableBill({ id, arrayExpenses }) {
         },
         {
             name: 'GG.CC',
-            selector: (row, index) => <Drop index={index} name={"gastos_comunes"} setArray={setArray} status={row.gastos_comunes} />,
+            selector: (row, index) => <Drop id={row.id} index={index} name={"gastos_comunes"} setArray={setArray} status={row.gastos_comunes} />,
             sortable: true,
             compact: true,
             width: '15%'
         },
         {
             name: 'Agua',
-            selector: (row, index) => <Drop index={index} name={"agua"} setArray={setArray} status={row.agua} />,
+            selector: (row, index) => <Drop id={row.id} index={index} name={"agua"} setArray={setArray} status={row.agua} />,
             sortable: true,
             compact: true,
             width: '15%'
         },
         {
             name: 'Luz',
-            selector: (row, index) => <Drop index={index} name={"luz"} setArray={setArray} status={row.luz} />,
+            selector: (row, index) => <Drop id={row.id} index={index} name={"luz"} setArray={setArray} status={row.luz} />,
             sortable: true,
             compact: true,
             width: '15%'
         },
         {
             name: 'Gas',
-            selector: (row, index) => <Drop index={index} name={"gas"} setArray={setArray} status={row.gas} />,
+            selector: (row, index) => <Drop id={row.id} index={index} name={"gas"} setArray={setArray} status={row.gas} />,
             sortable: true,
             compact: true,
             width: '15%'
         }
     ]
 
-    useEffect(() => {
-        const getData = async (params) => {
-            // const resp = await getExpensesId(id)
-            // setData(resp.data.expenses)
-            setData([
-
-                {
-                    "id": 1,
-                    "arriendo": null,
-                    "agua": "NO_PAGADO",
-                    "luz": "PENDIENTE",
-                    "gas": "PAGADO",
-                    "gastos_comunes": "PENDIENTE",
-                    "period": "12-2022",
-                    "date_review": null,
-                    "isReviewed": false,
-                    "createdAt": "2022-12-06T14:43:45.627Z",
-                    "propertyId": 1,
-                    "active": true
-                },
-                {
-                    "id": 2,
-                    "arriendo": null,
-                    "agua": "PAGADO",
-                    "luz": "PAGADO",
-                    "gas": "PAGADO",
-                    "gastos_comunes": "PAGADO",
-                    "period": "11-2022",
-                    "date_review": null,
-                    "isReviewed": false,
-                    "createdAt": "2022-12-06T14:43:45.627Z",
-                    "propertyId": 1,
-                    "active": true
-                },
-
-
-            ])
-
-            // console.log(resp)
-        }
-        getData()
-    }, [])
-
-
-    useEffect(() => {
-        console.log(dateFormatNames)
-    }, [data])
-
     return (
 
 
         <DataTable
             columns={columnas}
-            data={data}
+            data={dataExp}
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
             highlightOnHover
-            theme='solarized'
+
             customStyles={customStyles}
             paginationComponentOptions={paginationComponentOptions}
         />
