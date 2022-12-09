@@ -1,33 +1,75 @@
 import { Fragment, useRef, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { updateUser } from '../api/updateUser'
 
-export default function ModalEditUser({ open, setOpen, dataRow }) {
-    const [correo, setCorreo] = useState('')
+export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTableData }) {
 
-    const [nombre, setNombre] = useState('')
+    const [user, setUser] = useState({
+        email: "",
+        name: "",
+        lastname: "",
+    })
 
-    const [apellido, setApellido] = useState('')
 
     useEffect(() => {
 
         if (dataRow !== '') {
-            setCorreo(dataRow.correo)
-            setNombre(dataRow.nombre)
-            setApellido(dataRow.apellido)
+            setUser({ email: dataRow.email, name: dataRow.name, lastname: dataRow.lastname })
             console.log("VIVA CHILE")
             console.log(dataRow)
         }
 
     }, [dataRow])
 
+
     const cancelButtonRef = useRef(null)
 
     if (dataRow === '') {
         return <></>
     }
+
+    const updateDataUser = async () => {
+
+        let obj = {}
+        obj.name = user.name
+        obj.lastname = user.lastname
+        // obj.password = user.password
+        obj.id = dataRow.id
+
+        const data = await updateUser(obj)
+        console.log(data)
+        console.log("DATA")
+
+        // setTableData([data.data.user])
+
+        const getId = (element) => element.id === dataRow.id;
+        const index = tableData.findIndex(getId)
+        console.log(index)
+        console.log(tableData)
+
+        let newArr = tableData
+        let newObj = {}
+
+        newObj = data.data.user
+        newArr[index] = newObj
+
+        console.log(newObj)
+        console.log("NEWOBJ")
+
+        console.log(tableData)
+        console.log("TABLE DATA")
+
+        console.log(newArr)
+        console.log("NUEVO ARREGLO")
+
+        setTableData(newArr)
+        setOpen(false)
+
+    }
+
+
     return (
         <div>
-            <p> Hola </p>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                     <Transition.Child
@@ -62,17 +104,19 @@ export default function ModalEditUser({ open, setOpen, dataRow }) {
                                             <div className="space-y-4 md:space-y-6" action="#">
                                                 <div className="">
                                                     <label for="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
-                                                    <input value={correo} onChange={event => setCorreo(event.target.value)} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="name@company.com" required="" />
+                                                    <input value={user.email} onChange={event => setUser({ ...user, email: event.target.value })} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                                                        required="" />
                                                 </div>
                                                 <div>
                                                     <label for="nombre" className="block mb-2 text-sm font-medium text-black dark:text-white">Nombre</label>
-                                                    <input value={nombre} onChange={event => setNombre(event.target.value)} type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Nombre" required="" />
+                                                    <input value={user.name} onChange={event => setUser({ ...user, name: event.target.value })} type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Nombre" required="" />
                                                 </div>
                                                 <div>
                                                     <label for="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
-                                                    <input value={apellido} onChange={event => setApellido(event.target.value)} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Apellido" required="" />
+                                                    <input value={user.lastname} onChange={event => setUser({ ...user, lastname: event.target.value })} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Apellido" required="" />
                                                 </div>
-                                                <button className="w-full text-white bg-[#FF6F00] hover:bg-[#3A4348] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Actualizar</button>
+                                                <button className="w-full text-white bg-[#FF6F00] hover:bg-[#3A4348] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                                    onClick={() => updateDataUser()}>Actualizar</button>
                                             </div>
                                         </div>
                                     </div>
