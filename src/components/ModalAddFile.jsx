@@ -61,8 +61,9 @@ export default function ModalGuardar({ open, setOpen }) {
         })
 
         promise.then(async (d) => {
-            const resp = await updateForFile(d)
-            console.log(resp)
+            console.log(d)
+            // const resp = await updateForFile(d)
+            // console.log(resp)
         })
 
     }

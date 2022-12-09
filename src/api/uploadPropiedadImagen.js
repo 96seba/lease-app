@@ -1,4 +1,4 @@
-import { API_HOST } from '../utils/constants'
+import { API_HOST, TOKEN } from '../utils/constants'
 
 export async function uploadPropiedadImagen(form) {
     try {

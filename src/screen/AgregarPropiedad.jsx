@@ -305,9 +305,9 @@ export default function AgregarPropiedad() {
         }
     }
 
-    const checkInput = async () => {
+    const checkInput = () => {
 
-        let resp = await checkInputRut.validaRut(arrendador.rut.replaceAll('.', ''))
+        let resp = checkInputRut.validaRut(arrendador.rut.replaceAll('.', ''))
         console.log(resp)
 
         const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
@@ -317,18 +317,15 @@ export default function AgregarPropiedad() {
 
         if (resp === false && arrendador.rut.length !== 0) {
             setRutArrendadorCheck(true)
-            console.log("RUT INVALIDO")
             return
         }
 
 
         if (emailCheck === false && arrendador.correo.length !== 0) {
             setEmailArrendadorCheck(true)
-            console.log("EMAIL INVALIDO")
             return
         }
 
-        console.log("SE EJECUTA ADDPROPIEDAD")
         addPropiedad()
     }
 
@@ -432,14 +429,14 @@ export default function AgregarPropiedad() {
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p className='font-medium'>Tipo</p>
                         <select
-                            defaultValue={'Tipo'}
+                            value={tipo}
                             onChange={e => {
                                 console.log(e.target.value)
                                 setTipo(e.target.value)
                             }}
                             className={`bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[100%] py-0  px-3 text-grey-darker
                             ${error && tipo === 'Tipo' && " outline outline-2 outline-red-300"}`}>
-                            <option selected disabled  value="Tipo">Tipo</option>
+                            <option selected disabled value="Tipo">Tipo</option>
                             <option value="Casa">Casa</option>
                             <option value="Depto">Depto</option>
                             <option value="Oficina">Oficina</option>

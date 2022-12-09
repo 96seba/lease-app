@@ -51,6 +51,9 @@ export default function Propiedad() {
 
 
 
+
+
+
     const [logs, setLogs] = useState([])
 
     const [annotations, setAnnotations] = useState("")
@@ -273,7 +276,7 @@ export default function Propiedad() {
                                         setErrorAnnotation(false)
                                     }}
                                     type="text"
-                                    className={`p-4 w-full h-10 bg-white rounded-lg sm:text-md  ${errorAnnotation && 'outline outline-2 outline-red-400'}`} />
+                                    className={`p-4 w-full appearance-none h-10 bg-white rounded-lg sm:text-md focus:outline-0 focus:outline-black  ${errorAnnotation && 'outline outline-2 outline-red-400'}`} />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
                                 {annotations !== "" &&
