@@ -28,23 +28,21 @@ export default function Propiedad() {
     const getData = async () => {
 
         let data = await location.state.data
-        console.log(data.amounts.length)
+        console.log(data.annotations, "propiedad")
         setData(data)
-        setLogs(data.alerts)
-        console.log(data.alerts, "asdka")
+        setLogs(data.alerts.reverse())
+        setAnnotations(data.annotations.reverse())
+        console.log(data.annotations, "asdka")
         setFotoUrl(API_HOST + data?.image || '')
         document.title = 'Propiedad ' + data.property_id
+
 
         const respExpenses = await getExpensesId(data.id)
         setDataExp(respExpenses.data.expenses)
         console.log(respExpenses.data.expenses.length)
 
-        // respExpenses.data.expenses.forEach((element, index) => {
-        //     arrayExpenses[index] = { id: element.id }
-        // });
 
-        // console.log(arrayExpenses)
-
+        // data.annotations
     }
 
     useEffect(() => {
@@ -55,31 +53,27 @@ export default function Propiedad() {
 
     const [logs, setLogs] = useState([])
 
-    const [alerts, setAlerts] = useState("")
+    const [annotations, setAnnotations] = useState("")
 
     const [data, setData] = useState("")
 
     const [priority, setPriority] = useState("priority")
 
-    const [dataAlerts, setDataAlerts] = useState({
-        note: '',
-        level: '',
-        id: ''
-    })
-
     const [inputLog, setInputLog] = useState("")
 
-    const [inputData, setInputData] = useState("")
+    const [inputAnnotation, setInputAnnotation] = useState("")
+
+    const [errorAnnotation, setErrorAnnotation] = useState(false)
 
     const [inputLogIncomplete, setInputLogIncomplete] = useState(false)
 
     const [inputPriorityIncomplete, setInputPriorityIncomplete] = useState(false)
 
     const renderAlerts = () => {
-        // console.log(alerts, 23)
+        // console.log(annotations)
         return (
-            alerts.map((item, index) =>
-                <p key={index}>{item.data + " -- " + item.user}</p>
+            annotations.map((item, index) =>
+                <p key={index}>{item.value + " -- " + item.by}</p>
             )
         )
     }
@@ -125,13 +119,18 @@ export default function Propiedad() {
 
     const addAnotacion = async (event) => {
         if (event.key === 'Enter') {
-            let body = {}
-            body.propertyId = data.id
-            body.value = inputData
-            let resp = await addAnnotations(body)
-            console.log(resp)
-            setAlerts(current => [{ data: resp.data.annotation.value, user: resp.data.annotation.by }, ...current])
-            setInputData('')
+            if (inputAnnotation === "") {
+                console.log("NO HAY NADA ESCRITO")
+                setErrorAnnotation(true)
+            } else {
+                let body = {}
+                body.propertyId = data.id
+                body.value = inputAnnotation
+                let resp = await addAnnotations(body)
+                console.log(resp)
+                setAnnotations(current => [resp.data.annotation, ...current])
+                setInputAnnotation('')
+            }
         }
     }
 
@@ -263,17 +262,21 @@ export default function Propiedad() {
                         <div className='flex w-[100%] h-[100%] rounded flex-col p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <div className='w-full'>
-                                    <p className='text-lg font-semibold'>Anotaciones</p>
+                                    <p className='text-lg font-semibold'>Anotaciones </p>
+                                    <span className={`text-[12px] m-0 absolute top-[80vh] text-red-400 ${errorAnnotation ? 'block' : 'hidden'}`}>Debes ingresar la anotacion</span>
                                 </div>
                                 <input
                                     onKeyDown={addAnotacion}
-                                    value={inputData}
-                                    onChange={event => setInputData(event.target.value)}
+                                    value={inputAnnotation}
+                                    onChange={event => {
+                                        setInputAnnotation(event.target.value)
+                                        setErrorAnnotation(false)
+                                    }}
                                     type="text"
-                                    id="large-input-data" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md " />
+                                    className={`p-4 w-full h-10 bg-white rounded-lg sm:text-md  ${errorAnnotation && 'outline outline-2 outline-red-400'}`} />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
-                                {alerts !== "" &&
+                                {annotations !== "" &&
                                     renderAlerts()
                                 }
                             </div>

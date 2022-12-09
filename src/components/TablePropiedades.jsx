@@ -74,7 +74,7 @@ const columnas = [
         grow: 1
     },
     {
-        name: 'Arrendador',        
+        name: 'Arrendador',
         selector: row => validaArrendador(row.owner?.name, row.owner?.lastname),
         sortable: true,
     },
@@ -101,20 +101,20 @@ const columnas = [
     },
 ]
 
-const validaArrendador=(userName, userLastName)=>{
-    if(userName == "undefined" && userLastName == "undefined" || userName == null && userLastName == null){
+const validaArrendador = (userName, userLastName) => {
+    if (userName == "undefined" && userLastName == "undefined" || userName == null && userLastName == null) {
         return <p className=' pt-3'>No hay arrendador</p>
     }
-    else{
+    else {
         return <p className=' pt-3'> {userName} {userLastName}</p>
     }
 }
 
-const validaArrendatario=(user)=>{
-    if(user == "" || user == null){
+const validaArrendatario = (user) => {
+    if (user == "" || user == null) {
         return <p className='pt-3'> No hay arrendatario</p>
     }
-    else{
+    else {
         return <p className='pt-3'> {user}</p>
     }
 }
@@ -128,11 +128,6 @@ const paginationComponentOptions = {
 
 export default function TablePropiedades({ dataProp }) {
     let navigate = useNavigate()
-
-    React.useEffect(() => {
-        console.log(dataProp)
-    }, [])
-
 
     return (
         <div className='w-full rounded'>
