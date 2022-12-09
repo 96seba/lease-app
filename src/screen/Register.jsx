@@ -13,7 +13,7 @@ export default function Register() {
     //     console.log(tableData)
     //     console.log("SE BUSCA RIVAL EN LATINOAMERICA")
     // }, [tableData])
-    
+
     useEffect(() => {
         const getUsers = async () => {
             const resp = await getAllUsers()
@@ -38,26 +38,26 @@ export default function Register() {
 
     const [dataRow, setDataRow] = useState("")
 
-    const[nombreCheck, setNombreCheck] = useState(true)
+    const [nombreCheck, setNombreCheck] = useState(true)
 
-    const[apellidoCheck, setApellidoCheck] = useState(true)
+    const [apellidoCheck, setApellidoCheck] = useState(true)
 
-    const[passwordCheck, setPasswordCheck] = useState(true)
+    const [passwordCheck, setPasswordCheck] = useState(true)
 
     const [emailUserError, setEmailUserError] = useState(false)
 
 
     const checkInput = async () => {
 
-        if(nombre.length===0){
+        if (nombre.length === 0) {
             setNombreCheck(false)
         }
-        
-        if(apellido.length===0){
+
+        if (apellido.length === 0) {
             setApellidoCheck(false)
         }
 
-        if(password.length===0){
+        if (password.length === 0) {
             setPasswordCheck(false)
         }
 
@@ -83,15 +83,25 @@ export default function Register() {
         obj.name = nombre
         obj.lastname = apellido
 
+        console.log(obj)
         let contUser = 0
-        for(var key in obj){
-            if(obj[key] === ""){
+        for (var key in obj) {
+            if (obj[key].length === 0) {
+                console.log(obj[key])
                 contUser += 1
             }
         }
-        console.log(obj)
-        const resp = await createUser(obj)
-        console.log(resp)
+        if (contUser === 0) {
+            console.log("SE EJECUTA EL CREAR USER")
+            const resp = await createUser(obj)
+            console.log(resp)
+            setTableData(current => [...current, resp.data.user])
+            setCorreo("")
+            setNombre("")
+            setApellido("")
+            setPassword("")
+        }
+
     }
 
 
@@ -112,35 +122,43 @@ export default function Register() {
                     <div className="space-y-4 md:space-y-6 w-[80%]" action="#">
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
-                            <input value={correo} onChange={event => {setEmailUserError(false)
-                            setCorreo(event.target.value)}} type="email" name="email" id="email" 
-                            className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
+                            <input value={correo} onChange={event => {
+                                setEmailUserError(false)
+                                setCorreo(event.target.value)
+                            }} type="email" name="email" id="email"
+                                className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
                             ${emailUserError == true && "outline outline-2 outline-red-400"}`}
-                            placeholder="name@company.com" required="" />
+                                placeholder="name@company.com" required="" />
                         </div>
                         <div>
                             <label htmlFor="nombre" className="block mb-2 text-sm font-medium text-black dark:text-white">Nombre</label>
-                            <input value={nombre} onChange={event => {setNombreCheck(true)
-                            setNombre(event.target.value)}} type="text" name="nombre" id="nombre" 
-                            className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
+                            <input value={nombre} onChange={event => {
+                                setNombreCheck(true)
+                                setNombre(event.target.value)
+                            }} type="text" name="nombre" id="nombre"
+                                className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
                             ${nombreCheck == false && "outline outline-2 outline-red-400"}`}
-                            placeholder="Nombre" required="" />
+                                placeholder="Nombre" required="" />
                         </div>
                         <div>
                             <label htmlFor="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
-                            <input value={apellido} onChange={event => {setApellidoCheck(true)
-                            setApellido(event.target.value)}} type="text" name="apellido" id="apellido" 
-                            className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
+                            <input value={apellido} onChange={event => {
+                                setApellidoCheck(true)
+                                setApellido(event.target.value)
+                            }} type="text" name="apellido" id="apellido"
+                                className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
                             ${apellidoCheck == false && "outline outline-2 outline-red-400"}`}
-                            placeholder="Apellido" required="" />
+                                placeholder="Apellido" required="" />
                         </div>
                         <div >
                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-black dark:text-white">Contraseña</label>
-                            <input value={password} onChange={event => {setPasswordCheck(true)
-                            setPassword(event.target.value)}} type="password" name="password" id="password" placeholder="••••••••" 
-                            className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
-                            ${passwordCheck == false && "outline outline-2 outline-red-400"}`} 
-                            required="" />
+                            <input value={password} onChange={event => {
+                                setPasswordCheck(true)
+                                setPassword(event.target.value)
+                            }} type="password" name="password" id="password" placeholder="••••••••"
+                                className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
+                            ${passwordCheck == false && "outline outline-2 outline-red-400"}`}
+                                required="" />
                         </div>
                         {/* <div className="flex items-start">
                             <div className="flex items-center h-5">
@@ -150,7 +168,9 @@ export default function Register() {
                                 <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300 text-xs">Acepto los <button className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Términos y Condiciones </button></label>
                             </div>
                         </div> */}
-                        <button onClick={() => { checkInput() }} className="w-full mt-5 text-white bg-[#FF6F00] hover:bg-[#3A4348] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Crear cuenta</button>
+                        <button onClick={() => {
+                            checkInput()
+                        }} className="w-full mt-5 text-white bg-[#FF6F00] hover:bg-[#3A4348] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Crear cuenta</button>
 
                     </div>
                 </div>
@@ -168,7 +188,7 @@ export default function Register() {
 
 
             </div>
-            <ModalEditUser open={open} setOpen={setOpen} dataRow={dataRow} tableData={tableData} setTableData={setTableData}/>
+            <ModalEditUser open={open} setOpen={setOpen} dataRow={dataRow} tableData={tableData} setTableData={setTableData} />
         </div>
     )
 }

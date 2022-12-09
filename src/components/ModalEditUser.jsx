@@ -28,42 +28,36 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
         return <></>
     }
 
+    const executeEnter = (event) => {
+        if (event.key === 'Enter') {
+            updateDataUser()
+        }
+    }
+
     const updateDataUser = async () => {
 
         let obj = {}
         obj.name = user.name
         obj.lastname = user.lastname
-        // obj.password = user.password
         obj.id = dataRow.id
+        console.log(obj)
 
         const data = await updateUser(obj)
-        console.log(data)
-        console.log("DATA")
+        console.log(data.data.user)
 
-        // setTableData([data.data.user])
 
         const getId = (element) => element.id === dataRow.id;
         const index = tableData.findIndex(getId)
         console.log(index)
-        console.log(tableData)
 
-        let newArr = tableData
-        let newObj = {}
+        let newArr = [...tableData]
+        let newObj = data.data.user
 
-        newObj = data.data.user
+
         newArr[index] = newObj
-
-        console.log(newObj)
-        console.log("NEWOBJ")
-
-        console.log(tableData)
-        console.log("TABLE DATA")
-
-        console.log(newArr)
-        console.log("NUEVO ARREGLO")
-
         setTableData(newArr)
         setOpen(false)
+
 
     }
 
@@ -103,17 +97,23 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
                                             </h1>
                                             <div className="space-y-4 md:space-y-6" action="#">
                                                 <div className="">
-                                                    <label for="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
-                                                    <input value={user.email} onChange={event => setUser({ ...user, email: event.target.value })} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                                                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
+                                                    <input value={user.email}
+                                                        onKeyDown={event => { executeEnter(event) }}
+                                                        onChange={event => setUser({ ...user, email: event.target.value })} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                                                         required="" />
                                                 </div>
                                                 <div>
-                                                    <label for="nombre" className="block mb-2 text-sm font-medium text-black dark:text-white">Nombre</label>
-                                                    <input value={user.name} onChange={event => setUser({ ...user, name: event.target.value })} type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Nombre" required="" />
+                                                    <label htmlFor="nombre" className="block mb-2 text-sm font-medium text-black dark:text-white">Nombre</label>
+                                                    <input value={user.name}
+                                                        onKeyDown={event => { executeEnter(event) }}
+                                                        onChange={event => setUser({ ...user, name: event.target.value })} type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Nombre" required="" />
                                                 </div>
                                                 <div>
-                                                    <label for="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
-                                                    <input value={user.lastname} onChange={event => setUser({ ...user, lastname: event.target.value })} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Apellido" required="" />
+                                                    <label htmlFor="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
+                                                    <input value={user.lastname}
+                                                        onKeyDown={event => { executeEnter(event) }}
+                                                        onChange={event => setUser({ ...user, lastname: event.target.value })} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Apellido" required="" />
                                                 </div>
                                                 <button className="w-full text-white bg-[#FF6F00] hover:bg-[#3A4348] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                                                     onClick={() => updateDataUser()}>Actualizar</button>
