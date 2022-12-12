@@ -82,7 +82,13 @@ export default function AgregarPropiedad() {
 
     const [rutArrendadorCheck, setRutArrendadorCheck] = useState(false)
 
+    const [rutArrendatarioCheck, setRutArrendatarioCheck] = useState(false)
+
     const [emailArrendadorCheck, setEmailArrendadorCheck] = useState(false)
+
+    const [emailArrendatarioCheck, setEmailArrendatarioCheck] = useState(false)
+
+    const [fechaContratoError, setFechaContratoError] = useState(false)
 
 
     useEffect(() => {
@@ -315,18 +321,43 @@ export default function AgregarPropiedad() {
         const emailCheck = emailRegex.test(arrendador.correo)
         console.log("Revision de correo: ", emailCheck);
 
+        console.log("PROBANDO ARRENDATARIO")
+        let respArrendatario = await checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
+        console.log(respArrendatario, "Validacion Rut")
+
+        const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
+        console.log("Revision de correo arrendatario: ", emailCheckArrendatario)
+
         if (resp === false && arrendador.rut.length !== 0) {
             setRutArrendadorCheck(true)
             console.log("RUT INVALIDO")
             return
         }
 
-
         if (emailCheck === false && arrendador.correo.length !== 0) {
             setEmailArrendadorCheck(true)
             console.log("EMAIL INVALIDO")
             return
         }
+
+        if (newContrato === true && respArrendatario === false && arrendatario.rut.length !== 0) {
+            setRutArrendatarioCheck(true)
+            console.log("RUT INVALIDO ARRENDATARIO")
+            return
+        }
+
+        if (newContrato === true && emailCheckArrendatario === false && arrendatario.correo.length !== 0) {
+            setEmailArrendatarioCheck(true)
+            console.log("EMAIL INVALIDO ARRENDATARIO")
+            return
+        }
+
+        if(newContrato === true && Date.parse(inicioContrato)>= Date.parse(terminoContrato)){
+            setFechaContratoError(true)
+            console.log(fechaContratoError, "Error contrato?")
+            console.log("LA FECHA INICIO ES MAYOR A LA DE TERMINO")
+        }
+
 
         console.log("SE EJECUTA ADDPROPIEDAD")
         addPropiedad()
@@ -439,10 +470,10 @@ export default function AgregarPropiedad() {
                             }}
                             className={`bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[100%] py-0  px-3 text-grey-darker
                             ${error && tipo === 'Tipo' && " outline outline-2 outline-red-300"}`}>
-                            <option selected disabled  value="Tipo">Tipo</option>
-                            <option value="Casa">Casa</option>
-                            <option value="Depto">Depto</option>
-                            <option value="Oficina">Oficina</option>
+                            <option selected disabled value="Tipo">Tipo</option>
+                            <option value="CASA">Casa</option>
+                            <option value="DEPARTAMENTO">Depto</option>
+                            <option value="OFICINA">Oficina</option>
                         </select>
                     </div>
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start py-2">
@@ -702,7 +733,7 @@ export default function AgregarPropiedad() {
                                             value={inicioContrato}
                                             onChange={e => { setInicioContrato(e.target.value) }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                            ${contratoIncomplete === true && inicioContrato === "" && "outline outline-2 outline-red-300"}`} type="date"
+                                            ${error && contratoIncomplete === true && inicioContrato === "" && fechaContratoError === true && "outline outline-2 outline-red-300"}`} type="date"
                                             placeholder="Inicio de contrato" />
                                     </div>
                                     <div className="mb-5 w-[85%] flex flex-col justify-center items-start">
@@ -711,14 +742,14 @@ export default function AgregarPropiedad() {
                                             value={terminoContrato}
                                             onChange={e => { setTerminoContrato(e.target.value) }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                            ${contratoIncomplete === true && terminoContrato === "" && "outline outline-2 outline-red-300"}`} type="date"
+                                            ${error && contratoIncomplete === true && terminoContrato === "" && fechaContratoError === false && "outline outline-2 outline-red-300"}`} type="date"
                                             placeholder="Termino de contrato" />
                                     </div>
 
                                     <div
                                         className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
                                         <button className={`h-full w-1/2  flex justify-center items-center
-                                       ${newArrendatario === false && 'bg-white'}`}
+                                        ${newArrendatario === false && 'bg-white'}`}
                                             onClick={() => {
                                                 setNewArrendatario(false)
                                                 setArrendatarioIncomplete(false)
@@ -761,12 +792,28 @@ export default function AgregarPropiedad() {
                                                             placeholder="Apellido" />
                                                     </div>
                                                 </div>
-                                                <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
+                                                {/* <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
                                                     <input
                                                         value={arrendatario.rut}
                                                         onChange={text => { setArrendatario({ ...arrendatario, rut: text.target.value }) }}
                                                         className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
                                                         ${arrendatarioIncomplete && arrendatario.rut.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                        type="text"
+                                                        placeholder="Rut" />
+                                                </div> */}
+                                                <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
+                                                    <input
+                                                        value={arrendatario.rut}
+                                                        onChange={text => {
+                                                            console.log(text.target.value.length, "AYUA PRUEBA")
+                                                            if (text.target.value.length < 13) {
+                                                                let resp = checkRut(text.target.value)
+                                                                setArrendatario({ ...arrendatario, rut: resp })
+                                                            }
+                                                        }}
+                                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
+                                                        ${error && arrendatario.rut?.length === 0 && " outline outline-2 outline-red-300"}`
+                                                        }
                                                         type="text"
                                                         placeholder="Rut" />
                                                 </div>
@@ -786,7 +833,7 @@ export default function AgregarPropiedad() {
                                                             value={arrendatario.correo}
                                                             onChange={text => { setArrendatario({ ...arrendatario, correo: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`} type="text"
+                                                            ${error && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`} type="text"
                                                             placeholder="Correo" />
                                                     </div>
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
