@@ -179,7 +179,7 @@ export default function AgregarPropiedad() {
                 else if (contArrendador === 0) {
                     //* El contrato esta completo
                     setArrendadorIncomplete(false)
-                    objProp.rut = String(arrendador.rut).replaceAll(".","")
+                    objProp.rut = String(arrendador.rut).replaceAll(".", "")
                     objProp.name = arrendador.nombre
                     objProp.lastname = arrendador.apellido
                     objProp.email = arrendador.correo
@@ -314,7 +314,7 @@ export default function AgregarPropiedad() {
     const checkInput = async () => {
 
         let resp = await checkInputRut.validaRut(arrendador.rut.replaceAll('.', ''))
-        console.log(resp)
+        console.log(resp,"Validación Rut Dueño")
 
         const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
 
@@ -323,7 +323,7 @@ export default function AgregarPropiedad() {
 
         console.log("PROBANDO ARRENDATARIO")
         let respArrendatario = await checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
-        console.log(respArrendatario, "Validacion Rut")
+        console.log(respArrendatario, "Validacion Rut Arrendatario")
 
         const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
         console.log("Revision de correo arrendatario: ", emailCheckArrendatario)
@@ -353,7 +353,6 @@ export default function AgregarPropiedad() {
         }
 
         console.log(fechaContratoError, "Error contrato?")
-
 
         if (inicioContrato !== "" && terminoContrato !== "" && newContrato === true && Date.parse(inicioContrato) >= Date.parse(terminoContrato)) {
             setFechaContratoError(true)
@@ -399,7 +398,7 @@ export default function AgregarPropiedad() {
     function checkRut(rut) {
 
         var actual = rut.replace(/^0+/, "");
-        if (actual != '' && actual.length > 1) {
+        if (actual !== '' && actual.length > 1) {
             var sinPuntos = actual.replace(/\./g, "");
             var actualLimpio = sinPuntos.replace(/-/g, "");
             var inicio = actualLimpio.substring(0, actualLimpio.length - 1);
@@ -409,7 +408,7 @@ export default function AgregarPropiedad() {
             for (i = inicio.length - 1; i >= 0; i--) {
                 var letra = inicio.charAt(i);
                 rutPuntos = letra + rutPuntos;
-                if (j % 3 == 0 && j <= inicio.length - 1) {
+                if (j % 3 === 0 && j <= inicio.length - 1) {
                     rutPuntos = "." + rutPuntos;
                 }
                 j++;
@@ -417,8 +416,6 @@ export default function AgregarPropiedad() {
             var dv = actualLimpio.substring(actualLimpio.length - 1);
             rutPuntos = rutPuntos + "-" + dv;
         }
-        console.log(rutPuntos)
-        console.log("SIIUUUUUUUUUUUUUUU")
         return rutPuntos;
     }
 
@@ -466,14 +463,15 @@ export default function AgregarPropiedad() {
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <p className='font-medium'>Tipo</p>
                         <select
-                            defaultValue={'Tipo'}
+                            defaultValue={tipo}
                             onChange={e => {
                                 console.log(e.target.value)
                                 setTipo(e.target.value)
                             }}
                             className={`bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[100%] py-0  px-3 text-grey-darker
                             ${error && tipo === 'Tipo' && " outline outline-2 outline-red-300"}`}>
-                            <option selected disabled value="Tipo">Tipo</option>
+                            {/* <option selected disabled value="Tipo">Tipo</option> */}
+                            <option value={tipo} disabled > Tipo </option>
                             <option value="CASA">Casa</option>
                             <option value="DEPARTAMENTO">Depto</option>
                             <option value="OFICINA">Oficina</option>
@@ -566,7 +564,6 @@ export default function AgregarPropiedad() {
                         border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Gastos comunes" />
                     </div>
-
                     <div className='w-[90%] h-full flex flex-col justify-start items-center '>
                         <div
                             className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
@@ -591,7 +588,6 @@ export default function AgregarPropiedad() {
                                             ${newDueno === true && 'bg-white'}`}>
                                 Agregar dueño
                             </button>
-
                         </div>
                         <div className='h-auto w-full pt-4 shadow-md'>
                             {newDueno === true ?
@@ -621,14 +617,13 @@ export default function AgregarPropiedad() {
                                         <input
                                             value={arrendador.rut}
                                             onChange={text => {
-                                                console.log(text.target.value.length, "AYUA")
                                                 if (text.target.value.length < 13) {
                                                     let resp = checkRut(text.target.value)
                                                     setArrendador({ ...arrendador, rut: resp })
                                                 }
                                             }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                        ${error && arrendador.rut?.length == 0 && " outline outline-2 outline-red-300"}`
+                                                        ${error && arrendador.rut?.length === 0 && " outline outline-2 outline-red-300"}`
                                             }
                                             type="text"
                                             placeholder="Rut" />
@@ -656,7 +651,7 @@ export default function AgregarPropiedad() {
                                             <input
                                                 value={arrendador.telefono}
                                                 onChange={text => {
-                                                    if (text.target.value.length < 13 && text.target.value.length >= 0) {
+                                                    if (text.target.value.length < 12 && text.target.value.length >= 0) {
                                                         setArrendador({ ...arrendador, telefono: text.target.value })
                                                     }
                                                 }}
@@ -675,7 +670,6 @@ export default function AgregarPropiedad() {
                                     ${newDuenoError ? 'block' : 'hidden'}
                                     `}>Debes seleccionar al opcion agregar dueño</p>
                                 </div>
-
                             }
                         </div>
                     </div>
@@ -705,10 +699,8 @@ export default function AgregarPropiedad() {
                                     className='bg-teal-300 w-2/4 rounded-lg h-[10%] hover:bg-red-600  hover:text-white active:bg-blue-600'>Eliminar foto</button>
                             </div>
                         }
-
                     </div>
                     {/* Agregar contrato  */}
-
                     <div className='w-[90%] h-auto mt-2 flex flex-col items-start justify-center'>
                         <button onClick={() => {
                             setNewContrato(!newContrato)
@@ -750,7 +742,6 @@ export default function AgregarPropiedad() {
                                             ${error && terminoContrato.length <= 0 && "outline outline-2 outline-red-300"}`} type="date"
                                             placeholder="Termino de contrato" min={inicioContrato} />
                                     </div>
-
                                     <div
                                         className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
                                         <button className={`h-full w-1/2  flex justify-center items-center
@@ -771,7 +762,6 @@ export default function AgregarPropiedad() {
                                             ${newArrendatario === true && 'bg-white'}`}>
                                             Agregar arrendatario
                                         </button>
-
                                     </div>
                                     <div className='h-auto w-full pt-4'>
                                         {newArrendatario === true ?
@@ -783,7 +773,7 @@ export default function AgregarPropiedad() {
                                                             value={arrendatario.nombre}
                                                             onChange={text => { setArrendatario({ ...arrendatario, nombre: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                                            ${ error && newArrendatario === true && arrendatario.nombre.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            ${error && newArrendatario === true && arrendatario.nombre.length <= 0 && " outline outline-2 outline-red-300"}`}
                                                             type="text"
                                                             placeholder="Nombre" />
                                                     </div>
@@ -792,25 +782,15 @@ export default function AgregarPropiedad() {
                                                             value={arrendatario.apellido}
                                                             onChange={text => { setArrendatario({ ...arrendatario, apellido: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                            ${ error && newArrendatario === true && arrendatario.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            ${error && newArrendatario === true && arrendatario.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}
                                                             type="text"
                                                             placeholder="Apellido" />
                                                     </div>
                                                 </div>
-                                                {/* <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
-                                                    <input
-                                                        value={arrendatario.rut}
-                                                        onChange={text => { setArrendatario({ ...arrendatario, rut: text.target.value }) }}
-                                                        className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                        ${arrendatarioIncomplete && arrendatario.rut.length <= 0 && " outline outline-2 outline-red-300"}`}
-                                                        type="text"
-                                                        placeholder="Rut" />
-                                                </div> */}
                                                 <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
                                                     <input
                                                         value={arrendatario.rut}
                                                         onChange={text => {
-                                                            console.log(text.target.value.length, "AYUA PRUEBA")
                                                             if (text.target.value.length < 13) {
                                                                 let resp = checkRut(text.target.value)
                                                                 setArrendatario({ ...arrendatario, rut: resp })
@@ -844,10 +824,15 @@ export default function AgregarPropiedad() {
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                                                         <input
                                                             value={arrendatario.telefono}
-                                                            onChange={text => { setArrendatario({ ...arrendatario, telefono: text.target.value }) }}
+                                                            onChange={text => {
+                                                                if (text.target.value.length < 12 && text.target.value.length >= 0) {
+                                                                    setArrendatario({ ...arrendatario, telefono: text.target.value })
+                                                                }
+                                                            }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
                                                             ${error && newArrendatario === true && arrendatario.telefono.length <= 0 && " outline outline-2 outline-red-300"}`}
-                                                            placeholder="Telefono" />
+                                                            placeholder="Telefono"
+                                                            pattern="[0-9]*" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -856,40 +841,24 @@ export default function AgregarPropiedad() {
                                                 <ArrendatarioFinder selected={selected} setSelected={setSelected}
                                                     selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete} />
                                             </div>
-
                                         }
                                     </div>
                                 </div>
                             </div>
-
                         }
                     </div>
-
-
-
                     <div className='flex justify-center items-center h-[12vh] w-[85%]'>
                         <button
                             type="button"
                             className="inline-flex w-[70%] mt-4 mb-4 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                             onClick={async () => {
-                                // addPropiedad()
-                                // uploadImage()
-                                // setOpen(true)
                                 checkInput()
                                 console.log(arrendador.rut)
-
                             }}
-                        >
-                            Guardar
+                        > Guardar
                         </button>
                     </div>
-
-
-
                 </div>
-
-
-
             </div>
         </div>
     )
