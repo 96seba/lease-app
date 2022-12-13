@@ -179,7 +179,7 @@ export default function AgregarPropiedad() {
                 else if (contArrendador === 0) {
                     //* El contrato esta completo
                     setArrendadorIncomplete(false)
-                    objProp.rut = String(arrendador.rut)
+                    objProp.rut = String(arrendador.rut).replaceAll(".","")
                     objProp.name = arrendador.nombre
                     objProp.lastname = arrendador.apellido
                     objProp.email = arrendador.correo
@@ -352,7 +352,10 @@ export default function AgregarPropiedad() {
             return
         }
 
-        if(newContrato === true && Date.parse(inicioContrato)>= Date.parse(terminoContrato)){
+        console.log(fechaContratoError, "Error contrato?")
+
+
+        if (inicioContrato !== "" && terminoContrato !== "" && newContrato === true && Date.parse(inicioContrato) >= Date.parse(terminoContrato)) {
             setFechaContratoError(true)
             console.log(fechaContratoError, "Error contrato?")
             console.log("LA FECHA INICIO ES MAYOR A LA DE TERMINO")
@@ -733,7 +736,9 @@ export default function AgregarPropiedad() {
                                             value={inicioContrato}
                                             onChange={e => { setInicioContrato(e.target.value) }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                            ${error && contratoIncomplete === true && inicioContrato === "" && fechaContratoError === true && "outline outline-2 outline-red-300"}`} type="date"
+                                            ${error && inicioContrato.length <= 0 && "outline outline-2 outline-red-300 border border-red-500"}`
+                                            }
+                                            type="date"
                                             placeholder="Inicio de contrato" />
                                     </div>
                                     <div className="mb-5 w-[85%] flex flex-col justify-center items-start">
@@ -742,8 +747,8 @@ export default function AgregarPropiedad() {
                                             value={terminoContrato}
                                             onChange={e => { setTerminoContrato(e.target.value) }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                            ${error && contratoIncomplete === true && terminoContrato === "" && fechaContratoError === false && "outline outline-2 outline-red-300"}`} type="date"
-                                            placeholder="Termino de contrato" />
+                                            ${error && terminoContrato.length <= 0 && "outline outline-2 outline-red-300"}`} type="date"
+                                            placeholder="Termino de contrato" min={inicioContrato} />
                                     </div>
 
                                     <div
@@ -778,7 +783,7 @@ export default function AgregarPropiedad() {
                                                             value={arrendatario.nombre}
                                                             onChange={text => { setArrendatario({ ...arrendatario, nombre: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.nombre.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            ${ error && newArrendatario === true && arrendatario.nombre.length <= 0 && " outline outline-2 outline-red-300"}`}
                                                             type="text"
                                                             placeholder="Nombre" />
                                                     </div>
@@ -787,7 +792,7 @@ export default function AgregarPropiedad() {
                                                             value={arrendatario.apellido}
                                                             onChange={text => { setArrendatario({ ...arrendatario, apellido: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            ${ error && newArrendatario === true && arrendatario.apellido.length <= 0 && " outline outline-2 outline-red-300"}`}
                                                             type="text"
                                                             placeholder="Apellido" />
                                                     </div>
@@ -823,9 +828,9 @@ export default function AgregarPropiedad() {
                                                         value={arrendatario.fechaNacArrendatario}
                                                         onChange={text => { setArrendatario({ ...arrendatario, fechaNacArrendatario: text.target.value }) }}
                                                         className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                        ${arrendatarioIncomplete && arrendatario.fechaNacArrendatario.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                        ${error && newArrendatario === true && arrendatario.fechaNacArrendatario.length <= 0 && " outline outline-2 outline-red-300"}`}
                                                         type="date"
-                                                        placeholder="Inicio de contrato" />
+                                                        placeholder="Fecha de Nacimiento" />
                                                 </div>
                                                 <div className="mb-5 w-[85%] flex justify-around flex-row">
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -833,7 +838,7 @@ export default function AgregarPropiedad() {
                                                             value={arrendatario.correo}
                                                             onChange={text => { setArrendatario({ ...arrendatario, correo: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                                            ${error && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`} type="text"
+                                                            ${error && newArrendatario === true && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`} type="text"
                                                             placeholder="Correo" />
                                                     </div>
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -841,7 +846,7 @@ export default function AgregarPropiedad() {
                                                             value={arrendatario.telefono}
                                                             onChange={text => { setArrendatario({ ...arrendatario, telefono: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                            ${arrendatarioIncomplete && arrendatario.telefono.length <= 0 && " outline outline-2 outline-red-300"}`}
+                                                            ${error && newArrendatario === true && arrendatario.telefono.length <= 0 && " outline outline-2 outline-red-300"}`}
                                                             placeholder="Telefono" />
                                                     </div>
                                                 </div>
