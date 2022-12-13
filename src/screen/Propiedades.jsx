@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { getPropiedades } from "../api/getPropiedades"
 import ModalAddFile from '../components/ModalAddFile';
 import TableDebtors from "../components/TableDebtors";
+import { editPropiedad } from '../api/editPropiedad'
 
 export default function Propiedades() {
 
@@ -27,7 +28,7 @@ export default function Propiedades() {
         sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw] 2xl:w-[80vw]">
 
             <div className="flex items-end justify-end w-full pr-[0.8vw] h-[10vh] mb-4">
-                <button onClick={() => {
+                <button onClick={async () => {
                     navigate("/propiedades/agregarPropiedad")
                 }}
                     className="group relative h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">

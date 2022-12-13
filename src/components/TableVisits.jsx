@@ -61,21 +61,11 @@ const customStyles = {
 
 const tablaData = [
     {
-        descripcion: "NO PUEDO CREERLO", fechap: "25/02/2021", fechae: "10/03/2021", estado: "Realizada", anotaciones: "Increible"
+        descripcion: "Renovar contrato", fechap: "25/02/2021", fechae: "10/03/2021", estado: "Realizada", anotaciones: "Increible"
     },
     {
-        descripcion: "NO PUEDO CREERLO", fechap: "25/02/2021", fechae: "10/03/2021", estado: "Realizada", anotaciones: "Increible"
+        descripcion: "Hablar con conserjeria", fechap: "25/02/2021", fechae: "10/03/2021", estado: "Realizada", anotaciones: "Increible"
     },
-    {
-        descripcion: "NO PUEDO CREERLO", fechap: "25/02/2021", fechae: "10/03/2021", estado: "Realizada", anotaciones: "Increible"
-    },
-    {
-        descripcion: "NO PUEDO CREERLO", fechap: "25/02/2021", fechae: "10/03/2021", estado: "Realizada", anotaciones: "Increible"
-    },
-    {
-        descripcion: "NO PUEDO CREERLO", fechap: "25/02/2021", fechae: "10/03/2021", estado: "Realizada", anotaciones: "Increible"
-    },
-
 ]
 
 

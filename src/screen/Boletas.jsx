@@ -14,12 +14,12 @@ export default function Propiedades() {
         {
             id: "3", costoadministracion: "$98.000", nroboleta: "11", nroboletaanterior: "15",
         },
-        {
-            id: "4", costoadministracion: "$198.000", nroboleta: "56", nroboletaanterior: "26",
-        },
-        {
-            id: "5", costoadministracion: "$28.000", nroboleta: "40", nroboletaanterior: "16",
-        },
+        // {
+        //     id: "4", costoadministracion: "$198.000", nroboleta: "56", nroboletaanterior: "26",
+        // },
+        // {
+        //     id: "5", costoadministracion: "$28.000", nroboleta: "40", nroboletaanterior: "16",
+        // },
 
     ]
 

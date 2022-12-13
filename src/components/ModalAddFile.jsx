@@ -62,6 +62,9 @@ export default function ModalGuardar({ open, setOpen }) {
 
         promise.then(async (d) => {
             console.log(d)
+
+            let resp = d.sort((a, b) => a.id - b.id);
+            console.log(resp)
             // const resp = await updateForFile(d)
             // console.log(resp)
         })
@@ -138,13 +141,16 @@ export default function ModalGuardar({ open, setOpen }) {
                                         }} >
                                         Guardar
                                     </button>
-                                    <button
-                                        type="button"
-                                        className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-base font-medium text-[#98D7D1]shadow-sm hover:bg-[#3A4348] hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
-                                        onClick={() => setOpen(false)}
-                                    >
-                                        Cancelar
-                                    </button>
+                                    <div>
+
+                                        <button
+                                            type="button"
+                                            className="inline-flex w-[80%] justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-base font-medium text-[#98D7D1]shadow-sm hover:bg-[#3A4348] hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                                            onClick={() => setOpen(false)}
+                                        >
+                                            Cancelar
+                                        </button>
+                                    </div>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>

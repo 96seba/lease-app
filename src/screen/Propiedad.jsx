@@ -9,6 +9,7 @@ import { addAlerts } from '../api/addAlerts'
 import { addAnnotations } from '../api/addAnnotations'
 import { getExpensesId } from '../api/getExpensesId'
 import { editExpenses } from '../api/editExpenses'
+import { getPropiedad } from '../api/getPropiedad'
 
 export default function Propiedad() {
 
@@ -16,8 +17,6 @@ export default function Propiedad() {
     var [arrayExpenses, setArrayExpenses] = useState([])
 
     const [dataExp, setDataExp] = useState("")
-
-
 
     let navigate = useNavigate()
     const [fotoUrL, setFotoUrl] = useState("")
@@ -27,31 +26,23 @@ export default function Propiedad() {
     const location = useLocation()
     const getData = async () => {
 
-        let data = await location.state.data
-        console.log(data.annotations, "propiedad")
-        setData(data)
-        setLogs(data.alerts.reverse())
-        setAnnotations(data.annotations.reverse())
-        console.log(data.annotations, "asdka")
-        setFotoUrl(API_HOST + data?.image || '')
-        document.title = 'Propiedad ' + data.property_id
+        let id = await location.state.id
+        console.log(id)
+        const data = await getPropiedad(id)
+        console.log(data)
 
-
-        const respExpenses = await getExpensesId(data.id)
+        setData(data.property)
+        setLogs(data.property.alerts.reverse())
+        setAnnotations(data.property.annotations.reverse())
+        setFotoUrl(API_HOST + data.property?.image || '')
+        document.title = 'Propiedad ' + data.property.property_id
+        const respExpenses = await getExpensesId(data.property.id)
         setDataExp(respExpenses.data.expenses)
-        console.log(respExpenses.data.expenses.length)
-
-
-        // data.annotations
     }
 
     useEffect(() => {
         getData()
     }, [])
-
-
-
-
 
 
     const [logs, setLogs] = useState([])
@@ -146,6 +137,35 @@ export default function Propiedad() {
         });
     }
 
+    const parseType = () => {
+        let str = data?.type_property
+        str = str.toLowerCase()
+        let str2 = str.charAt(0).toUpperCase() + str.slice(1)
+        console.log(str, str2)
+        return str2
+
+    }
+
+    const parseDate = (fecha) => {
+
+        let date = new Date(fecha)
+
+        if (fecha === undefined) {
+            return "No hay fecha"
+        } else {
+            console.log(date, fecha)
+            const yyyy = date.getFullYear();
+            let mm = date.getMonth() + 1; // Months start at 0!
+            let dd = date.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            let formattedToday = dd + '/' + mm + '/' + yyyy;
+            return formattedToday
+        }
+    }
+
     if (data === "") {
         return <></>
     }
@@ -158,6 +178,11 @@ export default function Propiedad() {
                             onLoad={() => {
                                 console.log("SE CARGO")
                                 setLoaded(true)
+                            }}
+                            onError={() => {
+                                console.log("ERROOOOOOR")
+                                setLoaded(false)
+                                setFotoUrl("")
                             }}
                             className='w-[35vw] h-[40vh] rounded-l' src={fotoUrL} />
                         {loaded === false &&
@@ -177,9 +202,9 @@ export default function Propiedad() {
                             <p>ID: {data?.property_id}</p>
                             <p>Direccion: {data?.address}</p>
                             <p>Dueño:  {data.owner?.name} {data.owner?.lastname} </p>
-                            <p>Arrendatario: </p>
+                            <p>Arrendatario: {data?.leases[0]?.leaseholder?.name} {data?.leases[0]?.leaseholder?.lastname}</p>
                             <p>Nro Piso: {data?.floor}</p>
-                            <p>Tipo: {data?.type_property}</p>
+                            <p>Tipo: {parseType()}</p>
                         </div>
                         <div className='w-full '>
 
@@ -221,7 +246,7 @@ export default function Propiedad() {
                             </div>
                             <div className='flex w-1/2 h-full flex-col '>
 
-                                <p className='text-sm'>Inicio: 25/22/2222 - Termino : 25/22/2222</p>
+                                <p className='text-sm'>Inicio: {parseDate(data?.leases[0]?.initial_date.slice(0, 10))}  - Termino : {parseDate(data?.leases[0]?.end_date.slice(0, 10))} </p>
 
                             </div>
                         </div>

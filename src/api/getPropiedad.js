@@ -1,19 +1,19 @@
 import { API_HOST, TOKEN } from '../utils/constants'
 
-export async function uploadPropiedadImagen(form) {
+export async function getPropiedad(id) {
     try {
-        const response = await fetch(API_HOST + '/api/v1/property/uploadImage',
+        const response = await fetch(API_HOST + '/api/v1/property/'+id,
             {
-                method: 'POST',
+                method: 'GET',
                 headers: {
+                    'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + TOKEN
                 },
-                body: form
             })
         const result = await response.json();
-        var obj = { status: response.status, data: result.data }
-        return obj
+        return result.data
     } catch (error) {
         throw error;
     }
 }
+

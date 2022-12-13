@@ -20,14 +20,14 @@ const columnas = [
     },
     {
         name: 'Nombre',
-        selector: row => row.nombre,
+        selector: row => row.name,
         sortable: true,
         center: true,
         compact: true
     },
     {
         name: 'Apellido',
-        selector: row => row.apellido,
+        selector: row => row.lastname,
         sortable: true,
         center: true,
         compact: true

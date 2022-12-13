@@ -298,8 +298,6 @@ export default function AgregarPropiedad() {
                             }
                         }
                     }
-
-                    // console.log(objHolder)
                 }
             }
         }
@@ -434,7 +432,7 @@ export default function AgregarPropiedad() {
                                 console.log(e.target.value)
                                 setTipo(e.target.value)
                             }}
-                            className={`bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[100%] py-0  px-3 text-grey-darker
+                            className={`bg-gray-100 appearance-none cursor-pointer  border  h-[4vh]  rounded-sm w-[100%] py-0  px-3 text-grey-darker
                             ${error && tipo === 'Tipo' && " outline outline-2 outline-red-300"}`}>
                             <option selected disabled value="Tipo">Tipo</option>
                             <option value="Casa">Casa</option>
@@ -518,7 +516,7 @@ export default function AgregarPropiedad() {
                             border  h-[4vh]  rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Comision por administracion*" />
                     </div>
-                    <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
+                    {/* <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={ggcc} onChange={text => {
                                 if (text.target.value >= 0) {
@@ -528,7 +526,7 @@ export default function AgregarPropiedad() {
                             className={`appearance-none bg-gray-100 
                         border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Gastos comunes" />
-                    </div>
+                    </div> */}
 
                     <div className='w-[90%] h-full flex flex-col justify-start items-center '>
                         <div

@@ -11,9 +11,9 @@ export default function ModalEditUser({ open, setOpen, dataRow }) {
     useEffect(() => {
 
         if (dataRow !== '') {
-            setCorreo(dataRow.correo)
-            setNombre(dataRow.nombre)
-            setApellido(dataRow.apellido)
+            setCorreo(dataRow.email)
+            setNombre(dataRow.name)
+            setApellido(dataRow.lastname)
             console.log("VIVA CHILE")
             console.log(dataRow)
         }
@@ -27,7 +27,6 @@ export default function ModalEditUser({ open, setOpen, dataRow }) {
     }
     return (
         <div>
-            <p> Hola </p>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                     <Transition.Child
