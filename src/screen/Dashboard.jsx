@@ -62,7 +62,7 @@ export default function Dashboard() {
             <div className="flex h-[185.5vh] sm:h-[170.5vh] md:h-[165.5vh] lg:h-[125.5vh]  py-6  w-full items-center justify-start flex-col">
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[99%] h-[36vh] bg-white rounded-lg shadow-sm '>
                     <div className='w-full'>
-                        <p className='text-lg font-semibold'>Propiedades a revisar get expenses per day ask</p>
+                        <p className='text-lg font-semibold'>Propiedades a revisar</p>
                     </div>
                     <TableCheck dataCheck={dataCheck} setDataCheck={setDataCheck} />
                 </div>
@@ -108,7 +108,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-            {/* <ModalAddFile open={open} setOpen={setOpen} /> */}
         </div>
     )
 }
