@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-
+import React, { useState, useEffect } from 'react'
+import { getLeaseholder } from '../api/getLeaseholder'
 
 
 
@@ -28,6 +28,23 @@ export default function ArrendatarioFinder({ selected, setSelected, selectIncomp
         { id: 6, rut: 205916321, name: "Julian Casablancas" },
         { id: 7, rut: 264354322, name: "Jul Cas" }
     ])
+
+
+    useEffect(() => {
+        const getData = async () => {
+            const resp = await getLeaseholder()
+            let data = resp.data.leaseholder
+
+
+
+            console.log(data)
+            setTableArrendatarios(data)
+            setData(data)
+        }
+        getData()
+
+    }, [])
+
 
     const filtrar = (terminoBusqueda) => {
         var resultadosBusqueda = tablaArrendatarios.filter((elemento) => {
@@ -71,7 +88,7 @@ export default function ArrendatarioFinder({ selected, setSelected, selectIncomp
                             }}
                             className={` w-full  h-[5vh] flex justify-start items-center  px-4 
                             ${selected === user ? 'bg-[#FF6F00] text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
-                        > {user.rut} - {user.name} </button>
+                        > {user.rut} - {user.name} {user.lastname} </button>
                     ))}
 
 

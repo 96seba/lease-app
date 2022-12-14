@@ -145,6 +145,7 @@ export default function TableDebtors({ debtorData }) {
             width: '25%',
         },
     ]
+    
     return (
         <DataTable
             columns={columnas}

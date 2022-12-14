@@ -75,6 +75,11 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
 
     const [data, setData] = useState("");
 
+    useEffect(() => {
+        console.log(dataExp, arrayExpenses)
+    }, [])
+
+
     const setArray = (index, name, data, id) => {
         console.log(index, name, data, id)
         //* Funcion para obtener el index a cambiar
@@ -157,10 +162,14 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
         }
     ]
 
+    if (dataExp.length === 0) {
+        return <div className="w-full h-[20vh] flex justify-center items-center flex-col">
+            <p>No hay pagos aun :/</p>
+            <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />
+        </div>
+    }
     return (
-
-
-        <DataTable
+        < DataTable
             columns={columnas}
             data={dataExp}
             fixedHeader

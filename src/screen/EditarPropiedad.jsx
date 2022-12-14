@@ -3,10 +3,9 @@ import { editPropiedad } from "../api/editPropiedad"
 import { useLocation } from "react-router-dom"
 import { uploadPropiedadImagen } from "../api/uploadPropiedadImagen"
 import ModalEditPropiedad from "../components/ModalEditPropiedad"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import ArrendatarioFinder from '../components/ArrendatarioFinder'
 import { editLease } from "../api/editLease"
+import { addLease } from "../api/addLease"
 
 export default function EditarPropiedad() {
 
@@ -66,10 +65,26 @@ export default function EditarPropiedad() {
         setNroPiso(data.floor)
         setTipo(data.type_property)
         setIdProp(data.id)
-        let inito = data.leases[0].initial_date.slice(0, 10)
-        let endo = data.leases[0].end_date.slice(0, 10)
+        let inito = data?.leases[0]?.initial_date.slice(0, 10)
+        let endo = data?.leases[0]?.end_date.slice(0, 10)
         setInicioContrato(inito)
         setTerminoContrato(endo)
+
+
+        if (data.leases.length > 0) {
+            setArrendatario({
+                nombre: data?.leases[0]?.leaseholder.name,
+                apellido: data?.leases[0]?.leaseholder.lastname,
+                rut: data?.leases[0]?.leaseholder.rut,
+                fechaNacArrendatario: data?.leases[0]?.leaseholder.birthday.slice(0, 10),
+                correo: data?.leases[0]?.leaseholder.email,
+                telefono: data?.leases[0]?.leaseholder.phone
+            })
+        }
+
+        if (data.leases.length === 0) {
+            console.log("NO TIENE CONTRATOS")
+        }
 
     }, [])
 
@@ -93,14 +108,8 @@ export default function EditarPropiedad() {
 
     const addContrato = async () => {
         let objContrato = {}
+        console.log(inicioContrato, terminoContrato)
 
-        // objContrato.propertyId = idProp
-        // objContrato.name = arrendatario.nombre
-        // objContrato.lastname = arrendatario.apellido
-        // objContrato.email = arrendatario.correo
-        // objContrato.phone = arrendatario.telefono
-        // objContrato.birthday = arrendatario.fechaNacArrendatario
-        // objContrato.rut = String(arrendatario.rut).replaceAll('.', '')
 
         let init = new Date(inicioContrato)
         let end = new Date(terminoContrato)
@@ -108,7 +117,6 @@ export default function EditarPropiedad() {
         objContrato.initial_date = init.toISOString()
         objContrato.end_date = end.toISOString()
 
-        console.log(data)
 
         if (data.leases.length !== 0) {
             objContrato.id = data.leases[0].id
@@ -118,10 +126,34 @@ export default function EditarPropiedad() {
             console.log("Tiene lease y se edita")
         } else {
             console.log("No tiene lease")
-        }
+            //* Crear lease
+            if (newArrendatario) {
+                //* Se crea un leaseholder
+                console.log("Nuevo arrendatario")
+                objContrato.name = arrendatario.nombre
+                objContrato.lastname = arrendatario.apellido
+                objContrato.rut = arrendatario.rut
+                objContrato.email = arrendatario.correo
+                objContrato.phone = arrendatario.telefono
+                let fecha = new Date(arrendatario.fechaNacArrendatario)
+                objContrato.birthday = fecha.toISOString()
+                objContrato.propertyId = idProp
+                let resp = await addLease(objContrato)
+                console.log(resp)
 
+            } else {
+                //* Se selecciona un leaseholder ya creado
+                console.log("Buscar arrendatario")
+                console.log(selected)
+                objContrato.leaseholderId = selected.id
+                objContrato.propertyId = idProp
+                let resp = await addLease(objContrato)
+                console.log(resp)
+            }
+        }
         console.log(objContrato)
     }
+
 
     return (
         <div className='w-screen flex justify-center items-center bg-white'>
@@ -288,7 +320,9 @@ export default function EditarPropiedad() {
                                     <p className='font-medium'>Inicio de contrato</p>
                                     <input
                                         value={inicioContrato}
-                                        onChange={e => { setInicioContrato(e.target.value) }}
+                                        onChange={e => {
+                                            setInicioContrato(e.target.value)
+                                        }}
                                         className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
                                             ${contratoIncomplete === true && inicioContrato === "" && "outline outline-2 outline-red-300"}`} type="date"
                                         placeholder="Inicio de contrato" />
@@ -398,19 +432,32 @@ export default function EditarPropiedad() {
                                 <button
                                     className="inline-flex w-[50%] mb-3 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                     onClick={() => {
-                                        addContrato()
                                         if (inicioContrato === "" || terminoContrato === "") {
                                             setContratoIncomplete(true)
 
                                         } else {
-                                            if (arrendatario.nombre === "" ||
-                                                arrendatario.apellido === "" || arrendatario.correo === "" ||
-                                                arrendatario.fechaNacArrendatario === "" || arrendatario.rut.length === 0 ||
-                                                arrendatario.telefono === "") {
+                                            if (newArrendatario) {
+                                                if (arrendatario.nombre === "" ||
+                                                    arrendatario.apellido === "" || arrendatario.correo === "" ||
+                                                    arrendatario.fechaNacArrendatario === "" || arrendatario.rut === "" ||
+                                                    arrendatario.telefono === "") {
+                                                    console.log("El arrendatario esta incompleto")
+                                                    setArrendatarioIncomplete(true)
+                                                } else {
+                                                    console.log("El arrendatario esta completo")
+                                                    console.log(arrendatario)
 
-                                                setArrendatarioIncomplete(true)
+                                                    addContrato()
+                                                }
                                             } else {
-                                                addContrato()
+                                                if (selected === "") {
+                                                    console.log("El arrendatario no se selecciono")
+                                                    setSelectIncomplete(true)
+                                                } else {
+                                                    console.log("El arrendatario esta seleccionado")
+                                                    addContrato()
+                                                }
+
                                             }
                                         }
 
