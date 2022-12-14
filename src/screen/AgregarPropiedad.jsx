@@ -259,54 +259,54 @@ export default function AgregarPropiedad() {
                 console.log(objPropClean)
 
 
-                // //* Ejecucion de fetchs para crear propiedad, uploadImage y leaseholder 
-                // if (contArrendador === 0 || contArrendador === 6) {
-                //     //* El id de compañia va por defecto en developer mode
-                //     objPropClean.companyId = 1
-                //     console.log(objContrato)
-                //     console.log(objPropClean)
-                //     //* Se crea la propiedad con el objeto limpio de props vacios
-                //     const respProp = await createPropiedad(objPropClean)
-                //     console.log("respProp", respProp)
-                //     if (respProp.status === 200) {
-                //         navigate("/propiedades")
-                //     }
-                //     //* Se agrega el id de la propiedad al objeto del contrato
-                //     objContrato.propertyId = respProp.data.property.id
-                //     //* Se verifica si se eligio una imagen para la propiedad
-                //     if (fotoUri !== "") {
-                //         uploadImage(respProp.data.property.id)
-                //     }
-                //     //* Se crea el arrendatario en el caso de que se eliga agregar arrendatario nuevo
-                //     if (newContrato === true) {
-                //         if (newArrendatario === true) {
-                //             //* Se crea el arrendatario
-                //             //* Se agregan los datos del nuevo arrendatario al objeto del contrato
-                //             objContrato.rut = String(arrendatario.rut)
-                //             objContrato.name = arrendatario.nombre
-                //             objContrato.lastname = arrendatario.apellido
-                //             objContrato.email = arrendatario.correo
-                //             objContrato.phone = String(arrendatario.telefono)
-                //             let date = new Date(arrendatario.fechaNacArrendatario)
-                //             objContrato.birthday = date.toISOString()
-                //             //* Se crea el contrato
-                //             if (contArrendatario === 0) {
-                //                 const respLease = await addLease(objContrato)
-                //                 console.log("respLease", respLease)
-                //             }
-                //         } else {
-                //             //* Se agrega el id del leaseHolder seleccionado al objContrato
-                //             objContrato.leaseholderId = selected.id
-                //             if (selected.id !== '') {
-                //                 //* Se crea el contrato
-                //                 const respLease = await addLease(objContrato)
-                //                 console.log("respLease", respLease)
-                //             }
-                //         }
-                //     }
+                //* Ejecucion de fetchs para crear propiedad, uploadImage y leaseholder 
+                if (contArrendador === 0) {
+                    //* El id de compañia va por defecto en developer mode
+                    objPropClean.companyId = 1
+                    console.log(objContrato)
+                    console.log(objPropClean)
+                    //* Se crea la propiedad con el objeto limpio de props vacios
+                    const respProp = await createPropiedad(objPropClean)
+                    console.log("respProp", respProp)
+                    if (respProp.status === 200) {
+                        navigate("/propiedades")
+                    }
+                    //* Se agrega el id de la propiedad al objeto del contrato
+                    objContrato.propertyId = respProp.data.property.id
+                    //* Se verifica si se eligio una imagen para la propiedad
+                    if (fotoUri !== "") {
+                        uploadImage(respProp.data.property.id)
+                    }
+                    //* Se crea el arrendatario en el caso de que se eliga agregar arrendatario nuevo
+                    if (newContrato === true) {
+                        if (newArrendatario === true) {
+                            //* Se crea el arrendatario
+                            //* Se agregan los datos del nuevo arrendatario al objeto del contrato
+                            objContrato.rut = String(arrendatario.rut)
+                            objContrato.name = arrendatario.nombre
+                            objContrato.lastname = arrendatario.apellido
+                            objContrato.email = arrendatario.correo
+                            objContrato.phone = String(arrendatario.telefono)
+                            let date = new Date(arrendatario.fechaNacArrendatario)
+                            objContrato.birthday = date.toISOString()
+                            //* Se crea el contrato
+                            if (contArrendatario === 0) {
+                                const respLease = await addLease(objContrato)
+                                console.log("respLease", respLease)
+                            }
+                        } else {
+                            //* Se agrega el id del leaseHolder seleccionado al objContrato
+                            objContrato.leaseholderId = selected.id
+                            if (selected.id !== '') {
+                                //* Se crea el contrato
+                                const respLease = await addLease(objContrato)
+                                console.log("respLease", respLease)
+                            }
+                        }
+                    }
 
-                //     // console.log(objHolder)
-                // }
+                    // console.log(objHolder)
+                }
             }
         }
     }
@@ -314,7 +314,7 @@ export default function AgregarPropiedad() {
     const checkInput = async () => {
 
         let resp = await checkInputRut.validaRut(arrendador.rut.replaceAll('.', ''))
-        console.log(resp,"Validación Rut Dueño")
+        console.log(resp, "Validación Rut Dueño")
 
         const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
 
@@ -340,26 +340,34 @@ export default function AgregarPropiedad() {
             return
         }
 
-        if (newContrato === true && respArrendatario === false && arrendatario.rut.length !== 0) {
-            setRutArrendatarioCheck(true)
-            console.log("RUT INVALIDO ARRENDATARIO")
-            return
-        }
+        if (newContrato === true && newArrendatario === true) {
+            console.log("PROBANDO ARRENDATARIO")
+            let respArrendatario = await checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
+            console.log(respArrendatario, "Validacion Rut Arrendatario")
 
-        if (newContrato === true && emailCheckArrendatario === false && arrendatario.correo.length !== 0) {
-            setEmailArrendatarioCheck(true)
-            console.log("EMAIL INVALIDO ARRENDATARIO")
-            return
-        }
+            const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
+            console.log("Revision de correo arrendatario: ", emailCheckArrendatario)
 
-        console.log(fechaContratoError, "Error contrato?")
-
-        if (inicioContrato !== "" && terminoContrato !== "" && newContrato === true && Date.parse(inicioContrato) >= Date.parse(terminoContrato)) {
-            setFechaContratoError(true)
+            if (respArrendatario === false && arrendatario.rut.length !== 0) {
+                setRutArrendatarioCheck(true)
+                console.log("RUT INVALIDO ARRENDATARIO")
+                return
+            }
+    
+            if (emailCheckArrendatario === false && arrendatario.correo.length !== 0) {
+                setEmailArrendatarioCheck(true)
+                console.log("EMAIL INVALIDO ARRENDATARIO")
+                return
+            }
+    
             console.log(fechaContratoError, "Error contrato?")
-            console.log("LA FECHA INICIO ES MAYOR A LA DE TERMINO")
+    
+            if (inicioContrato !== "" && terminoContrato !== "" && Date.parse(inicioContrato) >= Date.parse(terminoContrato)) {
+                setFechaContratoError(true)
+                console.log(fechaContratoError, "Error contrato?")
+                console.log("LA FECHA INICIO ES MAYOR A LA DE TERMINO")
+            }
         }
-
 
         console.log("SE EJECUTA ADDPROPIEDAD")
         addPropiedad()
@@ -421,12 +429,6 @@ export default function AgregarPropiedad() {
 
 
     const [open, setOpen] = useState(false)
-
-    const numCheck = (text) => {
-        var reg = /^\d+$/;
-        let resp = reg.test(text)
-        return resp
-    }
 
     return (
         <div className='w-screen flex justify-center items-center bg-white'>
@@ -636,7 +638,7 @@ export default function AgregarPropiedad() {
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
                                                         ${error && arrendador.fechaNacArrendador.length <= 0 && " outline outline-2 outline-red-300"}`}
                                             type="date"
-                                            placeholder="Inicio de contrato" />
+                                            placeholder="Fecha de Nacimiento" />
                                     </div>
                                     <div className="mb-5 w-[85%] flex justify-around flex-row">
                                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
