@@ -311,9 +311,9 @@ export default function AgregarPropiedad() {
         }
     }
 
-    const checkInput = async () => {
+    const checkInput = () => {
 
-        let resp = await checkInputRut.validaRut(arrendador.rut.replaceAll('.', ''))
+        let resp =  checkInputRut.validaRut(arrendador.rut.replaceAll('.', ''))
         console.log(resp, "Validación Rut Dueño")
 
         const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
@@ -322,7 +322,7 @@ export default function AgregarPropiedad() {
         console.log("Revision de correo: ", emailCheck);
 
         console.log("PROBANDO ARRENDATARIO")
-        let respArrendatario = await checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
+        let respArrendatario =  checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
         console.log(respArrendatario, "Validacion Rut Arrendatario")
 
         const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
@@ -330,19 +330,17 @@ export default function AgregarPropiedad() {
 
         if (resp === false && arrendador.rut.length !== 0) {
             setRutArrendadorCheck(true)
-            console.log("RUT INVALIDO")
             return
         }
 
         if (emailCheck === false && arrendador.correo.length !== 0) {
             setEmailArrendadorCheck(true)
-            console.log("EMAIL INVALIDO")
             return
         }
 
         if (newContrato === true && newArrendatario === true) {
             console.log("PROBANDO ARRENDATARIO")
-            let respArrendatario = await checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
+            let respArrendatario =  checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
             console.log(respArrendatario, "Validacion Rut Arrendatario")
 
             const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
@@ -470,7 +468,7 @@ export default function AgregarPropiedad() {
                                 console.log(e.target.value)
                                 setTipo(e.target.value)
                             }}
-                            className={`bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[100%] py-0  px-3 text-grey-darker
+                            className={`bg-gray-100 appearance-none cursor-pointer  border  h-[4vh]  rounded-sm w-[100%] py-0  px-3 text-grey-darker
                             ${error && tipo === 'Tipo' && " outline outline-2 outline-red-300"}`}>
                             {/* <option selected disabled value="Tipo">Tipo</option> */}
                             <option value={tipo} disabled > Tipo </option>
@@ -555,7 +553,7 @@ export default function AgregarPropiedad() {
                             border  h-[4vh]  rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Comision por administracion*" />
                     </div>
-                    <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
+                    {/* <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={ggcc} onChange={text => {
                                 if (text.target.value >= 0) {

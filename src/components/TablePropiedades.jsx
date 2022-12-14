@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from "react-router-dom"
 import { customStyles, paginationComponentOptions } from '../utils/constants';
+import { getPropiedad } from '../api/getPropiedad';
 
 const columnas = [
     {
@@ -18,13 +19,13 @@ const columnas = [
         grow: 1
     },
     {
-        name: 'Arrendador',        
+        name: 'Arrendador',
         selector: row => validaArrendador(row.owner?.name, row.owner?.lastname),
         sortable: true,
     },
     {
         name: 'Arrendatario',
-        selector: row => validaArrendatario(row.arrendatario),
+        selector: row => validaArrendatario(row?.leases[0]),
         sortable: true,
     },
     {
@@ -45,31 +46,34 @@ const columnas = [
     },
 ]
 
-const validaArrendador=(userName, userLastName)=>{
-    if(userName == "undefined" && userLastName == "undefined" || userName == null && userLastName == null){
-        return <p className=' pt-3'>No hay arrendador</p>
+const validaArrendador = (userName, userLastName) => {
+    if (userName == "undefined" && userLastName == "undefined" || userName == null && userLastName == null) {
+        return <p className=' pt-3'>No hay Dueño</p>
     }
-    else{
+    else {
         return <p className=' pt-3'> {userName} {userLastName}</p>
     }
 }
 
-const validaArrendatario=(user)=>{
-    if(user == "" || user == null){
-        return <p className='pt-3'> No hay arrendatario</p>
+const validaArrendatario = (data) => {
+
+    console.log(data?.leaseholder)
+    if (data?.leaseholder === undefined) {
+        return "No hay arrendatario"
+    } else {
+
+        return data?.leaseholder?.name + " " + data?.leaseholder?.lastname
     }
-    else{
-        return <p className='pt-3'> {user}</p>
-    }
+    // if (user == "" || user == null) {
+    //     return <p className='pt-3'> No hay arrendatario</p>
+    // }
+    // else {
+    //     return <p className='pt-3'> {user}</p>
+    // }
 }
 
 export default function TablePropiedades({ dataProp }) {
     let navigate = useNavigate()
-
-    React.useEffect(() => {
-        console.log(dataProp)
-    }, [])
-
 
     return (
         <div className='w-full rounded'>
@@ -82,11 +86,13 @@ export default function TablePropiedades({ dataProp }) {
                 fixedHeaderScrollHeight='700px'
                 pagination
                 customStyles={customStyles}
-                onRowDoubleClicked={(e) => {
+                defaultSortFieldId={1}
+                onRowDoubleClicked={async (e) => {
+                   
                     let nav = `/propiedades/propiedad?=${e.id}`
                     navigate(nav, {
                         state: {
-                            data: e
+                            id: e.id
                         }
                     })
                 }}

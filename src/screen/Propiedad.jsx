@@ -8,17 +8,17 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { addAlerts } from '../api/addAlerts'
 import { addAnnotations } from '../api/addAnnotations'
 import { getExpensesId } from '../api/getExpensesId'
-import Drop from '../components/Drop'
+import { editExpenses } from '../api/editExpenses'
+import { getPropiedad } from '../api/getPropiedad'
 
 export default function Propiedad() {
 
     //* Array de objetos para enviar los gastos por mes
-    var arrayExpenses = []
+    var [arrayExpenses, setArrayExpenses] = useState([])
 
+    const [dataExp, setDataExp] = useState("")
 
     let navigate = useNavigate()
-
-
     const [fotoUrL, setFotoUrl] = useState("")
     const [loaded, setLoaded] = useState(false)
 
@@ -26,17 +26,18 @@ export default function Propiedad() {
     const location = useLocation()
     const getData = async () => {
 
-        let data = await location.state.data
-        console.log(data.amounts.length)
-        setData(data)
-        setLogs(data.alerts)
-        console.log(data.alerts, "asdka")
-        setFotoUrl(API_HOST + data?.image || '')
-        document.title = 'Propiedad ' + data.property_id;
+        let id = await location.state.id
+        console.log(id)
+        const data = await getPropiedad(id)
+        console.log(data)
 
-        const respExpenses = await getExpensesId(data.id)
-        console.log(data.property_id)
-        console.log(respExpenses)
+        setData(data.property)
+        setLogs(data.property.alerts.reverse())
+        setAnnotations(data.property.annotations.reverse())
+        setFotoUrl(API_HOST + data.property?.image || '')
+        document.title = 'Propiedad ' + data.property.property_id
+        const respExpenses = await getExpensesId(data.property.id)
+        setDataExp(respExpenses.data.expenses)
     }
 
     useEffect(() => {
@@ -46,31 +47,27 @@ export default function Propiedad() {
 
     const [logs, setLogs] = useState([])
 
-    const [alerts, setAlerts] = useState("")
+    const [annotations, setAnnotations] = useState("")
 
     const [data, setData] = useState("")
 
     const [priority, setPriority] = useState("priority")
 
-    const [dataAlerts, setDataAlerts] = useState({
-        note: '',
-        level: '',
-        id: ''
-    })
-
     const [inputLog, setInputLog] = useState("")
 
-    const [inputData, setInputData] = useState("")
+    const [inputAnnotation, setInputAnnotation] = useState("")
+
+    const [errorAnnotation, setErrorAnnotation] = useState(false)
 
     const [inputLogIncomplete, setInputLogIncomplete] = useState(false)
 
     const [inputPriorityIncomplete, setInputPriorityIncomplete] = useState(false)
 
     const renderAlerts = () => {
-        // console.log(alerts, 23)
+        // console.log(annotations)
         return (
-            alerts.map((item, index) =>
-                <p key={index}>{item.data + " -- " + item.user}</p>
+            annotations.map((item, index) =>
+                <p key={index}>{item.value + " -- " + item.by}</p>
             )
         )
     }
@@ -97,12 +94,8 @@ export default function Propiedad() {
                 console.log("TE FALTA LA PRIORIDAD")
             }
             console.log("ERROR TE FALTA UN DATO")
-
-
         }
         else {
-
-
             let obj = {}
             obj.propertyId = data.id
             obj.note = inputLog
@@ -115,70 +108,61 @@ export default function Propiedad() {
                 level: respAlert.data.alert.level,
                 note: respAlert.data.alert.note
             }, ...current])
-
-
-            // let separator = '/'
-            // let newDate = new Date()
-            // let date = newDate.getDate();
-            // let month = newDate.getMonth() + 1;
-            // let year = newDate.getFullYear();
-            // let hour = newDate.getHours()
-            // let minutes = newDate.getMinutes()
-
-            // let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-            // setLogs(current => [{ fecha: fecha, level: priority, mensaje: inputLog }, ...current])
-
-            // setInputLogIncomplete(false)
-            // setInputLog("")
-            // setPriority('priority')
-        }
-
-        // setInputLog("")
-        // let separator = '/'
-        // let newDate = new Date()
-        // let date = newDate.getDate();
-        // let month = newDate.getMonth() + 1;
-        // let year = newDate.getFullYear();
-        // let hour = newDate.getHours()
-        // let minutes = newDate.getMinutes()
-
-        // let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-        // setLogs(current => [{ fecha: fecha, level: priority, mensaje: inputLog }, ...current])
-        // setDataAlerts(current => [{ fecha: fecha, level: priority, note: inputLog }, ...current])
-
-
-
-    }
-
-    const validateDueno=(userName, userLastName)=>{
-        if(userName == "undefined" && userLastName == "undefined" || userName == null && userLastName == null){
-            return <p className=' inline text-gray-300'>Sin registro</p>
-        }
-        else{
-            return <p className=' pt-3'> {userName} {userLastName}</p>
         }
     }
 
-    const validateArrendatario=(userName, userLastName)=>{
-        if(userName == "undefined" && userLastName == "undefined" || userName == null && userLastName == null){
-            return <p className=' inline text-gray-300'>Sin registro</p>
-        }
-        else{
-            return <p className=' pt-3'> {userName} {userLastName}</p>
-        }
-    }
-
-
-    
     const addAnotacion = async (event) => {
         if (event.key === 'Enter') {
-            let body = {}
-            body.propertyId = data.id
-            body.value = inputData
-            let resp = await addAnnotations(body)
+            if (inputAnnotation === "") {
+                console.log("NO HAY NADA ESCRITO")
+                setErrorAnnotation(true)
+            } else {
+                let body = {}
+                body.propertyId = data.id
+                body.value = inputAnnotation
+                let resp = await addAnnotations(body)
+                console.log(resp)
+                setAnnotations(current => [resp.data.annotation, ...current])
+                setInputAnnotation('')
+            }
+        }
+    }
+
+    const updateExpenses = async () => {
+        console.log(arrayExpenses)
+        arrayExpenses.forEach(async (element) => {
+            console.log(element)
+            const resp = await editExpenses(element)
             console.log(resp)
-            setAlerts(current => [{ data: resp.data.annotation.value, user: resp.data.annotation.by }, ...current])
-            setInputData('')
+        });
+    }
+
+    const parseType = () => {
+        let str = data?.type_property
+        str = str.toLowerCase()
+        let str2 = str.charAt(0).toUpperCase() + str.slice(1)
+        console.log(str, str2)
+        return str2
+
+    }
+
+    const parseDate = (fecha) => {
+
+        let date = new Date(fecha)
+
+        if (fecha === undefined) {
+            return "No hay fecha"
+        } else {
+            console.log(date, fecha)
+            const yyyy = date.getFullYear();
+            let mm = date.getMonth() + 1; // Months start at 0!
+            let dd = date.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            let formattedToday = dd + '/' + mm + '/' + yyyy;
+            return formattedToday
         }
     }
 
@@ -194,6 +178,11 @@ export default function Propiedad() {
                             onLoad={() => {
                                 console.log("SE CARGO")
                                 setLoaded(true)
+                            }}
+                            onError={() => {
+                                console.log("ERROOOOOOR")
+                                setLoaded(false)
+                                setFotoUrl("")
                             }}
                             className='w-[35vw] h-[40vh] rounded-l' src={fotoUrL} />
                         {loaded === false &&
@@ -212,10 +201,10 @@ export default function Propiedad() {
                         <div>
                             <p>ID: {data?.property_id}</p>
                             <p>Direccion: {data?.address}</p>
-                            <p>Dueño: {validateDueno(data.owner?.name, data.owner?.lastname)}</p>
-                            <p>Arrendatario: {validateArrendatario(data.owner?.name, data.owner?.lastname)}</p>
+                            <p>Dueño:  {data.owner?.name} {data.owner?.lastname} </p>
+                            <p>Arrendatario: {data?.leases[0]?.leaseholder?.name} {data?.leases[0]?.leaseholder?.lastname}</p>
                             <p>Nro Piso: {data?.floor}</p>
-                            <p>Tipo: {data?.type_property}</p>
+                            <p>Tipo: {parseType()}</p>
                         </div>
                         <div className='w-full '>
 
@@ -244,14 +233,6 @@ export default function Propiedad() {
                     </div>
                 </div>
                 <div className="flex mb-10 bg-blue-500 rounded items-center max-w-full w-[96%]">
-                    {/* <div className="flex flex-col justify-center  items-start p-6 w-[22vw] sm:w-[38vw] md:w-[40vw]  lg:w-[34vw] xl:w-[30vw] h-[36vh] bg-slate-200 rounded shadow-md">
-                        <p className='text-lg'>Ultimo pago</p>
-                        <p className='text-sm'>Fecha de pago: (FECHA)</p>
-                        <p className='text-sm'>Monto: </p>
-                        <p className='text-sm'>Luz: (MONTO)</p>
-                        <p className='text-sm'>Agua: (MONTO)</p>
-                        <p className='text-sm'>Gas: (MONTO)</p>
-                    </div> */}
                     <div className="flex flex-col p-6 w-[96%] sm:w-[100%] md:w-[100%] lg:w-[100%]  xl:w-[100%]  h-[12vh] bg-white rounded shadow-md">
                         <b className='mb-2'>Contrato</b>
                         <div className='flex w-full h-full pt-'>
@@ -265,8 +246,7 @@ export default function Propiedad() {
                             </div>
                             <div className='flex w-1/2 h-full flex-col '>
 
-                                <p className='text-sm'>Inicio: 25/22/2222 - Termino : 25/22/2222</p>
-                                {/* <p className='text-sm'>Termino de contrato: (FECHA)</p> */}
+                                <p className='text-sm'>Inicio: {parseDate(data?.leases[0]?.initial_date.slice(0, 10))}  - Termino : {parseDate(data?.leases[0]?.end_date.slice(0, 10))} </p>
 
                             </div>
                         </div>
@@ -310,17 +290,21 @@ export default function Propiedad() {
                         <div className='flex w-[100%] h-[100%] rounded flex-col p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <div className='w-full'>
-                                    <p className='text-lg font-semibold'>Anotaciones</p>
+                                    <p className='text-lg font-semibold'>Anotaciones </p>
+                                    <span className={`text-[12px] m-0 absolute top-[80vh] text-red-400 ${errorAnnotation ? 'block' : 'hidden'}`}>Debes ingresar la anotacion</span>
                                 </div>
                                 <input
                                     onKeyDown={addAnotacion}
-                                    value={inputData}
-                                    onChange={event => setInputData(event.target.value)}
+                                    value={inputAnnotation}
+                                    onChange={event => {
+                                        setInputAnnotation(event.target.value)
+                                        setErrorAnnotation(false)
+                                    }}
                                     type="text"
-                                    id="large-input-data" className="block p-4 w-full h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md " />
+                                    className={`p-4 w-full appearance-none h-10 bg-white rounded-lg sm:text-md focus:outline-0 focus:outline-black  ${errorAnnotation && 'outline outline-2 outline-red-400'}`} />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
-                                {alerts !== "" &&
+                                {annotations !== "" &&
                                     renderAlerts()
                                 }
                             </div>
@@ -334,15 +318,15 @@ export default function Propiedad() {
                         <div className='h-full w-[30%] flex justify-end items-center'>
                             <button
                                 onClick={() => {
-
+                                    updateExpenses()
                                 }}
                                 className='h-[4vh]  w-40 bg-[#00ff00]
-                            hover:bg-green-500 text-white rounded'>
+                             hover:bg-green-500 text-white rounded'>
                                 Guardar
                             </button>
                         </div>
                     </div>
-                    <TableBill id={data.id} arrayExpenses={arrayExpenses} />
+                    <TableBill id={data.id} arrayExpenses={arrayExpenses} setArrayExpenses={setArrayExpenses} dataExp={dataExp} />
                 </div>
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white rounded-lg shadow-sm'>
                     <div className='w-full'>

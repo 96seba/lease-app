@@ -6,14 +6,20 @@ import TableToResolveNVisits from '../components/TableToResolveNVisits';
 import ModalAddFile from '../components/ModalAddFile';
 import { getDebtors } from '../api/getDebtors';
 import { getVisitsPending } from '../api/getVisitsPending';
-import { use } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 export default function Dashboard() {
+
+
+
     const [debtorData, setDebtorData] = useState([])
-    const [visitsData, setVisitsData] = useState([])
+    const [visitsData, setVisitsData] = useState([
+        { id: 10, descripcion: "Arreglar baño", fecha: '02/10/2022', urgencia: 'Alta' },
+        { id: 20, descripcion: "Arreglar baño", fecha: '02/10/2022', urgencia: 'Alta' }
+    ])
 
 
 
@@ -38,10 +44,10 @@ export default function Dashboard() {
     useEffect(() => {
         const getData = async () => {
             const respDebtors = await getDebtors()
-            console.log(respDebtors)
-            setDebtorData(respDebtors.data)
+            console.log(respDebtors.data)
+            setDebtorData(respDebtors.data.debtors)
             const respVisits = await getVisitsPending()
-            // setVisitsData(respVisits.data.visits)
+            setVisitsData(respVisits.data.visits)
             console.log(respVisits)
             let token = localStorage.getItem('token')
 
@@ -56,7 +62,7 @@ export default function Dashboard() {
             <div className="flex h-[185.5vh] sm:h-[170.5vh] md:h-[165.5vh] lg:h-[125.5vh]  py-6  w-full items-center justify-start flex-col">
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[99%] h-[36vh] bg-white rounded-lg shadow-sm '>
                     <div className='w-full'>
-                        <p className='text-lg font-semibold'>Propiedades a revisar</p>
+                        <p className='text-lg font-semibold'>Propiedades a revisar get expenses per day ask</p>
                     </div>
                     <TableCheck dataCheck={dataCheck} setDataCheck={setDataCheck} />
                 </div>
@@ -65,7 +71,7 @@ export default function Dashboard() {
                         <p className='text-lg font-semibold'>Deudores</p>
                     </div>
                     {
-                        debtorData === [] ?
+                        debtorData !== [] ?
                             <TableDebtors debtorData={debtorData} />
                             :
                             <div className="w-full h-[20vh] flex justify-center items-center flex-col">
@@ -79,24 +85,32 @@ export default function Dashboard() {
                         <div className='w-full'>
                             <p className='text-lg font-semibold'>Visitas pendientes</p>
                         </div>
-                        {visitsData === [] ?
+                        {visitsData !== [] ?
                             <TableToResolveNVisits data={visitsData} /> :
                             <div className="w-full h-[20vh] flex justify-center items-center flex-col">
                                 <p>No hay visitas aun :/</p>
                                 <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />
                             </div>
-
                         }
                     </div>
                     <div className='flex  flex-col  pt-3 px-4 justify-start items-end h-full sm:w-full md:w-full lg:w-[48%] rounded-lg shadow-sm bg-white'>
                         <div className='w-full'>
                             <p className='text-lg font-semibold'>Pendientes criticos</p>
                         </div>
-                        {/* <TableToResolveNVisits /> */}
+                        {/* {visitsData !== [] ?
+                            <TableToResolveNVisits data={visitsData} /> :
+                            <div className="w-full h-[20vh] flex justify-center items-center flex-col">
+                                <p>No hay pendientes criticos aun :/</p>
+                                <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />
+                            </div>
+
+                        } */}
                     </div>
                 </div>
             </div>
-            <ModalAddFile open={open} setOpen={setOpen} />
+            {/* <ModalAddFile open={open} setOpen={setOpen} /> */}
         </div>
     )
-} 
+}
+
+

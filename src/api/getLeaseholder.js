@@ -1,14 +1,14 @@
 import { API_HOST, TOKEN } from '../utils/constants'
 
-export async function uploadPropiedadImagen(form) {
+export async function getLeaseholder() {
     try {
-        const response = await fetch(API_HOST + '/api/v1/property/uploadImage',
+        const response = await fetch(API_HOST + '/api/v1/leaseholders/',
             {
-                method: 'POST',
+                method: 'GET',
                 headers: {
+                    'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + TOKEN
-                },
-                body: form
+                }
             })
         const result = await response.json();
         var obj = { status: response.status, data: result.data }

@@ -2,7 +2,7 @@ import { API_HOST, TOKEN } from '../utils/constants'
 
 export async function getDebtors() {
     try {
-        const response = await fetch(API_HOST + '/api/v1/expense/debtor',
+        const response = await fetch(API_HOST + '/api/v1/expense/debtors',
             {
                 method: 'GET',
                 headers: {
