@@ -313,7 +313,7 @@ export default function AgregarPropiedad() {
 
     const checkInput = () => {
 
-        let resp =  checkInputRut.validaRut(arrendador.rut.replaceAll('.', ''))
+        let resp = checkInputRut.validaRut(arrendador.rut.replaceAll('.', ''))
         console.log(resp, "Validación Rut Dueño")
 
         const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
@@ -322,7 +322,7 @@ export default function AgregarPropiedad() {
         console.log("Revision de correo: ", emailCheck);
 
         console.log("PROBANDO ARRENDATARIO")
-        let respArrendatario =  checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
+        let respArrendatario = checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
         console.log(respArrendatario, "Validacion Rut Arrendatario")
 
         const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
@@ -340,7 +340,7 @@ export default function AgregarPropiedad() {
 
         if (newContrato === true && newArrendatario === true) {
             console.log("PROBANDO ARRENDATARIO")
-            let respArrendatario =  checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
+            let respArrendatario = checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
             console.log(respArrendatario, "Validacion Rut Arrendatario")
 
             const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
@@ -351,15 +351,15 @@ export default function AgregarPropiedad() {
                 console.log("RUT INVALIDO ARRENDATARIO")
                 return
             }
-    
+
             if (emailCheckArrendatario === false && arrendatario.correo.length !== 0) {
                 setEmailArrendatarioCheck(true)
                 console.log("EMAIL INVALIDO ARRENDATARIO")
                 return
             }
-    
+
             console.log(fechaContratoError, "Error contrato?")
-    
+
             if (inicioContrato !== "" && terminoContrato !== "" && Date.parse(inicioContrato) >= Date.parse(terminoContrato)) {
                 setFechaContratoError(true)
                 console.log(fechaContratoError, "Error contrato?")
@@ -563,7 +563,7 @@ export default function AgregarPropiedad() {
                             className={`appearance-none bg-gray-100 
                         border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Gastos comunes" />
-                    </div>
+                    </div> */}
                     <div className='w-[90%] h-full flex flex-col justify-start items-center '>
                         <div
                             className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
