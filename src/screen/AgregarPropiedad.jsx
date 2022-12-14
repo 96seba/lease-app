@@ -553,7 +553,7 @@ export default function AgregarPropiedad() {
                             border  h-[4vh]  rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Comision por administracion*" />
                     </div>
-                    {/* <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
+                    <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={ggcc} onChange={text => {
                                 if (text.target.value >= 0) {
@@ -700,7 +700,7 @@ export default function AgregarPropiedad() {
                             </div>
                         }
                     </div>
-                    {/* Agregar contrato  */}
+                    {/* Agregar contrato */}
                     <div className='w-[90%] h-auto mt-2 flex flex-col items-start justify-center'>
                         <button onClick={() => {
                             setNewContrato(!newContrato)

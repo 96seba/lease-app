@@ -20,7 +20,7 @@ export default function Propiedad() {
 
     let navigate = useNavigate()
     const [fotoUrL, setFotoUrl] = useState("")
-    const [loaded, setLoaded] = useState(false)
+    const [loaded, setLoaded] = useState(true)
 
 
     const location = useLocation()
@@ -43,7 +43,6 @@ export default function Propiedad() {
     useEffect(() => {
         getData()
     }, [])
-
 
     const [logs, setLogs] = useState([])
 
@@ -166,6 +165,14 @@ export default function Propiedad() {
         }
     }
 
+    useEffect(() => {
+        if(data.image===null){
+            setLoaded(false)
+        }
+        console.log(data?.image)
+    },[data])
+    
+
     if (data === "") {
         return <></>
     }
@@ -174,18 +181,20 @@ export default function Propiedad() {
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[80vw]  2xl:w-[75vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
                     <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] ">
+                        {data.image===null?<p>No hay foto</p>:
                         <img alt="propiedad"
                             onLoad={() => {
                                 console.log("SE CARGO")
-                                setLoaded(true)
+                                setLoaded(false)
                             }}
                             onError={() => {
                                 console.log("ERROOOOOOR")
                                 setLoaded(false)
                                 setFotoUrl("")
                             }}
-                            className='w-[35vw] h-[40vh] rounded-l' src={fotoUrL} />
-                        {loaded === false &&
+                            className='w-[35vw] h-[40vh] rounded-l' src={fotoUrL} />}
+                        
+                        {loaded === true &&
                             <div className='w-[33vw] h-[40vh] absolute rounded-l  flex justify-center items-center' >
                                 <div role="status">
                                     <svg className="inline mr-2 w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
