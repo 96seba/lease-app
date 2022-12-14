@@ -563,7 +563,7 @@ export default function AgregarPropiedad() {
                             className={`appearance-none bg-gray-100 
                         border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Gastos comunes" />
-                    </div> */}
+                    </div>
                     <div className='w-[90%] h-full flex flex-col justify-start items-center '>
                         <div
                             className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
