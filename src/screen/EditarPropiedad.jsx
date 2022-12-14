@@ -124,6 +124,7 @@ export default function EditarPropiedad() {
             let resp = await editLease(objContrato)
             console.log(resp)
             console.log("Tiene lease y se edita")
+            setOpen(true)
         } else {
             console.log("No tiene lease")
             //* Crear lease
@@ -140,7 +141,7 @@ export default function EditarPropiedad() {
                 objContrato.propertyId = idProp
                 let resp = await addLease(objContrato)
                 console.log(resp)
-
+                setOpen(true)
             } else {
                 //* Se selecciona un leaseholder ya creado
                 console.log("Buscar arrendatario")
@@ -149,6 +150,7 @@ export default function EditarPropiedad() {
                 objContrato.propertyId = idProp
                 let resp = await addLease(objContrato)
                 console.log(resp)
+                setOpen(true)
             }
         }
         console.log(objContrato)

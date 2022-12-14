@@ -8,7 +8,6 @@ export default function ModalEditPropiedad({ open, setOpen, id }) {
 
     const cancelButtonRef = useRef(null)
 
-
     return (
         <div>
             <Transition.Root show={open} as={Fragment}>
@@ -43,7 +42,7 @@ export default function ModalEditPropiedad({ open, setOpen, id }) {
                                                 Propiedad guardada  ✅
                                             </h1>
 
-                                            <div className='w-full h-28 bg-gray-200 flex justify-center items-center'>
+                                            <div className='w-full h-28 flex justify-center items-center'>
                                                 <button
                                                     type="button"
                                                     className="inline-flex w-[40%] mt-4 mb-4 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
