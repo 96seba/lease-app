@@ -3,15 +3,20 @@ import { editPropiedad } from "../api/editPropiedad"
 import { useLocation } from "react-router-dom"
 import { uploadPropiedadImagen } from "../api/uploadPropiedadImagen"
 import ModalEditPropiedad from "../components/ModalEditPropiedad"
+import ModalNewContrato from "../components/ModalNewContrato"
 import ArrendatarioFinder from '../components/ArrendatarioFinder'
 import { editLease } from "../api/editLease"
 import { addLease } from "../api/addLease"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faFileCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { deactivateLease } from "../api/deactivateLease"
 
 export default function EditarPropiedad() {
 
     const location = useLocation()
 
     const [open, setOpen] = useState(false)
+    const [openModalContrato, setOpenModalContrato] = useState(false)
 
     const [data, setData] = useState("")
     const [idProp, setIdProp] = useState("")
@@ -30,7 +35,7 @@ export default function EditarPropiedad() {
     const [tipo, setTipo] = useState("Tipo")
 
 
-    const [newContrato, setNewContrato] = useState(false)
+
     const [newArrendatario, setNewArrendatario] = useState(true)
 
     const [inicioContrato, setInicioContrato] = useState("")
@@ -40,6 +45,8 @@ export default function EditarPropiedad() {
     const [contratoIncomplete, setContratoIncomplete] = useState(false)
     const [selectIncomplete, setSelectIncomplete] = useState(false)
     const [selected, setSelected] = useState("")
+
+    const [newContrato, setNewContrato] = useState(false)
 
     //* Datos arrendatario
 
@@ -69,7 +76,7 @@ export default function EditarPropiedad() {
         let endo = data?.leases[0]?.end_date.slice(0, 10)
         setInicioContrato(inito)
         setTerminoContrato(endo)
-
+        console.log("ID DE CONTRATO", data?.leases[0]?.id)
 
         if (data.leases.length > 0) {
             setArrendatario({
@@ -156,10 +163,68 @@ export default function EditarPropiedad() {
         console.log(objContrato)
     }
 
+    const overwriteContrato = async () => {
+        let objContrato = {}
+        console.log(inicioContrato, terminoContrato)
+
+
+        let init = new Date(inicioContrato)
+        let end = new Date(terminoContrato)
+
+        objContrato.initial_date = init.toISOString()
+        objContrato.end_date = end.toISOString()
+
+        if (newArrendatario) {
+            //* Se crea un leaseholder
+            console.log("Nuevo arrendatario")
+            objContrato.name = arrendatario.nombre
+            objContrato.lastname = arrendatario.apellido
+            objContrato.rut = arrendatario.rut
+            objContrato.email = arrendatario.correo
+            objContrato.phone = arrendatario.telefono
+            let fecha = new Date(arrendatario.fechaNacArrendatario)
+            objContrato.birthday = fecha.toISOString()
+            objContrato.propertyId = idProp
+            let resp = await addLease(objContrato)
+            console.log(resp)
+            setOpen(true)
+        } else {
+            //* Se selecciona un leaseholder ya creado
+            console.log("Buscar arrendatario")
+            console.log(selected)
+            objContrato.leaseholderId = selected.id
+            objContrato.propertyId = idProp
+            let resp = await addLease(objContrato)
+            console.log(resp)
+            setOpen(true)
+        }
+
+        console.log(objContrato)
+    }
+
+    const cleanContrato = () => {
+        setNewContrato(true)
+        setArrendatario({
+            nombre: "",
+            apellido: "",
+            rut: "",
+            fechaNacArrendatario: "",
+            correo: "",
+            telefono: ""
+        })
+        setInicioContrato('')
+        setTerminoContrato('')
+        setSelected('')
+
+        // console.log(data.leases[0].id)
+
+
+    }
+
 
     return (
         <div className='w-screen flex justify-center items-center bg-white'>
-            <div className={`w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[60vw] xl:w-[55vw] shadow-lg  p-6 flex items-center`}>
+            <div className={`w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[70vw] xl:w-[65vw] shadow-lg  p-6 flex items-center`}>
                 <div className='w-full h-full flex flex-col justify-start items-center 
                 sm:px-4 md:px-20 lg:px-6 xl:px-32'>
 
@@ -311,10 +376,22 @@ export default function EditarPropiedad() {
                     </div>
 
                     <div className="h-[1px] w-[90%] bg-gray-300 mb-4" />
+                    {newContrato === false && data.leases?.length > 0 &&
+                        <div className="w-[90%] h-10 flex justify-end  items-center">
+                            <button
+                                onClick={() => { setOpenModalContrato(true) }}
+                                className={`w-[52%] inline-block  px-s py-2 border-2 border-[#FF6F00] text-[#FF6F00] font-medium text-[14px] leading-normal uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out`}>
+                                <FontAwesomeIcon className="mx-2 " icon={faFileCirclePlus} />
+                                Agregar nuevo contrato
+                            </button>
+                        </div>
+                    }
 
                     <div className='w-[90%] h-auto mt-2 flex flex-col items-start justify-center'>
                         <div className='flex justify-between shadow-md items-center w-[100%] h-auto  '>
                             <div className='w-full h-full flex flex-col justify-start items-center '>
+
+
                                 <p className="flex my-4 text-xl">
                                     Contrato
                                 </p>
@@ -431,42 +508,75 @@ export default function EditarPropiedad() {
                                         </div>
                                     }
                                 </div>
-                                <button
-                                    className="inline-flex w-[50%] mb-3 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
-                                    onClick={() => {
-                                        if (inicioContrato === "" || terminoContrato === "") {
-                                            setContratoIncomplete(true)
-
-                                        } else {
-                                            if (newArrendatario) {
-                                                if (arrendatario.nombre === "" ||
-                                                    arrendatario.apellido === "" || arrendatario.correo === "" ||
-                                                    arrendatario.fechaNacArrendatario === "" || arrendatario.rut === "" ||
-                                                    arrendatario.telefono === "") {
-                                                    console.log("El arrendatario esta incompleto")
-                                                    setArrendatarioIncomplete(true)
-                                                } else {
-                                                    console.log("El arrendatario esta completo")
-                                                    console.log(arrendatario)
-
-                                                    addContrato()
-                                                }
+                                {newContrato === true ?
+                                    <button
+                                        className="inline-flex w-[50%] mb-3 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                                        onClick={async () => {
+                                            if (inicioContrato === "" || terminoContrato === "") {
+                                                setContratoIncomplete(true)
                                             } else {
-                                                if (selected === "") {
-                                                    console.log("El arrendatario no se selecciono")
-                                                    setSelectIncomplete(true)
+                                                if (newArrendatario) {
+                                                    if (arrendatario.nombre === "" || arrendatario.apellido === "" || arrendatario.correo === "" || arrendatario.fechaNacArrendatario === "" || arrendatario.rut === "" || arrendatario.telefono === "") {
+                                                        console.log("El arrendatario esta incompleto")
+                                                        setArrendatarioIncomplete(true)
+                                                    } else {
+                                                        console.log("El arrendatario esta completo")
+                                                        console.log(arrendatario)
+                                                        let resp = await deactivateLease(data.leases[0].id)
+                                                        console.log(resp)
+                                                        overwriteContrato()
+                                                    }
                                                 } else {
-                                                    console.log("El arrendatario esta seleccionado")
-                                                    addContrato()
+                                                    if (selected === "") {
+                                                        console.log("El arrendatario no se selecciono")
+                                                        setSelectIncomplete(true)
+                                                    } else {
+                                                        console.log("El arrendatario esta seleccionado")
+                                                        let resp = await deactivateLease(data.leases[0].id)
+                                                        console.log(resp)
+                                                        overwriteContrato()
+                                                    }
                                                 }
-
                                             }
-                                        }
 
-                                    }}
-                                >
-                                    Guardar Contrato
-                                </button>
+
+
+                                        }}
+                                    >
+                                        Crear Contrato
+                                    </button>
+                                    :
+
+                                    <button
+                                        className="inline-flex w-[50%] mb-3 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                                        onClick={() => {
+                                            if (inicioContrato === "" || terminoContrato === "") {
+                                                setContratoIncomplete(true)
+                                            } else {
+                                                if (newArrendatario) {
+                                                    if (arrendatario.nombre === "" || arrendatario.apellido === "" || arrendatario.correo === "" || arrendatario.fechaNacArrendatario === "" || arrendatario.rut === "" || arrendatario.telefono === "") {
+                                                        console.log("El arrendatario esta incompleto")
+                                                        setArrendatarioIncomplete(true)
+                                                    } else {
+                                                        console.log("El arrendatario esta completo")
+                                                        console.log(arrendatario)
+                                                        addContrato()
+                                                    }
+                                                } else {
+                                                    if (selected === "") {
+                                                        console.log("El arrendatario no se selecciono")
+                                                        setSelectIncomplete(true)
+                                                    } else {
+                                                        console.log("El arrendatario esta seleccionado")
+                                                        addContrato()
+                                                    }
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        Guardar Contrato
+                                    </button>
+                                }
                             </div>
                         </div>
 
@@ -477,6 +587,9 @@ export default function EditarPropiedad() {
 
                 </div>
                 <ModalEditPropiedad open={open} setOpen={setOpen} id={idProp} />
+
+                <ModalNewContrato open={openModalContrato} setOpen={setOpenModalContrato}
+                    cleanContrato={cleanContrato} />
             </div>
         </div>
     )

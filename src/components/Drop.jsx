@@ -13,7 +13,7 @@ export default function Drop({ status, index, name, setArray, id }) {
                 setValue(e.target.value)
                 setArray(index, name, e.target.value, id)
             }}
-            className={`w-[8vw]  text-black rounded-md px-2
+            className={`sm:w-24 md:w-28 lg:w-28  text-black rounded-[5px] px-2
                 ${value === 'PAGADO' && 'bg-green-300'}
                 ${value === 'NO_PAGADO' && 'bg-red-400'}
                 ${value === 'PENDIENTE' && 'bg-yellow-200'}

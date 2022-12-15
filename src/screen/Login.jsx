@@ -21,7 +21,7 @@ export default function Login() {
         } else {
             localStorage.setItem('token', resp.data.token)
             let token = localStorage.getItem('token')
-            
+
             navigate('/dashboard')
             window.location.reload(false);
             setLoading(false)
@@ -70,26 +70,26 @@ export default function Login() {
                 </div>
             }
 
-            <div className=" bg-white flex justify-center sm:w-[70%] md:w-[55%] lg:w-[40%]">
+            <div className=" bg-white flex justify-center   w-[500px]">
                 <div className="bg-white shadow rounded-lg px-8 pt-6 pb-8 m-auto w-full">
-                    <div className="mb-4">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
+                    <div className="mt-4 mb-6">
+                        {/* <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
                             Usuario
-                        </label>
+                        </label> */}
                         <input
                             value={user}
                             onChange={(e) => { setUser(e.target.value) }}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" type="text" placeholder="Usuario" />
                     </div>
-                    <div className="mb-6">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="password">
+                    <div className="mb-2">
+                        {/* <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="password">
                             Contraseña
-                        </label>
+                        </label> */}
                         <input
                             value={pass}
                             onChange={(e) => { setPass(e.target.value) }}
                             onKeyDown={event => addAnotacion(event)}
-                            className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" placeholder="******************" />
+                            className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" placeholder="Contraseña" />
                         <p className="text-red text-xs italic"></p>
                     </div>
                     <div className="flex items-center justify-between">
@@ -101,11 +101,12 @@ export default function Login() {
                                 // navigate('/dashboard')
                             }}
                             className="bg-[#FF6F00] hover:bg-[#3A4348] text-white font-bold py-2 px-4 rounded" type="button">
-                            Iniciar sesion
+                            Iniciar sesión
                         </button>
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }

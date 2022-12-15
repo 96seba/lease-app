@@ -1,31 +1,21 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
-import { customStyles, paginationComponentOptions} from '../utils/constants';
+import { customStyles, paginationComponentOptions } from '../utils/constants';
 
 
 
-export default function TableToResolveNVisits(data) {
+export default function TableAlerts(data) {
 
-    const parseDate = (fecha) => {
+    const [check, setCheck] = useState(false)
 
-        let date = new Date(fecha)
 
-        if (fecha === undefined) {
-            return "No hay fecha"
-        } else {
-            console.log(date, fecha)
-            const yyyy = date.getFullYear();
-            let mm = date.getMonth() + 1; // Months start at 0!
-            let dd = date.getDate();
+    useEffect(() => {
 
-            if (dd < 10) dd = '0' + dd;
-            if (mm < 10) mm = '0' + mm;
+        console.log(check)
 
-            let formattedToday = dd + '/' + mm + '/' + yyyy;
-            return formattedToday
-        }
-    }
+    }, [check])
+
+
 
     const columnas = [
         {
@@ -44,21 +34,33 @@ export default function TableToResolveNVisits(data) {
         // },
         {
             name: 'Direccion',
-            selector: row => row.direccion,
+            selector: row => row.note,
             sortable: true,
             wrap: true
         },
         {
             name: 'Fecha',
-            selector: row => parseDate(row?.date?.slice(0, 10)),
+            selector: row => row?.date,
             sortable: true,
             center: true,
             compact: true,
             width: '16%'
         },
         {
-            name: 'Prioridad',
-            selector: row => row.urgencia,
+            name: 'Estado',
+            selector: row =>
+                <div class="flex h-auto w-auto hover:bg-[#3A4348]">
+                    <input
+                        value={check}
+                        onChange={e => { setCheck(e.target.value) }}
+                        type={'checkbox'}
+                        className={`select-none cursor-pointer rounded-lg border-2
+                      border-[#FF6F00] w-6 h-6 checked:bg-teal-700
+              font-bold transition-colors duration-200 ease-in-out
+               `} />
+
+                </div>
+            ,
             sortable: true,
             center: true,
             compact: true,

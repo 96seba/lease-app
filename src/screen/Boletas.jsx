@@ -53,6 +53,7 @@ export default function Propiedades() {
                 </div>
                 <TableBoletas tablaData={tablaData} files={files} setFile={setFile} />
             </div>
+            
         </div>
     )
 }

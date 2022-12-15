@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import TableCheck from '../components/TableCheck'
 import TableDebtors from '../components/TableDebtors'
-import TableToResolveNVisits from '../components/TableToResolveNVisits';
+import TableVisitsPending from '../components/TableVisitsPending';
 import ModalAddFile from '../components/ModalAddFile';
 import { getDebtors } from '../api/getDebtors';
 import { getVisitsPending } from '../api/getVisitsPending';
 import { useNavigate } from 'react-router-dom';
+import TableAlerts from '../components/TableAlerts';
 
 
 
@@ -19,6 +20,11 @@ export default function Dashboard() {
     const [visitsData, setVisitsData] = useState([
         { id: 10, descripcion: "Arreglar baño", fecha: '02/10/2022', urgencia: 'Alta' },
         { id: 20, descripcion: "Arreglar baño", fecha: '02/10/2022', urgencia: 'Alta' }
+    ])
+    const [alertsData, setAlertsData] = useState([
+        { id: 1, note: "Arreglar el bañete", priority: "ALTA", by: "Julian Casablancas", date: "21/09/2022" },
+        { id: 2, note: "Hablar con conserjeria", priority: "MEDIA", by: "Julian Casablancas", date: "02/10/2022" },
+        { id: 3, note: "Renovar contrato", priority: "BAJA", by: "Julian Casablancas", date: "10/09/2022" }
     ])
 
 
@@ -66,7 +72,8 @@ export default function Dashboard() {
                     </div>
                     <TableCheck dataCheck={dataCheck} setDataCheck={setDataCheck} />
                 </div>
-                <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[99%] h-[36vh] bg-white rounded-lg shadow-sm '>
+                <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[99%] h-[36vh] rounded-lg shadow-sm
+                bg-white '>
                     <div className='w-full'>
                         <p className='text-lg font-semibold'>Deudores</p>
                     </div>
@@ -86,7 +93,7 @@ export default function Dashboard() {
                             <p className='text-lg font-semibold'>Visitas pendientes</p>
                         </div>
                         {visitsData !== [] ?
-                            <TableToResolveNVisits data={visitsData} /> :
+                            <TableVisitsPending data={visitsData} /> :
                             <div className="w-full h-[20vh] flex justify-center items-center flex-col">
                                 <p>No hay visitas aun :/</p>
                                 <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />
@@ -97,14 +104,14 @@ export default function Dashboard() {
                         <div className='w-full'>
                             <p className='text-lg font-semibold'>Pendientes criticos</p>
                         </div>
-                        {/* {visitsData !== [] ?
-                            <TableToResolveNVisits data={visitsData} /> :
+                        {alertsData !== [] ?
+                            <TableAlerts data={alertsData} /> :
                             <div className="w-full h-[20vh] flex justify-center items-center flex-col">
                                 <p>No hay pendientes criticos aun :/</p>
                                 <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />
                             </div>
 
-                        } */}
+                        }
                     </div>
                 </div>
             </div>
