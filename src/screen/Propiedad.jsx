@@ -275,8 +275,9 @@ export default function Propiedad() {
                                         value={inputLog}
                                         onChange={event => setInputLog(event.target.value)}
                                         type="text"
-                                        id="large-input" className={`block p-4 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md ${inputLogIncomplete === true && inputLog === '' && 'outline outline-[2.5px] outline-red-500'}`} />
-                                    <select value={priority} name="priority" onChange={e => { setPriority(e.target.value) }} className={`w-[18%] ml-1  ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
+                                        id="large-input" className={`block p-3 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md ${inputLogIncomplete === true && inputLog === '' && 'outline outline-[2.5px] outline-red-500'}`} />
+                                    <select value={priority} name="priority" onChange={e => { setPriority(e.target.value) }} 
+                                    className={`w-[25%] px-2 ml-1 text-center ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
                                         <option value="priority" disabled selected hidden>Prioridad</option>
                                         <option value="Alta">Alta</option>
                                         <option value="Media">Media</option>
