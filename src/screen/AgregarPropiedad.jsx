@@ -8,7 +8,7 @@ import ArrendatarioFinder from '../components/ArrendatarioFinder'
 import DuenoFinder from '../components/DuenoFinder'
 import { addLease } from '../api/addLease'
 import { useNavigate } from "react-router-dom"
-import { addLeaseholder } from '../api/addLeaseholder'
+import { getLeaseholder } from '../api/getLeaseholder'
 
 
 
@@ -90,9 +90,16 @@ export default function AgregarPropiedad() {
 
     const [fechaContratoError, setFechaContratoError] = useState(false)
 
+    const [leaseholders, setLeaseholders] = useState([])
+
 
     useEffect(() => {
         document.title = 'Agrega una propiedad'
+        const getArrendatarios = async () => {
+            let resp = await getLeaseholder()
+            setLeaseholders(resp.data.leaseholder)
+        }
+        getArrendatarios()
     }, []);
 
     const uploadImage = async (id) => {
@@ -553,7 +560,7 @@ export default function AgregarPropiedad() {
                             border  h-[4vh]  rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Comision por administracion*" />
                     </div>
-                    <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
+                    {/* <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={ggcc} onChange={text => {
                                 if (text.target.value >= 0) {
@@ -563,8 +570,8 @@ export default function AgregarPropiedad() {
                             className={`appearance-none bg-gray-100 
                         border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Gastos comunes" />
-                    </div> 
-                    <div className='w-[90%] h-full flex flex-col justify-start items-center '>
+                    </div>  */}
+                    <div className='w-[90%] h-[70%] flex flex-col justify-start items-center '>
                         <div
                             className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
                             <button className={`h-full w-1/2  flex justify-center items-center
@@ -838,8 +845,14 @@ export default function AgregarPropiedad() {
                                             </div>
                                             :
                                             <div className='h-[36vh]'>
-                                                <ArrendatarioFinder selected={selected} setSelected={setSelected}
-                                                    selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete} />
+                                                {
+                                                    leaseholders !== [] &&
+
+                                                    <ArrendatarioFinder selected={selected} setSelected={setSelected}
+                                                        selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete}
+                                                        leaseholders={leaseholders}
+                                                    />
+                                                }
                                             </div>
                                         }
                                     </div>
@@ -855,7 +868,8 @@ export default function AgregarPropiedad() {
                                 checkInput()
                                 console.log(arrendador.rut)
                             }}
-                        > Guardar
+                        >
+                            Guardar
                         </button>
                     </div>
                 </div>

@@ -1,47 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { getLeaseholder } from '../api/getLeaseholder'
 
 
 
-export default function ArrendatarioFinder({ selected, setSelected, selectIncomplete, setSelectIncomplete }) {
+export default function ArrendatarioFinder({ selected, setSelected, selectIncomplete, setSelectIncomplete, leaseholders }) {
 
     const [buscar, setBuscar] = useState("")
 
 
 
-    const [data, setData] = useState([
-        { id: 1, rut: 205916326, name: "Julian Casablancas" },
-        { id: 2, rut: 204316326, name: "Padre Casablancas" },
-        { id: 3, rut: 205923326, name: "Main Casablancas" },
-        { id: 4, rut: 204568355, name: "Reberto Casablancas" },
-        { id: 5, rut: 205978626, name: "Sebastian Acosta Cruz" },
-        { id: 6, rut: 205916321, name: "Julian Casablancas" },
-        { id: 7, rut: 264354322, name: "Jul Cas" }
-    ])
+    const [data, setData] = useState([])
 
-    const [tablaArrendatarios, setTableArrendatarios] = useState([
-        { id: 1, rut: 205916326, name: "Julian Casablancas" },
-        { id: 2, rut: 204316326, name: "Padre Casablancas" },
-        { id: 3, rut: 205923326, name: "Main Casablancas" },
-        { id: 4, rut: 204568355, name: "Reberto Casablancas" },
-        { id: 5, rut: 205978626, name: "Sebastian Acosta Cruz" },
-        { id: 6, rut: 205916321, name: "Julian Casablancas" },
-        { id: 7, rut: 264354322, name: "Jul Cas" }
-    ])
+    const [tablaArrendatarios, setTableArrendatarios] = useState([])
 
 
     useEffect(() => {
-        const getData = async () => {
-            const resp = await getLeaseholder()
-            let data = resp.data.leaseholder
-
-
-
-            console.log(data)
-            setTableArrendatarios(data)
-            setData(data)
-        }
-        getData()
+        console.log(leaseholders)
+        setTableArrendatarios(leaseholders)
+        setData(leaseholders)
 
     }, [])
 
@@ -56,6 +31,10 @@ export default function ArrendatarioFinder({ selected, setSelected, selectIncomp
         setData(resultadosBusqueda)
     }
 
+
+    if (data === []) {
+        return <></>
+    }
     return (
         <div className='flex justify-center items-center flex-col'>
             <div className='w-full h-[6vh] flex justify-start items-center flex-col'>
@@ -82,9 +61,14 @@ export default function ArrendatarioFinder({ selected, setSelected, selectIncomp
                     {data.map((user, index) => (
                         <button key={index}
                             onClick={e => {
-                                console.log(user)
-                                setSelected(user)
-                                setSelectIncomplete(false)
+                                console.log(user, selected)
+                                if (user.rut === selected.rut) {
+                                    setSelected("")
+                                } else {
+                                    setSelected(user)
+                                    setSelectIncomplete(false)
+                                }
+
                             }}
                             className={` w-full  h-[5vh] flex justify-start items-center  px-4 
                             ${selected === user ? 'bg-[#FF6F00] text-white' : 'bg-gray-100 hover:bg-gray-200'}`}

@@ -10,6 +10,7 @@ import { addAnnotations } from '../api/addAnnotations'
 import { getExpensesId } from '../api/getExpensesId'
 import { editExpenses } from '../api/editExpenses'
 import { getPropiedad } from '../api/getPropiedad'
+import { getVisitsForProperty } from '../api/getVisitsForProperty'
 
 export default function Propiedad() {
 
@@ -31,6 +32,10 @@ export default function Propiedad() {
         const data = await getPropiedad(id)
         console.log(data)
 
+        //* Se traen los datos de las visitas pendientes
+        getVisits(id)
+
+
         setData(data.property)
         setLogs(data.property.alerts.reverse())
         setAnnotations(data.property.annotations.reverse())
@@ -39,6 +44,12 @@ export default function Propiedad() {
         const respExpenses = await getExpensesId(data.property.id)
         setDataExp(respExpenses.data.expenses)
     }
+
+    const getVisits = async (id) => {
+        let resp = await getVisitsForProperty(id)
+        console.log(resp)
+    }
+
 
     useEffect(() => {
         getData()
@@ -95,14 +106,20 @@ export default function Propiedad() {
             console.log("ERROR TE FALTA UN DATO")
         }
         else {
+            //* Se crea el objeto y se llena con los datos
             let obj = {}
             obj.propertyId = data.id
             obj.note = inputLog
             obj.level = priority.toUpperCase()
 
-            console.log(obj)
+            //* Se hace un fetch con los datos
             const respAlert = await addAlerts(obj)
             console.log(respAlert.data.alert)
+            //* Se limpian los campos
+            setInputLog('')
+            setPriority('priority')
+
+            //* Se agregan los nuevos datos en el primer lugar del array
             setLogs(current => [{
                 level: respAlert.data.alert.level,
                 note: respAlert.data.alert.note
@@ -166,12 +183,12 @@ export default function Propiedad() {
     }
 
     useEffect(() => {
-        if(data.image===null){
+        if (data.image === null) {
             setLoaded(false)
         }
         console.log(data?.image)
-    },[data])
-    
+    }, [data])
+
 
     if (data === "") {
         return <></>
@@ -181,19 +198,19 @@ export default function Propiedad() {
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[80vw]  2xl:w-[75vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
                     <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] ">
-                        {data.image===null?<p>No hay foto</p>:
-                        <img alt="propiedad"
-                            onLoad={() => {
-                                console.log("SE CARGO")
-                                setLoaded(false)
-                            }}
-                            onError={() => {
-                                console.log("ERROOOOOOR")
-                                setLoaded(false)
-                                setFotoUrl("")
-                            }}
-                            className='w-[35vw] h-[40vh] rounded-l' src={fotoUrL} />}
-                        
+                        {data.image === null ? <p>No hay foto</p> :
+                            <img alt="propiedad"
+                                onLoad={() => {
+                                    console.log("SE CARGO")
+                                    setLoaded(false)
+                                }}
+                                onError={() => {
+                                    console.log("ERROOOOOOR")
+                                    setLoaded(false)
+                                    setFotoUrl("")
+                                }}
+                                className='w-[35vw] h-[40vh] rounded-l' src={fotoUrL} />}
+
                         {loaded === true &&
                             <div className='w-[33vw] h-[40vh] absolute rounded-l  flex justify-center items-center' >
                                 <div role="status">
@@ -276,8 +293,8 @@ export default function Propiedad() {
                                         onChange={event => setInputLog(event.target.value)}
                                         type="text"
                                         id="large-input" className={`block p-3 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md ${inputLogIncomplete === true && inputLog === '' && 'outline outline-[2.5px] outline-red-500'}`} />
-                                    <select value={priority} name="priority" onChange={e => { setPriority(e.target.value) }} 
-                                    className={`w-[25%] px-2 ml-1 text-center ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
+                                    <select value={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
+                                        className={`w-[25%] px-2 ml-1 text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
                                         <option value="priority" disabled selected hidden>Prioridad</option>
                                         <option value="Alta">Alta</option>
                                         <option value="Media">Media</option>
@@ -290,7 +307,7 @@ export default function Propiedad() {
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
-                                    <p key={index} className='text-sm break-words'>{item.level} - {item.note}</p>
+                                    <p key={index} className='text-sm break-words'>{item.level} - {item.note}- {item.by}</p>
                                 )}
                             </div>
                         </div>

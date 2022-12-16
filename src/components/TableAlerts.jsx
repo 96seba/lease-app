@@ -33,23 +33,30 @@ export default function TableAlerts(data) {
         //     wrap: true
         // },
         {
-            name: 'Direccion',
+            name: 'Descripcion',
             selector: row => row.note,
             sortable: true,
-            wrap: true
+            wrap: true,
+            width: '44%'
         },
         {
             name: 'Fecha',
-            selector: row => row?.date,
+            selector: row => row?.createdAt?.slice(0, 10).replaceAll('-', '/'),
             sortable: true,
             center: true,
             compact: true,
             width: '16%'
         },
         {
+            name: 'Prioridad',
+            selector: row => row?.level,
+            sortable: true,
+            wrap: true
+        },
+        {
             name: 'Estado',
             selector: row =>
-                <div class="flex h-auto w-auto hover:bg-[#3A4348]">
+                <div className="flex h-auto w-auto hover:bg-[#3A4348]">
                     <input
                         value={check}
                         onChange={e => { setCheck(e.target.value) }}
@@ -75,6 +82,7 @@ export default function TableAlerts(data) {
             columns={columnas}
             data={data.data}
             customStyles={customStyles}
+            defaultSortFieldId={4}
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination

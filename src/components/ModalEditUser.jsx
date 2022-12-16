@@ -8,6 +8,7 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
         email: "",
         name: "",
         lastname: "",
+        password: "",
     })
 
 
@@ -108,6 +109,12 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
                                                     <input value={user.name}
                                                         onKeyDown={event => { executeEnter(event) }}
                                                         onChange={event => setUser({ ...user, name: event.target.value })} type="text" name="nombre" id="nombre" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Nombre" required="" />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
+                                                    <input value={user.lastname}
+                                                        onKeyDown={event => { executeEnter(event) }}
+                                                        onChange={event => setUser({ ...user, lastname: event.target.value })} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Apellido" required="" />
                                                 </div>
                                                 <div>
                                                     <label htmlFor="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>

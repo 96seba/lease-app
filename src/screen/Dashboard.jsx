@@ -8,6 +8,7 @@ import { getDebtors } from '../api/getDebtors';
 import { getVisitsPending } from '../api/getVisitsPending';
 import { useNavigate } from 'react-router-dom';
 import TableAlerts from '../components/TableAlerts';
+import { getAlertsPending } from '../api/getAlertsPending';
 
 
 
@@ -44,6 +45,7 @@ export default function Dashboard() {
         { id: 81, descripcion: "Revisar la luz", estado: "No revisado" },
     ])
 
+
     const [open, setOpen] = useState(false)
 
 
@@ -55,6 +57,9 @@ export default function Dashboard() {
             const respVisits = await getVisitsPending()
             setVisitsData(respVisits.data.visits)
             console.log(respVisits)
+            const respAlerts = await getAlertsPending()
+            console.log(respAlerts.data.alerts)
+            setAlertsData(respAlerts.data.alerts)
             let token = localStorage.getItem('token')
 
             console.log(token)

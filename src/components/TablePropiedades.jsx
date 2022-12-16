@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from "react-router-dom"
 import { customStyles, paginationComponentOptions } from '../utils/constants';
-import { getPropiedad } from '../api/getPropiedad';
+import Drop from './Drop';
 
 const columnas = [
     {
@@ -16,17 +16,19 @@ const columnas = [
         name: 'Direccion',
         selector: row => row.address,
         sortable: true,
-        grow: 1
+        width: '16%'
     },
     {
         name: 'Arrendador',
         selector: row => validaArrendador(row.owner?.name, row.owner?.lastname),
         sortable: true,
+        width: '22%'
     },
     {
         name: 'Arrendatario',
         selector: row => validaArrendatario(row?.leases[0]),
         sortable: true,
+        width: '22%'
     },
     {
         name: 'Monto',
@@ -37,12 +39,12 @@ const columnas = [
     },
     {
         name: 'Estado',
-        selector: row => <button onClick={() => {
-
-        }} className='bg-[#00ff00] w-20 h-7 rounded '>Al dia</button>,
+        selector: row =>
+            <Drop />
+        ,
         sortable: true,
         center: true,
-        width: '12%'
+        width: '16%'
     },
 ]
 
@@ -88,7 +90,7 @@ export default function TablePropiedades({ dataProp }) {
                 customStyles={customStyles}
                 defaultSortFieldId={1}
                 onRowDoubleClicked={async (e) => {
-                   
+
                     let nav = `/propiedades/propiedad?=${e.id}`
                     navigate(nav, {
                         state: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
-import { customStyles, paginationComponentOptions} from '../utils/constants';
+import { customStyles, paginationComponentOptions } from '../utils/constants';
 
 
 
@@ -65,7 +65,12 @@ export default function TableVisitsPending(data) {
         },
     ]
 
-
+    if (data.data.length === 0) {
+        return <div className="w-full h-[22vh] flex justify-center items-center flex-col">
+            <p>No hay visitas pendientes aun :/</p>
+            <img src={require('../assets/velociraptor.png')} className={'w-[12vw]'} />
+        </div>
+    }
 
     return (
         <DataTable

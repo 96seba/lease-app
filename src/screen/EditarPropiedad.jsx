@@ -10,6 +10,7 @@ import { addLease } from "../api/addLease"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faFileCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { deactivateLease } from "../api/deactivateLease"
+import { getLeaseholder } from "../api/getLeaseholder"
 
 export default function EditarPropiedad() {
 
@@ -59,6 +60,9 @@ export default function EditarPropiedad() {
         telefono: ""
     })
 
+
+    const [leaseholders, setLeaseholders] = useState([])
+
     useEffect(() => {
         let data = location.state.data
         console.log(data)
@@ -92,6 +96,13 @@ export default function EditarPropiedad() {
         if (data.leases.length === 0) {
             console.log("NO TIENE CONTRATOS")
         }
+
+        const getArrendatarios = async () => {
+            const resp = await getLeaseholder()
+            let data = resp.data.leaseholder
+            setLeaseholders(data)
+        }
+        getArrendatarios()
 
     }, [])
 
@@ -504,7 +515,9 @@ export default function EditarPropiedad() {
                                         :
                                         <div className='h-[36vh]'>
                                             <ArrendatarioFinder selected={selected} setSelected={setSelected}
-                                                selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete} />
+                                                selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete} 
+                                                leaseholders={leaseholders}
+                                                />
                                         </div>
                                     }
                                 </div>
