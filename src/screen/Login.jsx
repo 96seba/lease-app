@@ -70,7 +70,7 @@ export default function Login() {
                 </div>
             }
 
-            <div className=" bg-white flex justify-center   w-[500px]">
+            <div className=" bg-white flex justify-center w-[400px]">
                 <div className="bg-white shadow rounded-lg px-8 pt-6 pb-8 m-auto w-full">
                     <div className="mt-4 mb-6">
                         {/* <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
@@ -92,7 +92,8 @@ export default function Login() {
                             className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" placeholder="Contraseña" />
                         <p className="text-red text-xs italic"></p>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="w-full mb-3 h-[0.2px] bg-gray-200"/>
+                    <div className="flex items-center justify-end">
                         <button
                             onClick={() => {
 

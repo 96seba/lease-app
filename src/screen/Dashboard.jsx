@@ -2,48 +2,22 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import TableCheck from '../components/TableCheck'
 import TableDebtors from '../components/TableDebtors'
-import TableVisitsPending from '../components/TableVisitsPending';
-import ModalAddFile from '../components/ModalAddFile';
+import TableVisitsPending from '../components/TableVisitsPending'
 import { getDebtors } from '../api/getDebtors';
 import { getVisitsPending } from '../api/getVisitsPending';
-import { useNavigate } from 'react-router-dom';
 import TableAlerts from '../components/TableAlerts';
 import { getAlertsPending } from '../api/getAlertsPending';
 
-
-
-
 export default function Dashboard() {
-
-
 
     const [debtorData, setDebtorData] = useState([])
     const [visitsData, setVisitsData] = useState([
         { id: 10, descripcion: "Arreglar baño", fecha: '02/10/2022', urgencia: 'Alta' },
         { id: 20, descripcion: "Arreglar baño", fecha: '02/10/2022', urgencia: 'Alta' }
     ])
-    const [alertsData, setAlertsData] = useState([
-        { id: 1, note: "Arreglar el bañete", priority: "ALTA", by: "Julian Casablancas", date: "21/09/2022" },
-        { id: 2, note: "Hablar con conserjeria", priority: "MEDIA", by: "Julian Casablancas", date: "02/10/2022" },
-        { id: 3, note: "Renovar contrato", priority: "BAJA", by: "Julian Casablancas", date: "10/09/2022" }
-    ])
+    const [alertsData, setAlertsData] = useState([])
 
-
-
-
-    const [dataCheck, setDataCheck] = useState([
-        { id: 26, descripcion: "Revisar la luz, revisar el bañete, porque el wc tiene un problema, esta tapado gente, no lo usen o terminara mal", estado: "No revisado" },
-        { id: 16, descripcion: "Revisar el agua", estado: "Revisado" },
-        { id: 63, descripcion: "LLevar ampolletas", estado: "Revisado" },
-        { id: 37, descripcion: "Echarlos de la casa", estado: "Revisado" },
-        { id: 59, descripcion: "Revisar la luz", estado: "No revisado" },
-        { id: 85, descripcion: "Revisar la ducha", estado: "No revisado" },
-        { id: 75, descripcion: "Revisar la luz", estado: "No revisado" },
-        { id: 72, descripcion: "Revisar la ducha", estado: "No revisado" },
-        { id: 71, descripcion: "Revisar la luz", estado: "No revisado" },
-        { id: 41, descripcion: "Revisar la ducha", estado: "No revisado" },
-        { id: 81, descripcion: "Revisar la luz", estado: "No revisado" },
-    ])
+    const [dataCheck, setDataCheck] = useState([])
 
 
     const [open, setOpen] = useState(false)
@@ -109,7 +83,7 @@ export default function Dashboard() {
                         <div className='w-full'>
                             <p className='text-lg font-semibold'>Pendientes criticos</p>
                         </div>
-                        {alertsData !== [] ?
+                        {alertsData.length > 0 ?
                             <TableAlerts data={alertsData} /> :
                             <div className="w-full h-[20vh] flex justify-center items-center flex-col">
                                 <p>No hay pendientes criticos aun :/</p>

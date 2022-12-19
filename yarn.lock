@@ -8534,6 +8534,11 @@
     "react-transition-group" "^4.3.0"
     "use-isomorphic-layout-effect" "^1.1.2"
 
+"react-tiny-popover@^7.2.0":
+  "integrity" "sha512-AIliRDqTFB1+qy4GvWn+8B8JPKA13xtESWYdFkrdCeI8hEnPKufBvcF9a3dO/0SmD21mV6721xxhAnUm8TRXJw=="
+  "resolved" "https://registry.npmjs.org/react-tiny-popover/-/react-tiny-popover-7.2.0.tgz"
+  "version" "7.2.0"
+
 "react-transition-group@^4.3.0":
   "integrity" "sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g=="
   "resolved" "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz"

@@ -1,19 +1,96 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
+import { getAlertsPending } from '../api/getAlertsPending';
 import { customStyles, paginationComponentOptions } from '../utils/constants';
-
+import ModalResolveAlert from './ModalResolveAlert';
 
 
 export default function TableAlerts(data) {
 
-    const [check, setCheck] = useState(false)
+    const [modalStates, setModalStates] = useState([])
+
+    const [handleData, setHandleData] = useState([])
+
+    useEffect(() => {
+        console.log("HA LLEGADO DEL DATA CHAVALES")
+        console.log(data)
+        setHandleData(data)
+    }, [])
 
 
     useEffect(() => {
+        const createStates = async () => {
+            // console.log(data.data)
+            console.log(data.data.length)
+            let arr = []
+            await data.data.forEach((element, index) => {
+                console.log(index)
+                arr[index] = { id: element.id, state: false }
+            });
+            console.log(arr)
+            setModalStates(arr)
+        }
+        createStates()
+    }, [])
 
-        console.log(check)
+    const refreshAlerts = async () => {
+        const respAlerts = await getAlertsPending()
+        console.log(respAlerts.data.alerts)
+        let obj = {data : respAlerts.data.alerts}
 
-    }, [check])
+        setHandleData(obj)
+
+    }
+
+
+    const getIndex = (id) => {
+        //* Funcion para obtener el index a cambiar
+        const idFind = (element) => element.id == id
+        //* Se ejecuta la funcion para obtener el index y se guarda en indexArr
+        let indexArr = modalStates.findIndex(idFind)
+        return indexArr
+    }
+
+    const setCheckState = async (row) => {
+        let index = getIndex(row.id)
+        console.log(index)
+        console.log(modalStates[index].state)
+        if (modalStates[index].state === true) {
+            let arr = [...modalStates]
+            arr[index].state = false
+            console.log(arr)
+            setModalStates(arr)
+        } else if (modalStates[index].state === false) {
+            let arr = [...modalStates]
+            arr[index].state = true
+            console.log(arr)
+            setModalStates(arr)
+        }
+
+    }
+
+    const setCheckStateFalse = async (row) => {
+        let index = getIndex(row.id)
+        console.log(index)
+        console.log("Se va a false gente", row.id)
+        console.log(modalStates[index].state)
+        let arr = [...modalStates]
+        arr[index].state = false
+        console.log(arr)
+        setModalStates(arr)
+    }
+
+
+    const renderModal = (row) => {
+        let index = getIndex(row.id)
+
+        if (modalStates[index]?.state === true) {
+            console.log(modalStates[index])
+            return (
+                <ModalResolveAlert row={row} setCheckStateFalse={setCheckStateFalse} refreshAlerts={refreshAlerts} />
+            )
+        }
+    }
 
 
 
@@ -26,18 +103,12 @@ export default function TableAlerts(data) {
             compact: true,
             width: '7%'
         },
-        // {
-        //     name: 'Descripcion',
-        //     selector: row => row.descripcion,
-        //     sortable: true,
-        //     wrap: true
-        // },
         {
             name: 'Descripcion',
             selector: row => row.note,
             sortable: true,
             wrap: true,
-            width: '44%'
+            width: '36%'
         },
         {
             name: 'Fecha',
@@ -51,36 +122,38 @@ export default function TableAlerts(data) {
             name: 'Prioridad',
             selector: row => row?.level,
             sortable: true,
-            wrap: true
+            wrap: true,
+            width: '18%'
         },
         {
             name: 'Estado',
             selector: row =>
+
                 <div className="flex h-auto w-auto hover:bg-[#3A4348]">
                     <input
-                        value={check}
-                        onChange={e => { setCheck(e.target.value) }}
+                        checked={modalStates[getIndex(row.id)]?.state}
+                        onClick={() => {
+                            setCheckState(row)
+                        }}
                         type={'checkbox'}
                         className={`select-none cursor-pointer rounded-lg border-2
-                      border-[#FF6F00] w-6 h-6 checked:bg-teal-700
-              font-bold transition-colors duration-200 ease-in-out
-               `} />
-
+                  border-[#FF6F00] w-6 h-6 checked:bg-teal-700 font-bold transition-colors duration-200 ease-in-out`}
+                    />
+                    {renderModal(row)}
                 </div>
             ,
             sortable: true,
-            center: true,
+            // center: true,
             compact: true,
             width: '16%',
         },
     ]
 
 
-
     return (
         <DataTable
             columns={columnas}
-            data={data.data}
+            data={handleData.data}
             customStyles={customStyles}
             defaultSortFieldId={4}
             fixedHeader

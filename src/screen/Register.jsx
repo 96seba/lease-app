@@ -3,6 +3,7 @@ import TableUsers from "../components/TableUsers"
 import ModalEditUser from "../components/ModalEditUser"
 import { createUser } from "../api/createUser"
 import { getAllUsers } from "../api/getAllUsers"
+import { Popover } from "react-tiny-popover"
 
 export default function Register() {
 
@@ -111,6 +112,8 @@ export default function Register() {
         console.log(data)
     }
 
+  
+
     return (
         <div className="bg-gray-100 w-screen h-[90vh] flex items-center justify-center">
             <div className="flex justify-between items-center w-[100vw] sm:w-[100vw] md:w-[90vw] lg:w-[90vw] xl:w-[75vw] h-full ">
@@ -184,7 +187,7 @@ export default function Register() {
                             <TableUsers tableData={tableData} setOpen={setOpen} openModal={openModal} />
                             : <></>
                     }
-                   
+                  
                 </div>
 
 

@@ -9,16 +9,24 @@ import Register from "./screen/Register.jsx";
 import Boletas from "./screen/Boletas.jsx";
 import EditarPropiedad from "./screen/EditarPropiedad.jsx";
 import { Routes, Route } from 'react-router-dom'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 function App() {
 
 	const location = useLocation();
+	const navigate = useNavigate()
 
 	// useEffect(() => {
 	// 	console.log(location.pathname)
 	// }, [location])
+
+
+	useEffect(() => {
+		if (location.pathname === '/') {
+			navigate('/login')
+		}
+	}, [])
 
 
 	return (
@@ -31,11 +39,13 @@ function App() {
 				}
 
 
+
+
 				<div className="flex w-screen overflow-y-hidden bg-gray-100 
 				 justify-center items-center">
 
 
-					<Routes>
+					<Routes >
 						<Route path="/login" element={<Login />} />
 						<Route path="/dashboard" element={<Dashboard />} />
 						<Route path="/propiedades" element={<Propiedades />} />
