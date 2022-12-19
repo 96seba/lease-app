@@ -22,11 +22,11 @@ export default function Drop({ status, index, name, setArray, id }) {
 
             {value === 'PAGADO' ?
                 <>
-                    <option value={'ESTADO'} disabled selected>Estado</option>
+                    <option value={'ESTADO'} disabled >Estado</option>
                     <option value={'PAGADO'}>Pagado</option>
                 </>
                 :
-                <>  <option value={'ESTADO'} disabled selected>Estado</option>
+                <>  <option value={'ESTADO'} disabled >Estado</option>
                     <option value={'PENDIENTE'}>Pendiente</option>
                     <option value={'PAGADO'}>Pagado</option>
                     <option value={'NO_PAGADO'}>No pagado</option>

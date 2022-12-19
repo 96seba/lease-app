@@ -624,9 +624,18 @@ export default function AgregarPropiedad() {
                                         <input
                                             value={arrendador.rut}
                                             onChange={text => {
+
+                                                let val = text.target.value.replaceAll('.', '').replace('-', '')
+                                                console.log(val)
                                                 if (text.target.value.length < 13) {
-                                                    let resp = checkRut(text.target.value)
-                                                    setArrendador({ ...arrendador, rut: resp })
+                                                    if (/^\d+$/.test(val) && val.length < 9) {
+                                                        let resp = checkRut(text.target.value)
+                                                        setArrendador({ ...arrendador, rut: resp })
+                                                    }
+                                                    else if (val.length === 9) {
+                                                        let resp = checkRut(text.target.value)
+                                                        setArrendador({ ...arrendador, rut: resp })
+                                                    }
                                                 }
                                             }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
@@ -675,7 +684,7 @@ export default function AgregarPropiedad() {
                                     <p className='text-center'><i>Proximamente</i></p>
                                     <p className={`text-center text-red-500
                                     ${newDuenoError ? 'block' : 'hidden'}
-                                    `}>Debes seleccionar al opcion agregar dueño</p>
+                                    `}>Debes seleccionar la opcion agregar dueño</p>
                                 </div>
                             }
                         </div>

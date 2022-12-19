@@ -38,6 +38,7 @@ export default function Propiedad() {
 
         setData(data.property)
         setLogs(data.property.alerts.reverse())
+        // console.log(data.property.alerts)
         setAnnotations(data.property.annotations.reverse())
         setFotoUrl(API_HOST + data.property?.image || '')
         document.title = 'Propiedad ' + data.property.property_id
@@ -106,21 +107,27 @@ export default function Propiedad() {
             console.log("ERROR TE FALTA UN DATO")
         }
         else {
-            //* Se crea el objeto y se llena con los datos
             let obj = {}
             obj.propertyId = data.id
             obj.note = inputLog
             obj.level = priority.toUpperCase()
 
-            //* Se hace un fetch con los datos
+            let newDate = new Date()
+            obj.fecha = newDate
+
+            let separator = '/'
+            let date = newDate.getDate();
+            let month = newDate.getMonth() + 1;
+            let year = newDate.getFullYear();
+            let hour = newDate.getHours()
+            let minutes = newDate.getMinutes()
+            let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
+            console.log(fecha,'fecha')
+            console.log(obj)
             const respAlert = await addAlerts(obj)
             console.log(respAlert.data.alert)
-            //* Se limpian los campos
-            setInputLog('')
-            setPriority('priority')
-
-            //* Se agregan los nuevos datos en el primer lugar del array
             setLogs(current => [{
+                fecha: fecha,
                 level: respAlert.data.alert.level,
                 note: respAlert.data.alert.note
             }, ...current])
@@ -157,7 +164,7 @@ export default function Propiedad() {
         let str = data?.type_property
         str = str.toLowerCase()
         let str2 = str.charAt(0).toUpperCase() + str.slice(1)
-        console.log(str, str2)
+        // console.log(str, str2)
         return str2
 
     }
@@ -169,7 +176,7 @@ export default function Propiedad() {
         if (fecha === undefined) {
             return "No hay fecha"
         } else {
-            console.log(date, fecha)
+            // console.log(date, fecha)
             const yyyy = date.getFullYear();
             let mm = date.getMonth() + 1; // Months start at 0!
             let dd = date.getDate();
@@ -186,7 +193,7 @@ export default function Propiedad() {
         if (data.image === null) {
             setLoaded(false)
         }
-        console.log(data?.image)
+        // console.log(data?.image)
     }, [data])
 
 
@@ -292,10 +299,10 @@ export default function Propiedad() {
                                         value={inputLog}
                                         onChange={event => setInputLog(event.target.value)}
                                         type="text"
-                                        id="large-input" className={`block p-3 w-[75%] h-10  bg-white rounded-lg  outline outline-1 outline-[#3A4348] focus:outline-2 sm:text-md ${inputLogIncomplete === true && inputLog === '' && 'outline outline-[2.5px] outline-red-500'}`} />
-                                    <select value={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
-                                        className={`w-[25%] px-2 ml-1 text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
-                                        <option value="priority" disabled selected hidden>Prioridad</option>
+                                        id="large-input" className={`block p-4 w-[75%] h-10 bg-white rounded-lg outline outline-0 focus:outline-2 sm:text-md ${inputLogIncomplete === true && inputLog === '' && 'outline outline-[2.5px] outline-red-500'}`} />
+                                    <select defaultValue={priority}  name="priority" onChange={e => { setPriority(e.target.value) }}
+                                        className={`w-[25%] px-2 ml-1 rounded text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
+                                        <option value={priority} disabled > Prioridad </option>
                                         <option value="Alta">Alta</option>
                                         <option value="Media">Media</option>
                                         <option value="Baja">Baja</option>
@@ -307,7 +314,7 @@ export default function Propiedad() {
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
-                                    <p key={index} className='text-sm break-words'>{item.level} - {item.note}- {item.by}</p>
+                                    <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - <strong className='text-[#FF6F00]'>{item.level}</strong> - {item.note}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
                                 )}
                             </div>
                         </div>
@@ -348,7 +355,7 @@ export default function Propiedad() {
                                     updateExpenses()
                                 }}
                                 className='h-[4vh]  w-40 bg-[#00ff00]
-                             hover:bg-green-500 text-white rounded'>
+                                hover:bg-green-500 text-white rounded'>
                                 Guardar
                             </button>
                         </div>
