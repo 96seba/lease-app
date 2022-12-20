@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import ModalGuardar from '../components/ModalGuardar'
 import { createPropiedad } from '../api/createPropiedad'
-// import { uploadPropiedadImagen } from '../api/uploadPropiedadImagen'
+import { uploadPropiedadImagen } from '../api/uploadPropiedadImagen'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import ArrendatarioFinder from '../components/ArrendatarioFinder'
@@ -106,18 +106,11 @@ export default function AgregarPropiedad() {
 
         console.log(fotoUri)
         const form = new FormData();
-        form.append("id", id);
+        form.append("id", Number(id));
         form.append("image", fotoUri);
 
-        const options = {
-            method: 'POST',
-            body: form
-        };
-
-        fetch('http://54.172.21.15:9000/api/v1/property/uploadImage', options)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(err => console.error(err));
+        let resp = await uploadPropiedadImagen(form)
+        console.log(resp)
 
     }
 
@@ -328,13 +321,6 @@ export default function AgregarPropiedad() {
         const emailCheck = emailRegex.test(arrendador.correo)
         console.log("Revision de correo: ", emailCheck);
 
-        console.log("PROBANDO ARRENDATARIO")
-        let respArrendatario = checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
-        console.log(respArrendatario, "Validacion Rut Arrendatario")
-
-        const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
-        console.log("Revision de correo arrendatario: ", emailCheckArrendatario)
-
         if (resp === false && arrendador.rut.length !== 0) {
             setRutArrendadorCheck(true)
             return
@@ -346,6 +332,7 @@ export default function AgregarPropiedad() {
         }
 
         if (newContrato === true && newArrendatario === true) {
+            console.log(newContrato, "new Contrato?")
             console.log("PROBANDO ARRENDATARIO")
             let respArrendatario = checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
             console.log(respArrendatario, "Validacion Rut Arrendatario")
