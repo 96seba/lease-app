@@ -72,7 +72,7 @@ export default function ModalResolveAlert({ row, setCheckStateFalse, refreshAler
                                             refreshAlerts()
                                         }}
                                     >
-                                        Guardar
+                                        Si
                                     </button>
                                     <button
                                         type="button"
@@ -82,7 +82,7 @@ export default function ModalResolveAlert({ row, setCheckStateFalse, refreshAler
                                             setCheckStateFalse(row)
                                         }}
                                     >
-                                        Cancelar
+                                        No
                                     </button>
                                 </div>
                             </Dialog.Panel>

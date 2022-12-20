@@ -7,6 +7,7 @@ import { getDebtors } from '../api/getDebtors';
 import { getVisitsPending } from '../api/getVisitsPending';
 import TableAlerts from '../components/TableAlerts';
 import { getAlertsPending } from '../api/getAlertsPending';
+import { getExpensesPerDay } from '../api/getExpensesPerDay';
 
 export default function Dashboard() {
 
@@ -18,6 +19,7 @@ export default function Dashboard() {
     const [alertsData, setAlertsData] = useState([])
 
     const [dataCheck, setDataCheck] = useState([])
+
 
 
     const [open, setOpen] = useState(false)
@@ -34,8 +36,10 @@ export default function Dashboard() {
             const respAlerts = await getAlertsPending()
             console.log(respAlerts.data.alerts)
             setAlertsData(respAlerts.data.alerts)
+            const respCheck = await getExpensesPerDay()
+            console.log(respCheck.expenses)
+            setDataCheck(respCheck.expenses)
             let token = localStorage.getItem('token')
-
             console.log(token)
         }
         getData()

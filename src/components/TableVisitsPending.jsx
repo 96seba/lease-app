@@ -1,10 +1,13 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import { customStyles, paginationComponentOptions } from '../utils/constants';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function TableVisitsPending(data) {
+
+    const navigate = useNavigate()
 
     const parseDate = (fecha) => {
 
@@ -35,15 +38,10 @@ export default function TableVisitsPending(data) {
             compact: true,
             width: '7%'
         },
-        // {
-        //     name: 'Descripcion',
-        //     selector: row => row.descripcion,
-        //     sortable: true,
-        //     wrap: true
-        // },
+
         {
             name: 'Direccion',
-            selector: row => row.direccion,
+            selector: row => row.Lease?.property?.address,
             sortable: true,
             wrap: true
         },
@@ -55,14 +53,7 @@ export default function TableVisitsPending(data) {
             compact: true,
             width: '16%'
         },
-        {
-            name: 'Prioridad',
-            selector: row => row.urgencia,
-            sortable: true,
-            center: true,
-            compact: true,
-            width: '16%',
-        },
+
     ]
 
     if (data.data.length === 0) {
@@ -81,6 +72,15 @@ export default function TableVisitsPending(data) {
             fixedHeaderScrollHeight='700px'
             pagination
             highlightOnHover
+            onRowDoubleClicked={(e)=>{
+                console.log(e.Lease.propertyId)
+                let nav = `/propiedades/propiedad?=${e.Lease.propertyId}`
+                    navigate(nav, {
+                        state: {
+                            id: e.Lease.propertyId
+                        }
+                    })
+            }}
             paginationComponentOptions={paginationComponentOptions}
         />
     )

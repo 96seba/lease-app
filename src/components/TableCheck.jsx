@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 import { customStyles, paginationComponentOptions } from '../utils/constants';
@@ -49,6 +49,20 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
         },
     ]
 
+    useEffect(() => {
+
+        console.log(dataCheck)
+    }, [])
+
+
+    if (dataCheck.length === 0) {
+
+        return (<div className="w-full h-[22vh] flex justify-center items-center flex-col">
+            <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+            <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
+        </div>)
+
+    }
     return (
         <DataTable
             columns={columnas}

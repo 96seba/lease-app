@@ -23,6 +23,8 @@ export default function Propiedad() {
     const [fotoUrL, setFotoUrl] = useState("")
     const [loaded, setLoaded] = useState(true)
 
+    const [visits, setVisits] = useState([])
+
 
     const location = useLocation()
     const getData = async () => {
@@ -35,7 +37,6 @@ export default function Propiedad() {
         //* Se traen los datos de las visitas pendientes
         getVisits(id)
 
-
         setData(data.property)
         setLogs(data.property.alerts.reverse())
         setAnnotations(data.property.annotations.reverse())
@@ -47,7 +48,8 @@ export default function Propiedad() {
 
     const getVisits = async (id) => {
         let resp = await getVisitsForProperty(id)
-        console.log(resp)
+        console.log(resp.visits)
+        setVisits(resp.visits)
     }
 
 
@@ -194,7 +196,7 @@ export default function Propiedad() {
         return <></>
     }
     return (
-        <div className='bg-gray-100 w-[100vw] flex justify-center'>
+        <div className='bg-gray-100 w-[100vw] flex justify-center '>
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[80vw]  2xl:w-[75vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
                     <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] ">
@@ -347,8 +349,8 @@ export default function Propiedad() {
                                 onClick={() => {
                                     updateExpenses()
                                 }}
-                                className='h-[4vh]  w-40 bg-[#00ff00]
-                             hover:bg-green-500 text-white rounded'>
+                                className='h-[4vh]  w-40 bg-emerald-400
+                             hover:bg-emerald-600  rounded'>
                                 Guardar
                             </button>
                         </div>
@@ -359,7 +361,11 @@ export default function Propiedad() {
                     <div className='w-full'>
                         <p className='text-lg font-semibold'>Visitas</p>
                     </div>
-                    <TableVisits />
+                    {
+                        visits.length === 0 ?
+                            <>No hay na</> :
+                            <TableVisits visits={visits} />
+                    }
                 </div>
             </div>
         </div >

@@ -7,7 +7,7 @@ import Drop from './Drop';
 
 const columnas = [
     {
-        name: 'Tipo',
+        name: 'Id',
         selector: row => Number(row.property_id),
         sortable: true,
         width: '8%'
@@ -19,16 +19,35 @@ const columnas = [
         width: '16%'
     },
     {
-        name: 'Arrendador',
+        name: 'Dueño',
         selector: row => validaArrendador(row.owner?.name, row.owner?.lastname),
         sortable: true,
-        width: '22%'
+        width: '13%'
+    },
+    {
+        name: 'Correo',
+        selector: row =>
+            row.owner?.email
+        ,
+        sortable: true,
+        wrap: true,
+        width: '16%'
+    },
+    {
+        name: 'Telefono',
+        selector: row =>
+            "+" + row.owner?.phone
+        ,
+        sortable: true,
+        wrap: true,
+        width: '16%'
     },
     {
         name: 'Arrendatario',
         selector: row => validaArrendatario(row?.leases[0]),
         sortable: true,
-        width: '22%'
+        width: '15%',
+        wrap: true
     },
     {
         name: 'Monto',
@@ -37,15 +56,7 @@ const columnas = [
         sortable: true,
         width: '13%'
     },
-    {
-        name: 'Estado',
-        selector: row =>
-            <Drop />
-        ,
-        sortable: true,
-        center: true,
-        width: '16%'
-    },
+   
 ]
 
 const validaArrendador = (userName, userLastName) => {
@@ -90,7 +101,6 @@ export default function TablePropiedades({ dataProp }) {
                 customStyles={customStyles}
                 defaultSortFieldId={1}
                 onRowDoubleClicked={async (e) => {
-
                     let nav = `/propiedades/propiedad?=${e.id}`
                     navigate(nav, {
                         state: {

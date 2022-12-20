@@ -14,8 +14,8 @@ export default function Drop({ status, index, name, setArray, id }) {
                 setArray(index, name, e.target.value, id)
             }}
             className={`sm:w-24 md:w-28 lg:w-28  text-black rounded-[5px] px-2
-           
-                ${value === 'PAGADO' && 'bg-[#06d6a0]'}
+                text-[13.4px]
+                ${value === 'PAGADO' && 'bg-emerald-400'}
                 ${value === 'NO_PAGADO' && 'bg-[#ef476f]'}
                 ${value === 'PENDIENTE' && 'bg-[#ffd166]'}
                 `}>

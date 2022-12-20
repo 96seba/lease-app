@@ -102,7 +102,6 @@ export default function Register() {
             setApellido("")
             setPassword("")
         }
-
     }
 
 
@@ -117,7 +116,6 @@ export default function Register() {
     return (
         <div className="bg-gray-100 w-screen h-[90vh] flex items-center justify-center">
             <div className="flex justify-between items-center w-[100vw] sm:w-[100vw] md:w-[90vw] lg:w-[90vw] xl:w-[75vw] h-full ">
-
                 <div className="flex justify-start items-center flex-col h-[80%] bg-white w-[45%] rounded-lg shadow py-5">
                     <h1 className="text-lg font-semibold text-center mb-4">
                         Crea una cuenta
@@ -125,7 +123,9 @@ export default function Register() {
                     <div className="space-y-4 md:space-y-6 w-[80%]" action="#">
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
-                            <input value={correo} onChange={event => {
+                            <input 
+                            inputMode="email"
+                            value={correo} onChange={event => {
                                 setEmailUserError(false)
                                 setCorreo(event.target.value)
                             }} type="email" name="email" id="email"
