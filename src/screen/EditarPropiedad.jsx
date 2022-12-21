@@ -228,10 +228,118 @@ export default function EditarPropiedad() {
         setSelected('')
 
         // console.log(data.leases[0].id)
+    }
 
+    const checkInput = () => {
+
+        let resp = checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
+        console.log(resp, "Validación Rut Arrendatario")
+
+        const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+
+        const emailCheck = emailRegex.test(arrendatario.correo)
+        console.log("Revision de correo: ", emailCheck);
+
+        // if (resp === false && arrendatario.rut.length !== 0) {
+        //     setRutArrendadorCheck(true)
+        //     return
+        // }
+
+        // if (emailCheck === false && arrendador.correo.length !== 0) {
+        //     setEmailArrendadorCheck(true)
+        //     return
+        // }
+
+        // if (newContrato === true && newArrendatario === true) {
+        //     console.log("PROBANDO ARRENDATARIO")
+            // let respArrendatario = checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
+        //     console.log(respArrendatario, "Validacion Rut Arrendatario")
+
+        //     const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
+        //     console.log("Revision de correo arrendatario: ", emailCheckArrendatario)
+
+            if (resp === false && arrendatario.rut.length !== 0) {
+                // setRutArrendatarioCheck(true)
+                console.log("RUT INVALIDO ARRENDATARIO")
+                return
+            }
+
+            // if (emailCheckArrendatario === false && arrendatario.correo.length !== 0) {
+            //     setEmailArrendatarioCheck(true)
+            //     console.log("EMAIL INVALIDO ARRENDATARIO")
+            //     return
+            // }
+
+        //     console.log(fechaContratoError, "Error contrato?")
+
+        //     if (inicioContrato !== "" && terminoContrato !== "" && Date.parse(inicioContrato) >= Date.parse(terminoContrato)) {
+        //         setFechaContratoError(true)
+        //         console.log(fechaContratoError, "Error contrato?")
+        //         console.log("LA FECHA INICIO ES MAYOR A LA DE TERMINO")
+        //     }
+        // }
+
+        console.log("SE EJECUTA ADDPROPIEDAD")
+        overwriteContrato()
+        // addPropiedad()
+    }
+
+    const checkInputContrato = () =>{
+
+        if(inicioContrato == ""){
+            console.log("Falta agregar Inicio de contrato")
+        }
+
+        if(terminoContrato == ""){
+            console.log("Falta agregar Término de contrato")
+        }
 
     }
 
+    const checkInputRut = {
+        // Valida el rut con su cadena completa "XXXXXXXX-X"
+        validaRut: function (rutCompleto) {
+            rutCompleto = rutCompleto.replace("‐", "-");
+            if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
+                return false;
+            var tmp = rutCompleto.split('-');
+            var digv = tmp[1];
+            var rut = tmp[0];
+            if (digv == 'K') digv = 'k';
+
+            return (checkInputRut.dv(rut) == digv);
+        },
+        dv: function (T) {
+            var M = 0, S = 1;
+            for (; T; T = Math.floor(T / 10))
+                S = (S + T % 10 * (9 - M++ % 6)) % 11;
+            return S ? S - 1 : 'k';
+        }
+    }
+
+    function checkRut(rut) {
+
+        var actual = rut.replace(/^0+/, "");
+        if (actual !== '' && actual.length > 1) {
+            var sinPuntos = actual.replace(/\./g, "");
+            var actualLimpio = sinPuntos.replace(/-/g, "");
+            var inicio = actualLimpio.substring(0, actualLimpio.length - 1);
+            var rutPuntos = "";
+            var i = 0;
+            var j = 1;
+            for (i = inicio.length - 1; i >= 0; i--) {
+                var letra = inicio.charAt(i);
+                rutPuntos = letra + rutPuntos;
+                if (j % 3 === 0 && j <= inicio.length - 1) {
+                    rutPuntos = "." + rutPuntos;
+                }
+                j++;
+            }
+            var dv = actualLimpio.substring(actualLimpio.length - 1);
+            rutPuntos = rutPuntos + "-" + dv;
+        }
+        return rutPuntos;
+    }
 
     return (
         <div className='w-screen flex justify-center items-center bg-white'>
@@ -270,7 +378,7 @@ export default function EditarPropiedad() {
                                 setTipo(e.target.value)
                             }}
                             className={`bg-gray-100 appearance-none  border  h-[4vh]  rounded-sm w-[100%] py-0  px-3 text-grey-darker`}>
-                            <option selected disabled value="Tipo">Tipo</option>
+                            <option value={tipo} disabled > Tipo </option>
                             <option value="CASA">Casa</option>
                             <option value="DEPARTAMENTO">Departamento</option>
                             <option value="OFICINA">Oficina</option>
@@ -401,8 +509,6 @@ export default function EditarPropiedad() {
                     <div className='w-[90%] h-auto mt-2 flex flex-col items-start justify-center'>
                         <div className='flex justify-between shadow-md items-center w-[100%] h-auto  '>
                             <div className='w-full h-full flex flex-col justify-start items-center '>
-
-
                                 <p className="flex my-4 text-xl">
                                     Contrato
                                 </p>
@@ -414,7 +520,7 @@ export default function EditarPropiedad() {
                                             setInicioContrato(e.target.value)
                                         }}
                                         className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                            ${contratoIncomplete === true && inicioContrato === "" && "outline outline-2 outline-red-300"}`} type="date"
+                                            ${contratoIncomplete == true && inicioContrato === "" && "outline outline-2 outline-red-300"}`} type="date"
                                         placeholder="Inicio de contrato" />
                                 </div>
                                 <div className="mb-5 w-[85%] flex flex-col justify-center items-start">
@@ -430,7 +536,7 @@ export default function EditarPropiedad() {
                                 <div
                                     className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
                                     <button className={`h-full w-1/2  flex justify-center items-center
-                                       ${newArrendatario === false && 'bg-white'}`}
+                                        ${newArrendatario === false && 'bg-white'}`}
                                         onClick={() => {
                                             setNewArrendatario(false)
                                             setArrendatarioIncomplete(false)
@@ -477,7 +583,12 @@ export default function EditarPropiedad() {
                                             <div className="mb-3 w-[85%] flex flex-col justify-center items-start">
                                                 <input
                                                     value={arrendatario.rut}
-                                                    onChange={text => { setArrendatario({ ...arrendatario, rut: text.target.value }) }}
+                                                    onChange={text => {
+                                                        if (text.target.value.length < 13) {
+                                                            let resp = checkRut(text.target.value)
+                                                            setArrendatario({ ...arrendatario, rut: resp })
+                                                        }
+                                                    }}
                                                     className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
                                                         ${arrendatarioIncomplete && arrendatario.rut.length <= 0 && " outline outline-2 outline-red-300"}`}
                                                     type="text"
@@ -515,9 +626,9 @@ export default function EditarPropiedad() {
                                         :
                                         <div className='h-[36vh]'>
                                             <ArrendatarioFinder selected={selected} setSelected={setSelected}
-                                                selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete} 
+                                                selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete}
                                                 leaseholders={leaseholders}
-                                                />
+                                            />
                                         </div>
                                     }
                                 </div>
@@ -551,15 +662,11 @@ export default function EditarPropiedad() {
                                                     }
                                                 }
                                             }
-
-
-
                                         }}
                                     >
                                         Crear Contrato
                                     </button>
                                     :
-
                                     <button
                                         className="inline-flex w-[50%] mb-3 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                         onClick={() => {
