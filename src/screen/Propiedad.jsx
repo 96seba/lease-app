@@ -129,7 +129,7 @@ export default function Propiedad() {
             const respAlert = await addAlerts(obj)
             console.log(respAlert.data.alert)
             setLogs(current => [{
-                fecha: fecha,
+                createdAt: respAlert.data.alert.createdAt,
                 level: respAlert.data.alert.level,
                 note: respAlert.data.alert.note,
                 by: respAlert.data.alert.by
