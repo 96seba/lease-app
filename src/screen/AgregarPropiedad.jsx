@@ -255,16 +255,10 @@ export default function AgregarPropiedad() {
                     }
                 }
 
-                console.log(objContrato)
-                console.log(objPropClean)
-
-
                 //* Ejecucion de fetchs para crear propiedad, uploadImage y leaseholder 
                 if (contArrendador === 0) {
                     //* El id de compañia va por defecto en developer mode
-                    objPropClean.companyId = 1
-                    console.log(objContrato)
-                    console.log(objPropClean)
+                    // objPropClean.companyId = 1
                     //* Se crea la propiedad con el objeto limpio de props vacios
                     const respProp = await createPropiedad(objPropClean)
                     console.log("respProp", respProp)
@@ -289,8 +283,13 @@ export default function AgregarPropiedad() {
                             objContrato.phone = String(arrendatario.telefono)
                             let date = new Date(arrendatario.fechaNacArrendatario)
                             objContrato.birthday = date.toISOString()
+
+                            console.log(objPropClean)
+
                             //* Se crea el contrato
                             if (contArrendatario === 0) {
+                                console.log(objContrato)
+                                console.log("Se crea un arrendatario")
                                 const respLease = await addLease(objContrato)
                                 console.log("respLease", respLease)
                             }
@@ -299,8 +298,11 @@ export default function AgregarPropiedad() {
                             objContrato.leaseholderId = selected.id
                             if (selected.id !== '') {
                                 //* Se crea el contrato
+                                console.log(objContrato)
+                                console.log("Se selecciona el arrendatario")
                                 const respLease = await addLease(objContrato)
                                 console.log("respLease", respLease)
+
                             }
                         }
                     }
