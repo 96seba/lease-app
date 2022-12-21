@@ -29,6 +29,29 @@ export default function TableVisitsPending(data) {
         }
     }
 
+    const calculoFecha = (fecha) => {
+
+        let dateVisit = new Date(fecha).getTime()
+        let dateActual = new Date().getTime()
+
+        // console.log(dateVisit)
+        // console.log(dateActual)
+
+        var diff = dateActual - dateVisit;
+
+        let calculo = Math.round((diff/(1000*60*60*24)))
+
+        // console.log(calculo,"Dias");
+
+        if(calculo <=0 ){
+            return "No existe atraso"
+        }
+        else{
+            return calculo
+        }  
+
+    }
+
     const columnas = [
         {
             name: 'Id',
@@ -43,7 +66,8 @@ export default function TableVisitsPending(data) {
             name: 'Direccion',
             selector: row => row.Lease?.property?.address,
             sortable: true,
-            wrap: true
+            wrap: true,
+            width: '35%'
         },
         {
             name: 'Fecha',
@@ -52,6 +76,13 @@ export default function TableVisitsPending(data) {
             center: true,
             compact: true,
             width: '16%'
+        }, {
+            name: 'Días de atraso',
+            selector: row => calculoFecha(row?.date?.slice(0, 10)),
+            sortable: true,
+            center: true,
+            compact: true,
+            width: '25%'
         },
 
     ]
@@ -72,14 +103,14 @@ export default function TableVisitsPending(data) {
             fixedHeaderScrollHeight='700px'
             pagination
             highlightOnHover
-            onRowDoubleClicked={(e)=>{
+            onRowDoubleClicked={(e) => {
                 console.log(e.Lease.propertyId)
                 let nav = `/propiedades/propiedad?=${e.Lease.propertyId}`
-                    navigate(nav, {
-                        state: {
-                            id: e.Lease.propertyId
-                        }
-                    })
+                navigate(nav, {
+                    state: {
+                        id: e.Lease.propertyId
+                    }
+                })
             }}
             paginationComponentOptions={paginationComponentOptions}
         />

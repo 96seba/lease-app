@@ -76,11 +76,14 @@ export default function Propiedad() {
 
     const [inputPriorityIncomplete, setInputPriorityIncomplete] = useState(false)
 
+
+
     const renderAlerts = () => {
         // console.log(annotations)
         return (
             annotations.map((item, index) =>
-                <p key={index}>{item.value + " -- " + item.by}</p>
+                // <p key={index}>{parseDate(item.createdAt) + " -- " + item.value - <strong className=' text-[#3A4348]'>{item.by}</strong>}</p>
+                <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - {item.value}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
             )
         )
     }
@@ -97,6 +100,14 @@ export default function Propiedad() {
     }
 
     const addAlert = async () => {
+
+        console.log("VALIDANDO INPUT")
+
+
+        console.log(inputLog)
+        console.log(priority)
+
+
         if (inputLog === "" || priority === "priority") {
             if (inputLog === "") {
                 setInputLogIncomplete(true)
@@ -124,7 +135,7 @@ export default function Propiedad() {
             let hour = newDate.getHours()
             let minutes = newDate.getMinutes()
             let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-            console.log(fecha,'fecha')
+            console.log(fecha, 'fecha')
             console.log(obj)
             const respAlert = await addAlerts(obj)
             console.log(respAlert.data.alert)
@@ -134,6 +145,11 @@ export default function Propiedad() {
                 note: respAlert.data.alert.note,
                 by: respAlert.data.alert.by
             }, ...current])
+
+            setInputLog("")
+            setPriority("priority")
+
+
         }
     }
 
@@ -146,10 +162,13 @@ export default function Propiedad() {
                 let body = {}
                 body.propertyId = data.id
                 body.value = inputAnnotation
+
                 let resp = await addAnnotations(body)
                 console.log(resp)
                 setAnnotations(current => [resp.data.annotation, ...current])
                 setInputAnnotation('')
+
+
             }
         }
     }
@@ -302,10 +321,10 @@ export default function Propiedad() {
                                         value={inputLog}
                                         onChange={event => setInputLog(event.target.value)}
                                         type="text"
-                                        id="large-input" className={`block p-4 w-[75%] h-10 bg-white rounded-lg outline outline-0 focus:outline-2 sm:text-md ${inputLogIncomplete === true && inputLog === '' && 'outline outline-[2.5px] outline-red-500'}`} />
-                                    <select defaultValue={priority}  name="priority" onChange={e => { setPriority(e.target.value) }}
+                                        id="large-input" className={`block p-4 w-[75%] h-10 bg-white rounded-lg sm:text-md ${inputLogIncomplete === true && inputLog === "" && 'outline outline-[2.5px] outline-red-500'}`} />
+                                    <select value={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
                                         className={`w-[25%] px-2 ml-1 rounded text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
-                                        <option value={priority} disabled > Prioridad </option>
+                                        <option value="priority" disabled > Prioridad </option>
                                         <option value="Alta">Alta</option>
                                         <option value="Media">Media</option>
                                         <option value="Baja">Baja</option>
@@ -358,7 +377,7 @@ export default function Propiedad() {
                                     updateExpenses()
                                 }}
                                 className='h-[4vh]  w-40 bg-emerald-400
-                             hover:bg-emerald-600  rounded'>
+                                hover:bg-emerald-600  rounded'>
                                 Guardar
                             </button>
                         </div>
