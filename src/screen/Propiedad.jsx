@@ -124,7 +124,8 @@ export default function Propiedad() {
             //* Se agregan los nuevos datos en el primer lugar del array
             setLogs(current => [{
                 level: respAlert.data.alert.level,
-                note: respAlert.data.alert.note
+                note: respAlert.data.alert.note,
+                by: respAlert.data.alert.by
             }, ...current])
         }
     }
@@ -309,7 +310,7 @@ export default function Propiedad() {
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
                                 {logs.map((item, index) =>
-                                    <p key={index} className='text-sm break-words'>{item.level} - {item.note}- {item.by}</p>
+                                    <p key={index} className='text-sm break-words'>{item.level} - {item.note} - {item.by}</p>
                                 )}
                             </div>
                         </div>

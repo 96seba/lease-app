@@ -1,37 +1,122 @@
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { customStyles, paginationComponentOptions } from '../utils/constants';
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFloppyDisk, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { visitIsDone } from '../api/visitIsDone';
 
 
 export default function TableVisits(visits) {
     React.useEffect(() => {
-        console.log(visits)
-        setAnnotation(visits)
+        // console.log(visits)
+        setAnnotation(visits[0]?.observations[0])
     }, [])
 
     const [annotation, setAnnotation] = useState("")
+    const [dateDone, setDateDone] = useState("")
 
 
     const parseDate = (fecha) => {
-
         let date = new Date(fecha)
+        // console.log(fecha, "asd")
 
         if (fecha === undefined) {
             return "No hay fecha"
         } else {
-            console.log(date, fecha)
             const yyyy = date.getFullYear();
             let mm = date.getMonth() + 1; // Months start at 0!
-            let dd = date.getDate();
+            let dd = date.getUTCDate();
 
             if (dd < 10) dd = '0' + dd;
             if (mm < 10) mm = '0' + mm;
 
             let formattedToday = dd + '/' + mm + '/' + yyyy;
+            console.log(formattedToday)
             return formattedToday
         }
+    }
+
+    const renderFechaInput = (index) => {
+        console.log(index)
+        if (index !== 0) {
+            return (
+                <input
+                    disabled
+                    type={'date'}
+                    className='block p-2.5 cursor-not-allowed w-[120px] text-sm text-gray-900
+             bg-gray-200 rounded-lg border border-gray-300
+              focus:ring-blue-500 focus:border-blue-500
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+            )
+        }
+        return (
+            <input
+                value={dateDone}
+                onChange={e => {
+                    setDateDone(e.target.value)
+                }}
+                type={'date'}
+                className='block p-2.5 w-[120px] text-sm text-gray-900
+             bg-gray-50 rounded-lg border border-gray-300
+              focus:ring-blue-500 focus:border-blue-500
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+
+        )
+    }
+
+    const renderAnotacionInput = (row, index) => {
+        if (index !== 0) {
+            return (
+                <textarea
+                    value={row.observations[index]} disabled
+                    data-tooltip-target="tooltip-default" id="message" rows="1"
+                    className="block p-2.5 w-full text-sm cursor-not-allowed text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Anotaciones"></textarea>
+            )
+        }
+        return (
+            <textarea
+                value={annotation}
+                onChange={e => { setAnnotation(e.target.value) }}
+                data-tooltip-target="tooltip-default" id="message" rows="1"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Anotaciones"></textarea>
+
+        )
+    }
+
+    const renderIcon = (row, index) => {
+        if (index !== 0) {
+            return (
+
+                <FontAwesomeIcon icon={faCircleCheck}
+                    className={`w-[23px] h-[23px] text-emerald-400`} />
+
+            )
+        }
+        return (
+            <button
+                onClick={async () => {
+                    let obj = {}
+                    let arr = []
+                    arr[0] = { note: annotation }
+                    let date = new Date(dateDone)
+                    obj.date = date.toISOString()
+                    obj.observations = arr
+                    obj.id = row.id
+                    // console.log(obj)
+                    let resp = await visitIsDone(obj)
+                    // console.log(resp)
+
+                }}
+            >
+                <FontAwesomeIcon icon={faFloppyDisk}
+                    className={`w-[23px] h-[23px]`} />
+            </button>
+
+        )
     }
 
     const columnas = [
@@ -53,9 +138,7 @@ export default function TableVisits(visits) {
         },
         {
             name: 'Fecha',
-            selector: row => <input 
-            type={'date'}
-            className='block p-2.5 w-[120px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'/>,
+            selector: (row, index) => renderFechaInput(index),
             sortable: true,
             wrap: true,
             compact: true,
@@ -63,18 +146,23 @@ export default function TableVisits(visits) {
         },
         {
             name: 'Anotaciones',
-            selector: row =>
-                <textarea
-                    value={row.observations[0]}
-                    data-tooltip-target="tooltip-default" id="message" rows="1"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Anotaciones"></textarea>
+            selector: (row, index) =>
+                renderAnotacionInput(row, index)
             ,
             sortable: true,
             compact: true,
             wrap: true,
-            width: '34%'
+            width: '30%'
         },
+        {
+            selector: (row, index) => renderIcon(row, index)
+            ,
+            sortable: true,
+            wrap: true,
+            compact: true,
+            width: '12%'
+        }
+
     ]
 
 

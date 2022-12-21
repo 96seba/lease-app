@@ -97,9 +97,10 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     value={boletasBody[getIndex(row.id)]?.amount}
                     onChange={e => {
                         setCostoAdm(row, Number(e.target.value))
-
                     }}
-                    className={`w-[120px] h-7 text-center text-black bg-gray-200/50 rounded-sm
+                    disabled
+                    className={`w-[120px] h-7 text-center text-gray-700 bg-gray-200/50 rounded-sm
+                                        
             focus:bg-white`} />,
             sortable: true,
             center: true,
@@ -169,7 +170,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             compact: true
         },
         {
-            name: 'Nro de boleto anterior',
+            name: 'Nro de boleta anterior',
             selector: row => row.nroTicket,
             sortable: true,
             center: true,

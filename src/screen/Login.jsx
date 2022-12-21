@@ -29,7 +29,7 @@ export default function Login() {
 
     }
 
-    const addAnotacion = (event) => {
+    const loginKey = (event) => {
         if (event.key === 'Enter') {
             console.log(user, pass)
             loginUser()
@@ -79,6 +79,7 @@ export default function Login() {
                         <input
                             value={user}
                             onChange={(e) => { setUser(e.target.value) }}
+                            onKeyDown={event => loginKey(event)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" type="text" placeholder="Usuario" />
                     </div>
                     <div className="mb-2">
@@ -88,7 +89,7 @@ export default function Login() {
                         <input
                             value={pass}
                             onChange={(e) => { setPass(e.target.value) }}
-                            onKeyDown={event => addAnotacion(event)}
+                            onKeyDown={event => loginKey(event)}
                             className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" placeholder="Contraseña" />
                         <p className="text-red text-xs italic"></p>
                     </div>
