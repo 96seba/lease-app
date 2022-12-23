@@ -34,14 +34,11 @@ export default function TableVisitsPending(data) {
         let dateVisit = new Date(fecha).getTime()
         let dateActual = new Date().getTime()
 
-        // console.log(dateVisit)
-        // console.log(dateActual)
 
         var diff = dateActual - dateVisit;
 
         let calculo = Math.round((diff/(1000*60*60*24)))
 
-        // console.log(calculo,"Dias");
 
         if(calculo <=0 ){
             return "No existe atraso"
@@ -57,11 +54,9 @@ export default function TableVisitsPending(data) {
             name: 'Id',
             selector: row => row.id,
             sortable: true,
-            center: true,
             compact: true,
-            width: '7%'
+            width: '14%'
         },
-
         {
             name: 'Direccion',
             selector: row => row.Lease?.property?.address,
@@ -75,8 +70,9 @@ export default function TableVisitsPending(data) {
             sortable: true,
             center: true,
             compact: true,
-            width: '16%'
-        }, {
+            width: '20%'
+        }, 
+        {
             name: 'Días de atraso',
             selector: row => calculoFecha(row?.date?.slice(0, 10)),
             sortable: true,
