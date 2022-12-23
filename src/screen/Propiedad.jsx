@@ -44,6 +44,7 @@ export default function Propiedad() {
         setFotoUrl(API_HOST + data.property?.image || '')
         document.title = 'Propiedad ' + data.property.property_id
         const respExpenses = await getExpensesId(data.property.id)
+        console.log(respExpenses)
         setDataExp(respExpenses.data.expenses)
     }
 

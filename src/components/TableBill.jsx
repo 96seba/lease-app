@@ -4,7 +4,7 @@ import DataTable, { createTheme } from 'react-data-table-component';
 import Drop from '../components/Drop'
 import { getExpensesId } from '../api/getExpensesId';
 import { dateFormatNames } from '@progress/kendo-intl';
-import { customStyles , paginationComponentOptions} from '../utils/constants';
+import { customStyles, paginationComponentOptions } from '../utils/constants';
 
 const getMonth = (period) => {
     let m = Number(period.slice(0, 2)) - 1
@@ -71,7 +71,7 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
         },
         {
             name: 'Monto',
-            selector: row => <Drop />,
+            selector: (row, index) => <Drop id={row.id} index={index} name={"arriendo"} setArray={setArray} status={row.arriendo} />,
             sortable: true,
             compact: true,
             width: '15%'
@@ -108,9 +108,9 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
 
     if (dataExp.length === 0) {
         return <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
-        <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
-        <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
-    </div>
+            <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+            <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
+        </div>
     }
     return (
         < DataTable
@@ -121,6 +121,7 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
             pagination
             highlightOnHover
             customStyles={customStyles}
+            defaultSortAsc={1}
             paginationComponentOptions={paginationComponentOptions}
         />
 

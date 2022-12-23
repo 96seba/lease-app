@@ -17,7 +17,7 @@ export default function Propiedades() {
     useEffect(() => {
         const getData = async () => {
             let resp = await getAllExpenses()
-            // console.log(resp.data.allAdminExpenses)
+            console.log(resp.data.allAdminExpenses)
             setTableData(resp.data.allAdminExpenses)
         }
         getData()

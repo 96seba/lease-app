@@ -51,15 +51,15 @@ export default function TableVisitsPending(data) {
 
         var diff = dateActual - dateVisit;
 
-        let calculo = Math.round((diff/(1000*60*60*24)))
+        let calculo = Math.round((diff / (1000 * 60 * 60 * 24)))
 
 
-        if(calculo <=0 ){
+        if (calculo <= 0) {
             return "No existe atraso"
         }
-        else{
+        else {
             return calculo
-        }  
+        }
 
     }
 
@@ -86,7 +86,7 @@ export default function TableVisitsPending(data) {
             compact: true,
             width: '20%',
             sortFunction: dateSort
-        }, 
+        },
         {
             name: 'Días de atraso',
             selector: row => calculoFecha(row?.date?.slice(0, 10)),
@@ -99,9 +99,9 @@ export default function TableVisitsPending(data) {
     ]
 
     if (data.data.length === 0) {
-        return <div className="w-full h-[22vh] flex justify-center items-center flex-col">
-            <p>No hay visitas pendientes aun :/</p>
-            <img src={require('../assets/velociraptor.png')} className={'w-[12vw]'} />
+        return <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
+            <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+            <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
         </div>
     }
 

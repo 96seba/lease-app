@@ -31,22 +31,23 @@ export default function TableDebtors({ debtorData }) {
     const columnas = [
         {
             name: 'Propiedad',
-            selector: row => row.expense.id,
+            selector: row => row?.id,
             sortable: true,
             width: '10%',
-            compact: true
+            compact: true,
+            center: true
         },
         {
             name: 'Arrendatario',
-            selector: row => printArrendatario(row?.leaseholder),
+            selector: row => row?.name + " " + row?.lastname,
             sortable: true
         },
         {
             name: 'Correo',
             selector: (row) => {
 
-                if (row.leaseholder) {
-                    return row.leaseholder.email
+                if (row.email) {
+                    return row?.email
                 } else {
                     return "No hay correo"
                 }
@@ -56,13 +57,19 @@ export default function TableDebtors({ debtorData }) {
         {
             name: 'Número',
             selector: row => {
-                if (row.leaseholder) {
-                    return row.leaseholder.phone
+                if (row.phone) {
+                    return row?.phone
                 } else {
                     return "No hay telefono"
                 }
             },
-            sortable: true
+            sortable: true,
+        },
+        {
+            name: 'Nro de deudas',
+            selector: row => row?.amount_debts,
+            sortable: true,
+            center: true
         },
         {
             name: '',
@@ -70,10 +77,10 @@ export default function TableDebtors({ debtorData }) {
                 type="button"
                 className="inline-flex w-28 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                 onClick={async () => {
-                    let nav = `/propiedades/propiedad?=${row.expense.property.id}`
+                    let nav = `/propiedades/propiedad?=${row.id}`
                     navigate(nav, {
                         state: {
-                            id: row.expense.property.id
+                            id: row.id
                         }
                     })
                 }}

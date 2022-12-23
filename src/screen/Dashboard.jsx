@@ -83,9 +83,9 @@ export default function Dashboard() {
                         </div>
                         {visitsData !== [] ?
                             <TableVisitsPending data={visitsData} /> :
-                            <div className="w-full h-[20vh] flex justify-center items-center flex-col">
-                                <p>No hay visitas aun :/</p>
-                                <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />
+                            <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
+                                <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+                                <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
                             </div>
                         }
                     </div>
@@ -95,9 +95,9 @@ export default function Dashboard() {
                         </div>
                         {alertsData.length > 0 ?
                             <TableAlerts data={alertsData} /> :
-                            <div className="w-full h-[20vh] flex justify-center items-center flex-col">
-                                <p>No hay pendientes criticos aun :/</p>
-                                <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />
+                            <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
+                                <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+                                <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
                             </div>
 
                         }

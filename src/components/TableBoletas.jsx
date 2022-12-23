@@ -18,7 +18,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                 // console.log(element)
                 arr[index] = { propertyId: element.id, nroTicket: "", ticket: null, amount: element.amount }
             });
-            console.log(arr)
+            // console.log(arr)
             setBoletasBody(arr)
         }
         createStates()
@@ -87,7 +87,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
     const columnas = [
         {
             name: 'ID Propiedad',
-            selector: row => row.id,
+            selector: row => row.propertyId,
             sortable: true,
             width: "9%",
         },
