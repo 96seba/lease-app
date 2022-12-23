@@ -4,10 +4,26 @@ import DataTable from 'react-data-table-component';
 import { useNavigate } from "react-router-dom"
 import { customStyles, paginationComponentOptions } from '../utils/constants';
 
+
+
+const amountSort = (rowA, rowB) => {
+    let date1 = rowA.amounts[0]?.amount_lease
+    let date2 = rowB.amounts[0]?.amount_lease
+
+    if (date1 > date2) {
+        return 1;
+    }
+
+    if (date2 > date1 ) {
+        return -1;
+    }
+    return 0;
+};
+
 const columnas = [
     {
         name: 'Id',
-        selector: row => Number(row.property_id),
+        selector: row => row.property_id,
         sortable: true,
         width: '8%'
     },
@@ -34,8 +50,7 @@ const columnas = [
     },
     {
         name: 'Telefono',
-        selector: row =>
-            "+" + row.owner?.phone
+        selector: row => row.owner?.phone
         ,
         sortable: true,
         wrap: true,
@@ -53,9 +68,10 @@ const columnas = [
         selector: row => "$ " + row.amounts[0]?.amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
         // selector: row => "$ " + row.amounts[0].amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
         sortable: true,
-        width: '13%'
+        width: '13%',
+        sortFunction: amountSort
     },
-   
+    
 ]
 
 const validaArrendador = (userName, userLastName) => {
