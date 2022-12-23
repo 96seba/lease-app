@@ -80,6 +80,21 @@ export default function TableAlerts(data) {
         setModalStates(arr)
     }
 
+    const dateSort = (rowA, rowB) => {
+        let date1 = new Date(rowA.date)
+        let date2 = new Date(rowB.date)
+
+        if (date1.getTime() > date2.getTime()) {
+            return 1;
+        }
+
+        if (date2.getTime() > date1.getTime()) {
+            return -1;
+        }
+
+        return 0;
+    };
+
 
     const renderModal = (row) => {
         let index = getIndex(row.id)
@@ -115,7 +130,8 @@ export default function TableAlerts(data) {
             sortable: true,
             center: true,
             compact: true,
-            width: '16%'
+            width: '16%',
+            sortFunction: dateSort
         },
         {
             name: 'Prioridad',

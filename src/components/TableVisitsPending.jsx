@@ -43,22 +43,40 @@ export default function TableVisitsPending(data) {
 
         return 0;
     };
+    const calculoFecha = (fecha) => {
+
+        let dateVisit = new Date(fecha).getTime()
+        let dateActual = new Date().getTime()
+
+
+        var diff = dateActual - dateVisit;
+
+        let calculo = Math.round((diff/(1000*60*60*24)))
+
+
+        if(calculo <=0 ){
+            return "No existe atraso"
+        }
+        else{
+            return calculo
+        }  
+
+    }
 
     const columnas = [
         {
             name: 'Id',
             selector: row => row.id,
             sortable: true,
-            center: true,
             compact: true,
-            width: '7%'
+            width: '14%'
         },
-
         {
             name: 'Direccion',
             selector: row => row.Lease?.property?.address,
             sortable: true,
-            wrap: true
+            wrap: true,
+            width: '35%'
         },
         {
             name: 'Fecha',
@@ -66,8 +84,16 @@ export default function TableVisitsPending(data) {
             sortable: true,
             center: true,
             compact: true,
-            width: '16%',
+            width: '20%',
             sortFunction: dateSort
+        }, 
+        {
+            name: 'Días de atraso',
+            selector: row => calculoFecha(row?.date?.slice(0, 10)),
+            sortable: true,
+            center: true,
+            compact: true,
+            width: '25%'
         },
 
     ]
