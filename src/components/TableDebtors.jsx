@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
-import { customStyles, paginationComponentOptions} from '../utils/constants';
+import { customStyles, paginationComponentOptions } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -44,7 +44,7 @@ export default function TableDebtors({ debtorData }) {
         {
             name: 'Correo',
             selector: (row) => {
-             
+
                 if (row.leaseholder) {
                     return row.leaseholder.email
                 } else {
@@ -84,7 +84,14 @@ export default function TableDebtors({ debtorData }) {
             width: '25%',
         },
     ]
-    
+
+
+    if (debtorData.length === 0) {
+        return (<div className="w-full h-[22vh] flex justify-center items-center flex-col">
+            <p>No hay deudores a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+            <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
+        </div>)
+    }
     return (
         <DataTable
             columns={columnas}

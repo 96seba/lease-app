@@ -3,22 +3,23 @@ import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { getPropiedades } from "../api/getPropiedades"
 import ModalAddFile from '../components/ModalAddFile';
-import TableDebtors from "../components/TableDebtors";
-import { editPropiedad } from '../api/editPropiedad'
 
 export default function Propiedades() {
 
     let navigate = useNavigate()
     const [dataProp, setDataProp] = useState("")
-
     const [open, setOpen] = useState(false)
 
 
     useEffect(() => {
         const propiedades = async () => {
             const resp = await getPropiedades()
+            if (resp.status === 401) {
+                navigate('/login')
+            }
             setDataProp(resp.data.properties)
             console.log(resp.data.properties)
+
         }
         propiedades()
     }, [])

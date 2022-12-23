@@ -13,7 +13,7 @@ export default function TableAlerts(data) {
 
     useEffect(() => {
         console.log("HA LLEGADO DEL DATA CHAVALES")
-        console.log(data)
+        // console.log(data)
         setHandleData(data)
     }, [])
 
@@ -21,13 +21,13 @@ export default function TableAlerts(data) {
     useEffect(() => {
         const createStates = async () => {
             // console.log(data.data)
-            console.log(data.data.length)
+            // console.log(data.data.length)
             let arr = []
             await data.data.forEach((element, index) => {
-                console.log(index)
+                // console.log(index)
                 arr[index] = { id: element.id, state: false }
             });
-            console.log(arr)
+            // console.log(arr)
             setModalStates(arr)
         }
         createStates()
@@ -35,7 +35,7 @@ export default function TableAlerts(data) {
 
     const refreshAlerts = async () => {
         const respAlerts = await getAlertsPending()
-        console.log(respAlerts.data.alerts)
+        // console.log(respAlerts.data.alerts)
         let obj = { data: respAlerts.data.alerts }
 
         setHandleData(obj)
@@ -53,17 +53,17 @@ export default function TableAlerts(data) {
 
     const setCheckState = async (row) => {
         let index = getIndex(row.id)
-        console.log(index)
-        console.log(modalStates[index].state)
+        // console.log(index)
+        // console.log(modalStates[index].state)
         if (modalStates[index].state === true) {
             let arr = [...modalStates]
             arr[index].state = false
-            console.log(arr)
+            // console.log(arr)
             setModalStates(arr)
         } else if (modalStates[index].state === false) {
             let arr = [...modalStates]
             arr[index].state = true
-            console.log(arr)
+            // console.log(arr)
             setModalStates(arr)
         }
 
@@ -71,9 +71,9 @@ export default function TableAlerts(data) {
 
     const setCheckStateFalse = async (row) => {
         let index = getIndex(row.id)
-        console.log(index)
-        console.log("Se va a false gente", row.id)
-        console.log(modalStates[index].state)
+        // console.log(index)
+        // console.log("Se va a false gente", row.id)
+        // console.log(modalStates[index].state)
         let arr = [...modalStates]
         arr[index].state = false
         console.log(arr)
@@ -85,7 +85,6 @@ export default function TableAlerts(data) {
         let index = getIndex(row.id)
 
         if (modalStates[index]?.state === true) {
-            console.log(modalStates[index])
             return (
                 <ModalResolveAlert row={row} setCheckStateFalse={setCheckStateFalse} refreshAlerts={refreshAlerts} />
             )

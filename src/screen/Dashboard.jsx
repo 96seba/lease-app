@@ -8,8 +8,11 @@ import { getVisitsPending } from '../api/getVisitsPending';
 import TableAlerts from '../components/TableAlerts';
 import { getAlertsPending } from '../api/getAlertsPending';
 import { getExpensesPerDay } from '../api/getExpensesPerDay';
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
+
+    const navigate = useNavigate()
 
     const [debtorData, setDebtorData] = useState([])
     const [visitsData, setVisitsData] = useState([
@@ -28,8 +31,11 @@ export default function Dashboard() {
     useEffect(() => {
         const getData = async () => {
             const respDebtors = await getDebtors()
-            console.log(respDebtors.data)
-            setDebtorData(respDebtors.data.debtors)
+            console.log(respDebtors)
+            if (respDebtors.status === 401) {
+                navigate('/login')
+            }
+            setDebtorData(respDebtors.data?.debtors)
             const respVisits = await getVisitsPending()
             setVisitsData(respVisits.data.visits)
             console.log(respVisits)

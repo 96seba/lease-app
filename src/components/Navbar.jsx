@@ -2,13 +2,8 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-const navigation = [
-    { name: 'Dashboard', href: '/dashboard', current: false },
-    { name: 'Propiedades', href: '/propiedades', current: false },
-    { name: 'Boletas', href: '/boletas', current: false },
-    { name: 'Usuarios', href: '/usuarios', current: false },
-]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -16,8 +11,35 @@ function classNames(...classes) {
 
 function Navbar() {
 
+    const [navigation, setNavigation] = useState([])
+
+    useEffect(() => {
+        const renderNavbar = async () => {
+            if (localStorage.getItem('type_user') === 'ADMIN') {
+                setNavigation([
+                    { name: 'Dashboard', href: '/dashboard', current: false },
+                    { name: 'Propiedades', href: '/propiedades', current: false },
+                    { name: 'Boletas', href: '/boletas', current: false },
+                    { name: 'Usuarios', href: '/usuarios', current: false },
+                ])
+            } else {
+                setNavigation([
+                    { name: 'Dashboard', href: '/dashboard', current: false },
+                    { name: 'Propiedades', href: '/propiedades', current: false },
+                    { name: 'Boletas', href: '/boletas', current: false },
+                ])
+            }
+
+        }
+        renderNavbar()
+    }, [])
+
     let navigate = useNavigate()
 
+
+    if (navigation.length === 0) {
+        return <></>
+    }
     return (
         <Disclosure as="nav" className="bg-[#FF6F00] p-0.5">
             {({ open }) => (
@@ -72,7 +94,7 @@ function Navbar() {
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 <Menu as="div" className="relative ml-3">
                                     <div>
-                                        <Menu.Button  className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                             <span className="sr-only">Open user menu</span>
                                             <img
                                                 className="h-8 w-8 rounded-full bg-gray-100"
@@ -97,7 +119,7 @@ function Navbar() {
                                                         onClick={() => { navigate('/login') }}
                                                         className={classNames(active ? 'bg-gray-100' : '', 'block text-left px-4 w-full py-2 text-sm text-gray-700')}
                                                     >
-                                                      Cerrar sesión
+                                                        Cerrar sesión
 
                                                     </button>
                                                 )}

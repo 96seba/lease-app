@@ -1,16 +1,15 @@
+import { API_HOST } from '../utils/constants'
 
-import { API_HOST, TOKEN } from '../utils/constants'
-
-export async function getAlertsPending() {
+export async function getCurentUser(token) {
     try {
-        const response = await fetch(API_HOST + '/api/v1/properties/alertsPending/',
+        const response = await fetch(API_HOST + '/api/v1/user/current',
             {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + TOKEN
-                }
-            })
+                    Authorization: 'Bearer ' + token,
+                },
+            });
         const result = await response.json();
         var obj = { status: response.status, data: result.data }
         return obj

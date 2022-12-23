@@ -7,27 +7,17 @@ import { sendAllTickets } from '../api/sendAllTickets'
 
 
 export default function Propiedades() {
+
     const [files, setFile] = useState([])
     const [boletasBody, setBoletasBody] = useState([])
-    const [boletasIds, setBoletasIds] = useState([])
 
-    const [tablaData, setTableData] = useState([
-        // {
-        //     id: 1, costoadministracion: 92000, nroboleta: "20", nroboletaanterior: "14",
-        // },
-        // {
-        //     id: 2, costoadministracion: 100000, nroboleta: "13", nroboletaanterior: "8",
-        // },
-        // {
-        //     id: 3, costoadministracion: 98000, nroboleta: "11", nroboletaanterior: "15",
-        // },
-    ])
+    const [tablaData, setTableData] = useState([])
 
 
     useEffect(() => {
         const getData = async () => {
             let resp = await getAllExpenses()
-            console.log(resp.data.allAdminExpenses)
+            // console.log(resp.data.allAdminExpenses)
             setTableData(resp.data.allAdminExpenses)
         }
         getData()
@@ -63,13 +53,13 @@ export default function Propiedades() {
                     <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[150ms] ease-out group-hover:w-full"></div>
                     <span className="relative  group-hover:text-white">Guardar boletas</span>
                 </button>
-                <button onClick={() => {
+                {/* <button onClick={() => {
                     sendBoletas()
                 }}
                     className="group relative h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">
                     <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[150ms] ease-out group-hover:w-full"></div>
                     <span className="relative  group-hover:text-white">Enviar boletas</span>
-                </button>
+                </button> */}
 
             </div>
 
@@ -79,14 +69,14 @@ export default function Propiedades() {
                 </div>
                 {
                     tablaData.length === 0 ?
-                        <>asd</>
+                        <div className={`w-full flex h-10 justify-center items-center`}>
+                            No hay data
+                        </div>
                         :
                         <TableBoletas tablaData={tablaData} files={files} setFile={setFile}
                             boletasBody={boletasBody} setBoletasBody={setBoletasBody} />
                 }
-
             </div>
-
         </div>
     )
 }

@@ -25,9 +25,6 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
 
     const cancelButtonRef = useRef(null)
 
-    if (dataRow === '') {
-        return <></>
-    }
 
     const executeEnter = (event) => {
         if (event.key === 'Enter') {
@@ -44,7 +41,7 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
         console.log(obj)
 
         const data = await updateUser(obj)
-        console.log(data.data.user)
+        console.log(data)
 
 
         const getId = (element) => element.id === dataRow.id;
@@ -63,6 +60,9 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
     }
 
 
+    if (dataRow === '') {
+        return <></>
+    }
     return (
         <div>
             <Transition.Root show={open} as={Fragment}>
@@ -99,9 +99,9 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
                                             <div className="space-y-4 md:space-y-6" action="#">
                                                 <div className="">
                                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
-                                                    <input value={user.email}
+                                                    <input value={user.email} disabled
                                                         onKeyDown={event => { executeEnter(event) }}
-                                                        onChange={event => setUser({ ...user, email: event.target.value })} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                                                        onChange={event => setUser({ ...user, email: event.target.value })} type="email" name="email" id="email" className="bg-gray-200 border border-gray-300 text-gray-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                                                         required="" />
                                                 </div>
                                                 <div>

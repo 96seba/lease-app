@@ -16,7 +16,7 @@ export default function TableVisitsPending(data) {
         if (fecha === undefined) {
             return "No hay fecha"
         } else {
-            console.log(date, fecha)
+            // console.log(date, fecha)
             const yyyy = date.getFullYear();
             let mm = date.getMonth() + 1; // Months start at 0!
             let dd = date.getDate();
@@ -28,6 +28,21 @@ export default function TableVisitsPending(data) {
             return formattedToday
         }
     }
+
+    const dateSort = (rowA, rowB) => {
+        let date1 = new Date(rowA.date)
+        let date2 = new Date(rowB.date)
+
+        if (date1.getTime() > date2.getTime()) {
+            return 1;
+        }
+
+        if (date2.getTime() > date1.getTime()) {
+            return -1;
+        }
+
+        return 0;
+    };
 
     const columnas = [
         {
@@ -51,7 +66,8 @@ export default function TableVisitsPending(data) {
             sortable: true,
             center: true,
             compact: true,
-            width: '16%'
+            width: '16%',
+            sortFunction: dateSort
         },
 
     ]
@@ -72,14 +88,14 @@ export default function TableVisitsPending(data) {
             fixedHeaderScrollHeight='700px'
             pagination
             highlightOnHover
-            onRowDoubleClicked={(e)=>{
+            onRowDoubleClicked={(e) => {
                 console.log(e.Lease.propertyId)
                 let nav = `/propiedades/propiedad?=${e.Lease.propertyId}`
-                    navigate(nav, {
-                        state: {
-                            id: e.Lease.propertyId
-                        }
-                    })
+                navigate(nav, {
+                    state: {
+                        id: e.Lease.propertyId
+                    }
+                })
             }}
             paginationComponentOptions={paginationComponentOptions}
         />

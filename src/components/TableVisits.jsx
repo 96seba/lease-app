@@ -4,12 +4,13 @@ import { customStyles, paginationComponentOptions } from '../utils/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFloppyDisk, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import { visitIsDone } from '../api/visitIsDone';
+import { getVisitsForProperty } from '../api/getVisitsForProperty';
 
 
-export default function TableVisits(visits) {
+export default function TableVisits({ id, visits, setVisits }) {
     React.useEffect(() => {
-        // console.log(visits)
-        setAnnotation(visits[0]?.observations[0])
+        console.log(visits)
+        // setAnnotation(visits[0]?.observations[0])
     }, [])
 
     const [annotation, setAnnotation] = useState("")
@@ -31,13 +32,13 @@ export default function TableVisits(visits) {
             if (mm < 10) mm = '0' + mm;
 
             let formattedToday = dd + '/' + mm + '/' + yyyy;
-            console.log(formattedToday)
+            // console.log(formattedToday)
             return formattedToday
         }
     }
 
-    const renderFechaInput = (index) => {
-        console.log(index)
+    const renderFechaInput = (index, date) => {
+        // console.log(index, date)
         if (index !== 0) {
             return (
                 <input
@@ -52,14 +53,14 @@ export default function TableVisits(visits) {
         }
         return (
             <input
+                min={date.slice(0, 10)}
                 value={dateDone}
                 onChange={e => {
                     setDateDone(e.target.value)
                 }}
                 type={'date'}
                 className='block p-2.5 w-[120px] text-sm text-gray-900
-             bg-gray-50 rounded-lg border border-gray-300
-              focus:ring-blue-500 focus:border-blue-500
+             bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500
                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
 
@@ -67,10 +68,11 @@ export default function TableVisits(visits) {
     }
 
     const renderAnotacionInput = (row, index) => {
+        // console.log(row.observations[0]?.note)
         if (index !== 0) {
             return (
                 <textarea
-                    value={row.observations[index]} disabled
+                    value={row.observations[0]?.note} disabled
                     data-tooltip-target="tooltip-default" id="message" rows="1"
                     className="block p-2.5 w-full text-sm cursor-not-allowed text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Anotaciones"></textarea>
@@ -108,8 +110,10 @@ export default function TableVisits(visits) {
                     obj.id = row.id
                     // console.log(obj)
                     let resp = await visitIsDone(obj)
-                    // console.log(resp)
-
+                    console.log(resp)
+                    let visitsData = await getVisitsForProperty(id)
+                    console.log(visitsData)
+                    setVisits(visitsData.visits)
                 }}
             >
                 <FontAwesomeIcon icon={faFloppyDisk}
@@ -138,7 +142,7 @@ export default function TableVisits(visits) {
         },
         {
             name: 'Fecha',
-            selector: (row, index) => renderFechaInput(index),
+            selector: (row, index) => renderFechaInput(index, row.date),
             sortable: true,
             wrap: true,
             compact: true,
@@ -155,21 +159,19 @@ export default function TableVisits(visits) {
             width: '30%'
         },
         {
-            selector: (row, index) => renderIcon(row, index)
-            ,
+            selector: (row, index) => renderIcon(row, index),
             sortable: true,
             wrap: true,
             compact: true,
-            width: '12%'
+            width: '10%'
         }
 
     ]
 
-
     return (
         <DataTable
             columns={columnas}
-            data={visits.visits}
+            data={visits}
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination

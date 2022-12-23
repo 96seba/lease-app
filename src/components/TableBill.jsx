@@ -107,10 +107,10 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
     ]
 
     if (dataExp.length === 0) {
-        return <div className="w-full h-[20vh] flex justify-center items-center flex-col">
-            <p>No hay pagos aun :/</p>
-            <img src={require('../assets/velociraptor.png')} className={'w-[12vh]'} alt="" />
-        </div>
+        return <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
+        <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+        <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
+    </div>
     }
     return (
         < DataTable

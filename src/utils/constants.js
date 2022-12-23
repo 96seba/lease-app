@@ -43,7 +43,7 @@ export const customStyles = {
             borderBottomColor: '#FFFFFF',
         },
         pageButtonsStyle: {
-            color: '#FF0000',
+            color: '#FFFFFF',
             fill: '#FF6F00',
             '&:hover:not(:disabled)': {
                 backgroundColor: '#3A4348',
@@ -51,7 +51,7 @@ export const customStyles = {
             },
             '&:focus': {
                 outline: 'none',
-                backgroundColor: '#FF0000',
+                backgroundColor: '#FFFFFF',
             },
         },
     },

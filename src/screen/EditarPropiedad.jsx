@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { editPropiedad } from "../api/editPropiedad"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { uploadPropiedadImagen } from "../api/uploadPropiedadImagen"
 import ModalEditPropiedad from "../components/ModalEditPropiedad"
 import ModalNewContrato from "../components/ModalNewContrato"
@@ -8,13 +8,14 @@ import ArrendatarioFinder from '../components/ArrendatarioFinder'
 import { editLease } from "../api/editLease"
 import { addLease } from "../api/addLease"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faFileCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faFileCirclePlus, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { deactivateLease } from "../api/deactivateLease"
 import { getLeaseholder } from "../api/getLeaseholder"
 
 export default function EditarPropiedad() {
 
     const location = useLocation()
+    const navigate = useNavigate()
 
     const [open, setOpen] = useState(false)
     const [openModalContrato, setOpenModalContrato] = useState(false)
@@ -252,23 +253,23 @@ export default function EditarPropiedad() {
 
         // if (newContrato === true && newArrendatario === true) {
         //     console.log("PROBANDO ARRENDATARIO")
-            // let respArrendatario = checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
+        // let respArrendatario = checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
         //     console.log(respArrendatario, "Validacion Rut Arrendatario")
 
         //     const emailCheckArrendatario = emailRegex.test(arrendatario.correo)
         //     console.log("Revision de correo arrendatario: ", emailCheckArrendatario)
 
-            if (resp === false && arrendatario.rut.length !== 0) {
-                // setRutArrendatarioCheck(true)
-                console.log("RUT INVALIDO ARRENDATARIO")
-                return
-            }
+        if (resp === false && arrendatario.rut.length !== 0) {
+            // setRutArrendatarioCheck(true)
+            console.log("RUT INVALIDO ARRENDATARIO")
+            return
+        }
 
-            // if (emailCheckArrendatario === false && arrendatario.correo.length !== 0) {
-            //     setEmailArrendatarioCheck(true)
-            //     console.log("EMAIL INVALIDO ARRENDATARIO")
-            //     return
-            // }
+        // if (emailCheckArrendatario === false && arrendatario.correo.length !== 0) {
+        //     setEmailArrendatarioCheck(true)
+        //     console.log("EMAIL INVALIDO ARRENDATARIO")
+        //     return
+        // }
 
         //     console.log(fechaContratoError, "Error contrato?")
 
@@ -284,13 +285,13 @@ export default function EditarPropiedad() {
         // addPropiedad()
     }
 
-    const checkInputContrato = () =>{
+    const checkInputContrato = () => {
 
-        if(inicioContrato == ""){
+        if (inicioContrato == "") {
             console.log("Falta agregar Inicio de contrato")
         }
 
-        if(terminoContrato == ""){
+        if (terminoContrato == "") {
             console.log("Falta agregar Término de contrato")
         }
 
@@ -347,6 +348,24 @@ export default function EditarPropiedad() {
                 <div className='w-full h-full flex flex-col justify-start items-center 
                 sm:px-4 md:px-20 lg:px-6 xl:px-32'>
 
+                    <button
+                    onClick={()=>{
+                        let nav = `/propiedades/propiedad?=${idProp}`
+                        navigate(nav, {
+                            state: {
+                                id: idProp
+                            }
+                        })
+                    }}
+                    className="w-[100px] top-[110px]  flex justify-between items-center h-12 
+                    absolute sm:left-[10vw] md:left-[17vw]  lg:left-[23vw]    xl:left-[31vw]
+                    ">
+                        <FontAwesomeIcon icon={faArrowLeft} className={`w-5 h-5`} />
+                        <span className="bg-white text-[25px]">
+                            Volver
+                        </span>
+                    </button>
+
                     <p className="flex mb-[7.3vh] mt-4 text-xl">
                         Datos de la propiedad
                     </p>
@@ -365,7 +384,6 @@ export default function EditarPropiedad() {
                         <input
                             value={direccion} onChange={text => { setDireccion(text.target.value) }}
                             className={`bg-gray-100 appearance-none h-[4vh] border  
-                        
                             rounded-sm w-[100%] py-2 px-3 text-grey-darke`} type="text"
                             placeholder="Direccion*" />
                     </div>

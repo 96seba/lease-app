@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudArrowUp, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCloudArrowUp, faCircleCheck, faFileCircleCheck, faFile } from '@fortawesome/free-solid-svg-icons'
 import { customStyles, paginationComponentOptions } from '../utils/constants';
 
 
@@ -15,7 +15,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
 
             let arr = []
             await tablaData.forEach((element, index) => {
-                console.log(element)
+                // console.log(element)
                 arr[index] = { propertyId: element.id, nroTicket: "", ticket: null, amount: element.amount }
             });
             console.log(arr)
@@ -49,7 +49,8 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         console.log(index)
         console.log(boletasBody[index].nroTicket)
         let arr = [...boletasBody]
-        arr[index].nroTicket = Number(data)
+        if ("")
+            arr[index].nroTicket = Number(data)
         console.log(arr)
         setBoletasBody(arr)
     }
@@ -94,24 +95,22 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             name: 'Costo por administración',
             selector: row =>
                 <input
-                    value={boletasBody[getIndex(row.id)]?.amount}
+                    value={boletasBody[getIndex(row.id)]?.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                     onChange={e => {
                         setCostoAdm(row, Number(e.target.value))
                     }}
                     disabled
-                    className={`w-[120px] h-7 text-center text-gray-700 bg-gray-200/50 rounded-sm
-                                        
-            focus:bg-white`} />,
+                    className={`w-[120px] h-7 text-center text-gray-700 bg-gray-200/50 rounded-sm focus:bg-white`} />,
             sortable: true,
             center: true,
-            width: '25%',
+            width: '22%',
             compact: true
         },
         {
             name: 'Subir boleta',
             selector: (row, index) => {
                 let result = boletasBody[getIndex(row.id)]?.ticket
-                console.log(row)
+                // console.log(row)
                 if (result !== null) {
                     return (
                         <button onClick={() => {
@@ -149,7 +148,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                 }
             },
             sortable: true,
-            width: "28%",
+            width: "25%",
             center: true,
             compact: true
         },
@@ -166,7 +165,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             ,
             sortable: true,
             center: true,
-            width: "15%",
+            width: "12%",
             compact: true
         },
         {
@@ -177,6 +176,13 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             width: "20%",
             compact: true
         },
+        {
+            name: "Estado",
+            center: true,
+            selector: row =>
+            // <FontAwesomeIcon icon={faFile} className={`w-6 h-6 text-emerald-400`} />
+            <FontAwesomeIcon icon={faFileCircleCheck} className={`w-6 h-6 text-emerald-400`} />
+        }
     ]
 
     if (boletasBody.length === 0) {

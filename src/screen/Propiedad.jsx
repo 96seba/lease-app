@@ -66,7 +66,9 @@ export default function Propiedad() {
 
     const [priority, setPriority] = useState("priority")
 
-    const [inputLog, setInputLog] = useState("")
+    const [inputAlert, setInputAlert] = useState("")
+
+    const [dateAlert, setDateAlert] = useState("")
 
     const [inputAnnotation, setInputAnnotation] = useState("")
 
@@ -75,6 +77,8 @@ export default function Propiedad() {
     const [inputLogIncomplete, setInputLogIncomplete] = useState(false)
 
     const [inputPriorityIncomplete, setInputPriorityIncomplete] = useState(false)
+
+    const [alertBill, setAlertBill] = useState(true)
 
     const renderAlerts = () => {
         // console.log(annotations)
@@ -97,8 +101,8 @@ export default function Propiedad() {
     }
 
     const addAlert = async () => {
-        if (inputLog === "" || priority === "priority") {
-            if (inputLog === "") {
+        if (inputAlert === "" || priority === "priority") {
+            if (inputAlert === "") {
                 setInputLogIncomplete(true)
                 console.log("TE FALTA EL MENSAJE")
             }
@@ -111,12 +115,17 @@ export default function Propiedad() {
         else {
             let obj = {}
             obj.propertyId = data.id
-            obj.note = inputLog
+            obj.note = inputAlert
             obj.level = priority.toUpperCase()
+            let objDate = new Date(dateAlert)
+            let objDay = objDate.getUTCDate()
+            let objMonth = objDate.getMonth() + 1
+            let objYear = objDate.getFullYear()
+            let objFecha = `${objDay < 10 ? `0${objDay}` : `${objDay}`}/${objMonth < 10 ? `0${objMonth}` : `${objMonth}`}/${objYear}`
+
+            console.log(objFecha)
 
             let newDate = new Date()
-            obj.fecha = newDate
-
             let separator = '/'
             let date = newDate.getDate();
             let month = newDate.getMonth() + 1;
@@ -124,16 +133,16 @@ export default function Propiedad() {
             let hour = newDate.getHours()
             let minutes = newDate.getMinutes()
             let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-            console.log(fecha,'fecha')
-            console.log(obj)
-            const respAlert = await addAlerts(obj)
-            console.log(respAlert.data.alert)
-            setLogs(current => [{
-                fecha: fecha,
-                level: respAlert.data.alert.level,
-                note: respAlert.data.alert.note,
-                by: respAlert.data.alert.by
-            }, ...current])
+            console.log(fecha, 'fecha')
+            // console.log(obj)
+            // const respAlert = await addAlerts(obj)
+            // console.log(respAlert.data.alert)
+            // setLogs(current => [{
+            //     fecha: fecha,
+            //     level: respAlert.data.alert.level,
+            //     note: respAlert.data.alert.note,
+            //     by: respAlert.data.alert.by
+            // }, ...current])
         }
     }
 
@@ -161,6 +170,7 @@ export default function Propiedad() {
             const resp = await editExpenses(element)
             console.log(resp)
         });
+        setAlertBill(true)
     }
 
     const parseType = () => {
@@ -192,6 +202,20 @@ export default function Propiedad() {
         }
     }
 
+    const renderPendientes = () => {
+        if (logs.length === 0) {
+
+            return (
+                <>No hay Pendientes criticos</>
+            )
+        }
+        return (
+            logs.map((item, index) =>
+                <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - <strong className='text-[#FF6F00]'>{item.level}</strong> - {item.note}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
+            )
+        )
+    }
+
     useEffect(() => {
         if (data.image === null) {
             setLoaded(false)
@@ -205,6 +229,26 @@ export default function Propiedad() {
     }
     return (
         <div className='bg-gray-100 w-[100vw] flex justify-center '>
+            {/* <div class="h-screen w-screen bg-gradient-to-br from-slate-100 sticky to-slate-300 py-32">
+                {
+                    alertBill === true &&
+                    <div onClick={() => {
+                        setAlertBill(false)
+                    }} className="bg-white/60 hover:bg-white/80 hover:shadow-lg transition duration-150 ease-linear backdrop-blur-xl z-20 max-w-md fixed right-4 top-10 rounded-lg p-6 shadow">
+                        <h1 className="text-xl text-slate-700 font-medium">Historial de pagos guardado con exito! ✅</h1>
+                    </div>
+                }
+
+                {
+                    alertBill === true &&
+                    <div onClick={() => {
+                        setAlertBill(false)
+                    }} className="bg-white/60 hover:bg-white/80 hover:shadow-lg transition duration-150 ease-linear backdrop-blur-xl z-20 max-w-md fixed right-4 top-10 rounded-lg p-6 shadow">
+                        <h1 className="text-xl text-slate-700 font-medium">Historial de pagos guardado con exito! ✅</h1>
+                    </div>
+                }
+            </div> */}
+
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[80vw]  2xl:w-[75vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
                     <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] ">
@@ -233,6 +277,10 @@ export default function Propiedad() {
                             </div>
                         }
                     </div>
+
+
+
+
                     <div className="flex  justify-between flex-column items-start p-6 w-[32vw] 2xl:w-[32vw] h-[40vh] bg-white ">
                         <div>
                             <p>ID: {data?.property_id}</p>
@@ -242,7 +290,7 @@ export default function Propiedad() {
                             <p>Nro Piso: {data?.floor}</p>
                             <p>Tipo: {parseType()}</p>
                         </div>
-                        <div className='w-full '>
+                        {/* <div className='w-full '>
 
                             <button onClick={() => {
                                 let nav = `/propiedades/propiedad/editarPropiedad`
@@ -255,13 +303,27 @@ export default function Propiedad() {
                                 className="group relative h-12 w-48 overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm">Editar Propiedad
                             </button>
 
-                        </div>
+                        </div> */}
                     </div>
                     <div>
                     </div>
                     <div className="flex justify-center flex-col rounded-r p-6 items-start w-[28vw] h-[40vh] bg-white">
                         <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
-                            <p>Dormitorios: {data.bedrooms || "Sin data"}</p>
+                            <div className='w-full '>
+
+                                <button onClick={() => {
+                                    let nav = `/propiedades/propiedad/editarPropiedad`
+                                    navigate(nav, {
+                                        state: {
+                                            data: data
+                                        }
+                                    })
+                                }}
+                                    className="group relative h-12 w-full overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm">Editar Propiedad
+                                </button>
+
+                            </div>
+                            <p className='mt-3'>Dormitorios: {data.bedrooms || "Sin data"}</p>
                             <p>Baños: {data.bathrooms || "Sin data"}</p>
                             <p>Estacionamiento: {parseAvaliable(data.parking)}</p>
                             <p>Bodega: {parseAvaliable(data.cellar)}</p>
@@ -273,11 +335,11 @@ export default function Propiedad() {
                         <b className='mb-2'>Contrato</b>
                         <div className='flex w-full h-full pt-'>
                             <div className='flex w-1/2 h-full flex-col '>
-                                <p className='text-sm'>Monto de arriendo: $ {data.amounts[0]?.amount_lease}</p>
+                                <p className='text-sm'>Monto de arriendo: $ {data.amounts[0]?.amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</p>
                             </div>
                             <div className='flex w-1/2 h-full flex-col '>
                                 <div>
-                                    <p className='text-sm'>Comision por administracion: $ {data.amounts[0]?.amount_adm}</p>
+                                    <p className='text-sm'>Comision por administracion: $ {data.amounts[0]?.amount_adm.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</p>
                                 </div>
                             </div>
                             <div className='flex w-1/2 h-full flex-col '>
@@ -291,19 +353,61 @@ export default function Propiedad() {
                 </div>
                 {/* Pendientes críticos */}
                 <div className="flex mb-10  rounded justify-between items-center w-[96%]  ">
-                    <div className="flex justify-center  items-start p-6 w-[48%] h-[36vh] bg-white rounded shadow-md">
+                    <div className="flex justify-center  items-start p-6 w-[56%] h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <div className='w-full'>
                                     <p className='text-lg font-semibold'>Pendientes críticos</p>
                                 </div>
                                 <div className='flex flex-row'>
-                                    <input
-                                        value={inputLog}
-                                        onChange={event => setInputLog(event.target.value)}
+                                    <div className={` w-[100%] h-[49px] flex justify-end items-center
+                                         bg-white  sm:text-md  rounded-[6px]`} >
+                                        <input
+                                            value={inputAlert}
+                                            onChange={event => setInputAlert(event.target.value)}
+                                            type="text"
+                                            className={`block  w-[22vw] h-full outline outline-[0.5px] rounded-l-[6px]
+                                         bg-white 
+                                         text-[15px]
+                                         ${inputLogIncomplete === true && inputAlert === '' && 'outline outline-[2.5px] outline-red-500'}`} />
+
+
+                                        <select defaultValue={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
+                                            className={`w-[100px] h-full outline outline-[1px]  text-[15px]  px-2 text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
+                                            <option value={priority} disabled > Prioridad </option>
+                                            <option value="Alta">Alta</option>
+                                            <option value="Media">Media</option>
+                                            <option value="Baja">Baja</option>
+                                        </select>
+
+                                        <input
+                                            value={dateAlert}
+                                            onChange={e => { setDateAlert(e.target.value) }}
+                                            className={`w-[124px]  p-1 h-[100%] outline outline-[1px]  text-[15px] `}
+                                            type={'date'}
+                                        />
+                                        <button
+                                            onClick={() => {
+                                                console.log(priority, inputAlert, dateAlert)
+                                                addAlert()
+                                            }}
+                                            className={`h-full w-12 outline outline-[1px]
+                                         flex rounded-r-[6px] justify-center items-center bg-[#FF6F00]
+                                        hover:bg-orange-600`}>
+                                            <FontAwesomeIcon icon={faPlus} className={`w-6 h-6 text-white`} />
+                                        </button>
+
+                                    </div>
+                                    {/* 
+                                     <input
+                                        value={inputAlert}
+                                        onChange={event => setInputAlert(event.target.value)}
                                         type="text"
-                                        id="large-input" className={`block p-4 w-[75%] h-10 bg-white rounded-lg outline outline-0 focus:outline-2 sm:text-md ${inputLogIncomplete === true && inputLog === '' && 'outline outline-[2.5px] outline-red-500'}`} />
-                                    <select defaultValue={priority}  name="priority" onChange={e => { setPriority(e.target.value) }}
+                                        id="large-input" className={`block p-4 w-[75%] h-10
+                                         bg-white rounded-lg outline outline-0 focus:outline-2 
+                                         sm:text-md 
+                                         ${inputLogIncomplete === true && inputAlert === '' && 'outline outline-[2.5px] outline-red-500'}`} />
+                                    <select defaultValue={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
                                         className={`w-[25%] px-2 ml-1 rounded text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
                                         <option value={priority} disabled > Prioridad </option>
                                         <option value="Alta">Alta</option>
@@ -312,18 +416,16 @@ export default function Propiedad() {
                                     </select>
                                     <button><FontAwesomeIcon onClick={() => {
                                         addAlert()
-                                    }} className="w-[100%] ml-1 text-orange-500" icon={faPlus} /></button>
+                                    }} className="w-[100%] ml-1 text-orange-500" icon={faPlus} /></button> */}
                                 </div>
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>
-                                {logs.map((item, index) =>
-                                    <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - <strong className='text-[#FF6F00]'>{item.level}</strong> - {item.note}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
-                                )}
+                                {renderPendientes()}
                             </div>
                         </div>
                     </div>
                     {/* Anotaciones */}
-                    <div className="flex justify-center  items-start p-6 w-[48%] h-[36vh] bg-white rounded shadow-md">
+                    <div className="flex justify-center  items-start p-6 w-[42%] h-[36vh] bg-white rounded shadow-md">
                         <div className='flex w-[100%] h-[100%] rounded flex-col p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <div className='w-full'>
@@ -338,11 +440,11 @@ export default function Propiedad() {
                                         setErrorAnnotation(false)
                                     }}
                                     type="text"
-                                    className={`p-4 w-full appearance-none h-10 bg-white rounded-lg sm:text-md focus:outline-0 focus:outline-black  ${errorAnnotation && 'outline outline-2 outline-red-400'}`} />
+                                    className={`p-4 w-full appearance-none h-10 bg-white rounded-lg sm:text-md outline outline-[1px] focus:outline-0 focus:outline-black  ${errorAnnotation && 'outline outline-2 outline-red-400'}`} />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
-                                {annotations !== "" &&
-                                    renderAlerts()
+                                {annotations.length !== 0 ?
+                                    renderAlerts() : <>No hay anotaciones</>
                                 }
                             </div>
                         </div>
@@ -371,8 +473,11 @@ export default function Propiedad() {
                     </div>
                     {
                         visits.length === 0 ?
-                            <>No hay na</> :
-                            <TableVisits visits={visits} />
+                            <div className="w-full h-[22vh] flex justify-center items-center flex-col">
+                                <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+                                <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
+                            </div> :
+                            <TableVisits id={data.id} visits={visits} setVisits={setVisits} />
                     }
                 </div>
             </div>

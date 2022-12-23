@@ -11,7 +11,8 @@ export async function getVisitsPending() {
                 }
             })
         const result = await response.json();
-        return result
+        var obj = { status: response.status, data: result.data }
+        return obj
     } catch (error) {
         throw error;
     }

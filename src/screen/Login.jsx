@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { LoginUser } from "../api/LoginUser"
 import React, { useState } from "react"
+import { getCurentUser } from "../api/getCurrentUser"
 
 export default function Login() {
 
@@ -19,8 +20,10 @@ export default function Login() {
             setError(true)
             setLoading(false)
         } else {
+            let respUser = await getCurentUser(resp.data.token)
+            console.log(respUser.data.user.type)
             localStorage.setItem('token', resp.data.token)
-            let token = localStorage.getItem('token')
+            localStorage.setItem('type_user', respUser.data.user.type)
 
             navigate('/dashboard')
             window.location.reload(false);
@@ -93,7 +96,7 @@ export default function Login() {
                             className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" placeholder="Contraseña" />
                         <p className="text-red text-xs italic"></p>
                     </div>
-                    <div className="w-full mb-3 h-[0.2px] bg-gray-200"/>
+                    <div className="w-full mb-3 h-[0.2px] bg-gray-200" />
                     <div className="flex items-center justify-end">
                         <button
                             onClick={() => {
