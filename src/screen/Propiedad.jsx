@@ -74,9 +74,11 @@ export default function Propiedad() {
 
     const [errorAnnotation, setErrorAnnotation] = useState(false)
 
-    const [inputLogIncomplete, setInputLogIncomplete] = useState(false)
+    const [inputAlertIncomplete, setInputAlertIncomplete] = useState(false)
 
     const [inputPriorityIncomplete, setInputPriorityIncomplete] = useState(false)
+
+    const [dateAlertIncomplete, setDateAlertIncomplete] = useState(false)
 
     const [alertBill, setAlertBill] = useState(true)
 
@@ -98,13 +100,12 @@ export default function Propiedad() {
         else if (state === true) {
             return "Si"
         }
-
     }
 
     const addAlert = async () => {
-        if (inputAlert === "" || priority === "priority") {
+        if (inputAlert === "" || priority === "priority" || dateAlert === "") {
             if (inputAlert === "") {
-                setInputLogIncomplete(true)
+                setInputAlertIncomplete(true)
                 console.log("TE FALTA EL MENSAJE")
             }
             if (priority === "priority") {
@@ -112,42 +113,37 @@ export default function Propiedad() {
                 console.log("TE FALTA LA PRIORIDAD")
             }
             console.log("ERROR TE FALTA UN DATO")
+            if (dateAlert === '') {
+                setDateAlertIncomplete(true)
+                console.log("TE FALTA LA FECHA")
+            }
         }
         else {
             let obj = {}
+            let objDate = new Date(dateAlert)
             obj.propertyId = data.id
             obj.note = inputAlert
             obj.level = priority.toUpperCase()
-            let objDate = new Date(dateAlert)
             obj.dateResolve = objDate.toISOString()
             // let objDay = objDate.getUTCDate()
             // let objMonth = objDate.getMonth() + 1
             // let objYear = objDate.getFullYear()
             // let objFecha = `${objDay < 10 ? `0${objDay}` : `${objDay}`}/${objMonth < 10 ? `0${objMonth}` : `${objMonth}`}/${objYear}`
 
-            
             console.log(obj)
 
+            const respAlert = await addAlerts(obj)
+            console.log(respAlert)
 
-
-            let newDate = new Date()
-            let separator = '/'
-            let date = newDate.getDate();
-            let month = newDate.getMonth() + 1;
-            let year = newDate.getFullYear();
-            let hour = newDate.getHours()
-            let minutes = newDate.getMinutes()
-            let fecha = `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}  ${hour}: ${String(minutes).length === 1 ? `0${minutes}` : `${minutes}`}`
-            console.log(fecha, 'fecha')
-            // console.log(obj)
-            // const respAlert = await addAlerts(obj)
-            // console.log(respAlert.data.alert)
-            // setLogs(current => [{
-            //     fecha: fecha,
-            //     level: respAlert.data.alert.level,
-            //     note: respAlert.data.alert.note,
-            //     by: respAlert.data.alert.by
-            // }, ...current])
+            setLogs(current => [{
+                createdAt: respAlert.data.alert.dateResolve,
+                level: respAlert.data.alert.level,
+                note: respAlert.data.alert.note,
+                by: respAlert.data.alert.by
+            }, ...current])
+            setInputAlert("")
+            setPriority("priority")
+            setDateAlert("")
         }
     }
 
@@ -165,8 +161,6 @@ export default function Propiedad() {
                 console.log(resp)
                 setAnnotations(current => [resp.data.annotation, ...current])
                 setInputAnnotation('')
-
-
             }
         }
     }
@@ -377,11 +371,11 @@ export default function Propiedad() {
                                             className={`block  w-[22vw] h-full outline outline-[0.5px] rounded-l-[6px]
                                         bg-white 
                                         text-[15px]
-                                        ${inputLogIncomplete === true && inputAlert === '' && 'outline outline-[2.5px] outline-red-500'}`} />
-
+                                        ${inputAlertIncomplete === true && inputAlert === '' && 'outline outline-[2px] outline-red-500'}`} />
 
                                         <select defaultValue={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
-                                            className={`w-[100px] h-full outline outline-[1px]  text-[15px]  px-2 text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
+                                            className={`w-[100px] h-full outline outline-[1px]  text-[15px]  px-2 text-start
+                                             ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2px] outline-red-500'}`}>
                                             <option value={priority} disabled > Prioridad </option>
                                             <option value="Alta">Alta</option>
                                             <option value="Media">Media</option>
@@ -391,7 +385,8 @@ export default function Propiedad() {
                                         <input
                                             value={dateAlert}
                                             onChange={e => { setDateAlert(e.target.value) }}
-                                            className={`w-[124px]  p-1 h-[100%] outline outline-[1px]  text-[15px] `}
+                                            className={`w-[124px]  p-1 h-[100%] outline outline-[1px]  text-[15px] 
+                                             ${dateAlertIncomplete === true && dateAlert === '' && 'outline outline-[2px] outline-red-500'} `}
                                             type={'date'}
                                         />
                                         <button
@@ -414,7 +409,7 @@ export default function Propiedad() {
                                         id="large-input" className={`block p-4 w-[75%] h-10
                                          bg-white rounded-lg outline outline-0 focus:outline-2 
                                          sm:text-md 
-                                         ${inputLogIncomplete === true && inputAlert === '' && 'outline outline-[2.5px] outline-red-500'}`} />
+                                         ${inputAlertIncomplete === true && inputAlert === '' && 'outline outline-[2.5px] outline-red-500'}`} />
                                     <select defaultValue={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
                                         className={`w-[25%] px-2 ml-1 rounded text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
                                         <option value="priority" disabled > Prioridad </option>
