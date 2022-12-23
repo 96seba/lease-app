@@ -83,6 +83,21 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         setBoletasBody(arr)
     }
 
+    const amountSort = (rowA, rowB) => {
+        let date1 = boletasBody[getIndex(rowA.id)]?.amount
+        let date2 = boletasBody[getIndex(rowB.id)]?.amount
+    
+        if (date1 > date2) {
+            return 1;
+        }
+    
+        if (date2 > date1 ) {
+            return -1;
+        }
+        return 0;
+    };
+
+
 
     const columnas = [
         {
@@ -104,7 +119,9 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             sortable: true,
             center: true,
             width: '22%',
-            compact: true
+            compact: true,
+            sortFunction: amountSort
+
         },
         {
             name: 'Subir boleta',
@@ -147,7 +164,6 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     )
                 }
             },
-            sortable: true,
             width: "25%",
             center: true,
             compact: true
@@ -163,7 +179,6 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     className={`w-[30px] h-7 text-center text-black bg-gray-200/50 rounded-sm
                     focus:bg-white`} />
             ,
-            sortable: true,
             center: true,
             width: "12%",
             compact: true

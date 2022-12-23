@@ -84,6 +84,10 @@ export default function TableAlerts(data) {
         let date1 = new Date(rowA.date)
         let date2 = new Date(rowB.date)
 
+        console.log(rowA)
+
+        console.log(rowB)
+        
         if (date1.getTime() > date2.getTime()) {
             return 1;
         }
@@ -94,6 +98,26 @@ export default function TableAlerts(data) {
 
         return 0;
     };
+
+    const parseDate = (fecha) => {
+
+        let date = new Date(fecha)
+
+        if (fecha === undefined) {
+            return "No hay fecha"
+        } else {
+            // console.log(date, fecha)
+            const yyyy = date.getFullYear();
+            let mm = date.getMonth() + 1; // Months start at 0!
+            let dd = date.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            let formattedToday = dd + '/' + mm + '/' + yyyy;
+            return formattedToday
+        }
+    }
 
 
     const renderModal = (row) => {
@@ -126,8 +150,8 @@ export default function TableAlerts(data) {
         },
         {
             name: 'Fecha',
-            selector: row => row?.createdAt?.slice(0, 10).replaceAll('-', '/'),
-            sortable: true,
+            selector: row => parseDate(row?.createdAt?.slice(0, 10).replaceAll('-', '/')),
+            sortable: true, 
             center: true,
             compact: true,
             width: '16%',

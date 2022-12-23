@@ -31,22 +31,22 @@ export default function TableDebtors({ debtorData }) {
     const columnas = [
         {
             name: 'Propiedad',
-            selector: row => row.expense.id,
+            selector: row => row.id,
             sortable: true,
             width: '10%',
             compact: true
         },
         {
             name: 'Arrendatario',
-            selector: row => printArrendatario(row?.leaseholder),
+            selector: row => printArrendatario(row),
             sortable: true
         },
         {
             name: 'Correo',
             selector: (row) => {
 
-                if (row.leaseholder) {
-                    return row.leaseholder.email
+                if (row.email) {
+                    return row.email
                 } else {
                     return "No hay correo"
                 }
@@ -56,8 +56,8 @@ export default function TableDebtors({ debtorData }) {
         {
             name: 'Número',
             selector: row => {
-                if (row.leaseholder) {
-                    return row.leaseholder.phone
+                if (row.phone) {
+                    return row.phone
                 } else {
                     return "No hay telefono"
                 }

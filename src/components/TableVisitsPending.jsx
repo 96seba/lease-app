@@ -43,6 +43,7 @@ export default function TableVisitsPending(data) {
 
         return 0;
     };
+    
     const calculoFecha = (fecha) => {
 
         let dateVisit = new Date(fecha).getTime()
