@@ -84,7 +84,8 @@ export default function Propiedad() {
         // console.log(annotations)
         return (
             annotations.map((item, index) =>
-                <p key={index}>{item.value + " -- " + item.by}</p>
+                // <p key={index}>{parseDate(item.createdAt) + " -- " + item.value - <strong className=' text-[#3A4348]'>{item.by}</strong>}</p>
+                <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - {item.value}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
             )
         )
     }
@@ -155,10 +156,13 @@ export default function Propiedad() {
                 let body = {}
                 body.propertyId = data.id
                 body.value = inputAnnotation
+
                 let resp = await addAnnotations(body)
                 console.log(resp)
                 setAnnotations(current => [resp.data.annotation, ...current])
                 setInputAnnotation('')
+
+
             }
         }
     }
@@ -361,15 +365,15 @@ export default function Propiedad() {
                                 </div>
                                 <div className='flex flex-row'>
                                     <div className={` w-[100%] h-[49px] flex justify-end items-center
-                                         bg-white  sm:text-md  rounded-[6px]`} >
+                                        bg-white  sm:text-md  rounded-[6px]`} >
                                         <input
                                             value={inputAlert}
                                             onChange={event => setInputAlert(event.target.value)}
                                             type="text"
                                             className={`block  w-[22vw] h-full outline outline-[0.5px] rounded-l-[6px]
-                                         bg-white 
-                                         text-[15px]
-                                         ${inputLogIncomplete === true && inputAlert === '' && 'outline outline-[2.5px] outline-red-500'}`} />
+                                        bg-white 
+                                        text-[15px]
+                                        ${inputLogIncomplete === true && inputAlert === '' && 'outline outline-[2.5px] outline-red-500'}`} />
 
 
                                         <select defaultValue={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
@@ -392,7 +396,7 @@ export default function Propiedad() {
                                                 addAlert()
                                             }}
                                             className={`h-full w-12 outline outline-[1px]
-                                         flex rounded-r-[6px] justify-center items-center bg-[#FF6F00]
+                                        flex rounded-r-[6px] justify-center items-center bg-[#FF6F00]
                                         hover:bg-orange-600`}>
                                             <FontAwesomeIcon icon={faPlus} className={`w-6 h-6 text-white`} />
                                         </button>
@@ -409,7 +413,7 @@ export default function Propiedad() {
                                          ${inputLogIncomplete === true && inputAlert === '' && 'outline outline-[2.5px] outline-red-500'}`} />
                                     <select defaultValue={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
                                         className={`w-[25%] px-2 ml-1 rounded text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
-                                        <option value={priority} disabled > Prioridad </option>
+                                        <option value="priority" disabled > Prioridad </option>
                                         <option value="Alta">Alta</option>
                                         <option value="Media">Media</option>
                                         <option value="Baja">Baja</option>
@@ -460,7 +464,7 @@ export default function Propiedad() {
                                     updateExpenses()
                                 }}
                                 className='h-[4vh]  w-40 bg-emerald-400
-                             hover:bg-emerald-600  rounded'>
+                                hover:bg-emerald-600  rounded'>
                                 Guardar
                             </button>
                         </div>
