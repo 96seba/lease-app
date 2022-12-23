@@ -118,12 +118,16 @@ export default function Propiedad() {
             obj.note = inputAlert
             obj.level = priority.toUpperCase()
             let objDate = new Date(dateAlert)
-            let objDay = objDate.getUTCDate()
-            let objMonth = objDate.getMonth() + 1
-            let objYear = objDate.getFullYear()
-            let objFecha = `${objDay < 10 ? `0${objDay}` : `${objDay}`}/${objMonth < 10 ? `0${objMonth}` : `${objMonth}`}/${objYear}`
+            obj.dateResolve = objDate.toISOString()
+            // let objDay = objDate.getUTCDate()
+            // let objMonth = objDate.getMonth() + 1
+            // let objYear = objDate.getFullYear()
+            // let objFecha = `${objDay < 10 ? `0${objDay}` : `${objDay}`}/${objMonth < 10 ? `0${objMonth}` : `${objMonth}`}/${objYear}`
 
-            console.log(objFecha)
+            
+            console.log(obj)
+
+
 
             let newDate = new Date()
             let separator = '/'
