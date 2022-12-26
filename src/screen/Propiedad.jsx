@@ -84,11 +84,13 @@ export default function Propiedad() {
 
     const [open, setOpen] = useState(false)
 
+    const [anotacionesTrigger, setAnotacionesTriger] = useState(false)
+
     const renderAlerts = () => {
         // console.log(annotations)
         return (
             annotations.map((item, index) =>
-                <p key={index} className='text-sm break-words'>{parseDate(item.dateResolve)} - {item.value}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
+                <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - {item.value}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
             )
         )
     }
@@ -157,11 +159,12 @@ export default function Propiedad() {
                 let body = {}
                 body.propertyId = data.id
                 body.value = inputAnnotation
-
+                setAnotacionesTriger(true)
                 let resp = await addAnnotations(body)
                 console.log(resp)
                 setAnnotations(current => [resp.data.annotation, ...current])
                 setInputAnnotation('')
+                setAnotacionesTriger(false)
             }
         }
     }
@@ -232,7 +235,7 @@ export default function Propiedad() {
     return (
         <div className='bg-gray-100 w-[100vw] flex justify-center '>
             <ModalPagos open={open} setOpen={setOpen} />
-           
+
 
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[80vw]  2xl:w-[75vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
@@ -419,7 +422,14 @@ export default function Propiedad() {
                                     <span className={`text-[12px] m-0 absolute top-[80vh] text-red-400 ${errorAnnotation ? 'block' : 'hidden'}`}>Debes ingresar la anotacion</span>
                                 </div>
                                 <input
-                                    onKeyDown={addAnotacion}
+                                    onKeyDown={(e) => {
+                                        if (anotacionesTrigger === false) {
+                                            addAnotacion(e)
+                                        }
+                                        else {
+                                            console.log("TRIGGER LO HIZO OTRA VEZ :^)")
+                                        }
+                                    }}
                                     value={inputAnnotation}
                                     onChange={event => {
                                         setInputAnnotation(event.target.value)

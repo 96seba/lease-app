@@ -2,20 +2,28 @@ import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudArrowUp, faCircleCheck, faFileCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCloudArrowUp, faCircleCheck, faFileCircleCheck, faFile, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { customStyles, paginationComponentOptions } from '../utils/constants';
+import { sendTicket } from '../api/sendTicket'
+import { uploadTicket } from '../api/uploadTicket'
 
 
-export default function TableBoletas({ files, setFile, tablaData, boletasBody, setBoletasBody }) {
+
+export default function TableBoletas({ files, setFile, tablaData, boletasBody, setBoletasBody, setSendedTicket }) {
 
     useEffect(() => {
 
         const createStates = async () => {
             // console.log(data.data)
-
             let arr = []
             await tablaData.forEach((element, index) => {
-                arr[index] = { propertyId: element.id, nroTicket: "", ticket: null, amount: element.amount }
+                // console.log(element.sended, element.id)
+                if (element.sended === true) {
+                    arr[index] = { propertyId: element.id, nroTicket: "", ticket: null, amount: element.amount, sended: true }
+                }
+                if (element.sended === false) {
+                    arr[index] = { propertyId: element.id, nroTicket: "", ticket: null, amount: element.amount, sended: false }
+                }
             });
             setBoletasBody(arr)
         }
@@ -44,11 +52,15 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
 
     const setNroBoleta = async (row, data) => {
         let index = getIndex(row.id)
-        console.log(index)
-        console.log(boletasBody[index].nroTicket)
+        // console.log(index)
+        // console.log(boletasBody[index].nroTicket)
         let arr = [...boletasBody]
-        arr[index].nroTicket = Number(data)
-        console.log(arr)
+        if (Number(data) === 0) {
+            arr[index].nroTicket = ""
+        } else (
+            arr[index].nroTicket = Number(data)
+        )
+        // console.log(arr)
         setBoletasBody(arr)
     }
 
@@ -115,7 +127,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     className={`w-[120px] h-7 text-center text-gray-700 bg-gray-200/50 rounded-sm focus:bg-white`} />,
             sortable: true,
             center: true,
-            width: '22%',
+            width: '19%',
             compact: true,
             sortFunction: amountSort
 
@@ -170,14 +182,13 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             selector: row =>
                 <input value={boletasBody[getIndex(row.id)]?.nroTicket}
                     onChange={e => {
-                        console.log(typeof e.target.value)
                         setNroBoleta(row, e.target.value)
                     }}
-                    className={`w-[30px] h-7 text-center text-black bg-gray-200/50 rounded-sm
+                    className={`w-[55px] h-7 text-center text-black bg-gray-200/50 rounded-sm
                     focus:bg-white`} />
             ,
             center: true,
-            width: "12%",
+            width: "10%",
             compact: true
         },
         {
@@ -191,9 +202,46 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         {
             name: "Estado",
             center: true,
-            selector: row =>
-                // <FontAwesomeIcon icon={faFile} className={`w-6 h-6 text-emerald-400`} />
-                <FontAwesomeIcon icon={faFileCircleCheck} className={`w-6 h-6 text-emerald-400`} />
+            selector: (row, index) => {
+                if (boletasBody[getIndex(row.id)]?.sended === false) {
+                    return (<FontAwesomeIcon icon={faFile} className={`w-6 h-6`} />)
+                }
+                else {
+                    return (<FontAwesomeIcon icon={faFileCircleCheck} className={`w-6 h-6 text-emerald-400`} />)
+                }
+            }
+        },
+        {
+            selector: (row, index) => <button onClick={async () => {
+                // console.log(row)
+                let obj = boletasBody[getIndex(row.id)]
+                console.log(obj.propertyId, obj.nroTicket, obj.ticket)
+                const form = new FormData();
+                form.append("id", obj.propertyId);
+                form.append("nroTicket", obj.nroTicket)
+                form.append("ticket", obj.ticket)
+                if (obj.nroTicket === "" || obj.ticket === null) {
+                    console.log("Faltan datos")
+                } else {
+                    let resp = await uploadTicket(form)
+                    console.log(resp.status)
+                    if (resp.status === 200) {
+                        let sendResp = await sendTicket(obj.propertyId)
+                        console.log(sendResp)
+                        console.log(sendResp.data.adm_exp.sended)
+                        if (sendResp.data.adm_exp.sended === true) {
+                            setSendedTicket(obj.propertyId)
+                        }
+
+                    }
+                }
+            }}>
+                <FontAwesomeIcon icon={faPaperPlane} className={`w-5 h-5 hover:text-emerald-400 active:hover:text-emerald-600`} />
+            </button>,
+            sortable: true,
+            center: true,
+            width: "5%",
+            compact: true,
         }
     ]
 

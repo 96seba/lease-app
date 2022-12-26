@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import TableBoletas from '../components/TableBoletas'
 import { getAllExpenses } from '../api/getAllExpenses'
-import { sendAllTickets } from '../api/sendAllTickets'
+import { sendTicket } from '../api/sendTicket'
+import { uploadTicket } from '../api/uploadTicket'
 
 
 export default function Propiedades() {
 
     const [files, setFile] = useState([])
     const [boletasBody, setBoletasBody] = useState([])
-
     const [tablaData, setTableData] = useState([])
     const [boletasSaved, setBoletasSaved] = useState(false)
-
-
 
     useEffect(() => {
         const getData = async () => {
@@ -23,24 +21,53 @@ export default function Propiedades() {
         getData()
     }, [])
 
+    const getIndex = (id) => {
+        //* Funcion para obtener el index a cambiar
+        const idFind = (element) => element.propertyId === id
+        //* Se ejecuta la funcion para obtener el index y se guarda en indexArr
+        let indexArr = boletasBody.findIndex(idFind)
+        return indexArr
+    }
+
+    const setSendedTicket = async (id) => {
+        let index = getIndex(id)
+        console.log(index)
+        console.log(boletasBody[index].sended)
+        let arr = [...boletasBody]
+        arr[index].sended = true
+        console.log(arr)
+        setBoletasBody(arr)
+    }
+
 
     const saveTicket = () => {
+        let count = { emmpty: 0, nice: 0 }
         boletasBody.forEach(async (element, index) => {
             // console.log(element)
             const form = new FormData();
             form.append("id", element.propertyId);
             form.append("nroTicket", element.nroTicket)
             form.append("ticket", element.ticket)
-            console.log({ id: element.propertyId, nroTicket: element.nroTicket, ticket: element.ticket })
-            // let resp = await uploadTicket(form)
-            // console.log(resp)
+            // console.log({ id: element.propertyId, nroTicket: element.nroTicket, ticket: element.ticket })
+            if (element.nroTicket === "" || element.ticket === null) {
+                count.emmpty += 1
+            } else {
+                let resp = await uploadTicket(form)
+                console.log(resp.status)
+                if (resp.status === 200) {
+                    setSendedTicket(element.propertyId)
+                }
+                count.nice += 1
+            }
+
         })
+        // console.log(boletasBody)
+        console.log(count)
         setBoletasSaved(true)
     }
 
     const sendBoletas = async () => {
-        let resp = await sendAllTickets()
-        console.log(resp)
+
 
     }
 
@@ -80,7 +107,7 @@ export default function Propiedades() {
                         </div>
                         :
                         <TableBoletas tablaData={tablaData} files={files} setFile={setFile}
-                            boletasBody={boletasBody} setBoletasBody={setBoletasBody} />
+                            boletasBody={boletasBody} setBoletasBody={setBoletasBody} setSendedTicket={setSendedTicket} />
                 }
             </div>
         </div>
