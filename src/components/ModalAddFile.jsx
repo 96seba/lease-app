@@ -65,7 +65,6 @@ export default function ModalGuardar({ open, setOpen }) {
 
             let resp = d.sort((a, b) => a.id - b.id);
             console.log(resp)
-            // resp[0].id = 129
             const respUpdate = await updateForFile(d)
             console.log(respUpdate)
         })

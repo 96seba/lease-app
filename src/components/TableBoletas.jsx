@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudArrowUp, faCircleCheck, faFileCircleCheck, faFile } from '@fortawesome/free-solid-svg-icons'
+import { faCloudArrowUp, faCircleCheck, faFileCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import { customStyles, paginationComponentOptions } from '../utils/constants';
 
 
@@ -15,10 +15,8 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
 
             let arr = []
             await tablaData.forEach((element, index) => {
-                // console.log(element)
                 arr[index] = { propertyId: element.id, nroTicket: "", ticket: null, amount: element.amount }
             });
-            // console.log(arr)
             setBoletasBody(arr)
         }
         createStates()
@@ -29,19 +27,19 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
 
     const getIndex = (id) => {
         //* Funcion para obtener el index a cambiar
-        const idFind = (element) => element.propertyId == id
+        const idFind = (element) => element.propertyId === id
         //* Se ejecuta la funcion para obtener el index y se guarda en indexArr
         let indexArr = boletasBody.findIndex(idFind)
         return indexArr
     }
 
-    const getIndexFiles = (id) => {
-        //* Funcion para obtener el index a cambiar
-        const idFind = (element) => element.id == id
-        //* Se ejecuta la funcion para obtener el index y se guarda en indexArr
-        let indexArr = files.findIndex(idFind)
-        return indexArr
-    }
+    // const getIndexFiles = (id) => {
+    //     //* Funcion para obtener el index a cambiar
+    //     const idFind = (element) => element.id == id
+    //     //* Se ejecuta la funcion para obtener el index y se guarda en indexArr
+    //     let indexArr = files.findIndex(idFind)
+    //     return indexArr
+    // }
 
 
     const setNroBoleta = async (row, data) => {
@@ -49,8 +47,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         console.log(index)
         console.log(boletasBody[index].nroTicket)
         let arr = [...boletasBody]
-        if ("")
-            arr[index].nroTicket = Number(data)
+        arr[index].nroTicket = Number(data)
         console.log(arr)
         setBoletasBody(arr)
     }
@@ -86,12 +83,12 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
     const amountSort = (rowA, rowB) => {
         let date1 = boletasBody[getIndex(rowA.id)]?.amount
         let date2 = boletasBody[getIndex(rowB.id)]?.amount
-    
+
         if (date1 > date2) {
             return 1;
         }
-    
-        if (date2 > date1 ) {
+
+        if (date2 > date1) {
             return -1;
         }
         return 0;
@@ -185,7 +182,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         },
         {
             name: 'Nro de boleta anterior',
-            selector: row => row.nroTicket,
+            selector: row => row.lastTicket || "No hay boleta anterior",
             sortable: true,
             center: true,
             width: "20%",
@@ -195,8 +192,8 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             name: "Estado",
             center: true,
             selector: row =>
-            // <FontAwesomeIcon icon={faFile} className={`w-6 h-6 text-emerald-400`} />
-            <FontAwesomeIcon icon={faFileCircleCheck} className={`w-6 h-6 text-emerald-400`} />
+                // <FontAwesomeIcon icon={faFile} className={`w-6 h-6 text-emerald-400`} />
+                <FontAwesomeIcon icon={faFileCircleCheck} className={`w-6 h-6 text-emerald-400`} />
         }
     ]
 

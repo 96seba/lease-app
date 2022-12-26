@@ -25,6 +25,7 @@ export default function Dashboard() {
 
 
 
+
     const [open, setOpen] = useState(false)
 
 
@@ -81,12 +82,13 @@ export default function Dashboard() {
                         <div className='w-full'>
                             <p className='text-lg font-semibold'>Visitas pendientes</p>
                         </div>
-                        {visitsData !== [] ?
-                            <TableVisitsPending data={visitsData} /> :
-                            <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
-                                <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
-                                <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
-                            </div>
+                        {visitsData !== [] &&
+                            <TableVisitsPending data={visitsData} />
+                            // :
+                            // <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
+                            //     <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+                            //     <img src={require('../assets/loading.JPG')} className={'w-[120px] h-[120px]'} />
+                            // </div>
                         }
                     </div>
                     <div className='flex  flex-col  pt-3 px-4 justify-start items-end h-full sm:w-full md:w-full lg:w-[48%] rounded-lg shadow-sm bg-white'>
@@ -97,7 +99,7 @@ export default function Dashboard() {
                             <TableAlerts data={alertsData} /> :
                             <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
                                 <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
-                                <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
+                                <img src={require('../assets/loading.JPG')} className={'w-[130px] h-[130px]'} />
                             </div>
 
                         }

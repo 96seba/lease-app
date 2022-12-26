@@ -11,6 +11,7 @@ import { getExpensesId } from '../api/getExpensesId'
 import { editExpenses } from '../api/editExpenses'
 import { getPropiedad } from '../api/getPropiedad'
 import { getVisitsForProperty } from '../api/getVisitsForProperty'
+import ModalPagos from '../components/ModalPagos'
 
 export default function Propiedad() {
 
@@ -81,7 +82,7 @@ export default function Propiedad() {
 
     const [dateAlertIncomplete, setDateAlertIncomplete] = useState(false)
 
-    const [alertBill, setAlertBill] = useState(true)
+    const [open, setOpen] = useState(false)
 
     const renderAlerts = () => {
         // console.log(annotations)
@@ -173,7 +174,7 @@ export default function Propiedad() {
             const resp = await editExpenses(element)
             console.log(resp)
         });
-        setAlertBill(true)
+        setOpen(true)
     }
 
     const parseType = () => {
@@ -182,7 +183,6 @@ export default function Propiedad() {
         let str2 = str.charAt(0).toUpperCase() + str.slice(1)
         // console.log(str, str2)
         return str2
-
     }
 
     const parseDate = (fecha) => {
@@ -194,7 +194,7 @@ export default function Propiedad() {
         } else {
             // console.log(date, fecha)
             const yyyy = date.getFullYear();
-            let mm = date.getMonth() + 1; // Months start at 0!
+            let mm = date.getMonth() + 1;
             let dd = date.getDate();
 
             if (dd < 10) dd = '0' + dd;
@@ -232,25 +232,8 @@ export default function Propiedad() {
     }
     return (
         <div className='bg-gray-100 w-[100vw] flex justify-center '>
-            {/* <div class="h-screen w-screen bg-gradient-to-br from-slate-100 sticky to-slate-300 py-32">
-                {
-                    alertBill === true &&
-                    <div onClick={() => {
-                        setAlertBill(false)
-                    }} className="bg-white/60 hover:bg-white/80 hover:shadow-lg transition duration-150 ease-linear backdrop-blur-xl z-20 max-w-md fixed right-4 top-10 rounded-lg p-6 shadow">
-                        <h1 className="text-xl text-slate-700 font-medium">Historial de pagos guardado con exito! ✅</h1>
-                    </div>
-                }
-
-                {
-                    alertBill === true &&
-                    <div onClick={() => {
-                        setAlertBill(false)
-                    }} className="bg-white/60 hover:bg-white/80 hover:shadow-lg transition duration-150 ease-linear backdrop-blur-xl z-20 max-w-md fixed right-4 top-10 rounded-lg p-6 shadow">
-                        <h1 className="text-xl text-slate-700 font-medium">Historial de pagos guardado con exito! ✅</h1>
-                    </div>
-                }
-            </div> */}
+            <ModalPagos open={open} setOpen={setOpen} />
+           
 
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[80vw]  2xl:w-[75vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">

@@ -59,7 +59,7 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
 
         return (<div className="w-full h-[22vh] flex justify-center items-center flex-col">
             <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
-            <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
+            <img src={require('../assets/loading.JPG')} className={'w-[130px] h-[130px]'} />
         </div>)
 
     }

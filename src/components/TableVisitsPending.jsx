@@ -100,9 +100,9 @@ export default function TableVisitsPending(data) {
     ]
 
     if (data.data.length === 0) {
-        return <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
+        return <div className="w-full h-[22vh] mt-2 flex justify-center items-center flex-col">
             <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
-            <img src={require('../assets/loading.JPG')} className={'w-[160px] h-[180px]'} />
+            <img src={require('../assets/loading.JPG')} className={'w-[130px] h-[130px]'} />
         </div>
     }
 

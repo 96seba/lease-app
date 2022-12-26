@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import TableBoletas from '../components/TableBoletas'
-import { addAdminExp } from '../api/addAdminExp'
 import { getAllExpenses } from '../api/getAllExpenses'
-import { uploadTicket } from '../api/uploadTicket'
 import { sendAllTickets } from '../api/sendAllTickets'
 
 
@@ -12,6 +10,8 @@ export default function Propiedades() {
     const [boletasBody, setBoletasBody] = useState([])
 
     const [tablaData, setTableData] = useState([])
+    const [boletasSaved, setBoletasSaved] = useState(false)
+
 
 
     useEffect(() => {
@@ -26,14 +26,16 @@ export default function Propiedades() {
 
     const saveTicket = () => {
         boletasBody.forEach(async (element, index) => {
-            console.log(element)
+            // console.log(element)
             const form = new FormData();
             form.append("id", element.propertyId);
             form.append("nroTicket", element.nroTicket)
             form.append("ticket", element.ticket)
-            let resp = await uploadTicket(form)
-            console.log(resp)
+            console.log({ id: element.propertyId, nroTicket: element.nroTicket, ticket: element.ticket })
+            // let resp = await uploadTicket(form)
+            // console.log(resp)
         })
+        setBoletasSaved(true)
     }
 
     const sendBoletas = async () => {
@@ -46,20 +48,24 @@ export default function Propiedades() {
     return (
         <div className="h-[100vh] flex flex-col justify-start items-start p-1  sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw]  2xl:w-[80vw]">
             <div className="flex  items-end justify-end w-full h-[10vh] mb-4 ">
-                <button onClick={() => {
-                    saveTicket()
-                }}
-                    className="group relative h-12 mr-4   w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">
-                    <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[150ms] ease-out group-hover:w-full"></div>
-                    <span className="relative  group-hover:text-white">Guardar boletas</span>
-                </button>
-                {/* <button onClick={() => {
-                    sendBoletas()
-                }}
-                    className="group relative h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">
-                    <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[150ms] ease-out group-hover:w-full"></div>
-                    <span className="relative  group-hover:text-white">Enviar boletas</span>
-                </button> */}
+                {boletasSaved === false ?
+                    <button onClick={() => {
+                        saveTicket()
+                    }}
+                        className="group relative h-12 mr-4   w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">
+                        <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[150ms] ease-out group-hover:w-full"></div>
+                        <span className="relative  group-hover:text-white">Guardar boletas</span>
+                    </button>
+
+                    :
+                    <button onClick={() => {
+                        sendBoletas()
+                    }}
+                        className="group relative h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">
+                        <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[150ms] ease-out group-hover:w-full"></div>
+                        <span className="relative  group-hover:text-white">Enviar boletas</span>
+                    </button>
+                }
 
             </div>
 
