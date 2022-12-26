@@ -8,25 +8,11 @@ import { updateForFile } from '../api/updateForFile';
 
 export default function ModalGuardar({ open, setOpen }) {
 
+    /* Variables*/
     const [file, setFile] = useState("");
-
     const cancelButtonRef = useRef(null);
 
-    // const getDataXlsx = async () => {
-
-    //     let data = []
-    //     const sheet = file.SheetNames[1]
-
-    //     const temp = reader.utils.sheet_to_json(file.Sheets[sheet])
-    //     temp.forEach(res => {
-    //         if (res.Id !== 0 && res['Comisión Administración'] && res['Monto Arriendo'])
-    //            data.push({ id: res.Id, comision: res['Comisión Administración'], arriendo: res['Monto Arriendo'] })
-    //     })
-
-    //     return data
-    // }
-
-
+    /* Funciones */
     const getDataXlsx = async () => {
         const promise = new Promise((resolve, reject) => {
 
@@ -37,13 +23,9 @@ export default function ModalGuardar({ open, setOpen }) {
 
             fileReader.onload = (e) => {
                 const bufferArray = e.target.result
-
                 const wb = XLSX.read(bufferArray, { type: 'buffer' })
-
                 const wsname = wb.SheetNames[1]
-
                 const ws = wb.Sheets[wsname]
-
                 const data = XLSX.utils.sheet_to_json(ws)
 
                 data.forEach(res => {
@@ -62,13 +44,11 @@ export default function ModalGuardar({ open, setOpen }) {
 
         promise.then(async (d) => {
             console.log(d)
-
             let resp = d.sort((a, b) => a.id - b.id);
             console.log(resp)
             const respUpdate = await updateForFile(d)
             console.log(respUpdate)
         })
-
     }
 
 

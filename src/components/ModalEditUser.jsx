@@ -4,6 +4,7 @@ import { updateUser } from '../api/updateUser'
 
 export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTableData }) {
 
+    /* Variables */
     const [user, setUser] = useState({
         email: "",
         name: "",
@@ -11,20 +12,7 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
         password: "",
     })
 
-
-    useEffect(() => {
-
-        if (dataRow !== '') {
-            setUser({ email: dataRow.email, name: dataRow.name, lastname: dataRow.lastname })
-            console.log("VIVA CHILE")
-            console.log(dataRow)
-        }
-
-    }, [dataRow])
-
-
     const cancelButtonRef = useRef(null)
-
 
     const executeEnter = (event) => {
         if (event.key === 'Enter') {
@@ -55,10 +43,18 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
         newArr[index] = newObj
         setTableData(newArr)
         setOpen(false)
-
-
     }
 
+    /* Funciones */
+    useEffect(() => {
+
+        if (dataRow !== '') {
+            setUser({ email: dataRow.email, name: dataRow.name, lastname: dataRow.lastname })
+            console.log("VIVA CHILE")
+            console.log(dataRow)
+        }
+
+    }, [dataRow])
 
     if (dataRow === '') {
         return <></>
@@ -116,12 +112,6 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
                                                         onKeyDown={event => { executeEnter(event) }}
                                                         onChange={event => setUser({ ...user, lastname: event.target.value })} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Apellido" required="" />
                                                 </div>
-                                                {/* <div>
-                                                    <label htmlFor="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
-                                                    <input value={user.lastname}
-                                                        onKeyDown={event => { executeEnter(event) }}
-                                                        onChange={event => setUser({ ...user, lastname: event.target.value })} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Apellido" required="" />
-                                                </div> */}
                                                 <button className="w-full text-white bg-[#FF6F00] hover:bg-[#3A4348] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                                                     onClick={() => updateDataUser()}>Actualizar</button>
                                             </div>

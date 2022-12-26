@@ -50,7 +50,6 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
     ]
 
     useEffect(() => {
-
         console.log(dataCheck)
     }, [])
 

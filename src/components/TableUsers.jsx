@@ -35,7 +35,6 @@ const columnas = [
     },
 ]
 
-
 export default function TableUsers({ tableData, openModal }) {
 
 

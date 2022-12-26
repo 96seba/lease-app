@@ -7,10 +7,12 @@ import ModalResolveAlert from './ModalResolveAlert';
 
 export default function TableAlerts(data) {
 
+    /* Variables */
     const [modalStates, setModalStates] = useState([])
-
     const [handleData, setHandleData] = useState([])
 
+
+    /* Funciones */
     useEffect(() => {
         console.log("HA LLEGADO DEL DATA CHAVALES")
         // console.log(data)
@@ -167,7 +169,6 @@ export default function TableAlerts(data) {
         {
             name: 'Estado',
             selector: row =>
-
                 <div className="flex h-auto w-auto hover:bg-[#3A4348]">
                     <button
                         onClick={() => {
@@ -176,15 +177,6 @@ export default function TableAlerts(data) {
                         className={`bg-emerald-400 w-24 h-8 hover:bg-emerald-600 text-white rounded-[3px] text-[15px]`} >
                         Listo
                     </button>
-                    {/* <input
-                        checked={modalStates[getIndex(row.id)]?.state}
-                        onClick={() => {
-                            setCheckState(row)
-                        }}
-                        type={'checkbox'}
-                        className={`select-none cursor-pointer rounded-lg border-2
-                  border-[#FF6F00] w-6 h-6 checked:bg-teal-700 font-bold transition-colors duration-200 ease-in-out`}
-                    /> */}
                     {renderModal(row)}
                 </div>
             ,

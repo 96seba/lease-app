@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import DataTable, { createTheme } from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 import Drop from '../components/Drop'
-import { getExpensesId } from '../api/getExpensesId';
-import { dateFormatNames } from '@progress/kendo-intl';
 import { customStyles, paginationComponentOptions } from '../utils/constants';
 
 const getMonth = (period) => {
@@ -16,8 +14,6 @@ const getMonth = (period) => {
 }
 
 export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp }) {
-
-    const [data, setData] = useState("");
 
     useEffect(() => {
         console.log(dataExp, arrayExpenses)
@@ -62,7 +58,6 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
         },
         {
             name: 'Arrendatario',
-            // selector: row => row.arrendatario,
             selector: row => row.id,
             sortable: true,
             compact: true,
@@ -124,7 +119,5 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
             defaultSortFieldId={1}
             paginationComponentOptions={paginationComponentOptions}
         />
-
-
     )
 } 

@@ -4,7 +4,6 @@ export default function Drop({ status, index, name, setArray, id }) {
 
     const [value, setValue] = useState(status)
 
-
     return (
         <select
             value={value}

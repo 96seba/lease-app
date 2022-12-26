@@ -8,11 +8,10 @@ import { customStyles, paginationComponentOptions } from '../utils/constants';
 
 export default function TableBoletas({ files, setFile, tablaData, boletasBody, setBoletasBody }) {
 
+
+    /* Funciones */
     useEffect(() => {
-
         const createStates = async () => {
-            // console.log(data.data)
-
             let arr = []
             await tablaData.forEach((element, index) => {
                 arr[index] = { propertyId: element.id, nroTicket: "", ticket: null, amount: element.amount }
@@ -20,7 +19,6 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             setBoletasBody(arr)
         }
         createStates()
-
 
     }, [])
 
@@ -124,7 +122,6 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             name: 'Subir boleta',
             selector: (row, index) => {
                 let result = boletasBody[getIndex(row.id)]?.ticket
-                // console.log(row)
                 if (result !== null) {
                     return (
                         <button onClick={() => {
@@ -192,7 +189,6 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             name: "Estado",
             center: true,
             selector: row =>
-                // <FontAwesomeIcon icon={faFile} className={`w-6 h-6 text-emerald-400`} />
                 <FontAwesomeIcon icon={faFileCircleCheck} className={`w-6 h-6 text-emerald-400`} />
         }
     ]

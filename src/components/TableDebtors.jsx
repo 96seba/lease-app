@@ -19,15 +19,6 @@ export default function TableDebtors({ debtorData }) {
 
     const navigate = useNavigate()
 
-    const printArrendatario = (data) => {
-        console.log(data)
-        if (data) {
-            return data.name + " " + data.lastname
-        } else {
-            return "No hay arrendatario"
-        }
-    }
-
     const columnas = [
         {
             name: 'Propiedad',

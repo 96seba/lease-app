@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { customStyles, paginationComponentOptions } from '../utils/constants';
 
 
-
+/* Funciones */
 const amountSort = (rowA, rowB) => {
     let date1 = rowA.amounts[0]?.amount_lease
     let date2 = rowB.amounts[0]?.amount_lease
@@ -66,7 +66,6 @@ const columnas = [
     {
         name: 'Monto',
         selector: row => "$ " + row.amounts[0]?.amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
-        // selector: row => "$ " + row.amounts[0].amount_lease.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
         sortable: true,
         width: '13%',
         sortFunction: amountSort
@@ -92,12 +91,6 @@ const validaArrendatario = (data) => {
 
         return data?.leaseholder?.name + " " + data?.leaseholder?.lastname
     }
-    // if (user == "" || user == null) {
-    //     return <p className='pt-3'> No hay arrendatario</p>
-    // }
-    // else {
-    //     return <p className='pt-3'> {user}</p>
-    // }
 }
 
 export default function TablePropiedades({ dataProp }) {

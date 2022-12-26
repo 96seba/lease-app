@@ -5,11 +5,9 @@ import { uploadPropiedadImagen } from '../api/uploadPropiedadImagen'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import ArrendatarioFinder from '../components/ArrendatarioFinder'
-import DuenoFinder from '../components/DuenoFinder'
 import { addLease } from '../api/addLease'
 import { useNavigate } from "react-router-dom"
 import { getLeaseholder } from '../api/getLeaseholder'
-
 
 
 export default function AgregarPropiedad() {

@@ -2,14 +2,11 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckToSlot } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from "react-router-dom"
 import { resolveAlert } from '../api/resolveAlert'
 
 export default function ModalResolveAlert({ row, setCheckStateFalse, refreshAlerts }) {
 
     const [open, setOpen] = useState(true)
-
-    let navigate = useNavigate()
 
     const cancelButtonRef = useRef(null)
 
@@ -31,7 +28,6 @@ export default function ModalResolveAlert({ row, setCheckStateFalse, refreshAler
                 >
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                 </Transition.Child>
-
                 <div className="fixed inset-0 z-10 overflow-y-auto">
                     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                         <Transition.Child

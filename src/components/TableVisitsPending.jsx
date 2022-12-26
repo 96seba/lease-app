@@ -10,13 +10,10 @@ export default function TableVisitsPending(data) {
     const navigate = useNavigate()
 
     const parseDate = (fecha) => {
-
         let date = new Date(fecha)
-
         if (fecha === undefined) {
             return "No hay fecha"
         } else {
-            // console.log(date, fecha)
             const yyyy = date.getFullYear();
             let mm = date.getMonth() + 1; // Months start at 0!
             let dd = date.getDate();
@@ -33,8 +30,6 @@ export default function TableVisitsPending(data) {
         let date1 = new Date(rowA.date)
         let date2 = new Date(rowB.date)
 
-
-        
         if (date1.getTime() > date2.getTime()) {
             return 1;
         }
@@ -55,7 +50,6 @@ export default function TableVisitsPending(data) {
         var diff = dateActual - dateVisit;
 
         let calculo = Math.round((diff / (1000 * 60 * 60 * 24)))
-
 
         if (calculo <= 0) {
             return "No existe atraso"

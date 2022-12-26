@@ -8,18 +8,20 @@ import { getVisitsForProperty } from '../api/getVisitsForProperty';
 
 
 export default function TableVisits({ id, visits, setVisits }) {
-    React.useEffect(() => {
-        console.log(visits)
-        // setAnnotation(visits[0]?.observations[0])
-    }, [])
 
+    /* Variables */
     const [annotation, setAnnotation] = useState("")
     const [dateDone, setDateDone] = useState("")
+
+    /* Funciones */
+    React.useEffect(() => {
+        console.log(visits)
+    }, [])
 
 
     const parseDate = (fecha) => {
         let date = new Date(fecha)
-        // console.log(fecha, "asd")
+        
 
         if (fecha === undefined) {
             return "No hay fecha"
@@ -38,16 +40,16 @@ export default function TableVisits({ id, visits, setVisits }) {
     }
 
     const renderFechaInput = (index, date) => {
-        // console.log(index, date)
+        
         if (index !== 0) {
             return (
                 <input
                     disabled
                     type={'date'}
                     className='block p-2.5 cursor-not-allowed w-[120px] text-sm text-gray-900
-             bg-gray-200 rounded-lg border border-gray-300
-              focus:ring-blue-500 focus:border-blue-500
-               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                bg-gray-200 rounded-lg border border-gray-300
+                focus:ring-blue-500 focus:border-blue-500
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
             )
         }
@@ -60,15 +62,14 @@ export default function TableVisits({ id, visits, setVisits }) {
                 }}
                 type={'date'}
                 className='block p-2.5 w-[120px] text-sm text-gray-900
-             bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500
-               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
 
         )
     }
 
     const renderAnotacionInput = (row, index) => {
-        // console.log(row.observations[0]?.note)
         if (index !== 0) {
             return (
                 <textarea

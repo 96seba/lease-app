@@ -1,11 +1,11 @@
-import { Fragment, useRef, useState, useEffect } from 'react'
+import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom'
 
 export default function ModalEditPropiedad({ open, setOpen, id }) {
 
+    /* Variables*/
     const navigate = useNavigate()
-
     const cancelButtonRef = useRef(null)
 
     return (
@@ -66,13 +66,9 @@ export default function ModalEditPropiedad({ open, setOpen, id }) {
                                                 >
                                                     Cerrar
                                                 </button>
-
-
                                             </div>
-
                                         </div>
                                     </div>
-
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
