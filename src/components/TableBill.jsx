@@ -121,7 +121,7 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
             pagination
             highlightOnHover
             customStyles={customStyles}
-            defaultSortAsc={1}
+            defaultSortFieldId={1}
             paginationComponentOptions={paginationComponentOptions}
         />
 
