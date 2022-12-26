@@ -33,6 +33,8 @@ export default function TableVisitsPending(data) {
         let date1 = new Date(rowA.date)
         let date2 = new Date(rowB.date)
 
+
+        
         if (date1.getTime() > date2.getTime()) {
             return 1;
         }

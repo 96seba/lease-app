@@ -88,8 +88,7 @@ export default function Propiedad() {
         // console.log(annotations)
         return (
             annotations.map((item, index) =>
-                // <p key={index}>{parseDate(item.createdAt) + " -- " + item.value - <strong className=' text-[#3A4348]'>{item.by}</strong>}</p>
-                <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - {item.value}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
+                <p key={index} className='text-sm break-words'>{parseDate(item.dateResolve)} - {item.value}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
             )
         )
     }
@@ -138,7 +137,7 @@ export default function Propiedad() {
             console.log(respAlert)
 
             setLogs(current => [{
-                createdAt: respAlert.data.alert.dateResolve,
+                dateResolve: respAlert.data.alert.dateResolve,
                 level: respAlert.data.alert.level,
                 note: respAlert.data.alert.note,
                 by: respAlert.data.alert.by
@@ -214,7 +213,7 @@ export default function Propiedad() {
         }
         return (
             logs.map((item, index) =>
-                <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - <strong className='text-[#FF6F00]'>{item.level}</strong> - {item.note}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
+                <p key={index} className='text-sm break-words'>{parseDate(item.dateResolve)} - <strong className='text-[#FF6F00]'>{item.level}</strong> - {item.note}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
             )
         )
     }

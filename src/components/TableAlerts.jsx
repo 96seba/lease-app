@@ -81,8 +81,8 @@ export default function TableAlerts(data) {
     }
 
     const dateSort = (rowA, rowB) => {
-        let date1 = new Date(rowA.date)
-        let date2 = new Date(rowB.date)
+        let date1 = new Date(rowA.dateResolve)
+        let date2 = new Date(rowB.dateResolve)
 
         console.log(rowA)
 
@@ -150,7 +150,7 @@ export default function TableAlerts(data) {
         },
         {
             name: 'Fecha',
-            selector: row => parseDate(row?.createdAt?.slice(0, 10).replaceAll('-', '/')),
+            selector: row => parseDate(row?.dateResolve?.slice(0, 10)),
             sortable: true, 
             center: true,
             compact: true,
