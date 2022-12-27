@@ -122,7 +122,10 @@ export default function AgregarPropiedad() {
             newDuenoRef.current?.scrollIntoView({ behavior: 'smooth' })
 
         } else {
-
+            if (selected === '' && newContrato === true && newArrendatario === false) {
+                console.log("NO HAY seleccionado")
+                return
+            }
 
             if (id.length === 0 || direccion.length === 0 || monto.length === 0 ||
                 administracion.length === 0 || tipo === "Tipo" || arrendador.nombre === "" ||
@@ -133,6 +136,9 @@ export default function AgregarPropiedad() {
                 setError(true)
                 inputRef.current?.scrollIntoView({ behavior: 'smooth' })
             } else {
+
+
+
                 //* Objeto de propiedad
                 var objProp = {}
                 //* Objeto de propiedad sin propiedades null o ""
@@ -222,11 +228,13 @@ export default function AgregarPropiedad() {
                     }
                     if (newArrendatario === false) {
                         //* Se selecciona un arrendatario ya creado
-                        console.log("ES CON ARRENDATARIO YA creado")
+                        console.log("ES CON ARRENDATARIO YA creado", selected)
                         // setSelectIncomplete
                         if (selected === "") {
+                            console.log("selected === ''", selected)
                             setSelectIncomplete(true)
                         } else {
+                            console.log("selected !== ''", selected)
                             objContrato.leaseholderId = selected.id
                         }
                     } else {
@@ -273,7 +281,9 @@ export default function AgregarPropiedad() {
                     }
                     //* Se crea el arrendatario en el caso de que se eliga agregar arrendatario nuevo
                     if (newContrato === true) {
+                        console.log("AGREGA CONTRATO")
                         if (newArrendatario === true) {
+                            console.log("NUEVO ARRENDATARIO ES TRUE")
                             //* Se crea el arrendatario
                             //* Se agregan los datos del nuevo arrendatario al objeto del contrato
                             objContrato.rut = String(arrendatario.rut)
@@ -294,14 +304,20 @@ export default function AgregarPropiedad() {
                                 console.log("respLease", respLease)
                             }
                         } else {
+                            console.log("SE SELECCIONA UN ARRENDATARIO", selected)
+
                             //* Se agrega el id del leaseHolder seleccionado al objContrato
                             objContrato.leaseholderId = selected.id
                             if (selected.id !== '') {
+                                console.log("es el arrendatario seleccionado", selected)
                                 //* Se crea el contrato
+                                console.log(selected.id)
                                 console.log(objContrato)
                                 console.log("Se selecciona el arrendatario")
                                 const respLease = await addLease(objContrato)
                                 console.log("respLease", respLease)
+
+                            } else {
 
                             }
                         }
@@ -613,19 +629,26 @@ export default function AgregarPropiedad() {
                                         <input
                                             value={arrendador.rut}
                                             onChange={text => {
-
-                                                let val = text.target.value.replaceAll('.', '').replace('-', '')
-                                                console.log(val)
                                                 if (text.target.value.length < 13) {
-                                                    if (/^\d+$/.test(val) && val.length < 9) {
-                                                        let resp = checkRut(text.target.value)
-                                                        setArrendador({ ...arrendador, rut: resp })
-                                                    }
-                                                    else if (val.length === 9) {
-                                                        let resp = checkRut(text.target.value)
-                                                        setArrendador({ ...arrendador, rut: resp })
-                                                    }
+                                                    let resp = checkRut(text.target.value)
+                                                    setArrendador({ ...arrendador, rut: resp })
                                                 }
+
+                                                // console.log(text.target.value)
+
+                                                // let val = text.target.value.replaceAll('.', '').replace('-', '')
+                                                // console.log(val)
+                                                // if (text.target.value.length < 13) {
+                                                //     if (/^\d+$/.test(val) && val.length < 9) {
+                                                //         let resp = checkRut(text.target.value)
+                                                //         console.log(resp)
+                                                //         setArrendador({ ...arrendador, rut: resp })
+                                                //     }
+                                                //     else if (val.length === 9) {
+                                                //         let resp = checkRut(text.target.value)
+                                                //         setArrendador({ ...arrendador, rut: resp })
+                                                //     }
+                                                // }
                                             }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
                                                         ${error && arrendador.rut?.length === 0 && " outline outline-2 outline-red-300"}`
@@ -864,7 +887,6 @@ export default function AgregarPropiedad() {
                             className="inline-flex w-[70%] mt-4 mb-4 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                             onClick={async () => {
                                 checkInput()
-                                console.log(arrendador.rut)
                             }}
                         >
                             Guardar

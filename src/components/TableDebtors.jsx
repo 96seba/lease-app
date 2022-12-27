@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 import { customStyles, paginationComponentOptions } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -71,6 +72,15 @@ export default function TableDebtors({ debtorData }) {
             sortable: true,
             center: true
         },
+        // {
+        //     name: "Notificar",
+        //     center: true,
+        //     selector: row =>
+        //         <button className={`hover:text-emerald-400`}>
+        //             <FontAwesomeIcon icon={faEnvelope} className={`w-6 h-6`} />
+        //         </button>,
+        //     width: '8%'
+        // },
         {
             name: '',
             selector: row => <button
@@ -88,8 +98,9 @@ export default function TableDebtors({ debtorData }) {
                 Ir a propiedad
             </button>,
             sortable: true,
-            width: '25%',
+            width: '15%',
         },
+
     ]
 
 

@@ -1,9 +1,16 @@
 import { useNavigate } from "react-router-dom"
 import { LoginUser } from "../api/LoginUser"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { getCurentUser } from "../api/getCurrentUser"
 
 export default function Login() {
+
+    useEffect(() => {
+      
+        document.title = 'Login'
+
+    }, [])
+    
 
     const navigate = useNavigate()
 

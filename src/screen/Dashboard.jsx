@@ -30,6 +30,7 @@ export default function Dashboard() {
 
 
     useEffect(() => {
+        document.title = 'Dashboard'
         const getData = async () => {
             const respDebtors = await getDebtors()
             console.log(respDebtors)

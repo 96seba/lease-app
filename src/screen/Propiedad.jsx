@@ -12,6 +12,7 @@ import { editExpenses } from '../api/editExpenses'
 import { getPropiedad } from '../api/getPropiedad'
 import { getVisitsForProperty } from '../api/getVisitsForProperty'
 import ModalPagos from '../components/ModalPagos'
+import { sendDebtorMail } from '../api/sendDebtorMail'
 
 export default function Propiedad() {
 
@@ -57,6 +58,7 @@ export default function Propiedad() {
 
 
     useEffect(() => {
+        console.log(minDate)
         getData()
     }, [])
 
@@ -85,6 +87,13 @@ export default function Propiedad() {
     const [open, setOpen] = useState(false)
 
     const [anotacionesTrigger, setAnotacionesTriger] = useState(false)
+
+    const [alertsTrigger, setAlertsTriger] = useState(false)
+
+    const [minDate, setMinDate] = useState(() => {
+        let date = new Date()
+        return date.toISOString().slice(0, 10)
+    })
 
     const renderAlerts = () => {
         // console.log(annotations)
@@ -134,7 +143,7 @@ export default function Propiedad() {
             // let objFecha = `${objDay < 10 ? `0${objDay}` : `${objDay}`}/${objMonth < 10 ? `0${objMonth}` : `${objMonth}`}/${objYear}`
 
             console.log(obj)
-
+            setAlertsTriger(true)
             const respAlert = await addAlerts(obj)
             console.log(respAlert)
 
@@ -147,6 +156,7 @@ export default function Propiedad() {
             setInputAlert("")
             setPriority("priority")
             setDateAlert("")
+            setAlertsTriger(false)
         }
     }
 
@@ -370,6 +380,7 @@ export default function Propiedad() {
 
                                         <input
                                             value={dateAlert}
+                                            min={minDate}
                                             onChange={e => { setDateAlert(e.target.value) }}
                                             className={`w-[124px]  p-1 h-[100%] outline outline-[1px]  text-[15px] 
                                              ${dateAlertIncomplete === true && dateAlert === '' && 'outline outline-[2px] outline-red-500'} `}
@@ -378,7 +389,12 @@ export default function Propiedad() {
                                         <button
                                             onClick={() => {
                                                 console.log(priority, inputAlert, dateAlert)
-                                                addAlert()
+                                                if (alertsTrigger === false) {
+                                                    addAlert()
+                                                }
+                                                else {
+                                                    console.log("TRIGGER LO HIZO OTRA VEZ :^)")
+                                                }
                                             }}
                                             className={`h-full w-12 outline outline-[1px]
                                         flex rounded-r-[6px] justify-center items-center bg-[#FF6F00]
@@ -448,9 +464,18 @@ export default function Propiedad() {
                 </div>
 
                 <div className='flex pt-3 px-4 mb-10 flex-col justify-start items-end w-[96%] h-[45vh] bg-white rounded-lg shadow-sm'>
-                    <div className='w-full flex flex-row justify-between items-center'>
+                    <div className='w-full  flex flex-row justify-between items-center'>
                         <p className='text-lg font-semibold'>Historial de pagos</p>
-                        <div className='h-full w-[30%] flex justify-end items-center'>
+                        <div className='h-full w-[40%] flex justify-end items-center'>
+                            <button
+                                onClick={async () => {
+                                    let resp = await sendDebtorMail(data.id)
+                                    console.log(resp)
+                                }}
+                                className='h-[4vh] mr-2  w-60 bg-emerald-400
+                                hover:bg-emerald-600  rounded'>
+                                Enviar correos
+                            </button>
                             <button
                                 onClick={() => {
                                     updateExpenses()

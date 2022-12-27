@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudArrowUp, faCircleCheck, faFileCircleCheck, faFile, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faCloudArrowUp, faCircleCheck, faFileCircleCheck, faFile, faPaperPlane, faFileImport } from '@fortawesome/free-solid-svg-icons'
 import { customStyles, paginationComponentOptions } from '../utils/constants';
 import { sendTicket } from '../api/sendTicket'
 import { uploadTicket } from '../api/uploadTicket'
@@ -164,7 +164,9 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                                     <span className='text-sm mx-2 text-black'>
                                         Elige un archivo...
                                     </span>
-                                    <input id={"dropzone-file" + index} onChange={(e) => {
+                                    <input id={"dropzone-file" + index}
+                                    accept=".pdf"
+                                    onChange={(e) => {
                                         setFileBoleta(row, e.target.files[0])
                                     }} type="file" className="hidden" />
                                 </div>
@@ -236,7 +238,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     }
                 }
             }}>
-                <FontAwesomeIcon icon={faPaperPlane} className={`w-5 h-5 hover:text-emerald-400 active:hover:text-emerald-600`} />
+                <FontAwesomeIcon icon={faFileImport} className={`w-5 h-5 hover:text-emerald-400 active:hover:text-emerald-600`} />
             </button>,
             sortable: true,
             center: true,

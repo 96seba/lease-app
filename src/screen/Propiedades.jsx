@@ -12,6 +12,7 @@ export default function Propiedades() {
 
 
     useEffect(() => {
+        document.title = 'Propiedades'
         const propiedades = async () => {
             const resp = await getPropiedades()
             if (resp.status === 401) {

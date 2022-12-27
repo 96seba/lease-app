@@ -16,6 +16,7 @@ export default function Register() {
     // }, [tableData])
 
     useEffect(() => {
+        document.title = 'Usuarios'
         const getUsers = async () => {
             const resp = await getAllUsers()
             console.log(resp.data.users)

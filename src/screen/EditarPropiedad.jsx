@@ -67,6 +67,7 @@ export default function EditarPropiedad() {
     useEffect(() => {
         let data = location.state.data
         console.log(data)
+        document.title = 'Editar propiedad '+ data.property_id
         setData(data)
         setId(data.property_id)
         setDireccion(data.address)
@@ -79,6 +80,7 @@ export default function EditarPropiedad() {
         setIdProp(data.id)
         let inito = data?.leases[0]?.initial_date.slice(0, 10)
         let endo = data?.leases[0]?.end_date.slice(0, 10)
+        console.log(inito)
         setInicioContrato(inito)
         setTerminoContrato(endo)
         console.log("ID DE CONTRATO", data?.leases[0]?.id)

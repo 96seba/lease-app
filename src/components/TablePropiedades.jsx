@@ -46,7 +46,7 @@ const columnas = [
         ,
         sortable: true,
         wrap: true,
-        width: '16%'
+        width: '19%'
     },
     {
         name: 'Telefono',
