@@ -85,7 +85,7 @@ const validaArrendador = (userName, userLastName) => {
 
 const validaArrendatario = (data) => {
 
-    console.log(data?.leaseholder)
+    // console.log(data?.leaseholder)
     if (data?.leaseholder === undefined) {
         return "No hay arrendatario"
     } else {
@@ -116,7 +116,7 @@ export default function TablePropiedades({ dataProp }) {
                 customStyles={customStyles}
                 defaultSortFieldId={1}
                 onRowDoubleClicked={async (e) => {
-                    let nav = `/propiedades/propiedad?=${e.id}`
+                    let nav = `/propiedades/propiedad?=${e.property_id}`
                     navigate(nav, {
                         state: {
                             id: e.id

@@ -87,7 +87,7 @@ export default function TableAlerts(data) {
         console.log(rowA)
 
         console.log(rowB)
-        
+
         if (date1.getTime() > date2.getTime()) {
             return 1;
         }
@@ -130,6 +130,34 @@ export default function TableAlerts(data) {
         }
     }
 
+    const parsePriority = (priority) => {
+        if (priority === "BAJA") {
+            return 0
+        }
+        if (priority === "MEDIA") {
+            return 1
+        }
+        if (priority === "ALTA") {
+            return 2
+        }
+
+    }
+
+
+    const prioritySort = (rowA, rowB) => {
+        let p1 = parsePriority(rowA.level)
+        let p2 = parsePriority(rowB.level)
+
+        if (p1 > p2) {
+            return 1;
+        }
+
+        if (p2 > p1) {
+            return -1;
+        }
+
+        return 0;
+    };
 
 
     const columnas = [
@@ -151,7 +179,7 @@ export default function TableAlerts(data) {
         {
             name: 'Fecha',
             selector: row => parseDate(row?.dateResolve?.slice(0, 10)),
-            sortable: true, 
+            sortable: true,
             center: true,
             compact: true,
             width: '16%',
@@ -162,7 +190,8 @@ export default function TableAlerts(data) {
             selector: row => row?.level,
             sortable: true,
             wrap: true,
-            width: '18%'
+            width: '18%',
+            sortFunction: prioritySort
         },
         {
             name: 'Estado',
@@ -188,7 +217,6 @@ export default function TableAlerts(data) {
                     {renderModal(row)}
                 </div>
             ,
-            sortable: true,
             center: true,
             compact: true,
             width: '16%',

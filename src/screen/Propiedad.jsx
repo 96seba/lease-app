@@ -12,6 +12,7 @@ import { editExpenses } from '../api/editExpenses'
 import { getPropiedad } from '../api/getPropiedad'
 import { getVisitsForProperty } from '../api/getVisitsForProperty'
 import ModalPagos from '../components/ModalPagos'
+import ModalCorreos from '../components/ModalCorreos'
 import { sendDebtorMail } from '../api/sendDebtorMail'
 
 export default function Propiedad() {
@@ -44,6 +45,7 @@ export default function Propiedad() {
         // console.log(data.property.alerts)
         setAnnotations(data.property.annotations.reverse())
         setFotoUrl(API_HOST + data.property?.image || '')
+        console.log(data.property.property_id)
         document.title = 'Propiedad ' + data.property.property_id
         const respExpenses = await getExpensesId(data.property.id)
         console.log(respExpenses)
@@ -85,6 +87,8 @@ export default function Propiedad() {
     const [dateAlertIncomplete, setDateAlertIncomplete] = useState(false)
 
     const [open, setOpen] = useState(false)
+
+    const [openCorreos, setOpenCorreos] = useState(false)
 
     const [anotacionesTrigger, setAnotacionesTriger] = useState(false)
 
@@ -207,7 +211,7 @@ export default function Propiedad() {
             // console.log(date, fecha)
             const yyyy = date.getFullYear();
             let mm = date.getMonth() + 1;
-            let dd = date.getDate();
+            let dd = date.getUTCDate();
 
             if (dd < 10) dd = '0' + dd;
             if (mm < 10) mm = '0' + mm;
@@ -245,7 +249,7 @@ export default function Propiedad() {
     return (
         <div className='bg-gray-100 w-[100vw] flex justify-center '>
             <ModalPagos open={open} setOpen={setOpen} />
-
+            <ModalCorreos open={openCorreos} setOpen={setOpenCorreos} />
 
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[80vw]  2xl:w-[75vw] bg-gray-100 flex-column justify-start items-center p-8">
                 <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
@@ -380,7 +384,7 @@ export default function Propiedad() {
 
                                         <input
                                             value={dateAlert}
-                                            min={minDate}
+                                            // min={minDate}
                                             onChange={e => { setDateAlert(e.target.value) }}
                                             className={`w-[124px]  p-1 h-[100%] outline outline-[1px]  text-[15px] 
                                              ${dateAlertIncomplete === true && dateAlert === '' && 'outline outline-[2px] outline-red-500'} `}
@@ -467,23 +471,28 @@ export default function Propiedad() {
                     <div className='w-full  flex flex-row justify-between items-center'>
                         <p className='text-lg font-semibold'>Historial de pagos</p>
                         <div className='h-full w-[40%] flex justify-end items-center'>
-                            <button
-                                onClick={async () => {
-                                    let resp = await sendDebtorMail(data.id)
-                                    console.log(resp)
-                                }}
-                                className='h-[4vh] mr-2  w-60 bg-emerald-400
+                            {dataExp.length !== 0 &&
+                                <>
+                                    <button
+                                        onClick={async () => {
+                                            let resp = await sendDebtorMail(data.id)
+                                            console.log(resp)
+                                            setOpenCorreos(true)
+                                        }}
+                                        className='h-[4vh] mr-2  w-60 bg-emerald-400
                                 hover:bg-emerald-600  rounded'>
-                                Enviar correos
-                            </button>
-                            <button
-                                onClick={() => {
-                                    updateExpenses()
-                                }}
-                                className='h-[4vh]  w-40 bg-emerald-400
+                                        Enviar correos
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            updateExpenses()
+                                        }}
+                                        className='h-[4vh]  w-40 bg-emerald-400
                                 hover:bg-emerald-600  rounded'>
-                                Guardar
-                            </button>
+                                        Guardar
+                                    </button>
+                                </>
+                            }
                         </div>
                     </div>
                     <TableBill id={data.id} arrayExpenses={arrayExpenses} setArrayExpenses={setArrayExpenses} dataExp={dataExp} />

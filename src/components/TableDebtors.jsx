@@ -81,25 +81,25 @@ export default function TableDebtors({ debtorData }) {
         //         </button>,
         //     width: '8%'
         // },
-        {
-            name: '',
-            selector: row => <button
-                type="button"
-                className="inline-flex w-28 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
-                onClick={async () => {
-                    let nav = `/propiedades/propiedad?=${row.id}`
-                    navigate(nav, {
-                        state: {
-                            id: row.id
-                        }
-                    })
-                }}
-            >
-                Ir a propiedad
-            </button>,
-            sortable: true,
-            width: '15%',
-        },
+        // {
+        //     name: '',
+        //     selector: row => <button
+        //         type="button"
+        //         className="inline-flex w-28 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+        //         onClick={async () => {
+        //             let nav = `/propiedades/propiedad?=${row.id}`
+        //             navigate(nav, {
+        //                 state: {
+        //                     id: row.id
+        //                 }
+        //             })
+        //         }}
+        //     >
+        //         Ir a propiedad
+        //     </button>,
+        //     sortable: true,
+        //     width: '15%',
+        // },
 
     ]
 
@@ -119,6 +119,14 @@ export default function TableDebtors({ debtorData }) {
             pagination
             customStyles={customStyles}
             highlightOnHover
+            onRowDoubleClicked={e => {
+                let nav = `/propiedades/propiedad?=${e.property_id}`
+                navigate(nav, {
+                    state: {
+                        id: e.id
+                    }
+                })
+            }}
             paginationComponentOptions={paginationComponentOptions}
         />
     )

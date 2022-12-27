@@ -116,7 +116,7 @@ export default function TableVisitsPending(data) {
             pagination
             highlightOnHover
             onRowDoubleClicked={(e) => {
-                console.log(e.Lease.propertyId)
+                console.log(e)
                 let nav = `/propiedades/propiedad?=${e.Lease.propertyId}`
                 navigate(nav, {
                     state: {

@@ -52,6 +52,9 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
     }
 
 
+
+
+
     const columnas = [
         {
             name: 'Mes',
@@ -72,35 +75,30 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
         {
             name: 'Monto',
             selector: (row, index) => <Drop id={row.id} index={index} name={"arriendo"} setArray={setArray} status={row.arriendo} />,
-            sortable: true,
             compact: true,
             width: '15%'
         },
         {
             name: 'GG.CC',
             selector: (row, index) => <Drop id={row.id} index={index} name={"gastos_comunes"} setArray={setArray} status={row.gastos_comunes} />,
-            sortable: true,
             compact: true,
             width: '15%'
         },
         {
             name: 'Agua',
             selector: (row, index) => <Drop id={row.id} index={index} name={"agua"} setArray={setArray} status={row.agua} />,
-            sortable: true,
             compact: true,
             width: '15%'
         },
         {
             name: 'Luz',
             selector: (row, index) => <Drop id={row.id} index={index} name={"luz"} setArray={setArray} status={row.luz} />,
-            sortable: true,
             compact: true,
             width: '15%'
         },
         {
             name: 'Gas',
             selector: (row, index) => <Drop id={row.id} index={index} name={"gas"} setArray={setArray} status={row.gas} />,
-            sortable: true,
             compact: true,
             width: '15%'
         }

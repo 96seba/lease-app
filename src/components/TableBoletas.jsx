@@ -107,6 +107,20 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
     };
 
 
+    const estadoSort = (rowA, rowB) => {
+        console.log(rowA.sended, rowB.sended)
+
+
+        if (rowA.sended === true && rowB.sended === false) {
+            return 1;
+        }
+
+        if (rowB.sended === true && rowA.sended === false) {
+            return -1;
+        }
+        return 0;
+    };
+
 
     const columnas = [
         {
@@ -165,10 +179,10 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                                         Elige un archivo...
                                     </span>
                                     <input id={"dropzone-file" + index}
-                                    accept=".pdf"
-                                    onChange={(e) => {
-                                        setFileBoleta(row, e.target.files[0])
-                                    }} type="file" className="hidden" />
+                                        accept=".pdf"
+                                        onChange={(e) => {
+                                            setFileBoleta(row, e.target.files[0])
+                                        }} type="file" className="hidden" />
                                 </div>
                             </label>
                         </div>
@@ -204,6 +218,8 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         {
             name: "Estado",
             center: true,
+            sortFunction: estadoSort,
+            sortable: true,
             selector: (row, index) => {
                 if (boletasBody[getIndex(row.id)]?.sended === false) {
                     return (<FontAwesomeIcon icon={faFile} className={`w-6 h-6`} />)
