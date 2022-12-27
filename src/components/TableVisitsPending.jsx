@@ -46,9 +46,7 @@ export default function TableVisitsPending(data) {
         let dateVisit = new Date(fecha).getTime()
         let dateActual = new Date().getTime()
 
-
         var diff = dateActual - dateVisit;
-
         let calculo = Math.round((diff / (1000 * 60 * 60 * 24)))
 
         if (calculo <= 0) {

@@ -52,44 +52,30 @@ export default function AgregarPropiedad() {
 
     const [inicioContrato, setInicioContrato] = useState("")
     const [terminoContrato, setTerminoContrato] = useState("")
-
     const [arrendadorIncomplete, setArrendadorIncomplete] = useState(false)
     const [arrendatarioIncomplete, setArrendatarioIncomplete] = useState(false)
     const [contratoIncomplete, setContratoIncomplete] = useState(false)
     const [selectIncomplete, setSelectIncomplete] = useState(false)
-
     const [selected, setSelected] = useState("")
-
     const [monto, setMonto] = useState("")
     const [administracion, setAdministracion] = useState("")
-    const [ggcc, setGgcc] = useState("")
-
-
     const [tipo, setTipo] = useState("Tipo")
-
     const [newContrato, setNewContrato] = useState(false)
     const [newArrendatario, setNewArrendatario] = useState(false)
     const [newDueno, setNewDueno] = useState(true)
     const [newDuenoError, setNewDuenoError] = useState(false)
-
     const [error, setError] = useState(false)
-
     const bottomRef = useRef(null)
     const inputRef = useRef(null)
     const newDuenoRef = useRef(null)
-
     const [rutArrendadorCheck, setRutArrendadorCheck] = useState(false)
-
     const [rutArrendatarioCheck, setRutArrendatarioCheck] = useState(false)
-
     const [emailArrendadorCheck, setEmailArrendadorCheck] = useState(false)
-
     const [emailArrendatarioCheck, setEmailArrendatarioCheck] = useState(false)
-
     const [fechaContratoError, setFechaContratoError] = useState(false)
-
     const [leaseholders, setLeaseholders] = useState([])
-
+    const [open, setOpen] = useState(false)
+    
 
     useEffect(() => {
         document.title = 'Agrega una propiedad'
@@ -280,6 +266,8 @@ export default function AgregarPropiedad() {
                             objContrato.email = arrendatario.correo
                             objContrato.phone = String(arrendatario.telefono)
                             let date = new Date(arrendatario.fechaNacArrendatario)
+                            console.log(date)
+                            console.log(arrendatario.fechaNacArrendatario)
                             objContrato.birthday = date.toISOString()
 
                             console.log(objPropClean)
@@ -300,7 +288,10 @@ export default function AgregarPropiedad() {
                                 console.log("Se selecciona el arrendatario")
                                 const respLease = await addLease(objContrato)
                                 console.log("respLease", respLease)
-
+                            }
+                            else{
+                                console.log("Selecciona a alguien gil")
+                                return
                             }
                         }
                     }
@@ -375,7 +366,6 @@ export default function AgregarPropiedad() {
             var digv = tmp[1];
             var rut = tmp[0];
             if (digv == 'K') digv = 'k';
-
             return (checkInputRut.dv(rut) == digv);
         },
         dv: function (T) {
@@ -418,9 +408,6 @@ export default function AgregarPropiedad() {
         }
         return rutPuntos;
     }
-
-
-    const [open, setOpen] = useState(false)
 
     return (
         <div className='w-screen flex justify-center items-center bg-white'>
@@ -547,17 +534,6 @@ export default function AgregarPropiedad() {
                             border  h-[4vh]  rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
                             placeholder="Comision por administracion*" />
                     </div>
-                    {/* <div className="mb-3 w-[90%] flex flex-col justify-center items-start">
-                        <input
-                            value={ggcc} onChange={text => {
-                                if (text.target.value >= 0) {
-                                    setGgcc(text.target.value)
-                                }
-                            }}
-                            className={`appearance-none bg-gray-100 
-                        border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker`}
-                            placeholder="Gastos comunes" />
-                    </div>  */}
                     <div className='w-[90%] h-[70%] flex flex-col justify-start items-center '>
                         <div
                             className='flex justify-between  items-center w-[100%] h-[5vh]   bg-gray-100'>
@@ -611,7 +587,7 @@ export default function AgregarPropiedad() {
                                         <input
                                             value={arrendador.rut}
                                             onChange={text => {
-
+                                                setRutArrendadorCheck(false)
                                                 let val = text.target.value.replaceAll('.', '').replace('-', '')
                                                 console.log(val)
                                                 if (text.target.value.length < 13) {
@@ -626,7 +602,8 @@ export default function AgregarPropiedad() {
                                                 }
                                             }}
                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                        ${error && arrendador.rut?.length === 0 && " outline outline-2 outline-red-300"}`
+                                                        ${error && arrendador.rut?.length === 0 && " outline outline-2 outline-red-300"}
+                                                        ${rutArrendadorCheck === true && " outline outline-2 outline-red-300"}`
                                             }
                                             type="text"
                                             placeholder="Rut" />
@@ -645,9 +622,13 @@ export default function AgregarPropiedad() {
                                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                                             <input
                                                 value={arrendador.correo}
-                                                onChange={text => { setArrendador({ ...arrendador, correo: text.target.value }) }}
+                                                onChange={text => { 
+                                                    setEmailArrendadorCheck(false)
+                                                    setArrendador({ ...arrendador, correo: text.target.value }) }}
                                                 className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                                            ${error && arrendador.correo.length <= 0 && " outline outline-2 outline-red-300"}`} type="text"
+                                                            ${error && arrendador.correo.length <= 0 && " outline outline-2 outline-red-300"}
+                                                            ${emailArrendadorCheck == true && " outline outline-2 outline-red-300"}
+                                                            `} type="text"
                                                 placeholder="Correo" />
                                         </div>
                                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -794,13 +775,15 @@ export default function AgregarPropiedad() {
                                                     <input
                                                         value={arrendatario.rut}
                                                         onChange={text => {
+                                                            setRutArrendatarioCheck(false)
                                                             if (text.target.value.length < 13) {
                                                                 let resp = checkRut(text.target.value)
                                                                 setArrendatario({ ...arrendatario, rut: resp })
                                                             }
                                                         }}
                                                         className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[100%] py-2 px-3 text-grey-darker
-                                                        ${error && arrendatario.rut?.length === 0 && " outline outline-2 outline-red-300"}`
+                                                        ${error && arrendatario.rut?.length === 0 && " outline outline-2 outline-red-300"}
+                                                        ${rutArrendatarioCheck == true && " outline outline-2 outline-red-300"}`
                                                         }
                                                         type="text"
                                                         placeholder="Rut" />
@@ -819,9 +802,12 @@ export default function AgregarPropiedad() {
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
                                                         <input
                                                             value={arrendatario.correo}
-                                                            onChange={text => { setArrendatario({ ...arrendatario, correo: text.target.value }) }}
+                                                            onChange={text => { 
+                                                                setEmailArrendatarioCheck(false)
+                                                                setArrendatario({ ...arrendatario, correo: text.target.value }) }}
                                                             className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[95%] py-2 px-3 text-grey-darker
-                                                            ${error && newArrendatario === true && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}`} type="text"
+                                                            ${error && newArrendatario === true && arrendatario.correo.length <= 0 && " outline outline-2 outline-red-300"}
+                                                            ${emailArrendatarioCheck == true && " outline outline-2 outline-red-300"}`} type="text"
                                                             placeholder="Correo" />
                                                     </div>
                                                     <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
@@ -843,7 +829,6 @@ export default function AgregarPropiedad() {
                                             <div className='h-[36vh]'>
                                                 {
                                                     leaseholders !== [] &&
-
                                                     <ArrendatarioFinder selected={selected} setSelected={setSelected}
                                                         selectIncomplete={selectIncomplete} setSelectIncomplete={setSelectIncomplete}
                                                         leaseholders={leaseholders}
