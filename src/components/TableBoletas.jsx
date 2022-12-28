@@ -125,7 +125,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
     const columnas = [
         {
             name: 'ID Propiedad',
-            selector: row => row.propertyId,
+            selector: row => row.property?.property_id,
             sortable: true,
             width: "9%",
         },

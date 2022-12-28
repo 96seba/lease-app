@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import { getAlertsPending } from '../api/getAlertsPending';
+import { useNavigate } from 'react-router-dom';
 import { customStyles, paginationComponentOptions } from '../utils/constants';
 import ModalResolveAlert from './ModalResolveAlert';
 
@@ -10,6 +11,8 @@ export default function TableAlerts(data) {
     const [modalStates, setModalStates] = useState([])
 
     const [handleData, setHandleData] = useState([])
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         console.log("HA LLEGADO DEL DATA CHAVALES")
@@ -161,14 +164,22 @@ export default function TableAlerts(data) {
 
 
     const columnas = [
-        {
-            name: 'Id',
-            selector: row => row.id,
-            sortable: true,
-            center: true,
-            compact: true,
-            width: '7%'
-        },
+        // {
+        //     name: 'Id',
+        //     selector: row => row.id,
+        //     sortable: true,
+        //     center: true,
+        //     compact: true,
+        //     width: '7%'
+        // },
+        // {
+        //     name: 'Id Propiedad',
+        //     selector: row => row.propertyId,
+        //     sortable: true,
+        //     center: true,
+        //     compact: true,
+        //     width: '12%'
+        // },
         {
             name: 'Descripcion',
             selector: row => row.note,
@@ -234,6 +245,14 @@ export default function TableAlerts(data) {
             fixedHeaderScrollHeight='700px'
             pagination
             highlightOnHover
+            onRowDoubleClicked={e => {
+                let nav = `/propiedades/propiedad?=${e.propertyId}`
+                navigate(nav, {
+                    state: {
+                        id: e.propertyId
+                    }
+                })
+            }}
             paginationComponentOptions={paginationComponentOptions}
         />
     )
