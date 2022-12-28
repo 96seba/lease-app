@@ -6,7 +6,6 @@ import { getCurentUser } from "../api/getCurrentUser"
 export default function Login() {
 
     useEffect(() => {
-      
         document.title = 'Login'
 
     }, [])
@@ -83,9 +82,9 @@ export default function Login() {
             <div className=" bg-white flex justify-center w-[400px]">
                 <div className="bg-white shadow rounded-lg px-8 pt-6 pb-8 m-auto w-full">
                     <div className="mt-4 mb-6">
-                        {/* <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
-                            Usuario
-                        </label> */}
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
+                            Correo usuario
+                        </label>
                         <input
                             value={user}
                             onChange={(e) => { setUser(e.target.value) }}
@@ -93,9 +92,9 @@ export default function Login() {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" type="text" placeholder="Usuario" />
                     </div>
                     <div className="mb-2">
-                        {/* <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="password">
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="password">
                             Contraseña
-                        </label> */}
+                        </label>
                         <input
                             value={pass}
                             onChange={(e) => { setPass(e.target.value) }}
@@ -107,9 +106,7 @@ export default function Login() {
                     <div className="flex items-center justify-end">
                         <button
                             onClick={() => {
-
                                 loginUser()
-
                                 // navigate('/dashboard')
                             }}
                             className="bg-[#FF6F00] hover:bg-[#3A4348] text-white font-bold py-2 px-4 rounded" type="button">
