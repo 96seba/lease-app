@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router-dom';
 
 export default function TableVisitsPending(data) {
 
+    React.useEffect(()=>{
+        console.log(data)
+    },[])
+
     const navigate = useNavigate()
 
     const parseDate = (fecha) => {
@@ -117,7 +121,7 @@ export default function TableVisitsPending(data) {
             highlightOnHover
             onRowDoubleClicked={(e) => {
                 console.log(e)
-                let nav = `/propiedades/propiedad?=${e.Lease.propertyId}`
+                let nav = `/propiedades/propiedad`
                 navigate(nav, {
                     state: {
                         id: e.Lease.propertyId

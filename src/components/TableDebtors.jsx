@@ -32,11 +32,12 @@ export default function TableDebtors({ debtorData }) {
     const columnas = [
         {
             name: 'Propiedad',
-            selector: row => row?.id,
+            selector: row => row?.property_id,
             sortable: true,
             width: '10%',
             compact: true,
-            center: true
+            center: true,
+            wrap:true
         },
         {
             name: 'Arrendatario',
@@ -120,7 +121,7 @@ export default function TableDebtors({ debtorData }) {
             customStyles={customStyles}
             highlightOnHover
             onRowDoubleClicked={e => {
-                let nav = `/propiedades/propiedad?=${e.property_id}`
+                let nav = `/propiedades/propiedad`
                 navigate(nav, {
                     state: {
                         id: e.id

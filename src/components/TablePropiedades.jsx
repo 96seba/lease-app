@@ -20,6 +20,25 @@ const amountSort = (rowA, rowB) => {
     return 0;
 };
 
+
+const removeAccents = (str) => {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+const nameSort = (rowA, rowB) => {
+
+    // if (date1 > date2) {
+    //     return 1;
+    // }
+
+    // if (date2 > date1 ) {
+    //     return -1;
+    // }
+    // return 0;
+};
+
+
+
 const columnas = [
     {
         name: 'Id',
@@ -100,6 +119,9 @@ const validaArrendatario = (data) => {
     // }
 }
 
+
+
+
 export default function TablePropiedades({ dataProp }) {
     let navigate = useNavigate()
 
@@ -116,7 +138,7 @@ export default function TablePropiedades({ dataProp }) {
                 customStyles={customStyles}
                 defaultSortFieldId={1}
                 onRowDoubleClicked={async (e) => {
-                    let nav = `/propiedades/propiedad?=${e.property_id}`
+                    let nav = `/propiedades/propiedad`
                     navigate(nav, {
                         state: {
                             id: e.id

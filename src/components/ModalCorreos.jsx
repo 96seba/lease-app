@@ -1,10 +1,8 @@
-import { Fragment, useRef, useState, useEffect } from 'react'
+import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { useNavigate } from 'react-router-dom'
 
 export default function ModalCorreos({ open, setOpen }) {
 
-    const navigate = useNavigate()
 
     const cancelButtonRef = useRef(null)
 

@@ -11,6 +11,7 @@ export default function Propiedades() {
     const [open, setOpen] = useState(false)
 
 
+
     useEffect(() => {
         document.title = 'Propiedades'
         const propiedades = async () => {

@@ -9,8 +9,6 @@ export default function ModalResolveAlert({ row, setCheckStateFalse, refreshAler
 
     const [open, setOpen] = useState(true)
 
-    let navigate = useNavigate()
-
     const cancelButtonRef = useRef(null)
 
     return (

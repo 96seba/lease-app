@@ -352,7 +352,7 @@ export default function EditarPropiedad() {
 
                     <button
                     onClick={()=>{
-                        let nav = `/propiedades/propiedad?=${idProp}`
+                        let nav = `/propiedades/propiedad`
                         navigate(nav, {
                             state: {
                                 id: idProp

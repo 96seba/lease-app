@@ -45,9 +45,9 @@ export default function TableVisits({ id, visits, setVisits }) {
                     disabled
                     type={'date'}
                     className='block p-2.5 cursor-not-allowed w-[120px] text-sm text-gray-900
-             bg-gray-200 rounded-lg border border-gray-300
-              focus:ring-blue-500 focus:border-blue-500
-               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                bg-gray-200 rounded-lg border border-gray-300
+                focus:ring-blue-500 focus:border-blue-500
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
             )
         }
@@ -133,7 +133,7 @@ export default function TableVisits({ id, visits, setVisits }) {
             width: '12%'
         },
         {
-            name: 'Fecha',
+            name: 'Fecha Agendada',
             selector: row => parseDate(row.date),
             sortable: true,
             wrap: true,
@@ -141,7 +141,7 @@ export default function TableVisits({ id, visits, setVisits }) {
             width: '24%'
         },
         {
-            name: 'Fecha',
+            name: 'Fecha Visita',
             selector: (row, index) => renderFechaInput(index, row.date),
             sortable: true,
             wrap: true,
