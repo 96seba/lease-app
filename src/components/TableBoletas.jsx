@@ -6,6 +6,8 @@ import { faCloudArrowUp, faCircleCheck, faFileCircleCheck, faFile, faPaperPlane,
 import { customStyles, paginationComponentOptions } from '../utils/constants';
 import { sendTicket } from '../api/sendTicket'
 import { uploadTicket } from '../api/uploadTicket'
+import ModalSendBoletas from './ModalSendBoletas';
+import { useState } from 'react';
 
 
 
@@ -31,6 +33,8 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
 
 
     }, [])
+
+    const [open, setOpen] = useState (false)
 
 
     const getIndex = (id) => {
@@ -196,15 +200,15 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         {
             name: 'Nro de boleta',
             selector: row =>
-                <input value={boletasBody[getIndex(row.id)]?.nroTicket}
+                <input type= 'number' value={boletasBody[getIndex(row.id)]?.nroTicket} min={0}
                     onChange={e => {
                         setNroBoleta(row, e.target.value)
                     }}
-                    className={`w-[55px] h-7 text-center text-black bg-gray-200/50 rounded-sm
+                    className={`w-[55px] h-7 text-center text-black border outline outline-none rounded-sm
                     focus:bg-white`} />
             ,
             center: true,
-            width: "10%",
+            width: "12%",
             compact: true
         },
         {
@@ -249,8 +253,8 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                         console.log(sendResp.data.adm_exp.sended)
                         if (sendResp.data.adm_exp.sended === true) {
                             setSendedTicket(obj.propertyId)
+                            setOpen(true)
                         }
-
                     }
                 }
             }}>
@@ -267,6 +271,8 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         return <></>
     }
     return (
+        <>
+        <ModalSendBoletas open={open} setOpen={setOpen} />
         <DataTable
             columns={columnas}
             data={tablaData}
@@ -280,7 +286,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             customStyles={customStyles}
             paginationComponentOptions={paginationComponentOptions}
         />
-
+        </>
 
     )
 } 
