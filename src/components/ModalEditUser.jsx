@@ -34,9 +34,12 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
 
     const updateDataUser = async () => {
 
+        console.log(user)
+
         let obj = {}
         obj.name = user.name
         obj.lastname = user.lastname
+        obj.password = user.password
         obj.id = dataRow.id
         console.log(obj)
 
@@ -116,12 +119,12 @@ export default function ModalEditUser({ open, setOpen, dataRow, tableData, setTa
                                                         onKeyDown={event => { executeEnter(event) }}
                                                         onChange={event => setUser({ ...user, lastname: event.target.value })} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Apellido" required="" />
                                                 </div>
-                                                {/* <div>
-                                                    <label htmlFor="apellido" className="block mb-2 text-sm font-medium text-black dark:text-white">Apellido</label>
-                                                    <input value={user.lastname}
+                                                <div>
+                                                    <label htmlFor="contraseña" className="block mb-2 text-sm font-medium text-black dark:text-white">Contraseña</label>
+                                                    <input value={user.password}
                                                         onKeyDown={event => { executeEnter(event) }}
-                                                        onChange={event => setUser({ ...user, lastname: event.target.value })} type="text" name="apellido" id="apellido" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Apellido" required="" />
-                                                </div> */}
+                                                        onChange={event => setUser({ ...user, password: event.target.value })} type="password" name="contraseña" id="contraseña" className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Contraseña" required="" />
+                                                </div>
                                                 <button className="w-full text-white bg-[#FF6F00] hover:bg-[#3A4348] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                                                     onClick={() => updateDataUser()}>Actualizar</button>
                                             </div>

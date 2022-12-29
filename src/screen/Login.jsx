@@ -83,7 +83,7 @@ export default function Login() {
                 <div className="bg-white shadow rounded-lg px-8 pt-6 pb-8 m-auto w-full">
                     <div className="mt-4 mb-6">
                         <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
-                            Correo usuario
+                            Correo
                         </label>
                         <input
                             value={user}

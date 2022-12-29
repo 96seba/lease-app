@@ -234,7 +234,12 @@ export default function TableAlerts(data) {
         },
     ]
 
-
+    if (handleData?.data?.length === 0) {
+        return <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
+            <p>No hay propiedades a revisar aun uyuiiiiiiii (Lease modo huaso)</p>
+            <img src={require('../assets/loading.JPG')} className={'w-[130px] h-[130px]'} />
+        </div>
+    }
     return (
         <DataTable
             columns={columnas}

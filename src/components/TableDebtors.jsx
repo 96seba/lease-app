@@ -30,43 +30,51 @@ export default function TableDebtors({ debtorData }) {
     }
 
     const columnas = [
-        {
-            name: 'Propiedad',
-            selector: row => row?.property_id,
-            sortable: true,
-            width: '10%',
-            compact: true,
-            center: true,
-            wrap:true
-        },
+        // {
+        //     name: 'Propiedad',
+        //     selector: row => row?.property_id,
+        //     sortable: true,
+        //     width: '10%',
+        //     compact: true,
+        //     center: true,
+        //     wrap:true
+        // },
         {
             name: 'Arrendatario',
             selector: row => row?.name + " " + row?.lastname,
             sortable: true
         },
         {
-            name: 'Correo',
-            selector: (row) => {
-
-                if (row.email) {
-                    return row?.email
-                } else {
-                    return "No hay correo"
-                }
-            },
-            sortable: true
-        },
-        {
-            name: 'Número',
-            selector: row => {
-                if (row.phone) {
-                    return row?.phone
-                } else {
-                    return "No hay telefono"
-                }
-            },
+            name: 'Direccion',
+            // selector: row => <></>,
+            selector: row => row?.address,
             sortable: true,
+            wrap: true
+
         },
+        // {
+        //     name: 'Correo',
+        //     selector: (row) => {
+
+        //         if (row.email) {
+        //             return row?.email
+        //         } else {
+        //             return "No hay correo"
+        //         }
+        //     },
+        //     sortable: true
+        // },
+        // {
+        //     name: 'Número',
+        //     selector: row => {
+        //         if (row.phone) {
+        //             return row?.phone
+        //         } else {
+        //             return "No hay telefono"
+        //         }
+        //     },
+        //     sortable: true,
+        // },
         {
             name: 'Nro de deudas',
             selector: row => row?.amount_debts,

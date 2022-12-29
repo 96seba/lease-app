@@ -4,6 +4,7 @@ import ModalEditUser from "../components/ModalEditUser"
 import { createUser } from "../api/createUser"
 import { getAllUsers } from "../api/getAllUsers"
 import { Popover } from "react-tiny-popover"
+import ModalUserCreate from "../components/ModalUserCreate"
 
 export default function Register() {
 
@@ -37,6 +38,8 @@ export default function Register() {
     const [password, setPassword] = useState("")
 
     const [open, setOpen] = useState(false)
+
+    const [openSucces, setOpenSucces] = useState(false)
 
     const [dataRow, setDataRow] = useState("")
 
@@ -97,6 +100,7 @@ export default function Register() {
             console.log("SE EJECUTA EL CREAR USER")
             const resp = await createUser(obj)
             console.log(resp)
+            setOpenSucces(true)
             setTableData(current => [...current, resp.data.user])
             setCorreo("")
             setNombre("")
@@ -112,7 +116,7 @@ export default function Register() {
         console.log(data)
     }
 
-  
+
 
     return (
         <div className="bg-gray-100 w-screen h-[90vh] flex items-center justify-center">
@@ -121,15 +125,14 @@ export default function Register() {
                     <h1 className="text-lg font-semibold text-center mb-4">
                         Crea una cuenta
                     </h1>
-                    <div className="space-y-4 md:space-y-6 w-[80%]" action="#">
+                    <div className="space-y-4 md:space-y-6 w-[80%]" >
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-black dark:text-white">Correo</label>
-                            <input 
-                            inputMode="email"
-                            value={correo} onChange={event => {
-                                setEmailUserError(false)
-                                setCorreo(event.target.value)
-                            }} type="email" name="email" id="email"
+                            <input
+                                value={correo} onChange={event => {
+                                    setEmailUserError(false)
+                                    setCorreo(event.target.value)
+                                }} type="email" name="email" id="email" autoComplete="new-password"
                                 className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
                             ${emailUserError == true && "outline outline-2 outline-red-400"}`}
                                 placeholder="name@company.com" required="" />
@@ -139,7 +142,7 @@ export default function Register() {
                             <input value={nombre} onChange={event => {
                                 setNombreCheck(true)
                                 setNombre(event.target.value)
-                            }} type="text" name="nombre" id="nombre"
+                            }} type="text" name="nombre" id="nombre" autoComplete="new-password"
                                 className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
                             ${nombreCheck == false && "outline outline-2 outline-red-400"}`}
                                 placeholder="Nombre" required="" />
@@ -149,7 +152,7 @@ export default function Register() {
                             <input value={apellido} onChange={event => {
                                 setApellidoCheck(true)
                                 setApellido(event.target.value)
-                            }} type="text" name="apellido" id="apellido"
+                            }} type="text" name="apellido" id="apellido" autoComplete="new-password"
                                 className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
                             ${apellidoCheck == false && "outline outline-2 outline-red-400"}`}
                                 placeholder="Apellido" required="" />
@@ -159,7 +162,7 @@ export default function Register() {
                             <input value={password} onChange={event => {
                                 setPasswordCheck(true)
                                 setPassword(event.target.value)
-                            }} type="password" name="password" id="password" placeholder="••••••••"
+                            }} type="password" name="password" id="password" placeholder="••••••••" autoComplete="new-password"
                                 className={`bg-gray-50 border  border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5
                             ${passwordCheck == false && "outline outline-2 outline-red-400"}`}
                                 required="" />
@@ -179,8 +182,11 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className="flex justify-start items-center flex-col h-[80%] bg-white w-[45%] rounded-lg shadow py-5">
-                    <h1 className="text-lg font-semibold text-center mb-4">
+
+
+                {/* <div className="flex justify-center items-center flex-col h-[72.1vh] bg-white w-[45%] rounded-lg shadow"> */}
+                <div className="flex justify-end px-5 items-end flex-col h-[80%] bg-white w-[45%] rounded-lg shadow py-5">
+                    <h1 className="text-lg font-semibold text-center mb-4 w-full flex justify-center items-center">
                         Usuarios
                     </h1>
                     {
@@ -188,11 +194,12 @@ export default function Register() {
                             <TableUsers tableData={tableData} setOpen={setOpen} openModal={openModal} />
                             : <></>
                     }
-                  
+
                 </div>
 
 
             </div>
+            <ModalUserCreate open={openSucces} setOpen={setOpenSucces} />
             <ModalEditUser open={open} setOpen={setOpen} dataRow={dataRow} tableData={tableData} setTableData={setTableData} />
         </div>
     )

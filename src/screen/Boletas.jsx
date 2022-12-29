@@ -15,6 +15,7 @@ export default function Propiedades() {
             let resp = await getAllExpenses()
             console.log(resp.data.allAdminExpenses)
             setTableData(resp.data.allAdminExpenses)
+            console.log(resp)
         }
         getData()
     }, [])
@@ -68,7 +69,7 @@ export default function Propiedades() {
 
 
     return (
-        <div className="h-[100vh] flex flex-col justify-start items-start p-1  sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw]  2xl:w-[80vw]">
+        <div className="h-[84vh] flex flex-col justify-start items-start p-1 mt-[65px] sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw]  2xl:w-[80vw]">
           
             <div className='flex pt-3 px-4 mt-[12px] mb-10 flex-col justify-start items-end w-[100%] h-auto bg-white rounded-lg shadow-sm'>
                 <div className='w-full'>
