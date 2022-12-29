@@ -3,7 +3,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-
+import { getCurentUser } from '../api/getCurrentUser'
+import { TOKEN } from '../utils/constants'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -15,27 +16,32 @@ function Navbar() {
 
     useEffect(() => {
         const renderNavbar = async () => {
+            const userNow = await getCurentUser(TOKEN)
+            console.log(userNow, "Usuario")
+            console.log(userNow.data.user.name)
             if (localStorage.getItem('type_user') === 'ADMIN') {
                 setNavigation([
                     { name: 'Dashboard', href: '/dashboard', current: false },
                     { name: 'Propiedades', href: '/propiedades', current: false },
                     { name: 'Boletas', href: '/boletas', current: false },
                     { name: 'Usuarios', href: '/usuarios', current: false },
+                    { name: `${userNow.data.user.name + " " + userNow.data.user.lastname}`, current: false },
                 ])
             } else {
                 setNavigation([
                     { name: 'Dashboard', href: '/dashboard', current: false },
                     { name: 'Propiedades', href: '/propiedades', current: false },
                     { name: 'Boletas', href: '/boletas', current: false },
+                    { name: `${userNow.data.user.name + " " + userNow.data.user.lastname}`, current: false },
                 ])
             }
+
 
         }
         renderNavbar()
     }, [])
 
     let navigate = useNavigate()
-
 
     if (navigation.length === 0) {
         return <></>
@@ -120,7 +126,6 @@ function Navbar() {
                                                         className={classNames(active ? 'bg-gray-100' : '', 'block text-left px-4 w-full py-2 text-sm text-gray-700')}
                                                     >
                                                         Cerrar sesión
-
                                                     </button>
                                                 )}
                                             </Menu.Item>
