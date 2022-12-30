@@ -1,12 +1,10 @@
-import { Fragment, useRef, useState, useEffect } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
-export default function ModalEditPropiedad({ open, setOpen, id }) {
+export default function ModalUserCreate({ open, setOpen }) {
 
-    const navigate = useNavigate()
 
     const cancelButtonRef = useRef(null)
 
@@ -51,7 +49,7 @@ export default function ModalEditPropiedad({ open, setOpen, id }) {
                                             </Dialog.Title>
                                             <div className="mt-2">
                                                 <p className="text-md text-gray-500">
-                                                    Propiedad guardada
+                                                    Usuario creado correctamente
                                                 </p>
                                             </div>
                                         </div>
@@ -62,17 +60,12 @@ export default function ModalEditPropiedad({ open, setOpen, id }) {
                                         type="button"
                                         className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                         onClick={async () => {
-                                            let nav = `/propiedades/propiedad`
-                                            navigate(nav, {
-                                                state: {
-                                                    id: id
-                                                }
-                                            })
+                                            setOpen(false)
                                         }}
                                     >
-                                        Volver
+                                        Okay
                                     </button>
-                                    <button
+                                    {/* <button
                                         type="button"
                                         className="inline-flex w-[40%] justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-base font-medium text-teal-600 shadow-sm hover:bg-teal-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                         onClick={() => {
@@ -80,8 +73,8 @@ export default function ModalEditPropiedad({ open, setOpen, id }) {
 
                                         }}
                                     >
-                                        Cerrar
-                                    </button>
+                                        No
+                                    </button> */}
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>

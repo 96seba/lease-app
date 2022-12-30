@@ -67,7 +67,7 @@ export default function EditarPropiedad() {
     useEffect(() => {
         let data = location.state.data
         console.log(data)
-        document.title = 'Editar propiedad '+ data.property_id
+        document.title = 'Editar propiedad ' + data.property_id
         setData(data)
         setId(data.property_id)
         setDireccion(data.address)
@@ -351,15 +351,15 @@ export default function EditarPropiedad() {
                 sm:px-4 md:px-20 lg:px-6 xl:px-32'>
 
                     <button
-                    onClick={()=>{
-                        let nav = `/propiedades/propiedad`
-                        navigate(nav, {
-                            state: {
-                                id: idProp
-                            }
-                        })
-                    }}
-                    className="w-[100px] top-[110px]  flex justify-between items-center h-12 
+                        onClick={() => {
+                            let nav = `/propiedades/propiedad`
+                            navigate(nav, {
+                                state: {
+                                    id: idProp
+                                }
+                            })
+                        }}
+                        className="w-[100px] top-[110px]  flex justify-between items-center h-12 
                     absolute sm:left-[10vw] md:left-[17vw]  lg:left-[23vw]    xl:left-[31vw]
                     ">
                         <FontAwesomeIcon icon={faArrowLeft} className={`w-5 h-5`} />
@@ -374,9 +374,9 @@ export default function EditarPropiedad() {
                     <div className="mb-1 w-[90%] flex flex-col justify-center items-start">
                         <input
                             value={id} onChange={text => {
-                                if (text.target.value.length < 10 && text.target.value >= 0) {
-                                    setId(text.target.value)
-                                }
+
+                                setId(text.target.value)
+
                             }}
                             className={`bg-gray-100 appearance-none
                             border h-[4vh]  rounded-sm w-[100%] py-2 px-3 text-grey-darker`} min={0}

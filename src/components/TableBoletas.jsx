@@ -56,11 +56,12 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
 
     const setNroBoleta = async (row, data) => {
         let index = getIndex(row.id)
-        // console.log(index)
         // console.log(boletasBody[index].nroTicket)
         let arr = [...boletasBody]
         if (Number(data) === 0) {
             arr[index].nroTicket = ""
+        } else if (data === '') {
+            arr[index].nroTicket = ''
         } else (
             arr[index].nroTicket = Number(data)
         )
@@ -134,6 +135,13 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             width: "9%",
         },
         {
+            name: 'Direccion',
+            selector: row => row.property?.address,
+            wrap: true,
+            sortable: true,
+            width: "13%",
+        },
+        {
             name: 'Costo por administración',
             selector: row =>
                 <input
@@ -145,7 +153,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     className={`w-[120px] h-7 text-center text-gray-700 bg-gray-200/50 rounded-sm focus:bg-white`} />,
             sortable: true,
             center: true,
-            width: '19%',
+            width: '16%',
             compact: true,
             sortFunction: amountSort
 
@@ -175,7 +183,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     return (
                         <div className="flex justify-center items-center mb-1 h-7 w-44">
                             <label htmlFor={"dropzone-file" + index} className="flex flex-col 
-                            justify-center items-center w-full h-full bg-gray-50 rounded-lg 
+                            justify-center items-center w-full h-full bg-gray-200/70 rounded-lg 
                             cursor-pointer dark:bg-gray-300 dark:hover:bg-[#FF6F00]">
                                 <div className='h-[100%] w-[100%] flex justify-start pl-4 items-center'>
                                     <FontAwesomeIcon icon={faCloudArrowUp} className='text-black' />
@@ -193,7 +201,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     )
                 }
             },
-            width: "25%",
+            width: "18%",
             center: true,
             compact: true
         },
@@ -202,7 +210,14 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             selector: row =>
                 <input type= 'number' value={boletasBody[getIndex(row.id)]?.nroTicket} min={0}
                     onChange={e => {
-                        setNroBoleta(row, e.target.value)
+                        var reg = /^\d+$/
+                        if (reg.test(e.target.value) === true) {
+                            setNroBoleta(row, e.target.value)
+                        }
+                        if (e.target.value === '') {
+                            setNroBoleta(row, e.target.value)
+                        }
+
                     }}
                     className={`w-[55px] h-7 text-center text-black border outline outline-none rounded-sm
                     focus:bg-white`} />
@@ -224,6 +239,8 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             center: true,
             sortFunction: estadoSort,
             sortable: true,
+            compact: true,
+            width: '5%',
             selector: (row, index) => {
                 if (boletasBody[getIndex(row.id)]?.sended === false) {
                     return (<FontAwesomeIcon icon={faFile} className={`w-6 h-6`} />)
