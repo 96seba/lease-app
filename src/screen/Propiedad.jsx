@@ -375,7 +375,7 @@ export default function Propiedad() {
 
                                         <select defaultValue={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
                                             className={`w-[100px] h-full outline outline-[1px]  text-[15px]  px-2 text-start
-                                             ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2px] outline-red-500'}`}>
+                                            ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2px] outline-red-500'}`}>
                                             <option value={priority} disabled > Prioridad </option>
                                             <option value="Alta">Alta</option>
                                             <option value="Media">Media</option>
@@ -387,7 +387,7 @@ export default function Propiedad() {
                                             // min={minDate}
                                             onChange={e => { setDateAlert(e.target.value) }}
                                             className={`w-[124px]  p-1 h-[100%] outline outline-[1px]  text-[15px] 
-                                             ${dateAlertIncomplete === true && dateAlert === '' && 'outline outline-[2px] outline-red-500'} `}
+                                            ${dateAlertIncomplete === true && dateAlert === '' && 'outline outline-[2px] outline-red-500'} `}
                                             type={'date'}
                                         />
                                         <button
@@ -405,27 +405,7 @@ export default function Propiedad() {
                                         hover:bg-orange-600`}>
                                             <FontAwesomeIcon icon={faPlus} className={`w-6 h-6 text-white`} />
                                         </button>
-
                                     </div>
-                                    {/* 
-                                     <input
-                                        value={inputAlert}
-                                        onChange={event => setInputAlert(event.target.value)}
-                                        type="text"
-                                        id="large-input" className={`block p-4 w-[75%] h-10
-                                         bg-white rounded-lg outline outline-0 focus:outline-2 
-                                         sm:text-md 
-                                         ${inputAlertIncomplete === true && inputAlert === '' && 'outline outline-[2.5px] outline-red-500'}`} />
-                                    <select defaultValue={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
-                                        className={`w-[25%] px-2 ml-1 rounded text-start ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2.5px] outline-red-500'}`}>
-                                        <option value="priority" disabled > Prioridad </option>
-                                        <option value="Alta">Alta</option>
-                                        <option value="Media">Media</option>
-                                        <option value="Baja">Baja</option>
-                                    </select>
-                                    <button><FontAwesomeIcon onClick={() => {
-                                        addAlert()
-                                    }} className="w-[100%] ml-1 text-orange-500" icon={faPlus} /></button> */}
                                 </div>
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded  bg-white'>

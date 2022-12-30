@@ -135,8 +135,22 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         //     width: "9%",
         // },
         {
+            name: 'Dueño',
+            selector: row => row.property?.owner.name + " " + row.property?.owner.lastname,
+            wrap: true,
+            sortable: true,
+            width: "10%",
+        },
+        {
+            name: 'Arrendatario',
+            selector: row => row.property?.leases[0].leaseholder.name + " " + row.property?.leases[0].leaseholder.lastname,
+            wrap: true,
+            sortable: true,
+            width: "13%",
+        },
+        {
             name: 'Direccion',
-            selector: row => row.property?.address,
+            selector: row => row.property?.type_property + " " + row.property?.address + " " + row.property?.floor,
             wrap: true,
             sortable: true,
             width: "13%",
@@ -153,7 +167,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     className={`w-[120px] h-7 text-center text-gray-700 bg-gray-200/50 rounded-sm focus:bg-white`} />,
             sortable: true,
             center: true,
-            width: '16%',
+            width: '10%',
             compact: true,
             sortFunction: amountSort
 
@@ -223,7 +237,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     focus:bg-white`} />
             ,
             center: true,
-            width: "12%",
+            width: "6%",
             compact: true
         },
         {
