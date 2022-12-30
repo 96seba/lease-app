@@ -69,13 +69,13 @@ export default function TableVisitsPending(data) {
     }
 
     const columnas = [
-        {
-            name: 'Id',
-            selector: row => row.id,
-            sortable: true,
-            compact: true,
-            width: '14%'
-        },
+        // {
+        //     name: 'Id',
+        //     selector: row => row.id,
+        //     sortable: true,
+        //     compact: true,
+        //     width: '14%'
+        // },
         {
             name: 'Direccion',
             selector: row => row.Lease?.property?.address,

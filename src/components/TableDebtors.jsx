@@ -29,6 +29,23 @@ export default function TableDebtors({ debtorData }) {
         }
     }
 
+    const debtsSort = (rowA, rowB) => {
+
+        console.log(rowA.amount_debts, rowB.amount_debts)
+
+
+        if (rowA.amount_debts > rowB.amount_debts) {
+            return 1;
+        }
+
+        if (rowB.amount_debts > rowA.amount_debts) {
+            return -1;
+        }
+
+        return 0;
+    };
+
+
     const columnas = [
         // {
         //     name: 'Propiedad',
@@ -77,7 +94,21 @@ export default function TableDebtors({ debtorData }) {
         // },
         {
             name: 'Nro de deudas',
-            selector: row => row?.amount_debts,
+            selector: row => {
+
+
+                return (
+                    <div className={`
+                    ${row?.amount_debts >= 3 && row?.amount_debts <= 4 && 'bg-[#fca311]'}
+                        ${row?.amount_debts >= 5 && 'bg-[#EF476F]'}
+                        ${row?.amount_debts <= 2 && 'bg-[#FFD166]'}
+                        w-[60px] h-[3vh] flex justify-center items-center rounded-md`}>
+                        {row?.amount_debts}
+                    </div>
+                )
+
+            },
+            sortFunction: debtsSort,
             sortable: true,
             center: true
         },
@@ -85,8 +116,8 @@ export default function TableDebtors({ debtorData }) {
         //     name: "Notificar",
         //     center: true,
         //     selector: row =>
-        //         <button className={`hover:text-emerald-400`}>
-        //             <FontAwesomeIcon icon={faEnvelope} className={`w-6 h-6`} />
+        //         <button className={`hover: text - emerald - 400`}>
+        //             <FontAwesomeIcon icon={faEnvelope} className={`w - 6 h - 6`} />
         //         </button>,
         //     width: '8%'
         // },
@@ -96,7 +127,7 @@ export default function TableDebtors({ debtorData }) {
         //         type="button"
         //         className="inline-flex w-28 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
         //         onClick={async () => {
-        //             let nav = `/propiedades/propiedad?=${row.id}`
+        //             let nav = `/ propiedades / propiedad ?= ${ row.id } `
         //             navigate(nav, {
         //                 state: {
         //                     id: row.id
@@ -129,10 +160,11 @@ export default function TableDebtors({ debtorData }) {
             customStyles={customStyles}
             highlightOnHover
             onRowDoubleClicked={e => {
+                console.log(e)
                 let nav = `/propiedades/propiedad`
                 navigate(nav, {
                     state: {
-                        id: e.id
+                        id: e.propertyId
                     }
                 })
             }}

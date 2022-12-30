@@ -8,13 +8,36 @@ import { getVisitsForProperty } from '../api/getVisitsForProperty';
 
 
 export default function TableVisits({ id, visits, setVisits }) {
+
+    const maxDate = new Date(
+        Math.max(
+            ...visits.map(element => {
+                return new Date(element.date);
+            }),
+        ),
+    );
+
     React.useEffect(() => {
         console.log(visits)
+
+
+
+
+
+        // console.log(resp.getUTCDate(), resp.getMonth() + 1, resp.getFullYear())
         // setAnnotation(visits[0]?.observations[0])
     }, [])
 
     const [annotation, setAnnotation] = useState("")
     const [dateDone, setDateDone] = useState("")
+
+    const getIndex = (id) => {
+        //* Funcion para obtener el index a cambiar
+        const idFind = (element) => element.id === id
+        //* Se ejecuta la funcion para obtener el index y se guarda en indexArr
+        let indexArr = visits.findIndex(idFind)
+        return indexArr
+    }
 
 
     const parseDate = (fecha) => {
@@ -37,65 +60,80 @@ export default function TableVisits({ id, visits, setVisits }) {
         }
     }
 
-    const renderFechaInput = (index, date) => {
-        // console.log(index, date)
-        if (index !== 0) {
+    const renderFechaInput = (row) => {
+        let resp = new Date(maxDate)
+
+        if (row.date === resp.toISOString()) {
             return (
                 <input
-                    disabled
+                    min={row.date.slice(0, 10)}
+                    value={dateDone}
+                    onChange={e => {
+                        setDateDone(e.target.value)
+                    }}
                     type={'date'}
-                    className='block p-2.5 cursor-not-allowed w-[120px] text-sm text-gray-900
-                bg-gray-200 rounded-lg border border-gray-300
-                focus:ring-blue-500 focus:border-blue-500
-                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-            )
-        }
-        return (
-            <input
-                min={date.slice(0, 10)}
-                value={dateDone}
-                onChange={e => {
-                    setDateDone(e.target.value)
-                }}
-                type={'date'}
-                className='block p-2.5 w-[120px] text-sm text-gray-900
+                    className='block p-2.5 w-[120px] text-sm text-gray-900
              bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500
                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+            )
+        } else {
+            if (row?.isDone === null) {
+                return (
 
-        )
+                    <div>
+                        No hay fecha
+                    </div>
+                )
+            } else {
+                return (
+                    <div>
+                        {parseDate(row?.isDone)}
+                    </div>
+
+                )
+            }
+
+        }
+
+
     }
 
-    const renderAnotacionInput = (row, index) => {
-        // console.log(row.observations[0]?.note)
-        if (index !== 0) {
+    const renderAnotacionInput = (row) => {
+        let resp = new Date(maxDate)
+
+        if (row.date === resp.toISOString()) {
             return (
                 <textarea
-                    value={row.observations[0]?.note} disabled
+                    value={annotation}
+                    onChange={e => { setAnnotation(e.target.value) }}
                     data-tooltip-target="tooltip-default" id="message" rows="1"
-                    className="block p-2.5 w-full text-sm cursor-not-allowed text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="block p-2.5 w-[220px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Anotaciones"></textarea>
             )
-        }
-        return (
-            <textarea
-                value={annotation}
-                onChange={e => { setAnnotation(e.target.value) }}
-                data-tooltip-target="tooltip-default" id="message" rows="1"
-                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Anotaciones"></textarea>
+        } else {
+            if (row.observations.length === 0) {
+                return (<div>No hay anotaciones</div>)
+            } else {
 
-        )
+                return (
+                    <div className=''>
+                        {row.observations[0]?.note}
+                    </div>
+                )
+            }
+        }
+
+        // if (index !== 0) {
+
+        // }
+
     }
 
     const renderIcon = (row, index) => {
         if (index !== 0) {
             return (
-
-                <FontAwesomeIcon icon={faCircleCheck}
-                    className={`w-[23px] h-[23px] text-emerald-400`} />
-
+                <FontAwesomeIcon icon={faCircleCheck} className={`w-[23px] h-[23px] text-emerald-400`} />
             )
         }
         return (
@@ -108,9 +146,11 @@ export default function TableVisits({ id, visits, setVisits }) {
                     obj.date = date.toISOString()
                     obj.observations = arr
                     obj.id = row.id
-                    // console.log(obj)
+                    console.log(obj)
                     let resp = await visitIsDone(obj)
                     console.log(resp)
+                    setAnnotation('')
+                    setDateDone('')
                     let visitsData = await getVisitsForProperty(id)
                     console.log(visitsData)
                     setVisits(visitsData.visits)
@@ -122,6 +162,22 @@ export default function TableVisits({ id, visits, setVisits }) {
 
         )
     }
+
+
+    const dateSort = (rowA, rowB) => {
+        let date1 = new Date(rowA.date)
+        let date2 = new Date(rowB.date)
+
+        if (date1.getTime() > date2.getTime()) {
+            return 1;
+        }
+
+        if (date2.getTime() > date1.getTime()) {
+            return -1;
+        }
+
+        return 0;
+    };
 
     const columnas = [
         {
@@ -135,28 +191,27 @@ export default function TableVisits({ id, visits, setVisits }) {
         {
             name: 'Fecha Agendada',
             selector: row => parseDate(row.date),
-            sortable: true,
             wrap: true,
             compact: true,
-            width: '24%'
+            width: '24%',
+            // sortable: true,
+            sortFunction: dateSort
         },
         {
             name: 'Fecha Visita',
-            selector: (row, index) => renderFechaInput(index, row.date),
-            sortable: true,
+            selector: row => renderFechaInput(row),
             wrap: true,
             compact: true,
-            width: '24%'
+            width: '18%',
+            center: true
         },
         {
             name: 'Anotaciones',
-            selector: (row, index) =>
-                renderAnotacionInput(row, index)
+            selector: row => renderAnotacionInput(row)
             ,
-            sortable: true,
             compact: true,
             wrap: true,
-            width: '30%'
+            width: '35%'
         },
         {
             selector: (row, index) => renderIcon(row, index),
@@ -177,7 +232,12 @@ export default function TableVisits({ id, visits, setVisits }) {
             pagination
             theme='solarized'
             customStyles={customStyles}
+            defaultSortFieldId={2}
+            defaultSortAsc={false}
             highlightOnHover
+            onRowDoubleClicked={e => {
+                console.log(e)
+            }}
             paginationComponentOptions={paginationComponentOptions}
         />
     )
