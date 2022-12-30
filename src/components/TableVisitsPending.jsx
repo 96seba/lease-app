@@ -53,35 +53,39 @@ export default function TableVisitsPending(data) {
         let dateVisit = new Date(fecha).getTime()
         let dateActual = new Date().getTime()
 
-
-        var diff = dateActual - dateVisit;
+        var diff = dateVisit - dateActual;
 
         let calculo = Math.round((diff / (1000 * 60 * 60 * 24)))
 
 
-        if (calculo <= 0) {
-            return "No existe atraso"
-        }
-        else {
-            return calculo
-        }
+        return (
+            <div className={`
+            ${calculo > 0 && 'bg-[#34D399]'}
+                ${calculo > -30 && calculo < 0 && 'bg-[#FFD166]'}
+                ${calculo <= -30 && 'bg-[#EF476F]'}
+                w-[60px] h-[3vh] flex justify-center items-center rounded-md }
+                `}>
+                {calculo}
+            </div>
+        )
 
     }
 
+
+    
     const columnas = [
-        {
-            name: 'Id',
-            selector: row => row.id,
-            sortable: true,
-            compact: true,
-            width: '14%'
-        },
+        // {
+        //     name: 'Id',
+        //     selector: row => row.id,
+        //     sortable: true,
+        //     compact: true,
+        //     width: '14%'
+        // },
         {
             name: 'Direccion',
             selector: row => row.Lease?.property?.address,
             sortable: true,
             wrap: true,
-            width: '35%'
         },
         {
             name: 'Fecha',
@@ -89,7 +93,6 @@ export default function TableVisitsPending(data) {
             sortable: true,
             center: true,
             compact: true,
-            width: '20%',
             sortFunction: dateSort
         },
         {
@@ -98,7 +101,6 @@ export default function TableVisitsPending(data) {
             sortable: true,
             center: true,
             compact: true,
-            width: '25%'
         },
 
     ]

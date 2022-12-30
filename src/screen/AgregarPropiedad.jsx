@@ -19,8 +19,8 @@ export default function AgregarPropiedad() {
     //* Datos propiedad
 
     const [id, setId] = useState("")
-    const [estacionamiento, setEstacionamiento] = useState(false)
-    const [bodega, setBodega] = useState(false)
+    const [estacionamiento, setEstacionamiento] = useState("")
+    const [bodega, setBodega] = useState("")
     const [direccion, setDireccion] = useState("")
     const [baños, setBaños] = useState("")
     const [dormitorios, setDormitorios] = useState("")
@@ -500,7 +500,7 @@ export default function AgregarPropiedad() {
                             className={`bg-gray-100 appearance-none border  h-[4vh]  rounded-sm w-[100%] py-2 px-3 text-grey-darker`} 
                             placeholder="Nro piso" />
                     </div>
-                    <div className="py-2 w-[90%]">
+                    {/* <div className="py-2 w-[90%]">
                         <label htmlFor="teal-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="teal-toggle" className="sr-only peer"
                                 checked={estacionamiento} onChange={(e) => {
@@ -515,6 +515,30 @@ export default function AgregarPropiedad() {
                             <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#FF6F00]"></div>
                             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Bodega</span>
                         </label>
+                    </div> */}
+                    <div className="w-[90%] mb-3 flex justify-around flex-row">
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
+                            <input
+                                value={estacionamiento} onChange={text => {
+                                    if (text.target.value.length < 3 && text.target.value >= 0) {
+                                        setEstacionamiento(text.target.value)
+                                    }
+                                }}
+                                className={`appearance-none bg-gray-100 
+                                border  h-[4vh]  rounded-sm w-[95%] px-3 text-grey-darker`} min={0}
+                                placeholder="Estacionamiento" />
+                        </div>
+                        <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
+                            <input
+                                value={bodega} onChange={text => {
+                                    if (text.target.value.length < 3 && text.target.value >= 0) {
+                                        setBodega(text.target.value)
+                                    }
+                                }}
+                                className={`appearance-none bg-gray-100 
+                                border h-[4vh] rounded-sm w-[100%] px-3 text-grey-darker`} min={0}
+                                placeholder="Bodega" />
+                        </div>
                     </div>
                     <div className="w-[90%] mb-3 flex justify-around flex-row">
                         <div className='w-1/2 h-[4vh] flex flex-col justify-center items-start'>
