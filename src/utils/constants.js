@@ -23,8 +23,8 @@ export const customStyles = {
 
         },
         highlightOnHoverStyle: {
-            backgroundColor: '#3A4348',
-            color: '#FFFFFF',
+            backgroundColor: '#F0F4F4',
+            color: '#000000',
         },
     },
     headRow: {
@@ -44,9 +44,9 @@ export const customStyles = {
         },
         pageButtonsStyle: {
             color: '#FFFFFF',
-            fill: '#FF6F00',
+            fill: '#A0D8CE',
             '&:hover:not(:disabled)': {
-                backgroundColor: '#3A4348',
+                backgroundColor: '#383D48',
                 fill: '#FFFFFF',
             },
             '&:focus': {

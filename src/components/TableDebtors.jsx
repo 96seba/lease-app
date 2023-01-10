@@ -46,6 +46,27 @@ export default function TableDebtors({ debtorData }) {
     };
 
 
+    const removeAccents = (str) => {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    const duenoSort = (rowA, rowB) => {
+        let data1 = removeAccents(rowA?.name+" "+rowA.lastname)
+        let data2 = removeAccents(rowB?.name+" "+rowB.lastname)
+
+        console.log(data1, data2)
+
+        if (data1 > data2) {
+            return 1;
+        }
+
+        if (data2 > data1) {
+            return -1;
+        }
+        return 0;
+    };
+
+
     const columnas = [
         // {
         //     name: 'Propiedad',
@@ -59,7 +80,8 @@ export default function TableDebtors({ debtorData }) {
         {
             name: 'Arrendatario',
             selector: row => row?.name + " " + row?.lastname,
-            sortable: true
+            sortable: true,
+            sortFunction: duenoSort
         },
         {
             name: 'Direccion',
@@ -99,9 +121,9 @@ export default function TableDebtors({ debtorData }) {
 
                 return (
                     <div className={`
-                    ${row?.amount_debts >= 3 && row?.amount_debts <= 4 && 'bg-[#fca311]'}
-                        ${row?.amount_debts >= 5 && 'bg-[#EF476F]'}
-                        ${row?.amount_debts <= 2 && 'bg-[#FFD166]'}
+                    ${row?.amount_debts >= 3 && row?.amount_debts <= 4 && 'bg-[#FFCFA3] text-[#DE7A1E]'}
+                        ${row?.amount_debts >= 5 && 'bg-[#FFD7D7] text-[#E46262]'}
+                        ${row?.amount_debts <= 2 && 'bg-[#F7E6AE] text-[#D9940E]'}
                         w-[60px] h-[3vh] flex justify-center items-center rounded-md`}>
                         {row?.amount_debts}
                     </div>

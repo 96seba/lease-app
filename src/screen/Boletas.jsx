@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import TableBoletas from '../components/TableBoletas'
 import { getAllExpenses } from '../api/getAllExpenses'
+import { getExpensesForPeriod } from '../api/getExpensesForPeriod'
 
 
-export default function Propiedades() {
+
+export default function Boletas() {
 
     const [files, setFile] = useState([])
     const [boletasBody, setBoletasBody] = useState([])
     const [tablaData, setTableData] = useState([])
 
+    const [monthInput, setMonthInput] = useState()
+
     useEffect(() => {
+        let date = new Date()
+        let mm = date.getMonth() + 1
+        let yyyy = date.getUTCFullYear()
+        if (mm < 10) {
+            mm = "0" + mm
+        }
+        console.log( mm+ "-" + yyyy)
+        setMonthInput(yyyy + "-" +mm)
         document.title = 'Boletas'
         const getData = async () => {
             let resp = await getAllExpenses()
@@ -19,6 +31,23 @@ export default function Propiedades() {
         }
         getData()
     }, [])
+
+    // useEffect(() => {
+    //     const getBoletasPorMes = async () => {
+    //         let date = new Date(monthInput)
+    //         let mm = date.getMonth() + 1
+    //         let yyyy = date.getUTCFullYear()
+    //         if (mm < 10) {
+    //             mm = "0" + mm
+    //         }
+    //         console.log(mm + "-" + yyyy)
+    //         // let resp = await getExpensesForPeriod({ period: mm + "-" + yyyy })
+    //         // console.log(resp)
+    //         // setTableData(resp.data.allAdminExpenses)
+    //     }
+    //     getBoletasPorMes()
+    // }, [monthInput])
+
 
     const getIndex = (id) => {
         //* Funcion para obtener el index a cambiar
@@ -39,46 +68,39 @@ export default function Propiedades() {
     }
 
 
-    // const saveTicket = () => {
-    //     let count = { emmpty: 0, nice: 0 }
-    //     boletasBody.forEach(async (element, index) => {
-    //         // console.log(element)
-    //         const form = new FormData();
-    //         form.append("id", element.propertyId);
-    //         form.append("nroTicket", element.nroTicket)
-    //         form.append("ticket", element.ticket)
-    //         // console.log({ id: element.propertyId, nroTicket: element.nroTicket, ticket: element.ticket })
-    //         if (element.nroTicket === "" || element.ticket === null) {
-    //             count.emmpty += 1
-    //         } else {
-    //             let resp = await uploadTicket(form)
-    //             console.log(resp.status)
-    //             if (resp.status === 200) {
-    //                 setSendedTicket(element.propertyId)
-    //             }
-    //             count.nice += 1
-    //         }
-
-    //     })
-    //     // console.log(boletasBody)
-    //     console.log(count)
-    //     setBoletasSaved(true)
-    // }
-
-  
 
 
     return (
-        <div className="h-[84vh] flex flex-col justify-start items-start p-1 mt-[65px] sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw]  2xl:w-[80vw]">
-          
+        <div className="h-[84vh] flex flex-col justify-start  items-start p-1 mt-[30px] sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[85vw]  2xl:w-[80vw]">
+            <div className='w-full h-[5vh] flex justify-start items-center'>
+
+                <input 
+                className={` rounded-md border-0`}
+                type={'month'}
+                    value={monthInput}
+                    onChange={async (e) => {
+                        setMonthInput(e.target.value)
+                        let date = e.target.value.split("-")
+                        console.log(date[1] + "-" + date[0])
+                        let resp = await getExpensesForPeriod({ period: date[1] + "-" + date[0] })
+                        console.log(resp)
+                        setTableData(resp.data.allAdminExpenses)
+                    }}
+                />
+            </div>
+
+
             <div className='flex pt-3 px-4 mt-[12px] mb-10 flex-col justify-start items-end w-[100%] h-auto bg-white rounded-lg shadow-sm'>
                 <div className='w-full'>
                     <p className='text-lg font-semibold'>Boletas</p>
                 </div>
                 {
                     tablaData.length === 0 ?
-                        <div className={`w-full flex h-10 justify-center items-center`}>
-                            No hay data
+                        <div className={`w-full flex h-64 justify-center items-center`}>
+                            <div className="w-full h-[22vh] mt-6 flex justify-center items-center flex-col">
+                                <p>No hay boletas del mes seleccionado</p>
+                                <img src={require('../assets/loading.JPG')} className={'w-[130px] h-[130px]'} />
+                            </div>
                         </div>
                         :
                         <TableBoletas tablaData={tablaData} files={files} setFile={setFile}

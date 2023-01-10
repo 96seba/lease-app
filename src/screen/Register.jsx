@@ -177,7 +177,7 @@ export default function Register() {
                         </div> */}
                         <button onClick={() => {
                             checkInput()
-                        }} className="w-full mt-5 text-white bg-[#FF6F00] hover:bg-[#3A4348] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Crear cuenta</button>
+                        }} className="w-full mt-5 text-white bg-[#A0D8CE] hover:bg-[#383D48] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Crear cuenta</button>
 
                     </div>
                 </div>
@@ -185,7 +185,7 @@ export default function Register() {
 
 
                 {/* <div className="flex justify-center items-center flex-col h-[72.1vh] bg-white w-[45%] rounded-lg shadow"> */}
-                <div className="flex justify-end px-5 items-end flex-col h-[80%] bg-white w-[45%] rounded-lg shadow py-5">
+                <div className="flex justify-start px-5 items-end flex-col h-[80%] bg-white w-[45%] rounded-lg shadow py-5">
                     <h1 className="text-lg font-semibold text-center mb-4 w-full flex justify-center items-center">
                         Usuarios
                     </h1>

@@ -103,7 +103,7 @@ export default function Propiedad() {
         // console.log(annotations)
         return (
             annotations.map((item, index) =>
-                <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - {item.value}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
+                <p key={index} className='text-sm break-words'>{parseDate(item.createdAt)} - {item.value} - <strong className=' text-[#3A4348]'>{item.by}</strong></p>
             )
         )
     }
@@ -230,7 +230,7 @@ export default function Propiedad() {
         }
         return (
             logs.map((item, index) =>
-                <p key={index} className='text-sm break-words'>{parseDate(item.dateResolve)} - <strong className='text-[#FF6F00]'>{item.level}</strong> - {item.note}- <strong className=' text-[#3A4348]'>{item.by}</strong></p>
+                <p key={index} className='text-sm break-words'>{parseDate(item.dateResolve)} - <strong className='text-[#FF6F00]'>{item.level}</strong> - {item.note} - <strong className=' text-[#3A4348]'>{item.by}</strong></p>
             )
         )
     }
@@ -252,86 +252,60 @@ export default function Propiedad() {
             <ModalCorreos open={openCorreos} setOpen={setOpenCorreos} />
 
             <div className="flex sm:w-[100vw] md:w-[100vw] lg:w-[100vw] xl:w-[80vw]  2xl:w-[75vw] bg-gray-100 flex-column justify-start items-center p-8">
-                <div className="flex my-10 justify-center rounded items-center w-[96%] h-[40vh]  shadow-md ">
-                    <div className="flex justify-center rounded-l items-center w-[33vw] h-[40vh] ">
-                        {data.image === null ? <p>No hay foto</p> :
-                            <img alt="propiedad"
-                                onLoad={() => {
-                                    console.log("SE CARGO")
-                                    setLoaded(false)
-                                }}
-                                onError={() => {
-                                    console.log("ERROOOOOOR")
-                                    setLoaded(false)
-                                    setFotoUrl("")
-                                }}
-                                className='w-[35vw] h-[40vh] rounded-l' src={fotoUrL} />}
 
-                        {loaded === true &&
-                            <div className='w-[33vw] h-[40vh] absolute rounded-l  flex justify-center items-center' >
-                                <div role="status">
-                                    <svg className="inline mr-2 w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
-                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
-                                    </svg>
-                                    <span className="sr-only">Loading...</span>
-                                </div>
-                            </div>
-                        }
+
+                <div className="flex my-10 justify-start px-4 rounded items-center w-[96%] h-[40vh] gap-[2vw]   shadow-md bg-white ">
+
+                    <div className='w-[36vh] h-[36vh] bg-gray-100 rounded-md' >
+
                     </div>
 
-
-
-
-                    <div className="flex  justify-between flex-column items-start p-6 w-[32vw] 2xl:w-[32vw] h-[40vh] bg-white ">
-                        <div>
-                            <p>ID: {data?.property_id}</p>
-                            <p>Direccion: {data?.address}</p>
-                            <p>Dueño:  {data.owner?.name} {data.owner?.lastname} </p>
-                            <p>Arrendatario: {data?.leases[0]?.leaseholder?.name} {data?.leases[0]?.leaseholder?.lastname}</p>
-                            <p>Nro Piso: {data?.floor}</p>
-                            <p>Tipo: {parseType()}</p>
+                    <div className='w-[36vh] h-[32vh]  flex flex-col justify-start items-start gap-2 ' >
+                        <p className='text-[#383D48] text-[24px] font-[700]'>ID: {data?.property_id}</p>
+                        <div className='w-full h-[5vh]'>
+                            <h5 className='font-extrabold text-[15px] h-[15px] m-0 text-[#383D48]'>Dirección</h5>
+                            <h6 className='text-[15px] h-[15px] font-normal ext-[#383D48]'>{data?.address}</h6>
                         </div>
-                        {/* <div className='w-full '>
-
-                            <button onClick={() => {
-                                let nav = `/propiedades/propiedad/editarPropiedad`
-                                navigate(nav, {
-                                    state: {
-                                        data: data
-                                    }
-                                })
-                            }}
-                                className="group relative h-12 w-48 overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm">Editar Propiedad
-                            </button>
-
-                        </div> */}
-                    </div>
-                    <div>
-                    </div>
-                    <div className="flex justify-center flex-col rounded-r p-6 items-start w-[28vw] h-[40vh] bg-white">
-                        <div className='flex rounded flex-col w-full h-full p-6 justify-center items-start bg-slate-100'>
-                            <div className='w-full '>
-
-                                <button onClick={() => {
-                                    let nav = `/propiedades/propiedad/editarPropiedad`
-                                    navigate(nav, {
-                                        state: {
-                                            data: data
-                                        }
-                                    })
-                                }}
-                                    className="group relative h-12 w-full overflow-hidden rounded-lg text-white bg-[#FF6F00] hover:bg-[#3A4348] text-lg shadow-sm">Editar Propiedad
-                                </button>
-
-                            </div>
-                            <p className='mt-3'>Dormitorios: {data.bedrooms || "Sin data"}</p>
-                            <p>Baños: {data.bathrooms || "Sin data"}</p>
-                            <p>Estacionamiento: {parseAvaliable(data.parking)}</p>
-                            <p>Bodega: {parseAvaliable(data.cellar)}</p>
+                        <div className='w-full h-[5vh]'>
+                            <h5 className='font-extrabold text-[15px] h-[15px] m-0 text-[#383D48]'>Dueño</h5>
+                            <h6 className='text-[15px] h-[15px]'>Elvira Caballero</h6>
+                        </div>
+                        <div className='w-full h-[5vh]'>
+                            <h5 className='font-extrabold text-[15px] h-[15px] m-0 text-[#383D48]'>Arrendatario</h5>
+                            <h6 className='text-[15px] h-[15px] text-[#383D48]'>Rebeca Guevara</h6>
+                        </div>
+                        <div className='w-full h-[5vh]'>
+                            <h5 className='font-extrabold text-[15px] h-[15px] m-0 text-[#383D48]'>Tipo de Propiedad</h5>
+                            <h6 className='text-[15px] h-[15px] text-[#383D48]'>Departamento</h6>
                         </div>
                     </div>
+
+                    <div className='w-[36vh] h-[34vh] pt-[15px] pl-[30px]  flex flex-col justify-start items-start gap-2  border-l-[2px]' >
+                        <div className='w-full h-[5vh]'>
+                            <h5 className='font-extrabold text-[15px] h-[15px] m-0 text-[#383D48]'>Número Depto / Casa</h5>
+                            <h6 className='text-[15px] h-[15px] font-normal ext-[#383D48]'>Glorieta Conchita Arellano 79, León</h6>
+                        </div>
+                        <div className='w-full h-[5vh]'>
+                            <h5 className='font-extrabold text-[15px] h-[15px] m-0 text-[#383D48]'>Dormitorios</h5>
+                            <h6 className='text-[15px] h-[15px] font-normal ext-[#383D48]'>Glorieta Conchita Arellano 79, León</h6>
+                        </div>
+                        <div className='w-full h-[5vh]'>
+                            <h5 className='font-extrabold text-[15px] h-[15px] m-0 text-[#383D48]'>Baños</h5>
+                            <h6 className='text-[15px] h-[15px] font-normal ext-[#383D48]'>Glorieta Conchita Arellano 79, León</h6>
+                        </div>
+                        <div className='w-full h-[5vh]'>
+                            <h5 className='font-extrabold text-[15px] h-[15px] m-0 text-[#383D48]'>Estacionamiento</h5>
+                            <h6 className='text-[15px] h-[15px] font-normal ext-[#383D48]'>Glorieta Conchita Arellano 79, León</h6>
+                        </div>
+                        <div className='w-full h-[5vh]'>
+                            <h5 className='font-extrabold text-[15px] h-[15px] m-0 text-[#383D48]'>Bodega</h5>
+                            <h6 className='text-[15px] h-[15px] font-normal ext-[#383D48]'>Glorieta Conchita Arellano 79, León</h6>
+                        </div>
+                    </div>
+
                 </div>
+
+
                 <div className="flex mb-10 bg-blue-500 rounded items-center max-w-full w-[96%]">
                     <div className="flex flex-col p-6 w-[96%] sm:w-[100%] md:w-[100%] lg:w-[100%]  xl:w-[100%]  h-[12vh] bg-white rounded shadow-md">
                         <b className='mb-2'>Contrato</b>
@@ -355,26 +329,26 @@ export default function Propiedad() {
                 </div>
                 {/* Pendientes críticos */}
                 <div className="flex mb-10  rounded justify-between items-center w-[96%]  ">
-                    <div className="flex justify-center  items-start p-6 w-[56%] h-[36vh] bg-white rounded shadow-md">
-                        <div className='flex w-[100%] h-[100%] rounded flex-col  p-3 justify-start items-start '>
+                    <div className="flex justify-center  items-start p-6 w-[56%] h-[36vh] bg-white rounded  shadow-md">
+                        <div className='flex w-[100%] h-[100%] rounded flex-col   p-3 justify-start items-start '>
                             <div className="mb-6 w-full">
                                 <div className='w-full'>
                                     <p className='text-lg font-semibold'>Pendientes críticos</p>
                                 </div>
-                                <div className='flex flex-row'>
-                                    <div className={` w-[100%] h-[49px] flex justify-end items-center
+                                <div className='flex flex-row '>
+                                    <div className={` w-[100%] h-[49px] flex justify-end items-center 
                                         bg-white  sm:text-md  rounded-[6px]`} >
                                         <input
                                             value={inputAlert}
                                             onChange={event => setInputAlert(event.target.value)}
                                             type="text"
-                                            className={`block  w-[22vw] h-full outline outline-[0.5px] rounded-l-[6px]
+                                            className={`block  w-[22vw] h-full outline outline-[2px]  outline-slate-300/80 border-0 rounded-l-md
                                         bg-white 
                                         text-[15px]
                                         ${inputAlertIncomplete === true && inputAlert === '' && 'outline outline-[2px] outline-red-500'}`} />
 
                                         <select defaultValue={priority} name="priority" onChange={e => { setPriority(e.target.value) }}
-                                            className={`w-[100px] h-full outline outline-[1px]  text-[15px]  px-2 text-start
+                                            className={`w-[100px] h-full  outline outline-[2px]  outline-slate-300/80 border-0 text-[15px]  px-2 text-start 
                                             ${inputPriorityIncomplete === true && priority === 'priority' && 'outline outline-[2px] outline-red-500'}`}>
                                             <option value={priority} disabled > Prioridad </option>
                                             <option value="Alta">Alta</option>
@@ -386,7 +360,7 @@ export default function Propiedad() {
                                             value={dateAlert}
                                             // min={minDate}
                                             onChange={e => { setDateAlert(e.target.value) }}
-                                            className={`w-[124px]  p-1 h-[100%] outline outline-[1px]  text-[15px] 
+                                            className={`w-[124px]  p-1 h-[100%]  outline outline-[2px]  outline-slate-300/80 border-0  text-[15px] 
                                             ${dateAlertIncomplete === true && dateAlert === '' && 'outline outline-[2px] outline-red-500'} `}
                                             type={'date'}
                                         />
@@ -400,9 +374,8 @@ export default function Propiedad() {
                                                     console.log("TRIGGER LO HIZO OTRA VEZ :^)")
                                                 }
                                             }}
-                                            className={`h-full w-12 outline outline-[1px]
-                                        flex rounded-r-[6px] justify-center items-center bg-[#FF6F00]
-                                        hover:bg-orange-600`}>
+                                            className={`h-full w-12  outline outline-[2px]  outline-slate-300/80 border-0
+                                        flex rounded-r-[6px] justify-center items-center bg-[#A0D8CE] hover:bg-[#86B5AC]`}>
                                             <FontAwesomeIcon icon={faPlus} className={`w-6 h-6 text-white`} />
                                         </button>
                                     </div>
@@ -436,7 +409,7 @@ export default function Propiedad() {
                                         setErrorAnnotation(false)
                                     }}
                                     type="text"
-                                    className={`p-4 w-full appearance-none h-10 bg-white rounded-lg sm:text-md outline outline-[1px] focus:outline-0 focus:outline-black  ${errorAnnotation && 'outline outline-2 outline-red-400'}`} />
+                                    className={`p-4 w-full appearance-none h-10 bg-white rounded-lg sm:text-md outline outline-[2px]  outline-slate-300/80 border-0 focus:outline-0 focus:outline-black  ${errorAnnotation && 'outline outline-2 outline-red-400'}`} />
                             </div>
                             <div className='flex flex-col break-normal w-full overflow-auto justify-start items-start p-2 rounded bg-white'>
                                 {annotations.length !== 0 ?
@@ -459,16 +432,16 @@ export default function Propiedad() {
                                             console.log(resp)
                                             setOpenCorreos(true)
                                         }}
-                                        className='h-[4vh] mr-2  w-60 bg-emerald-400
-                                hover:bg-emerald-600  rounded'>
+                                        className='h-[4vh] mr-2  w-60 bg-[#A0D8CE]
+                                hover:bg-[#86B5AC]  rounded-md'>
                                         Enviar correos
                                     </button>
                                     <button
                                         onClick={() => {
                                             updateExpenses()
                                         }}
-                                        className='h-[4vh]  w-40 bg-emerald-400
-                                hover:bg-emerald-600  rounded'>
+                                        className='h-[4vh]  w-40 bg-[#A0D8CE]
+                                hover:bg-[#86B5AC]  rounded'>
                                         Guardar
                                     </button>
                                 </>

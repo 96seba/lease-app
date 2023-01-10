@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { uploadPropiedadImagen } from "../api/uploadPropiedadImagen"
 import ModalEditPropiedad from "../components/ModalEditPropiedad"
 import ModalNewContrato from "../components/ModalNewContrato"
+import ModalDeleteContrato from "../components/ModalDeleteContrato"
 import ArrendatarioFinder from '../components/ArrendatarioFinder'
 import { editLease } from "../api/editLease"
 import { addLease } from "../api/addLease"
@@ -19,6 +20,7 @@ export default function EditarPropiedad() {
 
     const [open, setOpen] = useState(false)
     const [openModalContrato, setOpenModalContrato] = useState(false)
+    const [openModalDeactivate, setOpenModalDeactivate] = useState(false)
 
     const [data, setData] = useState("")
     const [idProp, setIdProp] = useState("")
@@ -233,6 +235,14 @@ export default function EditarPropiedad() {
         // console.log(data.leases[0].id)
     }
 
+    const deleteContrato = async () => {
+        console.log(arrendatario)
+        let resp = await deactivateLease(data.leases[0].id)
+        console.log(resp)
+        cleanContrato()
+        // window.location.reload(false);
+    }
+
     const checkInput = () => {
 
         let resp = checkInputRut.validaRut(arrendatario.rut.replaceAll('.', ''))
@@ -421,13 +431,13 @@ export default function EditarPropiedad() {
                                 checked={estacionamiento} onChange={(e) => {
                                     setEstacionamiento(e.target.checked)
                                 }} />
-                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#FF6F00]"></div>
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#A0D8CE]"></div>
                             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Estacionamiento</span>
                         </label>
                         <label htmlFor="d-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
                             <input type="checkbox" value="" id="d-toggle" className="sr-only peer"
                                 checked={bodega} onChange={(e) => { setBodega(e.target.checked) }} />
-                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#FF6F00]"></div>
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700  peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#A0D8CE]"></div>
                             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-900">Bodega</span>
                         </label>
                     </div>
@@ -488,7 +498,7 @@ export default function EditarPropiedad() {
                     <div className='flex justify-center items-center h-[12vh] w-[85%]'>
                         <button
                             type="button"
-                            className="inline-flex w-[50%] mt-4 mb-4 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                            className="inline-flex w-[50%] mt-4 mb-4 justify-center rounded-md border border-transparent bg-[#A0D8CE] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                             onClick={async () => {
                                 let objProp = {
                                     id: idProp,
@@ -516,10 +526,19 @@ export default function EditarPropiedad() {
 
                     <div className="h-[1px] w-[90%] bg-gray-300 mb-4" />
                     {newContrato === false && data.leases?.length > 0 &&
-                        <div className="w-[90%] h-10 flex justify-end  items-center">
+
+                        <div className="w-[90%] h-10 flex justify-between  items-center">
+                            <button
+                                onClick={() => {
+                                    setOpenModalDeactivate(true)
+                                }}
+                                className={`w-[42%] inline-block  px-s py-2 border-2 border-[#A0D8CE] text-[#A0D8CE] font-medium text-[14px] leading-normal uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out`}>
+                                <FontAwesomeIcon className="mx-2 " icon={faTrash} />
+                                Eliminar contrato
+                            </button>
                             <button
                                 onClick={() => { setOpenModalContrato(true) }}
-                                className={`w-[52%] inline-block  px-s py-2 border-2 border-[#FF6F00] text-[#FF6F00] font-medium text-[14px] leading-normal uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out`}>
+                                className={`w-[52%] inline-block  px-s py-2 border-2 border-[#A0D8CE] text-[#A0D8CE] font-medium text-[14px] leading-normal uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out`}>
                                 <FontAwesomeIcon className="mx-2 " icon={faFileCirclePlus} />
                                 Agregar nuevo contrato
                             </button>
@@ -688,7 +707,7 @@ export default function EditarPropiedad() {
                                     </button>
                                     :
                                     <button
-                                        className="inline-flex w-[50%] mb-3 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
+                                        className="inline-flex w-[50%] mb-3 justify-center rounded-md border border-transparent bg-[#A0D8CE] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
                                         onClick={() => {
                                             if (inicioContrato === "" || terminoContrato === "") {
                                                 setContratoIncomplete(true)
@@ -730,6 +749,9 @@ export default function EditarPropiedad() {
 
                 <ModalNewContrato open={openModalContrato} setOpen={setOpenModalContrato}
                     cleanContrato={cleanContrato} />
+
+                <ModalDeleteContrato open={openModalDeactivate} setOpen={setOpenModalDeactivate}
+                    cleanContrato={deleteContrato} />
             </div>
         </div>
     )

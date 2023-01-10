@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 
 export default function TableVisitsPending(data) {
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         console.log(data)
-    },[])
+    }, [])
 
     const navigate = useNavigate()
 
@@ -60,9 +60,9 @@ export default function TableVisitsPending(data) {
 
         return (
             <div className={`
-            ${calculo > 0 && 'bg-[#34D399]'}
-                ${calculo > -30 && calculo < 0 && 'bg-[#FFD166]'}
-                ${calculo <= -30 && 'bg-[#EF476F]'}
+            ${calculo > 0 && 'bg-[#C6E7B2] text-[#799B65]'}
+                ${calculo > -30 && calculo < 0 && 'bg-[#F7E6AE] text-[#D9940E]'}
+                ${calculo <= -30 && 'bg-[#FFD7D7] text-[#E46262]'}
                 w-[60px] h-[3vh] flex justify-center items-center rounded-md }
                 `}>
                 {calculo}
@@ -72,7 +72,39 @@ export default function TableVisitsPending(data) {
     }
 
 
-    
+    const sortAtraso = (rowA, rowB) => {
+
+        let dateVisitA = new Date(rowA.date).getTime()
+        let dateActualA = new Date().getTime()
+
+        var diffA = dateVisitA - dateActualA;
+
+        let calculoA = Math.round((diffA / (1000 * 60 * 60 * 24)))
+
+        let dateVisitB = new Date(rowB.date).getTime()
+        let dateActualB = new Date().getTime()
+
+        var diffB = dateVisitB - dateActualB;
+
+        let calculoB = Math.round((diffB / (1000 * 60 * 60 * 24)))
+
+        console.log(calculoA, calculoB)
+
+
+        if (calculoA > calculoB) {
+            return 1;
+        }
+
+        if (calculoB > calculoA) {
+            return -1;
+        }
+
+        return 0;
+
+    }
+
+
+
     const columnas = [
         // {
         //     name: 'Id',
@@ -101,6 +133,7 @@ export default function TableVisitsPending(data) {
             sortable: true,
             center: true,
             compact: true,
+            sortFunction: sortAtraso
         },
 
     ]

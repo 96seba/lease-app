@@ -52,21 +52,36 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
     }
 
 
+    const dateSort = (rowA, rowB) => {
+        let date1 = new Date("01-" + rowA.period)
+        let date2 = new Date("01-" + rowB.period)
+
+        if (date1.getTime() > date2.getTime()) {
+            return 1;
+        }
+
+        if (date2.getTime() > date1.getTime()) {
+            return -1;
+        }
+
+        return 0;
+    };
 
 
 
     const columnas = [
         {
             name: 'Mes',
-            selector: row => getMonth(row.period),
+            selector: row => getMonth(row?.period),
             sortable: true,
             width: '8%',
-            compact: true
+            compact: true,
+            sortFunction: dateSort
         },
         {
             name: 'Arrendatario',
             // selector: row => row.arrendatario,
-            selector: row => row.id,
+            selector: row => row?.leaseholder?.name + " " + row?.leaseholder?.lastname,
             sortable: true,
             compact: true,
             wrap: true,
@@ -120,6 +135,7 @@ export default function TableBill({ id, arrayExpenses, setArrayExpenses, dataExp
             highlightOnHover
             customStyles={customStyles}
             defaultSortFieldId={1}
+            defaultSortAsc={false}
             paginationComponentOptions={paginationComponentOptions}
         />
 

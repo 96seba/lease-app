@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 
 
-export default function ModalNewContrato({ open, setOpen, cleanContrato }) {
+export default function ModalDeleteContrato({ open, setOpen, cleanContrato }) {
 
     const cancelButtonRef = useRef(null)
 
@@ -46,7 +46,7 @@ export default function ModalNewContrato({ open, setOpen, cleanContrato }) {
                                                 </Dialog.Title>
                                                 <div className="mt-2">
                                                     <p className="text-md text-gray-500">
-                                                        ¿Seguro que deseas crear un nuevo contrato?
+                                                        ¿Seguro que deseas eliminar este contrato?
                                                     </p>
                                                 </div>
                                             </div>
@@ -78,55 +78,7 @@ export default function ModalNewContrato({ open, setOpen, cleanContrato }) {
                         </div>
                     </div>
 
-                    {/* <div className="fixed inset-0 z-10 overflow-y-auto">
-                        <div className="flex min-h-full items-end justify-center p-6 text-center sm:items-center sm:p-0">
-                            <Transition.Child
-                                as={Fragment}
-                                enter="ease-out duration-300"
-                                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                enterTo="opacity-100 translate-y-0 sm:scale-100"
-                                leave="ease-in duration-200"
-                                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                            >
-                                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                    <div className="w-full bg-white rounded-lg shadow  md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700 p-2 pb-4">
-                                        <div className="p-6 space-y-4 md:space-y-6 sm:p-8 w-full  flex justify-center items-center flex-col">
-                                            <h1 className="text-xl font-bold leading-tight  tracking-tight text-black md:text-2xl dark:text-white  text-center">
-                                                ¿Seguro que deseas crear un nuevo contrato?
-                                            </h1>
 
-                                            <div className='w-full h-14  flex justify-center items-center'>
-                                                <button
-                                                    type="button"
-                                                    className="inline-flex w-[30%] mt-4 mb-4 justify-center rounded-md border border-transparent bg-[#FF6F00] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
-                                                    onClick={async () => {
-                                                        cleanContrato()
-                                                        setOpen(false)
-                                                    }}
-                                                >
-                                                    Si
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="inline-flex w-[30%] mt-4 mb-4 justify-center rounded-md border border-transparent bg-gray-400 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-[#3A4348] focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-3 sm:text-sm"
-                                                    onClick={async () => {
-                                                        setOpen(false)
-                                                    }}
-                                                >
-                                                    No
-                                                </button>
-
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </Dialog.Panel>
-                            </Transition.Child>
-                        </div>
-                    </div> */}
                 </Dialog>
             </Transition.Root>
         </div>

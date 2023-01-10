@@ -81,6 +81,7 @@ export default function Login() {
 
             <div className=" bg-white flex justify-center w-[400px]">
                 <div className="bg-white shadow rounded-lg px-8 pt-6 pb-8 m-auto w-full">
+                <span className={`font-bold text-[30px]`}>Lease</span>
                     <div className="mt-4 mb-6">
                         <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
                             Correo
@@ -109,7 +110,7 @@ export default function Login() {
                                 loginUser()
                                 // navigate('/dashboard')
                             }}
-                            className="bg-[#FF6F00] hover:bg-[#3A4348] text-white font-bold py-2 px-4 rounded" type="button">
+                            className="bg-[#A0D8CE] hover:bg-[#86B5AC] text-white font-bold py-2 px-4 rounded-md" type="button">
                             Iniciar sesión
                         </button>
                     </div>

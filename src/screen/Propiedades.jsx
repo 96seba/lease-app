@@ -34,14 +34,14 @@ export default function Propiedades() {
                 <button onClick={async () => {
                     navigate("/propiedades/agregarPropiedad")
                 }}
-                    className="group relative h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">
-                    <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                    className="group relative h-12 w-48 overflow-hidden rounded-md bg-white text-lg shadow-sm">
+                    <div className="absolute inset-0 w-0 bg-[#A0D8CE] transition-all duration-[250ms] ease-out group-hover:w-full"></div>
                     <span className="relative group-hover:text-white">Agregar propiedad</span>
                 </button>
                 <button
                     onClick={() => setOpen(true)}
-                    className="group relative ml-4 h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow-sm">
-                    <div className="absolute inset-0 w-0 bg-[#FF6F00] transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                    className="group relative ml-4 h-12 w-48 overflow-hidden rounded-md bg-white text-lg shadow-sm">
+                    <div className="absolute inset-0 w-0 bg-[#A0D8CE] transition-all duration-[250ms] ease-out group-hover:w-full"></div>
                     <span className="relative group-hover:text-white">Subir excel</span>
                 </button>
             </div>

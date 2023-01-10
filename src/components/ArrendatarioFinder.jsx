@@ -36,16 +36,16 @@ export default function ArrendatarioFinder({ selected, setSelected, selectIncomp
         return <></>
     }
     return (
-        <div className='flex justify-center items-center flex-col'>
-            <div className='w-full h-[6vh] flex justify-start items-center flex-col'>
+        <div className='flex flex-col items-center justify-cente'>
+            {/* <div className='w-full h-[6vh] flex justify-start items-center flex-col'>
                 <p className='mb-0 font-bold'>Buscar Arrendatario</p>
                 <p className={`text-xs ${selectIncomplete === true ? 'block' : 'hidden'}`}>Debes seleccionar un arrendatario </p>
-            </div>
+            </div> */}
             {/* <p className='text-xl'>Buscar Arrendatario</p>
-            <p className='text-xs absolute'>Debes seleccionar un arrendatario </p> */}
+            <p className='absolute text-xs'>Debes seleccionar un arrendatario </p> */}
             <input
-                className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[85%] py-2 px-3 m-2 text-grey-darker
-                ${selectIncomplete === true && 'outline outline-2 outline-red-400'}`}
+                className={`appearance-none bg-gray-100  border h-[4vh] rounded-sm w-[90%] py-2 px-3 m-2 text-grey-darker
+                ${selectIncomplete === true && 'outline outline-2 outline-red-400'}`} autoComplete="off"
                 value={buscar}
                 onChange={e => {
                     filtrar(e.target.value)
@@ -55,8 +55,8 @@ export default function ArrendatarioFinder({ selected, setSelected, selectIncomp
                 placeholder="Rut o nombre"
             />
 
-            <div className='flex mb-4 justify-start items-start  flex-col w-[85%] h-[16vh] bg-slate-200'>
-                <div className='h-auto overflow-auto w-full'>
+            <div className='flex  justify-start items-start  flex-col w-[90%] h-[16vh] bg-slate-200'>
+                <div className='w-full h-auto overflow-auto'>
 
                     {data.map((user, index) => (
                         <button key={index}
@@ -71,7 +71,7 @@ export default function ArrendatarioFinder({ selected, setSelected, selectIncomp
 
                             }}
                             className={` w-full  h-[5vh] flex justify-start items-center  px-4 
-                            ${selected === user ? 'bg-[#FF6F00] text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
+                            ${selected === user ? 'bg-[#383D48] text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
                         > {user.rut} - {user.name} {user.lastname} </button>
                     ))}
 

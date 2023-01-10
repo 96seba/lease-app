@@ -32,9 +32,9 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         createStates()
 
 
-    }, [])
+    }, [tablaData])
 
-    const [open, setOpen] = useState (false)
+    const [open, setOpen] = useState(false)
 
 
     const getIndex = (id) => {
@@ -113,8 +113,6 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
 
 
     const estadoSort = (rowA, rowB) => {
-        console.log(rowA.sended, rowB.sended)
-
 
         if (rowA.sended === true && rowB.sended === false) {
             return 1;
@@ -125,6 +123,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         }
         return 0;
     };
+
 
 
     const columnas = [
@@ -158,13 +157,9 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         {
             name: 'Costo por administración',
             selector: row =>
-                <input
-                    value={boletasBody[getIndex(row.id)]?.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                    onChange={e => {
-                        setCostoAdm(row, Number(e.target.value))
-                    }}
-                    disabled
-                    className={`w-[120px] h-7 text-center text-gray-700 bg-gray-200/50 rounded-sm focus:bg-white`} />,
+                <div>
+                    {boletasBody[getIndex(row.id)]?.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </div>,
             sortable: true,
             center: true,
             width: '10%',
@@ -182,7 +177,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                         <button onClick={() => {
                             deleteFileBoleta(row)
                         }} className="flex justify-center items-center mb-1 h-7 w-44">
-                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-emerald-400 rounded-lg 
+                            <label htmlFor="dropzone-file" className="flex flex-col justify-center items-center w-full h-full bg-[#A0D8CE] rounded-lg 
                 cursor-pointer dark:bg-[#00ff00]  dark:hover:bg-[#ff0000]">
                                 <div className='h-[100%] w-[100%] flex justify-start pl-4 items-center'>
                                     <FontAwesomeIcon icon={faCircleCheck} />
@@ -197,7 +192,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                     return (
                         <div className="flex justify-center items-center mb-1 h-7 w-44">
                             <label htmlFor={"dropzone-file" + index} className="flex flex-col 
-                            justify-center items-center w-full h-full bg-gray-200/70 rounded-lg 
+                            justify-center items-center w-full h-full bg-gray-200/70 rounded-md
                             cursor-pointer dark:bg-gray-300 dark:hover:bg-[#FF6F00]">
                                 <div className='h-[100%] w-[100%] flex justify-start pl-4 items-center'>
                                     <FontAwesomeIcon icon={faCloudArrowUp} className='text-black' />
@@ -222,7 +217,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
         {
             name: 'Nro de boleta',
             selector: row =>
-                <input type= 'number' value={boletasBody[getIndex(row.id)]?.nroTicket} min={0}
+                <input value={boletasBody[getIndex(row.id)]?.nroTicket} min={0}
                     onChange={e => {
                         var reg = /^\d+$/
                         if (reg.test(e.target.value) === true) {
@@ -233,7 +228,7 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
                         }
 
                     }}
-                    className={`w-[55px] h-7 text-center text-black border outline outline-none rounded-sm
+                    className={`w-[55px] h-7 text-center text-black border outline outline-none rounded-md
                     focus:bg-white`} />
             ,
             center: true,
@@ -257,10 +252,16 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
             width: '5%',
             selector: (row, index) => {
                 if (boletasBody[getIndex(row.id)]?.sended === false) {
-                    return (<FontAwesomeIcon icon={faFile} className={`w-6 h-6`} />)
+                    return (<FontAwesomeIcon icon={faFile} className={`w-6 h-6 `} />)
                 }
                 else {
-                    return (<FontAwesomeIcon icon={faFileCircleCheck} className={`w-6 h-6 text-emerald-400`} />)
+                    return (
+                        <button onClick={() => {
+                            window.open("https://google.com", "_blank");
+                        }}>
+                            <FontAwesomeIcon icon={faFileCircleCheck} className={`w-6 h-6 text-[#A0D8CE]`} />
+                        </button>
+                    )
                 }
             }
         },
@@ -303,20 +304,20 @@ export default function TableBoletas({ files, setFile, tablaData, boletasBody, s
     }
     return (
         <>
-        <ModalSendBoletas open={open} setOpen={setOpen} />
-        <DataTable
-            columns={columnas}
-            data={tablaData}
-            onRowClicked={(e) => {
-                console.log(e)
-            }}
-            highlightOnHover
-            fixedHeader
-            fixedHeaderScrollHeight='700px'
-            pagination
-            customStyles={customStyles}
-            paginationComponentOptions={paginationComponentOptions}
-        />
+            <ModalSendBoletas open={open} setOpen={setOpen} />
+            <DataTable
+                columns={columnas}
+                data={tablaData}
+                onRowClicked={(e) => {
+                    console.log(e)
+                }}
+                highlightOnHover
+                fixedHeader
+                fixedHeaderScrollHeight='700px'
+                pagination
+                customStyles={customStyles}
+                paginationComponentOptions={paginationComponentOptions}
+            />
         </>
 
     )

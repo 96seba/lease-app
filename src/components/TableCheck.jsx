@@ -2,50 +2,53 @@ import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import DataTable from 'react-data-table-component';
 import { customStyles, paginationComponentOptions } from '../utils/constants';
+import { useNavigate } from 'react-router-dom';
 
 export default function TableCheck({ dataCheck, setDataCheck }) {
 
+    const navigate = useNavigate()
+
+    const mostrarArrendatario = (row) => {
+        if(row.property?.leases[0]?.leaseholder.name===undefined){
+            return "No hay arrendatario"
+        }
+        return row.property?.leases[0]?.leaseholder.name + " " + row.property?.leases[0]?.leaseholder.lastname
+    }
+
     const columnas = [
+        // {
+        //     name: 'Id',
+        //     selector: row => row.id,
+        //     sortable: true,
+        //     width: '10%'
+        // },
         {
-            name: 'Id',
-            selector: row => row.id,
+            name: 'Dueño',
+            selector: row => row.property?.owner.name + " " + row.property?.owner.lastname,
             sortable: true,
-            width: '10%'
-        },
-        {
-            name: 'Descripcion',
-            selector: row => row.descripcion,
-            sortable: true,
+            width: '22%',
             wrap: true
         },
         {
-            name: 'Estado',
-            selector: row => row.estado === "Revisado" ?
-                <button onClick={() => {
-                    let newDataCheck = []
-                    dataCheck.forEach((element, index) => {
-                        if (element.id === row.id) {
-                            newDataCheck[index] = { id: element.id, descripcion: element.descripcion, estado: "No revisado" }
-                        } else {
-                            newDataCheck[index] = element
-                        }
-                    });
-                    setDataCheck(newDataCheck)
-                }} className='bg-[#00ff00] w-20 h-7 rounded '>Revisado</button> :
-                <button onClick={() => {
-                    let newDataCheck = []
-                    dataCheck.forEach((element, index) => {
-                        if (element.id === row.id) {
-                            newDataCheck[index] = { id: element.id, descripcion: element.descripcion, estado: "Revisado" }
-                        } else {
-                            newDataCheck[index] = element
-                        }
-                    });
-                    setDataCheck(newDataCheck)
-                }} className=' bg-[#ff0000] w-20 h-7 rounded '>No revisado</button>,
+            name: 'Arrendatario',
+            selector: row => mostrarArrendatario(row),
             sortable: true,
-            width: '18%',
-            compact: true
+            width: '22%',
+            wrap: true
+        },
+        {
+            name: 'Direccion',
+            selector: row => row.property.address,
+            sortable: true,
+            width: '30%',
+            wrap: true
+        },
+        {
+            name: 'Nro de pendientes',
+            selector: row => row?.countPending,
+            sortable: true,
+            wrap: true,
+            center:true
         },
     ]
 
@@ -70,6 +73,15 @@ export default function TableCheck({ dataCheck, setDataCheck }) {
             fixedHeader
             fixedHeaderScrollHeight='700px'
             pagination
+            onRowDoubleClicked={e => {
+                console.log(e)
+                let nav = `/propiedades/propiedad?=${e.propertyId}`
+                navigate(nav, {
+                    state: {
+                        id: e.propertyId
+                    }
+                })
+            }}
             customStyles={customStyles}
             highlightOnHover
             paginationComponentOptions={paginationComponentOptions}

@@ -213,7 +213,7 @@ export default function TableAlerts(data) {
                         onClick={() => {
                             setCheckState(row)
                         }}
-                        className={`bg-emerald-400 w-24 h-8 hover:bg-emerald-600 text-white rounded-[3px] text-[15px]`} >
+                        className={`bg-[#A0D8CE] hover:bg-[#77A099] w-24 h-8 hover:bg-emerald-600 text-white rounded-md text-[15px]`} >
                         Listo
                     </button>
                     {/* <input
